@@ -13,15 +13,20 @@
 		F714E16E14A1A88400E24956 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F714E16C14A1A88400E24956 /* InfoPlist.strings */; };
 		F714E17014A1A88400E24956 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E16F14A1A88400E24956 /* main.m */; };
 		F714E17414A1A88400E24956 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E17314A1A88400E24956 /* AppDelegate.m */; };
-		F714E17714A1A88400E24956 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E17614A1A88400E24956 /* MasterViewController.m */; };
-		F714E17A14A1A88400E24956 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E17914A1A88400E24956 /* DetailViewController.m */; };
-		F714E17D14A1A88400E24956 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F714E17B14A1A88400E24956 /* MasterViewController.xib */; };
-		F714E18014A1A88400E24956 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F714E17E14A1A88400E24956 /* DetailViewController.xib */; };
 		F714E18814A1A88400E24956 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F714E18714A1A88400E24956 /* SenTestingKit.framework */; };
 		F714E18914A1A88400E24956 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F714E16314A1A88400E24956 /* UIKit.framework */; };
 		F714E18A14A1A88400E24956 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F714E16514A1A88400E24956 /* Foundation.framework */; };
 		F714E19214A1A88400E24956 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F714E19014A1A88400E24956 /* InfoPlist.strings */; };
 		F714E19514A1A88400E24956 /* FriendlyWagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E19414A1A88400E24956 /* FriendlyWagerTests.m */; };
+		F714E1EB14A1B7F700E24956 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1E914A1B7F700E24956 /* MasterViewController.m */; };
+		F714E1EC14A1B7F700E24956 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F714E1EA14A1B7F700E24956 /* MasterViewController.xib */; };
+		F714E1F114A1BE6B00E24956 /* LedgerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1EF14A1BE6B00E24956 /* LedgerViewController.m */; };
+		F714E1F214A1BE6B00E24956 /* LedgerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F714E1F014A1BE6B00E24956 /* LedgerViewController.xib */; };
+		F714E1FE14A1D0CD00E24956 /* BHTabsFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1F514A1D0CD00E24956 /* BHTabsFooterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F714E1FF14A1D0CD00E24956 /* BHTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1F714A1D0CD00E24956 /* BHTabStyle.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F714E20014A1D0CD00E24956 /* BHTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1F914A1D0CD00E24956 /* BHTabsView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F714E20114A1D0CD00E24956 /* BHTabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1FB14A1D0CD00E24956 /* BHTabsViewController.m */; };
+		F714E20214A1D0CD00E24956 /* BHTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1FD14A1D0CD00E24956 /* BHTabView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,18 +50,28 @@
 		F714E17114A1A88400E24956 /* FriendlyWager-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FriendlyWager-Prefix.pch"; sourceTree = "<group>"; };
 		F714E17214A1A88400E24956 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F714E17314A1A88400E24956 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		F714E17514A1A88400E24956 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
-		F714E17614A1A88400E24956 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		F714E17814A1A88400E24956 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
-		F714E17914A1A88400E24956 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
-		F714E17C14A1A88400E24956 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController.xib; sourceTree = "<group>"; };
-		F714E17F14A1A88400E24956 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController.xib; sourceTree = "<group>"; };
 		F714E18614A1A88400E24956 /* FriendlyWagerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FriendlyWagerTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F714E18714A1A88400E24956 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		F714E18F14A1A88400E24956 /* FriendlyWagerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FriendlyWagerTests-Info.plist"; sourceTree = "<group>"; };
 		F714E19114A1A88400E24956 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F714E19314A1A88400E24956 /* FriendlyWagerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FriendlyWagerTests.h; sourceTree = "<group>"; };
 		F714E19414A1A88400E24956 /* FriendlyWagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendlyWagerTests.m; sourceTree = "<group>"; };
+		F714E1E814A1B7F700E24956 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MasterViewController.h; path = FriendlyWager/MasterViewController.h; sourceTree = "<group>"; };
+		F714E1E914A1B7F700E24956 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MasterViewController.m; path = FriendlyWager/MasterViewController.m; sourceTree = "<group>"; };
+		F714E1EA14A1B7F700E24956 /* MasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MasterViewController.xib; path = FriendlyWager/MasterViewController.xib; sourceTree = "<group>"; };
+		F714E1EE14A1BE6B00E24956 /* LedgerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LedgerViewController.h; sourceTree = "<group>"; };
+		F714E1EF14A1BE6B00E24956 /* LedgerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LedgerViewController.m; sourceTree = "<group>"; };
+		F714E1F014A1BE6B00E24956 /* LedgerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LedgerViewController.xib; sourceTree = "<group>"; };
+		F714E1F414A1D0CD00E24956 /* BHTabsFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHTabsFooterView.h; sourceTree = "<group>"; };
+		F714E1F514A1D0CD00E24956 /* BHTabsFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabsFooterView.m; sourceTree = "<group>"; };
+		F714E1F614A1D0CD00E24956 /* BHTabStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHTabStyle.h; sourceTree = "<group>"; };
+		F714E1F714A1D0CD00E24956 /* BHTabStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabStyle.m; sourceTree = "<group>"; };
+		F714E1F814A1D0CD00E24956 /* BHTabsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHTabsView.h; sourceTree = "<group>"; };
+		F714E1F914A1D0CD00E24956 /* BHTabsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabsView.m; sourceTree = "<group>"; };
+		F714E1FA14A1D0CD00E24956 /* BHTabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHTabsViewController.h; sourceTree = "<group>"; };
+		F714E1FB14A1D0CD00E24956 /* BHTabsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabsViewController.m; sourceTree = "<group>"; };
+		F714E1FC14A1D0CD00E24956 /* BHTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHTabView.h; sourceTree = "<group>"; };
+		F714E1FD14A1D0CD00E24956 /* BHTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,14 +131,11 @@
 		F714E16914A1A88400E24956 /* FriendlyWager */ = {
 			isa = PBXGroup;
 			children = (
+				F714E1F314A1D0A000E24956 /* Tabs View */,
+				F714E1A214A1B00000E24956 /* Home */,
+				F714E1ED14A1BE2600E24956 /* Ledger */,
 				F714E17214A1A88400E24956 /* AppDelegate.h */,
 				F714E17314A1A88400E24956 /* AppDelegate.m */,
-				F714E17514A1A88400E24956 /* MasterViewController.h */,
-				F714E17614A1A88400E24956 /* MasterViewController.m */,
-				F714E17814A1A88400E24956 /* DetailViewController.h */,
-				F714E17914A1A88400E24956 /* DetailViewController.m */,
-				F714E17B14A1A88400E24956 /* MasterViewController.xib */,
-				F714E17E14A1A88400E24956 /* DetailViewController.xib */,
 				F714E16A14A1A88400E24956 /* Supporting Files */,
 			);
 			path = FriendlyWager;
@@ -157,6 +169,44 @@
 				F714E19014A1A88400E24956 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F714E1A214A1B00000E24956 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				F714E1E814A1B7F700E24956 /* MasterViewController.h */,
+				F714E1E914A1B7F700E24956 /* MasterViewController.m */,
+				F714E1EA14A1B7F700E24956 /* MasterViewController.xib */,
+			);
+			name = Home;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		F714E1ED14A1BE2600E24956 /* Ledger */ = {
+			isa = PBXGroup;
+			children = (
+				F714E1EE14A1BE6B00E24956 /* LedgerViewController.h */,
+				F714E1EF14A1BE6B00E24956 /* LedgerViewController.m */,
+				F714E1F014A1BE6B00E24956 /* LedgerViewController.xib */,
+			);
+			name = Ledger;
+			sourceTree = "<group>";
+		};
+		F714E1F314A1D0A000E24956 /* Tabs View */ = {
+			isa = PBXGroup;
+			children = (
+				F714E1F414A1D0CD00E24956 /* BHTabsFooterView.h */,
+				F714E1F514A1D0CD00E24956 /* BHTabsFooterView.m */,
+				F714E1F614A1D0CD00E24956 /* BHTabStyle.h */,
+				F714E1F714A1D0CD00E24956 /* BHTabStyle.m */,
+				F714E1F814A1D0CD00E24956 /* BHTabsView.h */,
+				F714E1F914A1D0CD00E24956 /* BHTabsView.m */,
+				F714E1FA14A1D0CD00E24956 /* BHTabsViewController.h */,
+				F714E1FB14A1D0CD00E24956 /* BHTabsViewController.m */,
+				F714E1FC14A1D0CD00E24956 /* BHTabView.h */,
+				F714E1FD14A1D0CD00E24956 /* BHTabView.m */,
+			);
+			name = "Tabs View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,8 +280,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F714E16E14A1A88400E24956 /* InfoPlist.strings in Resources */,
-				F714E17D14A1A88400E24956 /* MasterViewController.xib in Resources */,
-				F714E18014A1A88400E24956 /* DetailViewController.xib in Resources */,
+				F714E1EC14A1B7F700E24956 /* MasterViewController.xib in Resources */,
+				F714E1F214A1BE6B00E24956 /* LedgerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,8 +318,13 @@
 			files = (
 				F714E17014A1A88400E24956 /* main.m in Sources */,
 				F714E17414A1A88400E24956 /* AppDelegate.m in Sources */,
-				F714E17714A1A88400E24956 /* MasterViewController.m in Sources */,
-				F714E17A14A1A88400E24956 /* DetailViewController.m in Sources */,
+				F714E1EB14A1B7F700E24956 /* MasterViewController.m in Sources */,
+				F714E1F114A1BE6B00E24956 /* LedgerViewController.m in Sources */,
+				F714E1FE14A1D0CD00E24956 /* BHTabsFooterView.m in Sources */,
+				F714E1FF14A1D0CD00E24956 /* BHTabStyle.m in Sources */,
+				F714E20014A1D0CD00E24956 /* BHTabsView.m in Sources */,
+				F714E20114A1D0CD00E24956 /* BHTabsViewController.m in Sources */,
+				F714E20214A1D0CD00E24956 /* BHTabView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,22 +353,6 @@
 				F714E16D14A1A88400E24956 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		F714E17B14A1A88400E24956 /* MasterViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F714E17C14A1A88400E24956 /* en */,
-			);
-			name = MasterViewController.xib;
-			sourceTree = "<group>";
-		};
-		F714E17E14A1A88400E24956 /* DetailViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F714E17F14A1A88400E24956 /* en */,
-			);
-			name = DetailViewController.xib;
 			sourceTree = "<group>";
 		};
 		F714E19014A1A88400E24956 /* InfoPlist.strings */ = {
@@ -447,6 +486,7 @@
 				F714E19A14A1A88400E24956 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F714E19B14A1A88400E24956 /* Build configuration list for PBXNativeTarget "FriendlyWagerTests" */ = {
 			isa = XCConfigurationList;
@@ -455,6 +495,7 @@
 				F714E19D14A1A88400E24956 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,10 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@class DetailViewController;
+@interface MasterViewController : UIViewController {
+    IBOutlet UIButton *myLedgerButton;
+    IBOutlet UIButton *myActionButton;
+    IBOutlet UIButton *scoresButton;
+    IBOutlet UIButton *makeWagerButton;
+    IBOutlet UIButton *rankingsButton;
+}
 
-@interface MasterViewController : UITableViewController
-
-@property (strong, nonatomic) DetailViewController *detailViewController;
+- (IBAction)myLedgerButtonClicked:(id)sender;
+- (IBAction)myActionButtonClicked:(id)sender;
+- (IBAction)scoresButtonClicked:(id)sender;
+- (IBAction)makeWagerButtonClicked:(id)sender;
+- (IBAction)rankingsButtonClicked:(id)sender;
 
 @end
