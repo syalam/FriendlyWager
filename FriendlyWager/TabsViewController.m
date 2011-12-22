@@ -62,16 +62,6 @@
     [self.window addSubview:viewController.view];
     [self.window makeKeyAndVisible];
     
-    //Set datasource for each of the table views
-    myActionTableView.dataSource = self;
-    ranksTableView.dataSource = self;
-    scoresTableView.dataSource = self;
-    
-    myActionOpponentArray = [[NSMutableArray alloc]initWithObjects:@"Bill Smith", @"John Taylor", @"Timmy Jones", @"Steve Bird", nil];
-    myActionWagersArray = [[NSMutableArray alloc]initWithObjects:@"2", @"36", @"7", @"19", nil];
-    rankingsArray = [[NSMutableArray alloc]initWithObjects:@"Rankings By Points", @"Rankings By Wins", @"Rankings By Sport", @"Rankings By City", nil];
-    scoresArray = [[NSMutableArray alloc]initWithObjects:@"NFL Football", @"College Football", @"MLB Baseball", @"NBA Basketball", @"College Basketball", nil];
-
     
     NSUserDefaults *currentIndex = [NSUserDefaults alloc];
     [currentIndex setValue:[NSString stringWithFormat:@"%d", myTabIndex] forKey:@"currentIndex"];
@@ -95,24 +85,8 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - UITableView Delegate Methods
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    return 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    return cell;
+- (IBAction)cancelButtonClicked:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

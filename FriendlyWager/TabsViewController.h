@@ -10,22 +10,8 @@
 
 @class BHTabsViewController;
 
-@interface TabsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
-    //My Action view items
-    IBOutlet UIView *myActionView;
-    IBOutlet UITableView *myActionTableView;
-    NSMutableArray *myActionOpponentArray;
-    NSMutableArray *myActionWagersArray;
-    
-    //Rank view items
-    IBOutlet UIView *ranksView;
-    IBOutlet UITableView *ranksTableView;
-    NSMutableArray *rankingsArray;
-    
-    //Scores view items
-    IBOutlet UIView *scoresView;
-    IBOutlet UITableView *scoresTableView;
-    NSMutableArray *scoresArray;
+@interface TabsViewController : UIViewController {
+    IBOutlet UIButton *cancelButton;
     
     UIViewController *_vc1;
     UIViewController *_vc2;
@@ -41,6 +27,7 @@
 @property (nonatomic, retain) IBOutlet UIViewController *vc2;
 @property (nonatomic, retain) IBOutlet UIViewController *vc3;
 
+- (IBAction)cancelButtonClicked:(id)sender;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil tabIndex:(NSUInteger)tabIndex;
 

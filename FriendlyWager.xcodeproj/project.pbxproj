@@ -28,6 +28,10 @@
 		F714E20214A1D0CD00E24956 /* BHTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1FD14A1D0CD00E24956 /* BHTabView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F743C97214A2F637006B533B /* TabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F743C97014A2F637006B533B /* TabsViewController.m */; };
 		F743C97314A2F637006B533B /* TabsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F743C97114A2F637006B533B /* TabsViewController.xib */; };
+		F743C97C14A3ABB1006B533B /* MyActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F743C97A14A3ABB1006B533B /* MyActionViewController.m */; };
+		F743C98214A3B04F006B533B /* RanksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F743C98014A3B04F006B533B /* RanksViewController.m */; };
+		F743C98714A3B158006B533B /* ScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F743C98614A3B158006B533B /* ScoresViewController.m */; };
+		F743C98C14A3E8E4006B533B /* MyActionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F743C98A14A3E8E4006B533B /* MyActionDetailsViewController.m */; };
 		F785721F14A26ED20028AD5E /* BHTabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F785721E14A26ED20028AD5E /* BHTabsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
@@ -75,6 +79,14 @@
 		F743C96F14A2F637006B533B /* TabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabsViewController.h; sourceTree = "<group>"; };
 		F743C97014A2F637006B533B /* TabsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabsViewController.m; sourceTree = "<group>"; };
 		F743C97114A2F637006B533B /* TabsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabsViewController.xib; sourceTree = "<group>"; };
+		F743C97914A3ABB1006B533B /* MyActionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyActionViewController.h; sourceTree = "<group>"; };
+		F743C97A14A3ABB1006B533B /* MyActionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyActionViewController.m; sourceTree = "<group>"; };
+		F743C97F14A3B04F006B533B /* RanksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RanksViewController.h; sourceTree = "<group>"; };
+		F743C98014A3B04F006B533B /* RanksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RanksViewController.m; sourceTree = "<group>"; };
+		F743C98514A3B158006B533B /* ScoresViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoresViewController.h; sourceTree = "<group>"; };
+		F743C98614A3B158006B533B /* ScoresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoresViewController.m; sourceTree = "<group>"; };
+		F743C98914A3E8E4006B533B /* MyActionDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyActionDetailsViewController.h; path = FriendlyWager/MyActionDetailsViewController.h; sourceTree = "<group>"; };
+		F743C98A14A3E8E4006B533B /* MyActionDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyActionDetailsViewController.m; path = FriendlyWager/MyActionDetailsViewController.m; sourceTree = "<group>"; };
 		F785721D14A26ED20028AD5E /* BHTabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHTabsViewController.h; sourceTree = "<group>"; };
 		F785721E14A26ED20028AD5E /* BHTabsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -142,6 +154,10 @@
 				F714E1A214A1B00000E24956 /* Home */,
 				F714E1ED14A1BE2600E24956 /* Ledger */,
 				F743C96714A2EF39006B533B /* Tab Screen */,
+				F743C97814A3AB7B006B533B /* My Action */,
+				F743C98814A3E8B3006B533B /* My Action Details */,
+				F743C97E14A3B016006B533B /* Ranks */,
+				F743C98414A3B135006B533B /* Scores */,
 				F714E16A14A1A88400E24956 /* Supporting Files */,
 			);
 			path = FriendlyWager;
@@ -224,6 +240,43 @@
 				F743C97114A2F637006B533B /* TabsViewController.xib */,
 			);
 			name = "Tab Screen";
+			sourceTree = "<group>";
+		};
+		F743C97814A3AB7B006B533B /* My Action */ = {
+			isa = PBXGroup;
+			children = (
+				F743C97914A3ABB1006B533B /* MyActionViewController.h */,
+				F743C97A14A3ABB1006B533B /* MyActionViewController.m */,
+			);
+			name = "My Action";
+			sourceTree = "<group>";
+		};
+		F743C97E14A3B016006B533B /* Ranks */ = {
+			isa = PBXGroup;
+			children = (
+				F743C97F14A3B04F006B533B /* RanksViewController.h */,
+				F743C98014A3B04F006B533B /* RanksViewController.m */,
+			);
+			name = Ranks;
+			sourceTree = "<group>";
+		};
+		F743C98414A3B135006B533B /* Scores */ = {
+			isa = PBXGroup;
+			children = (
+				F743C98514A3B158006B533B /* ScoresViewController.h */,
+				F743C98614A3B158006B533B /* ScoresViewController.m */,
+			);
+			name = Scores;
+			sourceTree = "<group>";
+		};
+		F743C98814A3E8B3006B533B /* My Action Details */ = {
+			isa = PBXGroup;
+			children = (
+				F743C98914A3E8E4006B533B /* MyActionDetailsViewController.h */,
+				F743C98A14A3E8E4006B533B /* MyActionDetailsViewController.m */,
+			);
+			name = "My Action Details";
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -344,6 +397,10 @@
 				F714E20214A1D0CD00E24956 /* BHTabView.m in Sources */,
 				F785721F14A26ED20028AD5E /* BHTabsViewController.m in Sources */,
 				F743C97214A2F637006B533B /* TabsViewController.m in Sources */,
+				F743C97C14A3ABB1006B533B /* MyActionViewController.m in Sources */,
+				F743C98214A3B04F006B533B /* RanksViewController.m in Sources */,
+				F743C98714A3B158006B533B /* ScoresViewController.m in Sources */,
+				F743C98C14A3E8E4006B533B /* MyActionDetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

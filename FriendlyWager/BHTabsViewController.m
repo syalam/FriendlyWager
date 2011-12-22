@@ -131,11 +131,6 @@ enum { kTagTabBase = 100 };
     self.tabsContainerView.style = self.style;
     [self.view addSubview:tabsContainerView];
     
-    // Add table view
-    tabsTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.style.tabsViewHeight, self.view.frame.size.width, self.view.frame.size.height - self.style.tabsViewHeight) style:UITableViewStylePlain];
-    [self.view addSubview:tabsTableView];
-    tabsTableView.dataSource = self;
-    
     
     // Tabs are resized such that all fit in the view's width.
     // We position the tab views from left to right, with some overlapping after the first one.

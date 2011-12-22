@@ -19,7 +19,7 @@
 
 @end
 
-@interface BHTabsViewController : UIViewController <BHTabViewDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface BHTabsViewController : UIViewController <BHTabViewDelegate> {
     NSArray *viewControllers;
     UIView *contentView;
     BHTabsView *tabsContainerView;
@@ -27,7 +27,6 @@
     BHTabStyle *tabStyle;
     NSUInteger currentTabIndex;
     BOOL userSelected;
-    UITableView *tabsTableView;
     
     id <BHTabsViewControllerDelegate> delegate;
 }
