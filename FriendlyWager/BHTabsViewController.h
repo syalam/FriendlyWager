@@ -19,21 +19,26 @@
 
 @end
 
-@interface BHTabsViewController : UIViewController <BHTabViewDelegate> {
-  NSArray *viewControllers;
-  UIView *contentView;
-  BHTabsView *tabsContainerView;
-  BHTabsFooterView *footerView;
-  BHTabStyle *tabStyle;
-  NSUInteger currentTabIndex;
-  id <BHTabsViewControllerDelegate> delegate;
+@interface BHTabsViewController : UIViewController <BHTabViewDelegate, UITableViewDelegate, UITableViewDataSource> {
+    NSArray *viewControllers;
+    UIView *contentView;
+    BHTabsView *tabsContainerView;
+    BHTabsFooterView *footerView;
+    BHTabStyle *tabStyle;
+    NSUInteger currentTabIndex;
+    BOOL userSelected;
+    UITableView *tabsTableView;
+    
+    id <BHTabsViewControllerDelegate> delegate;
 }
 
-@property (nonatomic, copy) id <BHTabsViewControllerDelegate> delegate;
-@property (nonatomic, copy, readonly) UIView *contentView;
+@property (nonatomic, assign) id <BHTabsViewControllerDelegate> delegate;
+@property (nonatomic, assign, readonly) UIView *contentView;
 @property (nonatomic, retain) BHTabStyle *style;
+
 
 - (id)initWithViewControllers:(NSArray *)viewControllers
                         style:(BHTabStyle *)style;
+- (id)initWithViewControllers:(NSArray *)viewControllers style:(BHTabStyle *)style tabIndex:(NSUInteger)tabIndex;
 
 @end

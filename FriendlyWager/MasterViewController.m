@@ -8,7 +8,7 @@
 
 #import "MasterViewController.h"
 #import "LedgerViewController.h"
-#import "BHTabsViewController.h"
+#import "TabsViewController.h"
 
 @implementation MasterViewController
 
@@ -65,18 +65,24 @@
 }
 
 - (IBAction)myActionButtonClicked:(id)sender {
-    /*BHTabsViewController *tabsController = [[BHTabsViewController alloc]initWithNibName:@"BHTabsViewController" bundle:nil];
-    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:tabsController];
+    TabsViewController *tabs = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil tabIndex:0];
+    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:tabs];
     navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self presentModalViewController:navController animated:YES];*/
-}
-- (IBAction)scoresButtonClicked:(id)sender {
-    
-}
-- (IBAction)makeWagerButtonClicked:(id)sender {
-    
+    [self presentModalViewController:navController animated:YES];
 }
 - (IBAction)rankingsButtonClicked:(id)sender {
+    TabsViewController *tabs = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil tabIndex:1];
+    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:tabs];
+    navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:navController animated:YES];
+}
+- (IBAction)scoresButtonClicked:(id)sender {
+    TabsViewController *tabs = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil tabIndex:2];
+    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:tabs];
+    navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:navController animated:YES];
+}
+- (IBAction)makeWagerButtonClicked:(id)sender {
     
 }
 
