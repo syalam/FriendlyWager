@@ -27,7 +27,6 @@
 @property (nonatomic, retain) IBOutlet UIViewController *vc2;
 @property (nonatomic, retain) IBOutlet UIViewController *vc3;
 
-- (IBAction)cancelButtonClicked:(id)sender;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil tabIndex:(NSUInteger)tabIndex;
 

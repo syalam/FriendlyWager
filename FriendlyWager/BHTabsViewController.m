@@ -78,21 +78,23 @@ enum { kTagTabBase = 100 };
 }
 
 - (void)_makeTabViewCurrent:(BHTabView *)tabView {
-  if (!tabView) return;
-
-  currentTabIndex = tabView.tag - kTagTabBase;
-
-  UIViewController *viewController = [self.viewControllers objectAtIndex:currentTabIndex];
-
-  [self.contentView removeFromSuperview];
-  self.contentView = viewController.view;
-  
-  self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-  self.contentView.frame = CGRectMake(0, self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
-  
-  [self.view addSubview:self.contentView];
-
-  [self _reconfigureTabs];
+    if (!tabView) return;
+    
+    currentTabIndex = tabView.tag - kTagTabBase;
+    
+    UIViewController *viewController = [self.viewControllers objectAtIndex:currentTabIndex];
+    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:viewController];
+    navc.navigationBarHidden = YES;
+    [self.contentView removeFromSuperview];
+    self.contentView = navc.view;
+    //self.contentView = viewController.view;
+    
+    self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    self.contentView.frame = CGRectMake(0, self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
+    
+    [self.view addSubview:self.contentView];
+    
+    [self _reconfigureTabs];
 }
 
 - (void)didTapTabView:(BHTabView *)tappedView {

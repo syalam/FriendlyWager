@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ScoresViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
-    IBOutlet UIView *scoresView;
     IBOutlet UITableView *scoresTableView;
     
     NSArray *scoresArray;

@@ -53,18 +53,25 @@
     //Initialize Tab View
     NSArray *vcs = [NSArray arrayWithObjects:self.vc1, self.vc2, self.vc3, nil];
     
+    self.title = @"Friendly Wager";
+    NSDictionary *navTitleAttributes = [[NSDictionary alloc]initWithObjectsAndKeys:
+                                        [UIColor blackColor], UITextAttributeTextColor, nil];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
+    
+    
     if (userSelected) {
         viewController = [[BHTabsViewController alloc] initWithViewControllers:vcs style:[BHTabStyle defaultStyle] tabIndex:myTabIndex];
     }
     else {
         viewController = [[BHTabsViewController alloc] initWithViewControllers:vcs style:[BHTabStyle defaultStyle]];
     }
-    [self.window addSubview:viewController.view];
-    [self.window makeKeyAndVisible];
+    [self.view addSubview:viewController.view];
+    //[self.window makeKeyAndVisible];
     
-    
-    NSUserDefaults *currentIndex = [NSUserDefaults alloc];
-    [currentIndex setValue:[NSString stringWithFormat:@"%d", myTabIndex] forKey:@"currentIndex"];
+    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc]initWithTitle:@"Home" style:UIBarButtonItemStyleBordered target:self action:@selector(homeButtonClicked:)];
+    homeButton.tintColor = [UIColor blackColor];
+    self.navigationItem.leftBarButtonItem = homeButton;
     
 }
 
@@ -85,7 +92,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (IBAction)cancelButtonClicked:(id)sender {
+- (void)homeButtonClicked:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
 }
 

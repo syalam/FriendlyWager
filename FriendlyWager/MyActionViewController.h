@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyActionViewController : UIViewController
+@interface MyActionViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+    IBOutlet UITableView *myActionTableView;
+    
+    UINavigationController *navController;
+    
+    NSMutableArray *myActionOpponentArray;
+    NSMutableArray *myActionWagersArray;
+}
 
 @end

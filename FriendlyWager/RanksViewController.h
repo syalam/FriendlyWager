@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface RanksViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
-    IBOutlet UIView *ranksView;
     IBOutlet UITableView *ranksTableView;
     
     NSMutableArray *rankingsArray;
