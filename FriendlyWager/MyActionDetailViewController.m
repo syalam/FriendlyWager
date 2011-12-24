@@ -2,15 +2,13 @@
 //  MyActionDetailViewController.m
 //  FriendlyWager
 //
-//  Created by Reyaad Sidique on 12/23/11.
+//  Created by Reyaad Sidique on 12/24/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
 #import "MyActionDetailViewController.h"
 
 @implementation MyActionDetailViewController
-
-@synthesize contentList;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -21,11 +19,11 @@
     return self;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil CurrentWagers:(NSString *)CurrentWagers opponentName:(NSString *)opponentName {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil wagerType:(NSString *)wagerType opponentName:(NSString *)opponentName {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        currentWagers = CurrentWagers;
+        wagerOfType = wagerType;
         opponent = opponentName;
     }
     return self;
@@ -44,32 +42,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    actionHistoryTableView.delegate = self;
+    actionHistoryTableView.dataSource = self;
     
-    cellCount = 0;
+    detailWithPersonLabel.text = [NSString stringWithFormat:@"%@ %@ %@", wagerOfType, @"with", opponent];
     
-    //Set Scrollview size
-    scrollView.contentSize = CGSizeMake(320, 560);
+    /*NSDictionary *line1 = [[NSDictionary alloc]initWithObjectsAndKeys:@"8/2/11", @"date", @"Cubs", @"team", @"+4", @"odds", @"L", @"winLose", nil];
+    NSDictionary *line2 = [[NSDictionary alloc]initWithObjectsAndKeys:@"8/15/11", @"date", @"Suns", "team", @"-4", @"odds", @"W", @"winLose", nil];
+    NSDictionary *line3 = [[NSDictionary alloc]initWithObjectsAndKeys:@"8/20/11", @"date", @"Cardinals", "team", @"-3", @"odds", @"W", @"winLose", nil];
+    NSDictionary *line4 = [[NSDictionary alloc]initWithObjectsAndKeys:@"9/3/11", @"date", @"Bears", "team", @"-40", @"odds", @"L", @"winLose", nil];
+    NSDictionary *line5 = [[NSDictionary alloc]initWithObjectsAndKeys:@"10/2/11", @"date", @"Cubs", "team", @"+9", @"odds", @"W", @"winLose", nil];*/
     
-    //Set labels with name of currently selected opponent
-    wagersWithLabel.text = [NSString stringWithFormat:@"%@ %@", @"Wagers With", opponent];
+    detailTableContents = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"8/2/11", @"date", @"Cubs", @"team", @"+4", @"odds", @"L", @"winLose", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"8/15/11", @"date", @"Suns", @"team", @"-4", @"odds", @"W", @"winLose", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"8/20/11", @"date", @"Cardinals", @"team", @"-3", @"odds", @"W", @"winLose", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"9/3/11", @"date", @"Bears", @"team", @"-40", @"odds", @"L", @"winLose", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"10/2/11", @"date", @"Cubs", @"team", @"+9", @"odds", @"W", @"winLose", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"11/7/11", @"date", @"Dodgers", @"team", @"+4", @"odds", @"W", @"winLose", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"11/22/11", @"date", @"Heat", @"team", @"+13", @"odds", @"W", @"winLose", nil], nil];
     
-    wagerButton.titleLabel.text = [NSString stringWithFormat:@"%@\n%@", @"Wager", opponent];
-    wagerButton.titleLabel.textAlignment = UITextAlignmentCenter;
-    wagerButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
-    
-    chatButton.titleLabel.text = [NSString stringWithFormat:@"%@\n%@", @"Chat", opponent];
-    chatButton.titleLabel.textAlignment = UITextAlignmentCenter;
-    chatButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
-    
-    //Set datasource and delegate for table view
-    wagersTableView.dataSource = self;
-    wagersTableView.delegate = self;
-    
-    NSArray *currentWagersArray = [[NSArray alloc]initWithObjects:currentWagers, nil];
-    NSArray *pendingWagersArray = [[NSArray alloc]initWithObjects:@"0", nil];
-    NSArray *historyWagersArray = [[NSArray alloc]initWithObjects:@"3", nil];
-    wagersArray = [[NSArray alloc]initWithObjects:currentWagersArray, pendingWagersArray, historyWagersArray, nil];
-    [self setContentList:wagersArray];
 }
 
 - (void)viewDidUnload
@@ -85,56 +70,40 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - Button Clicks
-- (IBAction)wagerButtonClicked:(id)sender {
-    
-}
-- (IBAction)chatButtonClicked:(id)sender {
-    
-}
-
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.contentList.count;
+    return 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:section];
-    return sectionContents.count;  
+    return detailTableContents.count;  
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
-    id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
-    UILabel *wagerType = [[UILabel alloc]initWithFrame:CGRectMake(47, 15, 105, 20)];
-    UILabel *wagerCount = [[UILabel alloc]initWithFrame:CGRectMake(255, 15, 25, 20)];
+    UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, 70, 20)];
+    UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(85, 15, 105, 20)];
+    UILabel *oddsLabel = [[UILabel alloc]initWithFrame:CGRectMake(200, 15, 90, 20)];
+    UILabel *winLoseLabel = [[UILabel alloc]initWithFrame:CGRectMake(290, 15, 15, 20)];
     
-    wagerCount.text = contentForThisRow;
+    dateLabel.text = [[detailTableContents objectAtIndex:indexPath.row]objectForKey:@"date"];
+    teamLabel.text = [[detailTableContents objectAtIndex:indexPath.row]objectForKey:@"team"];
+    oddsLabel.text = [[detailTableContents objectAtIndex:indexPath.row]objectForKey:@"odds"];
+    winLoseLabel.text = [[detailTableContents objectAtIndex:indexPath.row]objectForKey:@"winLose"];
     
-    wagerType.backgroundColor = [UIColor clearColor];
-    wagerCount.backgroundColor = [UIColor clearColor];
-    
-    if (cellCount == 0) {
-        wagerType.text = @"Current";
-    }
-    if (cellCount == 1) {
-        wagerType.text = @"Pending";
-    }
-    if (cellCount == 2) {
-        wagerType.text = @"History";
-    }
+    dateLabel.backgroundColor = [UIColor clearColor];
+    teamLabel.backgroundColor = [UIColor clearColor];
+    oddsLabel.backgroundColor = [UIColor clearColor];
+    winLoseLabel.backgroundColor = [UIColor clearColor];
     
     static NSString *CellIdentifier = @"MyActionDetailTableViewCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    [cell addSubview:wagerType];
-    [cell addSubview:wagerCount];
-    
-    cellCount ++;
-    
+    [cell addSubview:dateLabel];
+    [cell addSubview:teamLabel];
+    [cell addSubview:oddsLabel];
+    [cell addSubview:winLoseLabel];
     return cell;
 }
 

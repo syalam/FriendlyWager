@@ -8,7 +8,7 @@
 
 #import "MyActionViewController.h"
 #import "LedgerViewController.h"
-#import "MyActionDetailViewController.h"
+#import "MyActionSummaryViewController.h"
 
 @implementation MyActionViewController
 
@@ -93,8 +93,8 @@
 #pragma mark - TableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    MyActionDetailViewController *actionDetails = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil CurrentWagers:[myActionWagersArray objectAtIndex:indexPath.row] opponentName:[myActionOpponentArray objectAtIndex:indexPath.row]];
-    [self.navigationController pushViewController:actionDetails animated:YES];
+    MyActionSummaryViewController *actionSummary = [[MyActionSummaryViewController alloc]initWithNibName:@"MyActionSummaryViewController" bundle:nil CurrentWagers:[myActionWagersArray objectAtIndex:indexPath.row] opponentName:[myActionOpponentArray objectAtIndex:indexPath.row]];
+    [self.navigationController pushViewController:actionSummary animated:YES];
 }
 
 @end
