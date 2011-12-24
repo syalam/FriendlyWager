@@ -28,6 +28,8 @@
     NSUInteger currentTabIndex;
     BOOL userSelected;
     
+    UINavigationController *navc;
+    
     id <BHTabsViewControllerDelegate> delegate;
 }
 

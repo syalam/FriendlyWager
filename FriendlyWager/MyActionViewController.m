@@ -8,6 +8,7 @@
 
 #import "MyActionViewController.h"
 #import "LedgerViewController.h"
+#import "MyActionDetailViewController.h"
 
 @implementation MyActionViewController
 
@@ -92,9 +93,7 @@
 #pragma mark - TableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    LedgerViewController *actionDetails = [[LedgerViewController alloc]initWithNibName:@"LedgerViewController" bundle:nil];
-    //UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:actionDetails];
-    //[self presentModalViewController:navc animated:YES];
+    MyActionDetailViewController *actionDetails = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil CurrentWagers:[myActionWagersArray objectAtIndex:indexPath.row] opponentName:[myActionOpponentArray objectAtIndex:indexPath.row]];
     [self.navigationController pushViewController:actionDetails animated:YES];
 }
 

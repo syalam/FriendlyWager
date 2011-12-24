@@ -61,7 +61,7 @@
 				<bool key="IBUIHorizontal">NO</bool>
 			</object>
 			<object class="IBUIViewController" id="512003229">
-				<string key="IBUITitle">Ranks</string>
+				<string key="IBUITitle">Rankings</string>
 				<string key="IBUINibName">RanksViewController</string>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 				<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
@@ -224,20 +224,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">ScoresViewController</string>
 					<string key="superclassName">UIViewController</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="scoresTableView">UITableView</string>
-						<string key="scoresView">UIView</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="scoresTableView">
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">scoresTableView</string>
+						<string key="NS.object.0">UITableView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">scoresTableView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
 							<string key="name">scoresTableView</string>
 							<string key="candidateClassName">UITableView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="scoresView">
-							<string key="name">scoresView</string>
-							<string key="candidateClassName">UIView</string>
-						</object>
-					</dictionary>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/ScoresViewController.h</string>

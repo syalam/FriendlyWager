@@ -34,6 +34,8 @@
 		F743C9CA14A47303006B533B /* MyActionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F743C9C814A47303006B533B /* MyActionViewController.xib */; };
 		F743C9CC14A47CFC006B533B /* RanksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F743C9CB14A47CFC006B533B /* RanksViewController.xib */; };
 		F743C9CE14A47E07006B533B /* ScoresViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F743C9CD14A47E07006B533B /* ScoresViewController.xib */; };
+		F743C9DD14A586D5006B533B /* MyActionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F743C9DB14A586D5006B533B /* MyActionDetailViewController.m */; };
+		F743C9DE14A586D5006B533B /* MyActionDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F743C9DC14A586D5006B533B /* MyActionDetailViewController.xib */; };
 		F785721F14A26ED20028AD5E /* BHTabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F785721E14A26ED20028AD5E /* BHTabsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
@@ -90,6 +92,9 @@
 		F743C9C814A47303006B533B /* MyActionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyActionViewController.xib; sourceTree = "<group>"; };
 		F743C9CB14A47CFC006B533B /* RanksViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RanksViewController.xib; sourceTree = "<group>"; };
 		F743C9CD14A47E07006B533B /* ScoresViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoresViewController.xib; sourceTree = "<group>"; };
+		F743C9DA14A586D5006B533B /* MyActionDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyActionDetailViewController.h; sourceTree = "<group>"; };
+		F743C9DB14A586D5006B533B /* MyActionDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyActionDetailViewController.m; sourceTree = "<group>"; };
+		F743C9DC14A586D5006B533B /* MyActionDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyActionDetailViewController.xib; sourceTree = "<group>"; };
 		F785721D14A26ED20028AD5E /* BHTabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHTabsViewController.h; sourceTree = "<group>"; };
 		F785721E14A26ED20028AD5E /* BHTabsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -158,6 +163,8 @@
 				F714E1ED14A1BE2600E24956 /* Ledger */,
 				F743C96714A2EF39006B533B /* Tab Screen */,
 				F743C97814A3AB7B006B533B /* My Action */,
+				F743C9D814A586B4006B533B /* Action Summary */,
+				F743C9DF14A5BA2A006B533B /* Action Detail */,
 				F743C97E14A3B016006B533B /* Ranks */,
 				F743C98414A3B135006B533B /* Scores */,
 				F714E16A14A1A88400E24956 /* Supporting Files */,
@@ -274,6 +281,23 @@
 			name = Scores;
 			sourceTree = "<group>";
 		};
+		F743C9D814A586B4006B533B /* Action Summary */ = {
+			isa = PBXGroup;
+			children = (
+				F743C9DA14A586D5006B533B /* MyActionDetailViewController.h */,
+				F743C9DB14A586D5006B533B /* MyActionDetailViewController.m */,
+				F743C9DC14A586D5006B533B /* MyActionDetailViewController.xib */,
+			);
+			name = "Action Summary";
+			sourceTree = "<group>";
+		};
+		F743C9DF14A5BA2A006B533B /* Action Detail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Action Detail";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -351,6 +375,7 @@
 				F743C9CA14A47303006B533B /* MyActionViewController.xib in Resources */,
 				F743C9CC14A47CFC006B533B /* RanksViewController.xib in Resources */,
 				F743C9CE14A47E07006B533B /* ScoresViewController.xib in Resources */,
+				F743C9DE14A586D5006B533B /* MyActionDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +423,7 @@
 				F743C98214A3B04F006B533B /* RanksViewController.m in Sources */,
 				F743C98714A3B158006B533B /* ScoresViewController.m in Sources */,
 				F743C9C914A47303006B533B /* MyActionViewController.m in Sources */,
+				F743C9DD14A586D5006B533B /* MyActionDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

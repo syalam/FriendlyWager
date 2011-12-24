@@ -83,7 +83,7 @@ enum { kTagTabBase = 100 };
     currentTabIndex = tabView.tag - kTagTabBase;
     
     UIViewController *viewController = [self.viewControllers objectAtIndex:currentTabIndex];
-    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:viewController];
+    navc = [[UINavigationController alloc]initWithRootViewController:viewController];
     navc.navigationBarHidden = YES;
     [self.contentView removeFromSuperview];
     self.contentView = navc.view;
@@ -98,21 +98,24 @@ enum { kTagTabBase = 100 };
 }
 
 - (void)didTapTabView:(BHTabView *)tappedView {
-    NSUserDefaults *currentSelectedIndex = [NSUserDefaults alloc];
     NSUInteger index = tappedView.tag - kTagTabBase;
-    [currentSelectedIndex setValue:[NSString stringWithFormat:@"%d",index] forKey:@"currentIndex"];
     NSAssert(index < [self.viewControllers count], @"invalid tapped view");
     
-    UIViewController *viewController = [self.viewControllers objectAtIndex:index];
-    
-    if ([self.delegate respondsToSelector:@selector(shouldMakeTabCurrentAtIndex:controller:tabBarController:)])
-        if (![self.delegate shouldMakeTabCurrentAtIndex:index controller:viewController tabBarController:self])
-            return;
-    
-    [self _makeTabViewCurrent:tappedView];
-    
-    if ([self.delegate respondsToSelector:@selector(didMakeTabCurrentAtIndex:controller:tabBarController:)])
-        [self.delegate didMakeTabCurrentAtIndex:index controller:viewController tabBarController:self];
+    if (currentTabIndex == index) {
+        [navc popViewControllerAnimated:YES];
+    }
+    else {
+        UIViewController *viewController = [self.viewControllers objectAtIndex:index];
+        
+        if ([self.delegate respondsToSelector:@selector(shouldMakeTabCurrentAtIndex:controller:tabBarController:)])
+            if (![self.delegate shouldMakeTabCurrentAtIndex:index controller:viewController tabBarController:self])
+                return;
+        
+        [self _makeTabViewCurrent:tappedView];
+        
+        if ([self.delegate respondsToSelector:@selector(didMakeTabCurrentAtIndex:controller:tabBarController:)])
+            [self.delegate didMakeTabCurrentAtIndex:index controller:viewController tabBarController:self];
+    }
 }
 
 - (void)loadView {
