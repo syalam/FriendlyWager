@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ScoreDetailViewController : UIViewController
+@interface ScoreDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+    IBOutlet UITableView *scoreDetailTableView;
+    NSDictionary *scoreDataDictionary;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil scoreData:(NSDictionary *)scoreData;
+@property (nonatomic, retain) NSArray* contentList;
 
 @end

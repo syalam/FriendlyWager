@@ -7,6 +7,7 @@
 //
 
 #import "ScoreSummaryViewController.h"
+#import "ScoreDetailViewController.h"
 
 @implementation ScoreSummaryViewController
 
@@ -74,58 +75,65 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [leftButton setFrame:CGRectMake(30, 10, 120, 80)];
-    [rightButton setFrame:CGRectMake(170, 10, 120, 80)];
-    [leftButton addTarget:self action:@selector(leftButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [rightButton addTarget:self action:@selector(rightButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UILabel *team1Label = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 50, 20)];
-    UILabel *team2Label = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 50, 20)];
-    UILabel *team1ScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(80, 10, 20, 20)];
-    UILabel *team2ScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(80, 50, 20, 20)];
-    team1Label.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team1"];
-    team2Label.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team2"];
-    team1ScoreLabel.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team1Score"];
-    team2ScoreLabel.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team2Score"];
-    team1Label.backgroundColor = [UIColor clearColor];
-    team2Label.backgroundColor = [UIColor clearColor];
-    team1ScoreLabel.backgroundColor = [UIColor clearColor];
-    team2ScoreLabel.backgroundColor = [UIColor clearColor];
-    
-    [leftButton addSubview:team1Label];
-    [leftButton addSubview:team1ScoreLabel];
-    [leftButton addSubview:team2Label];
-    [leftButton addSubview:team2ScoreLabel];
-    
-    UILabel *team1LabelRight = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 50, 20)];
-    UILabel *team2LabelRight = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 50, 20)];
-    UILabel *team1ScoreLabelRight = [[UILabel alloc]initWithFrame:CGRectMake(80, 10, 20, 20)];
-    UILabel *team2ScoreLabelRight = [[UILabel alloc]initWithFrame:CGRectMake(80, 50, 20, 20)];
-    team1LabelRight.text = [[rightArray objectAtIndex:indexPath.row]objectForKey:@"team1"];
-    team2LabelRight.text = [[rightArray objectAtIndex:indexPath.row]objectForKey:@"team2"];
-    team1ScoreLabelRight.text = [[rightArray objectAtIndex:indexPath.row]objectForKey:@"team1Score"];
-    team2ScoreLabelRight.text = [[rightArray objectAtIndex:indexPath.row]objectForKey:@"team2Score"];
-    team1LabelRight.backgroundColor = [UIColor clearColor];
-    team2LabelRight.backgroundColor = [UIColor clearColor];
-    team1ScoreLabelRight.backgroundColor = [UIColor clearColor];
-    team2ScoreLabelRight.backgroundColor = [UIColor clearColor];
-    
-    [rightButton addSubview:team1LabelRight];
-    [rightButton addSubview:team1ScoreLabelRight];
-    [rightButton addSubview:team2LabelRight];
-    [rightButton addSubview:team2ScoreLabelRight];
-    
-    
     static NSString *CellIdentifier = @"ScoresSummaryTableViewCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        //Configure buttons
+        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        leftButton.tag = indexPath.row;
+        rightButton.tag = indexPath.row;
+        [leftButton setFrame:CGRectMake(30, 10, 120, 80)];
+        [rightButton setFrame:CGRectMake(170, 10, 120, 80)];
+        [leftButton addTarget:self action:@selector(leftButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [rightButton addTarget:self action:@selector(rightButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        //Configure labels which will be used in buttons
+        UILabel *team1Label = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 50, 20)];
+        UILabel *team2Label = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 50, 20)];
+        UILabel *team1ScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(80, 10, 20, 20)];
+        UILabel *team2ScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(80, 50, 20, 20)];
+        team1Label.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team1"];
+        team2Label.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team2"];
+        team1ScoreLabel.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team1Score"];
+        team2ScoreLabel.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team2Score"];
+        team1Label.backgroundColor = [UIColor clearColor];
+        team2Label.backgroundColor = [UIColor clearColor];
+        team1ScoreLabel.backgroundColor = [UIColor clearColor];
+        team2ScoreLabel.backgroundColor = [UIColor clearColor];
+        
+        //add the labels to the buttons as sub-views
+        [leftButton addSubview:team1Label];
+        [leftButton addSubview:team1ScoreLabel];
+        [leftButton addSubview:team2Label];
+        [leftButton addSubview:team2ScoreLabel];
+        
+        //Configure buttons
+        UILabel *team1LabelRight = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 50, 20)];
+        UILabel *team2LabelRight = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 50, 20)];
+        UILabel *team1ScoreLabelRight = [[UILabel alloc]initWithFrame:CGRectMake(80, 10, 20, 20)];
+        UILabel *team2ScoreLabelRight = [[UILabel alloc]initWithFrame:CGRectMake(80, 50, 20, 20)];
+        team1LabelRight.text = [[rightArray objectAtIndex:indexPath.row]objectForKey:@"team1"];
+        team2LabelRight.text = [[rightArray objectAtIndex:indexPath.row]objectForKey:@"team2"];
+        team1ScoreLabelRight.text = [[rightArray objectAtIndex:indexPath.row]objectForKey:@"team1Score"];
+        team2ScoreLabelRight.text = [[rightArray objectAtIndex:indexPath.row]objectForKey:@"team2Score"];
+        team1LabelRight.backgroundColor = [UIColor clearColor];
+        team2LabelRight.backgroundColor = [UIColor clearColor];
+        team1ScoreLabelRight.backgroundColor = [UIColor clearColor];
+        team2ScoreLabelRight.backgroundColor = [UIColor clearColor];
+        
+        //Configure labels which will be used in buttons
+        [rightButton addSubview:team1LabelRight];
+        [rightButton addSubview:team1ScoreLabelRight];
+        [rightButton addSubview:team2LabelRight];
+        [rightButton addSubview:team2ScoreLabelRight];
+        
+        //add the labels to the buttons as sub-views
+        [cell addSubview:leftButton];
+        [cell addSubview:rightButton];
     }
-    [cell addSubview:leftButton];
-    [cell addSubview:rightButton];
     return cell;
 }
 
@@ -136,11 +144,17 @@
 
 #pragma mark - Button Clicks
 - (void)leftButtonClicked:(id)sender {
-
+    NSUInteger index = [sender tag];
+    NSDictionary *dataDictionary = [leftArray objectAtIndex:index];
+    ScoreDetailViewController *scoreDetail = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil scoreData:dataDictionary];
+    [self.navigationController pushViewController:scoreDetail animated:YES];
 }
 
 - (void)rightButtonClicked:(id)sender {
-    
+    NSUInteger index = [sender tag];
+    NSDictionary *dataDictionary = [rightArray objectAtIndex:index];
+    ScoreDetailViewController *scoreDetail = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil scoreData:dataDictionary];
+    [self.navigationController pushViewController:scoreDetail animated:YES];
 }
 
 @end
