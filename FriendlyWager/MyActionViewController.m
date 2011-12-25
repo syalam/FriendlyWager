@@ -77,13 +77,7 @@
     opponentLabel.text = [myActionOpponentArray objectAtIndex:indexPath.row];
     wagersLabel.text = [myActionWagersArray objectAtIndex:indexPath.row];
     
-    static NSString *CellIdentifier = @"MyActionTableViewCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     [cell.contentView addSubview:opponentLabel];
     [cell.contentView addSubview:wagersLabel];
     

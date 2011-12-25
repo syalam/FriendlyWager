@@ -86,10 +86,10 @@
 
 #pragma mark - Button Clicks
 - (IBAction)wagerButtonClicked:(id)sender {
-    
+
 }
 - (IBAction)chatButtonClicked:(id)sender {
-    
+
 }
 
 #pragma mark - Table view data source
