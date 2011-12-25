@@ -7,6 +7,7 @@
 //
 
 #import "ScoresViewController.h"
+#import "ScoreSummaryViewController.h"
 
 @implementation ScoresViewController
 
@@ -44,6 +45,8 @@
 {
     [super viewDidLoad];
     scoresTableView.dataSource = self;
+    scoresTableView.delegate = self;
+    
     NSArray *nflFootball = [[NSArray alloc]initWithObjects:@"NFL Football", nil];
     NSArray *collegeFootball = [[NSArray alloc]initWithObjects:@"College Football", nil];
     NSArray *mlbBaseball = [[NSArray alloc]initWithObjects:@"MBL Baseball", nil];
@@ -93,5 +96,13 @@
     cell.textLabel.text = contentForThisRow;
     return cell;
 }
+
+#pragma mark - TableView Delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    ScoreSummaryViewController *scoreSummary = [[ScoreSummaryViewController alloc]initWithNibName:@"ScoreSummaryViewController" bundle:nil];
+    [self.navigationController pushViewController:scoreSummary animated:YES];
+}
+
+
 
 @end

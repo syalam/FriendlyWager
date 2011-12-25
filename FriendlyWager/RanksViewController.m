@@ -7,6 +7,7 @@
 //
 
 #import "RanksViewController.h"
+#import "RankingsDetailViewController.h"
 
 @implementation RanksViewController
 
@@ -36,6 +37,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     ranksTableView.dataSource = self;
+    ranksTableView.delegate = self;
     
     rankingsByPoints = [[NSArray alloc]initWithObjects:@"Rankings By Points", nil];
     rankingsByWins = [[NSArray alloc]initWithObjects:@"Rankings By Wins", nil];
@@ -83,6 +85,14 @@
 
     cell.textLabel.text = contentForThisRow;
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
+    id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
+    RankingsDetailViewController *rankingDetails = [[RankingsDetailViewController alloc]initWithNibName:@"RankingsDetailViewController" bundle:nil rankingBy:contentForThisRow];
+    [self.navigationController pushViewController:rankingDetails animated:YES];
+    
 }
 
 @end
