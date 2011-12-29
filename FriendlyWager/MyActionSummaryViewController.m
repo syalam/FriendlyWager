@@ -58,6 +58,9 @@
     //Set Scrollview size
     scrollView.contentSize = CGSizeMake(320, 560);
     
+    //wagerView.hidden = YES;
+    [wagerView addSubview:wagerController.view];
+    
     //Set labels with name of currently selected opponent
     wagersWithLabel.text = [NSString stringWithFormat:@"%@ %@", @"Wagers With", opponent];
     
@@ -97,6 +100,12 @@
 
 #pragma mark - Button Clicks
 - (IBAction)wagerButtonClicked:(id)sender {
+    [UIView beginAnimations:nil context: NULL];
+	[UIView setAnimationDuration: 3.0];
+    [wagerView setFrame:CGRectMake(20, 80, wagerView.frame.size.width, wagerView.frame.size.height)];
+    wagerView.hidden = NO;
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+	[UIView commitAnimations];
     
 }
 - (IBAction)chatButtonClicked:(id)sender {
