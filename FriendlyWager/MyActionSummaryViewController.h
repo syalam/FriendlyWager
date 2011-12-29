@@ -20,6 +20,8 @@
     
     NSArray *wagersArray;
     
+    BOOL newWagerBool;
+    
 }
 
 - (IBAction)wagerButtonClicked:(id)sender;
@@ -28,5 +30,7 @@
 @property (nonatomic, retain) NSArray* contentList;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil CurrentWagers:(NSString *)CurrentWagers opponentName:(NSString *)opponentName;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil newWager:(BOOL)newWager opponentName:(NSString *)opponentName;
 
 @end

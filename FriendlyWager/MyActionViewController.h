@@ -15,6 +15,8 @@
     
     NSMutableArray *myActionOpponentArray;
     NSMutableArray *myActionWagersArray;
+    
+    BOOL newWagerBool;
 }
 
 @end

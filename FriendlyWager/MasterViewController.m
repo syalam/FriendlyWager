@@ -9,6 +9,7 @@
 #import "MasterViewController.h"
 #import "LedgerViewController.h"
 #import "TabsViewController.h"
+#import "MakeAWagerViewController.h"
 
 @implementation MasterViewController
 
@@ -34,6 +35,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSUserDefaults *newWager = [NSUserDefaults alloc];
+    [newWager removeObjectForKey:@"opponent"];
     NSDictionary *navTitleAttributes = [[NSDictionary alloc]initWithObjectsAndKeys:
                        [UIColor blackColor], UITextAttributeTextColor, nil];
     self.title = @"Friendly Wager";
@@ -83,7 +86,13 @@
     [self presentModalViewController:navController animated:YES];
 }
 - (IBAction)makeWagerButtonClicked:(id)sender {
+    NSUserDefaults *newWager = [NSUserDefaults alloc];
+    [newWager removeObjectForKey:@"opponent"];
     
+    MakeAWagerViewController *makeWager = [[MakeAWagerViewController alloc]initWithNibName:@"MakeAWagerViewController" bundle:nil];
+    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:makeWager];
+    navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:navController animated:YES];
 }
 
 @end

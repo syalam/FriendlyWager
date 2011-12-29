@@ -31,6 +31,16 @@
     return self;
 }
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil newWager:(BOOL)newWager opponentName:(NSString *)opponentName {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+        opponent = opponentName;
+        
+    }
+    return self;
+}
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -54,6 +64,7 @@
     wagerButton.titleLabel.text = [NSString stringWithFormat:@"%@\n%@", @"Wager", opponent];
     wagerButton.titleLabel.textAlignment = UITextAlignmentCenter;
     wagerButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+    
     
     chatButton.titleLabel.text = [NSString stringWithFormat:@"%@\n%@", @"Chat", opponent];
     chatButton.titleLabel.textAlignment = UITextAlignmentCenter;
@@ -105,25 +116,25 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
     id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
-    UILabel *wagerType = [[UILabel alloc]initWithFrame:CGRectMake(47, 15, 105, 20)];
-    UILabel *wagerCount = [[UILabel alloc]initWithFrame:CGRectMake(255, 15, 25, 20)];
-    
-    wagerType.text = [contentForThisRow objectForKey:@"type"];
-    wagerCount.text = [contentForThisRow objectForKey:@"wagers"];
-    
-    wagerType.backgroundColor = [UIColor clearColor];
-    wagerCount.backgroundColor = [UIColor clearColor];
     
     
     static NSString *CellIdentifier = @"MyActionDetailTableViewCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        UILabel *wagerType = [[UILabel alloc]initWithFrame:CGRectMake(47, 15, 105, 20)];
+        UILabel *wagerCount = [[UILabel alloc]initWithFrame:CGRectMake(255, 15, 25, 20)];
+        
+        wagerType.text = [contentForThisRow objectForKey:@"type"];
+        wagerCount.text = [contentForThisRow objectForKey:@"wagers"];
+        
+        wagerType.backgroundColor = [UIColor clearColor];
+        wagerCount.backgroundColor = [UIColor clearColor];
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        [cell addSubview:wagerType];
+        [cell addSubview:wagerCount];
     }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    [cell addSubview:wagerType];
-    [cell addSubview:wagerCount];
-
     
     return cell;
 }

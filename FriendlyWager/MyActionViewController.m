@@ -16,7 +16,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+
     }
     return self;
 }
@@ -35,6 +35,13 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    NSUserDefaults *newWager = [NSUserDefaults alloc];
+    if ([newWager objectForKey:@"opponent"]) {
+        MyActionSummaryViewController *actionSummary = [[MyActionSummaryViewController alloc]initWithNibName:@"MyActionSummaryViewController" bundle:nil newWager:YES opponentName:[newWager objectForKey:@"opponent"]];
+        [self.navigationController pushViewController:actionSummary animated:NO];
+    }
+    
+    
     myActionTableView.dataSource = self;
     myActionTableView.delegate = self;
 
