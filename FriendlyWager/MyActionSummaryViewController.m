@@ -8,6 +8,7 @@
 
 #import "MyActionSummaryViewController.h"
 #import "MyActionDetailViewController.h"
+#import "ScoresViewController.h"
 
 @implementation MyActionSummaryViewController
 @synthesize contentList;
@@ -100,12 +101,19 @@
 
 #pragma mark - Button Clicks
 - (IBAction)wagerButtonClicked:(id)sender {
-    [UIView beginAnimations:nil context: NULL];
-	[UIView setAnimationDuration: 3.0];
-    [wagerView setFrame:CGRectMake(20, 80, wagerView.frame.size.width, wagerView.frame.size.height)];
+    /*[UIView beginAnimations:nil context: NULL];
+	[UIView setAnimationDuration: 2.0];
+    [wagerView setFrame:CGRectMake(0,0, 300, 400)];
     wagerView.hidden = NO;
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-	[UIView commitAnimations];
+    //[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+	[UIView commitAnimations];*/
+    //ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
+    //UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:sports];
+    ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil opponentName:opponent];
+    
+    [self.navigationController pushViewController:sports animated:YES];
+    
     
 }
 - (IBAction)chatButtonClicked:(id)sender {

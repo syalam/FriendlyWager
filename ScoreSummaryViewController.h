@@ -8,12 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ScoreSummaryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface ScoreSummaryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate> {
     IBOutlet UITableView *scoreSummaryTableView;
     
+    NSString *opponent;
     NSArray *leftArray;
     NSArray *rightArray;
     
+    BOOL newWagerVisible;
+    
 }
+
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil opponentName:(NSString *)opponentName;
 
 @end

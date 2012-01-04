@@ -8,6 +8,7 @@
 
 #import "ScoreSummaryViewController.h"
 #import "ScoreDetailViewController.h"
+#import "NewWagerViewController.h"
 
 @implementation ScoreSummaryViewController
 
@@ -16,6 +17,14 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+    }
+    return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil opponentName:(NSString *)opponentName {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        opponent = opponentName;
     }
     return self;
 }
@@ -36,6 +45,9 @@
     
     scoreSummaryTableView.dataSource = self;
     scoreSummaryTableView.delegate = self;
+    
+    
+    newWagerVisible = NO;
     
     leftArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"NVG", @"team1", @"14", @"team1Score", @"CAR", @"team2", @"7", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"SF", @"team1", @"10", @"team1Score", @"AZ", @"team2", @"20", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"BUF", @"team1", @"2", @"team1Score", @"WAS", @"team2", @"27", @"team2Score", nil], nil];
     
@@ -146,8 +158,22 @@
 - (void)leftButtonClicked:(id)sender {
     NSUInteger index = [sender tag];
     NSDictionary *dataDictionary = [leftArray objectAtIndex:index];
-    ScoreDetailViewController *scoreDetail = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil scoreData:dataDictionary];
-    [self.navigationController pushViewController:scoreDetail animated:YES];
+    if (!opponent) {
+        ScoreDetailViewController *scoreDetail = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil scoreData:dataDictionary];
+        [self.navigationController pushViewController:scoreDetail animated:YES];
+    }
+    else {
+        NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil opponent:opponent];
+        [self.navigationController pushViewController:newWager animated:YES];
+        
+        /*[UIView beginAnimations:nil context: NULL];
+        [UIView setAnimationDuration: 0.8];
+        [newWagerView setFrame:CGRectMake(45, 66, 214, 187)];
+        newWagerVisible = YES;
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+        [UIView commitAnimations];*/
+    }
 }
 
 - (void)rightButtonClicked:(id)sender {
@@ -156,5 +182,7 @@
     ScoreDetailViewController *scoreDetail = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil scoreData:dataDictionary];
     [self.navigationController pushViewController:scoreDetail animated:YES];
 }
+
+
 
 @end
