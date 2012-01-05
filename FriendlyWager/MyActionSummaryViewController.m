@@ -60,17 +60,15 @@
     scrollView.contentSize = CGSizeMake(320, 560);
     
     //wagerView.hidden = YES;
-    [wagerView addSubview:wagerController.view];
     
     //Set labels with name of currently selected opponent
     wagersWithLabel.text = [NSString stringWithFormat:@"%@ %@", @"Wagers With", opponent];
     
-    wagerButton.titleLabel.text = [NSString stringWithFormat:@"%@\n%@", @"Wager", opponent];
+    [wagerButton setTitle:[NSString stringWithFormat:@"%@\n%@", @"Wager", opponent] forState:UIControlStateNormal];
     wagerButton.titleLabel.textAlignment = UITextAlignmentCenter;
     wagerButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
     
-    
-    chatButton.titleLabel.text = [NSString stringWithFormat:@"%@\n%@", @"Chat", opponent];
+    [chatButton setTitle:[NSString stringWithFormat:@"%@\n%@", @"Chat", opponent] forState:UIControlStateNormal];
     chatButton.titleLabel.textAlignment = UITextAlignmentCenter;
     chatButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
     
@@ -101,20 +99,9 @@
 
 #pragma mark - Button Clicks
 - (IBAction)wagerButtonClicked:(id)sender {
-    /*[UIView beginAnimations:nil context: NULL];
-	[UIView setAnimationDuration: 2.0];
-    [wagerView setFrame:CGRectMake(0,0, 300, 400)];
-    wagerView.hidden = NO;
-    //[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationCurve:UIViewAnimationCurveLinear];
-	[UIView commitAnimations];*/
-    //ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
-    //UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:sports];
     ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil opponentName:opponent];
     
     [self.navigationController pushViewController:sports animated:YES];
-    
-    
 }
 - (IBAction)chatButtonClicked:(id)sender {
     

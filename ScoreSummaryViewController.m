@@ -165,22 +165,20 @@
     else {
         NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil opponent:opponent];
         [self.navigationController pushViewController:newWager animated:YES];
-        
-        /*[UIView beginAnimations:nil context: NULL];
-        [UIView setAnimationDuration: 0.8];
-        [newWagerView setFrame:CGRectMake(45, 66, 214, 187)];
-        newWagerVisible = YES;
-        [UIView setAnimationBeginsFromCurrentState:YES];
-        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
-        [UIView commitAnimations];*/
     }
 }
 
 - (void)rightButtonClicked:(id)sender {
     NSUInteger index = [sender tag];
     NSDictionary *dataDictionary = [rightArray objectAtIndex:index];
-    ScoreDetailViewController *scoreDetail = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil scoreData:dataDictionary];
-    [self.navigationController pushViewController:scoreDetail animated:YES];
+    if (!opponent) {
+        ScoreDetailViewController *scoreDetail = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil scoreData:dataDictionary];
+        [self.navigationController pushViewController:scoreDetail animated:YES];
+    }
+    else {
+        NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil opponent:opponent];
+        [self.navigationController pushViewController:newWager animated:YES];
+    }
 }
 
 

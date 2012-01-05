@@ -45,7 +45,7 @@
     newWagerTableView.dataSource = self;
     newWagerTableView.delegate = self;
     otherOpponents = [[NSMutableArray alloc]initWithCapacity:1];
-    
+        
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -135,7 +135,8 @@
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];  
     
     if([title isEqualToString:@"OK"]) {
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        //[self.navigationController popToRootViewControllerAnimated:YES];
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -4)] animated:YES];
     }
 }
 
