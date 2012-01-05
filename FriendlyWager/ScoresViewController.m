@@ -22,6 +22,14 @@
     return self;
 }
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil opponentName:(NSString *)opponentName {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        opponent = opponentName;
+    }
+    return self;
+}
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -46,6 +54,16 @@
     [super viewDidLoad];
     scoresTableView.dataSource = self;
     scoresTableView.delegate = self;
+    
+    if (opponent) {
+        opponentLabel.text = [NSString stringWithFormat:@"%@ %@", @"New Wager with", opponent];
+        opponentLabel.backgroundColor = [UIColor clearColor];
+        [scoresTableView setFrame:CGRectMake(0, 40, 320, 420)];
+    }
+    else {
+        opponentLabel.hidden = YES;
+    }
+    
     
     NSArray *nflFootball = [[NSArray alloc]initWithObjects:@"NFL Football", nil];
     NSArray *collegeFootball = [[NSArray alloc]initWithObjects:@"College Football", nil];
@@ -99,7 +117,13 @@
 
 #pragma mark - TableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ScoreSummaryViewController *scoreSummary = [[ScoreSummaryViewController alloc]initWithNibName:@"ScoreSummaryViewController" bundle:nil];
+    ScoreSummaryViewController *scoreSummary;
+    if (opponent) {
+        scoreSummary = [[ScoreSummaryViewController alloc]initWithNibName:@"ScoreSummaryViewController" bundle:nil opponentName:opponent];
+    }
+    else {
+        scoreSummary = [[ScoreSummaryViewController alloc]initWithNibName:@"ScoreSummaryViewController" bundle:nil];
+    }
     [self.navigationController pushViewController:scoreSummary animated:YES];
 }
 

@@ -8,6 +8,7 @@
 
 #import "MyActionSummaryViewController.h"
 #import "MyActionDetailViewController.h"
+#import "ScoresViewController.h"
 
 @implementation MyActionSummaryViewController
 @synthesize contentList;
@@ -58,15 +59,16 @@
     //Set Scrollview size
     scrollView.contentSize = CGSizeMake(320, 560);
     
+    //wagerView.hidden = YES;
+    
     //Set labels with name of currently selected opponent
     wagersWithLabel.text = [NSString stringWithFormat:@"%@ %@", @"Wagers With", opponent];
     
-    wagerButton.titleLabel.text = [NSString stringWithFormat:@"%@\n%@", @"Wager", opponent];
+    [wagerButton setTitle:[NSString stringWithFormat:@"%@\n%@", @"Wager", opponent] forState:UIControlStateNormal];
     wagerButton.titleLabel.textAlignment = UITextAlignmentCenter;
     wagerButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
     
-    
-    chatButton.titleLabel.text = [NSString stringWithFormat:@"%@\n%@", @"Chat", opponent];
+    [chatButton setTitle:[NSString stringWithFormat:@"%@\n%@", @"Chat", opponent] forState:UIControlStateNormal];
     chatButton.titleLabel.textAlignment = UITextAlignmentCenter;
     chatButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
     
@@ -97,7 +99,9 @@
 
 #pragma mark - Button Clicks
 - (IBAction)wagerButtonClicked:(id)sender {
+    ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil opponentName:opponent];
     
+    [self.navigationController pushViewController:sports animated:YES];
 }
 - (IBAction)chatButtonClicked:(id)sender {
     

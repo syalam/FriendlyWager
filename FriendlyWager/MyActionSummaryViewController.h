@@ -14,6 +14,9 @@
     IBOutlet UITableView *wagersTableView;
     IBOutlet UIButton *wagerButton;
     IBOutlet UIButton *chatButton;
+
+    
+    IBOutlet UIView *wagerView;
     
     NSString *currentWagers;
     NSString *opponent;

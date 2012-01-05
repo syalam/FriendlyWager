@@ -304,7 +304,7 @@
 			
 			if (checked)
 			{
-				[telephones addObject:[item valueForKey:@"telephoneSelected"]];
+				[telephones addObject:[item valueForKey:@"name"]];
 			}
 		}
 	}
@@ -313,14 +313,27 @@
 	{
 		[self.delegate numberOfRowsSelected:[telephones count] withTelephones:telephones];
 	}
+    
+    /*UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"An email invitation will be sent to all selected contacts" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    [alert show];*/
 
 	[telephones release];
-	[self dismiss];
+    [self.navigationController popViewControllerAnimated:YES];
+	//[self dismiss];
 }
 
 - (void)dismiss
 {
 	[self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];  
+    
+    if([title isEqualToString:@"OK"]) {
+        [self dismiss];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
