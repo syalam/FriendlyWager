@@ -93,6 +93,8 @@
 }
 
 - (void)homeButtonClicked:(id)sender {
+    NSUserDefaults *newWager = [NSUserDefaults alloc];
+    [newWager removeObjectForKey:@"opponent"];
     [self dismissModalViewControllerAnimated:YES];
 }
 

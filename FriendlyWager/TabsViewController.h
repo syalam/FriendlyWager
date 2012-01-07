@@ -20,7 +20,6 @@
     
     NSUInteger myTabIndex;
     BOOL userSelected;
-    BOOL newWager;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

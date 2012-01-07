@@ -674,10 +674,14 @@
 		F714E19914A1A88400E24956 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FriendlyWager/FriendlyWager-Prefix.pch";
 				INFOPLIST_FILE = "FriendlyWager/FriendlyWager-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "A956CC5B-D8CD-4D87-A2E9-BD8C6689CDA8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A956CC5B-D8CD-4D87-A2E9-BD8C6689CDA8";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -685,10 +689,14 @@
 		F714E19A14A1A88400E24956 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FriendlyWager/FriendlyWager-Prefix.pch";
 				INFOPLIST_FILE = "FriendlyWager/FriendlyWager-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "A956CC5B-D8CD-4D87-A2E9-BD8C6689CDA8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A956CC5B-D8CD-4D87-A2E9-BD8C6689CDA8";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
