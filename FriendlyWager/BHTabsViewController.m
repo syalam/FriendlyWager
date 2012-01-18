@@ -120,7 +120,8 @@ enum { kTagTabBase = 100 };
 
 - (void)loadView {
     CGRect frame = [UIScreen mainScreen].applicationFrame;
-    UIView *view = [[UIView alloc] initWithFrame:frame];
+    //UIView *view = [[UIView alloc] initWithFrame:frame];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
     self.view = view;
     [view release];
     

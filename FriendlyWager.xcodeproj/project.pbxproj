@@ -26,6 +26,18 @@
 		F714E1FF14A1D0CD00E24956 /* BHTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1F714A1D0CD00E24956 /* BHTabStyle.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F714E20014A1D0CD00E24956 /* BHTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1F914A1D0CD00E24956 /* BHTabsView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F714E20214A1D0CD00E24956 /* BHTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1FD14A1D0CD00E24956 /* BHTabView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F7342CDC14C4F15600AC0819 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7342CDA14C4F15600AC0819 /* ChatViewController.m */; };
+		F7342CDD14C4F15600AC0819 /* ChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7342CDB14C4F15600AC0819 /* ChatViewController.xib */; };
+		F7342CE314C4F20600AC0819 /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7342CE014C4F20600AC0819 /* HPGrowingTextView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F7342CE414C4F20600AC0819 /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = F7342CE214C4F20600AC0819 /* HPTextViewInternal.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F7342CED14C4F21600AC0819 /* MessageEntryBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = F7342CE514C4F21600AC0819 /* MessageEntryBackground.png */; };
+		F7342CEE14C4F21600AC0819 /* MessageEntryBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7342CE614C4F21600AC0819 /* MessageEntryBackground@2x.png */; };
+		F7342CEF14C4F21600AC0819 /* MessageEntryInputField.png in Resources */ = {isa = PBXBuildFile; fileRef = F7342CE714C4F21600AC0819 /* MessageEntryInputField.png */; };
+		F7342CF014C4F21600AC0819 /* MessageEntryInputField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7342CE814C4F21600AC0819 /* MessageEntryInputField@2x.png */; };
+		F7342CF114C4F21600AC0819 /* MessageEntrySendButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7342CE914C4F21600AC0819 /* MessageEntrySendButton.png */; };
+		F7342CF214C4F21600AC0819 /* MessageEntrySendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7342CEA14C4F21600AC0819 /* MessageEntrySendButton@2x.png */; };
+		F7342CF314C4F21600AC0819 /* MessageEntrySendButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = F7342CEB14C4F21600AC0819 /* MessageEntrySendButtonPressed.png */; };
+		F7342CF414C4F21600AC0819 /* MessageEntrySendButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7342CEC14C4F21600AC0819 /* MessageEntrySendButtonPressed@2x.png */; };
 		F743C97214A2F637006B533B /* TabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F743C97014A2F637006B533B /* TabsViewController.m */; };
 		F743C97314A2F637006B533B /* TabsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F743C97114A2F637006B533B /* TabsViewController.xib */; };
 		F743C98214A3B04F006B533B /* RanksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F743C98014A3B04F006B533B /* RanksViewController.m */; };
@@ -100,6 +112,21 @@
 		F714E1F914A1D0CD00E24956 /* BHTabsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabsView.m; sourceTree = "<group>"; };
 		F714E1FC14A1D0CD00E24956 /* BHTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHTabView.h; sourceTree = "<group>"; };
 		F714E1FD14A1D0CD00E24956 /* BHTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabView.m; sourceTree = "<group>"; };
+		F7342CD914C4F15600AC0819 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		F7342CDA14C4F15600AC0819 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		F7342CDB14C4F15600AC0819 /* ChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatViewController.xib; sourceTree = "<group>"; };
+		F7342CDF14C4F20600AC0819 /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
+		F7342CE014C4F20600AC0819 /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
+		F7342CE114C4F20600AC0819 /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
+		F7342CE214C4F20600AC0819 /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
+		F7342CE514C4F21600AC0819 /* MessageEntryBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntryBackground.png; sourceTree = "<group>"; };
+		F7342CE614C4F21600AC0819 /* MessageEntryBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntryBackground@2x.png"; sourceTree = "<group>"; };
+		F7342CE714C4F21600AC0819 /* MessageEntryInputField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntryInputField.png; sourceTree = "<group>"; };
+		F7342CE814C4F21600AC0819 /* MessageEntryInputField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntryInputField@2x.png"; sourceTree = "<group>"; };
+		F7342CE914C4F21600AC0819 /* MessageEntrySendButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntrySendButton.png; sourceTree = "<group>"; };
+		F7342CEA14C4F21600AC0819 /* MessageEntrySendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntrySendButton@2x.png"; sourceTree = "<group>"; };
+		F7342CEB14C4F21600AC0819 /* MessageEntrySendButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntrySendButtonPressed.png; sourceTree = "<group>"; };
+		F7342CEC14C4F21600AC0819 /* MessageEntrySendButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntrySendButtonPressed@2x.png"; sourceTree = "<group>"; };
 		F743C96F14A2F637006B533B /* TabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabsViewController.h; sourceTree = "<group>"; };
 		F743C97014A2F637006B533B /* TabsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabsViewController.m; sourceTree = "<group>"; };
 		F743C97114A2F637006B533B /* TabsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabsViewController.xib; sourceTree = "<group>"; };
@@ -219,6 +246,7 @@
 				F743C97814A3AB7B006B533B /* My Action */,
 				F743C9D814A586B4006B533B /* Action Summary */,
 				F743C9DF14A5BA2A006B533B /* Action Detail */,
+				F7342CD714C4F13100AC0819 /* Chat */,
 				F743C97E14A3B016006B533B /* Rankings */,
 				F743C9F314A67CD6006B533B /* Rankings Detail */,
 				F743C98414A3B135006B533B /* Scores */,
@@ -296,6 +324,35 @@
 				F714E1FD14A1D0CD00E24956 /* BHTabView.m */,
 			);
 			name = "Tab src";
+			sourceTree = "<group>";
+		};
+		F7342CD714C4F13100AC0819 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				F7342CD914C4F15600AC0819 /* ChatViewController.h */,
+				F7342CDA14C4F15600AC0819 /* ChatViewController.m */,
+				F7342CDB14C4F15600AC0819 /* ChatViewController.xib */,
+			);
+			name = Chat;
+			sourceTree = "<group>";
+		};
+		F7342CDE14C4F1DD00AC0819 /* Expanding TextView */ = {
+			isa = PBXGroup;
+			children = (
+				F7342CE514C4F21600AC0819 /* MessageEntryBackground.png */,
+				F7342CE614C4F21600AC0819 /* MessageEntryBackground@2x.png */,
+				F7342CE714C4F21600AC0819 /* MessageEntryInputField.png */,
+				F7342CE814C4F21600AC0819 /* MessageEntryInputField@2x.png */,
+				F7342CE914C4F21600AC0819 /* MessageEntrySendButton.png */,
+				F7342CEA14C4F21600AC0819 /* MessageEntrySendButton@2x.png */,
+				F7342CEB14C4F21600AC0819 /* MessageEntrySendButtonPressed.png */,
+				F7342CEC14C4F21600AC0819 /* MessageEntrySendButtonPressed@2x.png */,
+				F7342CDF14C4F20600AC0819 /* HPGrowingTextView.h */,
+				F7342CE014C4F20600AC0819 /* HPGrowingTextView.m */,
+				F7342CE114C4F20600AC0819 /* HPTextViewInternal.h */,
+				F7342CE214C4F20600AC0819 /* HPTextViewInternal.m */,
+			);
+			name = "Expanding TextView";
 			sourceTree = "<group>";
 		};
 		F743C96714A2EF39006B533B /* Tab Screen */ = {
@@ -402,6 +459,7 @@
 		F7CDD73E14ABDC820038FE6B /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F7342CDE14C4F1DD00AC0819 /* Expanding TextView */,
 				F7CDD73F14ABDC970038FE6B /* Multiple Contact Selector */,
 				F714E1F314A1D0A000E24956 /* Tab src */,
 			);
@@ -522,6 +580,15 @@
 				F7CDD79914AC0AA60038FE6B /* SMContactsSelector.xib in Resources */,
 				F7CDD79B14AC0AA60038FE6B /* unchecked.png in Resources */,
 				F7CDD80E14B16C380038FE6B /* NewWagerViewController.xib in Resources */,
+				F7342CDD14C4F15600AC0819 /* ChatViewController.xib in Resources */,
+				F7342CED14C4F21600AC0819 /* MessageEntryBackground.png in Resources */,
+				F7342CEE14C4F21600AC0819 /* MessageEntryBackground@2x.png in Resources */,
+				F7342CEF14C4F21600AC0819 /* MessageEntryInputField.png in Resources */,
+				F7342CF014C4F21600AC0819 /* MessageEntryInputField@2x.png in Resources */,
+				F7342CF114C4F21600AC0819 /* MessageEntrySendButton.png in Resources */,
+				F7342CF214C4F21600AC0819 /* MessageEntrySendButton@2x.png in Resources */,
+				F7342CF314C4F21600AC0819 /* MessageEntrySendButtonPressed.png in Resources */,
+				F7342CF414C4F21600AC0819 /* MessageEntrySendButtonPressed@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,6 +646,9 @@
 				F7CDD79A14AC0AA60038FE6B /* UIAlertView+UITableView.m in Sources */,
 				F7CDD80D14B16C380038FE6B /* NewWagerViewController.m in Sources */,
 				F74C0F0414B424C0006F3D99 /* SMContactsSelector.m in Sources */,
+				F7342CDC14C4F15600AC0819 /* ChatViewController.m in Sources */,
+				F7342CE314C4F20600AC0819 /* HPGrowingTextView.m in Sources */,
+				F7342CE414C4F20600AC0819 /* HPTextViewInternal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,6 +746,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FriendlyWager/SSToolkit/Tests\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FriendlyWager/FriendlyWager-Prefix.pch";
 				INFOPLIST_FILE = "FriendlyWager/FriendlyWager-Info.plist";
@@ -691,6 +765,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FriendlyWager/SSToolkit/Tests\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FriendlyWager/FriendlyWager-Prefix.pch";
 				INFOPLIST_FILE = "FriendlyWager/FriendlyWager-Info.plist";

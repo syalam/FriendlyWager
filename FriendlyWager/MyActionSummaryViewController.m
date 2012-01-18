@@ -9,6 +9,7 @@
 #import "MyActionSummaryViewController.h"
 #import "MyActionDetailViewController.h"
 #import "ScoresViewController.h"
+#import "ChatViewController.h"
 
 @implementation MyActionSummaryViewController
 @synthesize contentList;
@@ -104,7 +105,8 @@
     [self.navigationController pushViewController:sports animated:YES];
 }
 - (IBAction)chatButtonClicked:(id)sender {
-    
+    ChatViewController *chatVc = [[ChatViewController alloc]initWithNibName:@"ChatViewController" bundle:nil];
+    [self.navigationController pushViewController:chatVc animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -153,6 +155,8 @@
     [self.navigationController pushViewController:actionDetail animated:YES];
     
 }
+
+
 
 
 @end
