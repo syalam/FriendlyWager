@@ -74,13 +74,13 @@
     [self presentModalViewController:navController animated:YES];
 }
 - (IBAction)rankingsButtonClicked:(id)sender {
-    TabsViewController *tabs = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil tabIndex:1];
+    TabsViewController *tabs = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil tabIndex:2];
     UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:tabs];
     navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:navController animated:YES];
 }
 - (IBAction)scoresButtonClicked:(id)sender {
-    TabsViewController *tabs = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil tabIndex:2];
+    TabsViewController *tabs = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil tabIndex:1];
     UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:tabs];
     navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:navController animated:YES];
