@@ -35,9 +35,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
-    [testObject setObject:@"bar" forKey:@"foo"];
-    [testObject save];
     
     NSUserDefaults *newWager = [NSUserDefaults alloc];
     [newWager removeObjectForKey:@"opponent"];
