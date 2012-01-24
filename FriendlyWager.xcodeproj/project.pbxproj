@@ -228,12 +228,6 @@
 		F714E15414A1A88400E24956 = {
 			isa = PBXGroup;
 			children = (
-				F7D2AF1D14C7F7F300472ED3 /* QuartzCore.framework */,
-				F7D2AF1B14C7F7ED00472ED3 /* Security.framework */,
-				F7D2AF1914C7F7DF00472ED3 /* libz.1.1.3.dylib */,
-				F7D2AF1714C7F7CB00472ED3 /* MobileCoreServices.framework */,
-				F7D2AF1514C7F7C200472ED3 /* SystemConfiguration.framework */,
-				F7D2AF1314C7F7B700472ED3 /* CFNetwork.framework */,
 				F714E16914A1A88400E24956 /* FriendlyWager */,
 				F7CDD73E14ABDC820038FE6B /* Helper Classes */,
 				F714E18D14A1A88400E24956 /* FriendlyWagerTests */,
@@ -254,6 +248,12 @@
 		F714E16214A1A88400E24956 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F7D2AF1D14C7F7F300472ED3 /* QuartzCore.framework */,
+				F7D2AF1B14C7F7ED00472ED3 /* Security.framework */,
+				F7D2AF1914C7F7DF00472ED3 /* libz.1.1.3.dylib */,
+				F7D2AF1714C7F7CB00472ED3 /* MobileCoreServices.framework */,
+				F7D2AF1514C7F7C200472ED3 /* SystemConfiguration.framework */,
+				F7D2AF1314C7F7B700472ED3 /* CFNetwork.framework */,
 				F7D2AEF614C7F54500472ED3 /* Parse.framework */,
 				F7CDD77414ABF3410038FE6B /* AddressBook.framework */,
 				F7CDD77514ABF3410038FE6B /* AddressBookUI.framework */,
