@@ -10,6 +10,7 @@
 #import "LedgerViewController.h"
 #import "TabsViewController.h"
 #import "MakeAWagerViewController.h"
+#import "LoginViewController.h"
 
 @implementation MasterViewController
 
@@ -36,6 +37,10 @@
 {
     [super viewDidLoad];
     
+    LoginViewController *loginVc = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
+    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
+    [self.navigationController presentModalViewController:navc animated:NO];
+    
     NSUserDefaults *newWager = [NSUserDefaults alloc];
     [newWager removeObjectForKey:@"opponent"];
     NSDictionary *navTitleAttributes = [[NSDictionary alloc]initWithObjectsAndKeys:
@@ -43,7 +48,10 @@
     self.title = @"Friendly Wager";
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
-    // Do any additional setup after loading the view from its nib.
+    
+    UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc]initWithTitle:@"Sign Out" style:UIBarButtonItemStyleBordered target:self action:@selector(signOutButtonClicked:)];
+    signOutButton.tintColor = [UIColor blackColor];
+    self.navigationItem.rightBarButtonItem = signOutButton;
 }
 
 - (void)viewDidUnload
@@ -94,6 +102,12 @@
     UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:makeWager];
     navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:navController animated:YES];
+}
+
+- (void)signOutButtonClicked:(id)sender {
+    LoginViewController *loginVc = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
+    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
+    [self.navigationController presentModalViewController:navc animated:YES];
 }
 
 @end
