@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "NewAccountViewController.h"
 
 @implementation LoginViewController
 
@@ -63,6 +64,11 @@
 #pragma mark - Button Clicks
 - (IBAction)loginButtonClicked:(id)sender {
     [self.navigationController dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)newAccountButtonClicked:(id)sender {
+    NewAccountViewController *newAccountVC = [[NewAccountViewController alloc]initWithNibName:@"NewAccountViewController" bundle:nil];
+    [self.navigationController pushViewController:newAccountVC animated:YES];
 }
 
 @end

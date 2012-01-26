@@ -1,5 +1,5 @@
 //
-//  LoginViewController.h
+//  NewAccountViewController.h
 //  FriendlyWager
 //
 //  Created by Reyaad Sidique on 1/25/12.
@@ -8,16 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginViewController : UIViewController {
-    IBOutlet UIButton *loginButton;
-    IBOutlet UIButton *newAccountButton;
+@interface NewAccountViewController : UIViewController {
     IBOutlet UITextField *userNameTextField;
     IBOutlet UITextField *passwordTextField;
     IBOutlet UITextField *favoriteSportTextField;
     IBOutlet UITextField *favoriteTeamTextField;
+    IBOutlet UIButton *submitButton;
 }
 
-- (IBAction)loginButtonClicked:(id)sender;
-- (IBAction)newAccountButtonClicked:(id)sender;
+- (IBAction)submitButtonClicked:(id)sender;
 
 @end
