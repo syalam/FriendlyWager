@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "NewAccountViewController.h"
+#import <Parse/Parse.h>
 
 @implementation LoginViewController
 
@@ -63,7 +64,23 @@
 
 #pragma mark - Button Clicks
 - (IBAction)loginButtonClicked:(id)sender {
-    [self.navigationController dismissModalViewControllerAnimated:YES];
+    
+    [PFUser logInWithUsernameInBackground:userNameTextField.text password:passwordTextField.text 
+                                    block:^(PFUser *user, NSError *error) {
+                                        NSString *errorString = [[error userInfo] objectForKey:@"error"];
+                                        if (user) {
+                                           [self.navigationController dismissModalViewControllerAnimated:YES];
+                                        } else {
+                                            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
+                                                                                                message:errorString 
+                                                                                               delegate:self 
+                                                                                      cancelButtonTitle:@"OK" 
+                                                                                      otherButtonTitles:nil];
+                                            [alertView show];
+ 
+                                        }
+                                    }];
+
 }
 
 - (IBAction)newAccountButtonClicked:(id)sender {

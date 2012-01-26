@@ -37,9 +37,14 @@
 {
     [super viewDidLoad];
     
-    LoginViewController *loginVc = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
-    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
-    [self.navigationController presentModalViewController:navc animated:NO];
+    PFUser *currentUser = [PFUser currentUser];
+    if (currentUser) {
+        // do stuff with the user
+    } else {
+        LoginViewController *loginVc = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
+        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
+        [self.navigationController presentModalViewController:navc animated:NO];
+    }
     
     NSUserDefaults *newWager = [NSUserDefaults alloc];
     [newWager removeObjectForKey:@"opponent"];
@@ -105,6 +110,8 @@
 }
 
 - (void)signOutButtonClicked:(id)sender {
+    [PFUser logOut];
+    PFUser *currentUser = [PFUser currentUser]; // this will now be nil
     LoginViewController *loginVc = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
     UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
     [self.navigationController presentModalViewController:navc animated:YES];

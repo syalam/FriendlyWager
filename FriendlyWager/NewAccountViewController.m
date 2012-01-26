@@ -60,16 +60,29 @@
     user.username = userNameTextField.text;
     user.password = passwordTextField.text;
     [user setObject:favoriteSportTextField.text forKey:@"favorite_sport"];
-    [user setObject:favoriteTeamTextField forKey:@"favorite_team"];
+    [user setObject:favoriteTeamTextField.text forKey:@"favorite_team"];
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             // Hooray! Let them use the app now.
-            NSLog(@"success!");
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Success" 
+                                                                message:@"New user created!" 
+                                                               delegate:self 
+                                                      cancelButtonTitle:@"OK" 
+                                                      otherButtonTitles:nil];
+            [alertView show];
+            
             [self.navigationController popViewControllerAnimated:YES];
         } else {
             NSString *errorString = [[error userInfo] objectForKey:@"error"];
-            NSLog(@"Error: %@", errorString);
+            
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
+                                                                message:errorString
+                                                               delegate:self 
+                                                      cancelButtonTitle:@"OK" 
+                                                      otherButtonTitles:nil];
+            [alertView show];
+
 
         }
     }];
