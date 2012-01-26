@@ -37,13 +37,6 @@
 {
     [super viewDidLoad];
     
-    PFUser *currentUser = [PFUser currentUser];
-    if (!currentUser) {
-        LoginViewController *loginVc = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
-        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
-        [self.navigationController presentModalViewController:navc animated:NO];
-    }
-    
     NSUserDefaults *newWager = [NSUserDefaults alloc];
     [newWager removeObjectForKey:@"opponent"];
     NSDictionary *navTitleAttributes = [[NSDictionary alloc]initWithObjectsAndKeys:
@@ -62,6 +55,16 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    PFUser *currentUser = [PFUser currentUser];
+    if (!currentUser) {
+        LoginViewController *loginVc = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
+        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
+        [self.navigationController presentModalViewController:navc animated:NO];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
