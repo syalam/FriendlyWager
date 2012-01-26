@@ -38,9 +38,7 @@
     [super viewDidLoad];
     
     PFUser *currentUser = [PFUser currentUser];
-    if (currentUser) {
-        // do stuff with the user
-    } else {
+    if (!currentUser) {
         LoginViewController *loginVc = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
         UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
         [self.navigationController presentModalViewController:navc animated:NO];
