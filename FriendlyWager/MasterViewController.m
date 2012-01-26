@@ -112,7 +112,6 @@
 
 - (void)signOutButtonClicked:(id)sender {
     [PFUser logOut];
-    PFUser *currentUser = [PFUser currentUser]; // this will now be nil
     LoginViewController *loginVc = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
     UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
     [self.navigationController presentModalViewController:navc animated:YES];

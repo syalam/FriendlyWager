@@ -14,6 +14,7 @@
     IBOutlet UITextField *favoriteSportTextField;
     IBOutlet UITextField *favoriteTeamTextField;
     IBOutlet UIButton *submitButton;
+    IBOutlet UITextField *emailAddressTextField;
 }
 
 - (IBAction)submitButtonClicked:(id)sender;

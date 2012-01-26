@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C4AA62014D13CCE00A6013F /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4AA61D14D13CCE00A6013F /* ResetPasswordViewController.m */; };
+		8C4AA62114D13CCE00A6013F /* ResetPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4AA61E14D13CCE00A6013F /* ResetPasswordViewController.xib */; };
 		F714E16414A1A88400E24956 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F714E16314A1A88400E24956 /* UIKit.framework */; };
 		F714E16614A1A88400E24956 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F714E16514A1A88400E24956 /* Foundation.framework */; };
 		F714E16814A1A88400E24956 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F714E16714A1A88400E24956 /* CoreGraphics.framework */; };
@@ -94,6 +96,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8C4AA61C14D13CCE00A6013F /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = ResetPasswordViewController.h; sourceTree = "<group>"; };
+		8C4AA61D14D13CCE00A6013F /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordViewController.m; sourceTree = "<group>"; };
+		8C4AA61E14D13CCE00A6013F /* ResetPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResetPasswordViewController.xib; sourceTree = "<group>"; };
 		F714E15F14A1A88400E24956 /* FriendlyWager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FriendlyWager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F714E16314A1A88400E24956 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F714E16514A1A88400E24956 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -235,6 +240,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8C4AA61B14D13C7200A6013F /* Reset Password */ = {
+			isa = PBXGroup;
+			children = (
+				8C4AA61C14D13CCE00A6013F /* ResetPasswordViewController.h */,
+				8C4AA61D14D13CCE00A6013F /* ResetPasswordViewController.m */,
+				8C4AA61E14D13CCE00A6013F /* ResetPasswordViewController.xib */,
+			);
+			name = "Reset Password";
+			sourceTree = "<group>";
+		};
 		F714E15414A1A88400E24956 = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +313,7 @@
 				F7CDD80914B16BEE0038FE6B /* New Wager */,
 				F743CA0314A6C22F006B533B /* Score Detail */,
 				F714E16A14A1A88400E24956 /* Supporting Files */,
+				8C4AA61B14D13C7200A6013F /* Reset Password */,
 			);
 			path = FriendlyWager;
 			sourceTree = "<group>";
@@ -655,6 +671,7 @@
 				F7342CF414C4F21600AC0819 /* MessageEntrySendButtonPressed@2x.png in Resources */,
 				F724468B14D0C8D80009E001 /* LoginViewController.xib in Resources */,
 				F724469614D0FF110009E001 /* NewAccountViewController.xib in Resources */,
+				8C4AA62114D13CCE00A6013F /* ResetPasswordViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -717,6 +734,7 @@
 				F7342CE414C4F20600AC0819 /* HPTextViewInternal.m in Sources */,
 				F724468A14D0C8D80009E001 /* LoginViewController.m in Sources */,
 				F724469514D0FF110009E001 /* NewAccountViewController.m in Sources */,
+				8C4AA62014D13CCE00A6013F /* ResetPasswordViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

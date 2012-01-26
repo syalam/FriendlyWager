@@ -15,9 +15,11 @@
     IBOutlet UITextField *passwordTextField;
     IBOutlet UITextField *favoriteSportTextField;
     IBOutlet UITextField *favoriteTeamTextField;
+    IBOutlet UIButton *resetButton;
 }
 
 - (IBAction)loginButtonClicked:(id)sender;
 - (IBAction)newAccountButtonClicked:(id)sender;
+- (IBAction)resetButtonClicked:(id)sender;
 
 @end

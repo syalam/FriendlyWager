@@ -42,6 +42,7 @@
 
 - (void)viewDidUnload
 {
+    emailAddressTextField = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -59,6 +60,7 @@
     PFUser *user = [PFUser user];
     user.username = userNameTextField.text;
     user.password = passwordTextField.text;
+    user.email = emailAddressTextField.text;
     [user setObject:favoriteSportTextField.text forKey:@"favorite_sport"];
     [user setObject:favoriteTeamTextField.text forKey:@"favorite_team"];
     

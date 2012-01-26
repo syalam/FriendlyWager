@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "NewAccountViewController.h"
 #import <Parse/Parse.h>
+#import "ResetPasswordViewController.h"
 
 @implementation LoginViewController
 
@@ -51,6 +52,7 @@
 
 - (void)viewDidUnload
 {
+    resetButton = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -86,6 +88,11 @@
 - (IBAction)newAccountButtonClicked:(id)sender {
     NewAccountViewController *newAccountVC = [[NewAccountViewController alloc]initWithNibName:@"NewAccountViewController" bundle:nil];
     [self.navigationController pushViewController:newAccountVC animated:YES];
+}
+
+- (IBAction)resetButtonClicked:(id)sender {
+    ResetPasswordViewController *resetPasswordVC = [[ResetPasswordViewController alloc]initWithNibName:@"ResetPasswordViewController" bundle:nil];
+    [self.navigationController pushViewController:resetPasswordVC animated:YES];
 }
 
 @end
