@@ -12,6 +12,8 @@
     IBOutlet UIButton *loginButton;
     IBOutlet UITextField *userNameTextField;
     IBOutlet UITextField *passwordTextField;
+    IBOutlet UITextField *favoriteSportTextField;
+    IBOutlet UITextField *favoriteTeamTextField;
 }
 
 - (IBAction)loginButtonClicked:(id)sender;

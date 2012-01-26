@@ -253,6 +253,7 @@
 		F714E16214A1A88400E24956 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F7D2AEF814C7F59000472ED3 /* AudioToolbox.framework */,
 				F7D2AF1D14C7F7F300472ED3 /* QuartzCore.framework */,
 				F7D2AF1B14C7F7ED00472ED3 /* Security.framework */,
 				F7D2AF1914C7F7DF00472ED3 /* libz.1.1.3.dylib */,
@@ -273,7 +274,6 @@
 		F714E16914A1A88400E24956 /* FriendlyWager */ = {
 			isa = PBXGroup;
 			children = (
-				F7D2AEF814C7F59000472ED3 /* AudioToolbox.framework */,
 				F714E17214A1A88400E24956 /* AppDelegate.h */,
 				F714E17314A1A88400E24956 /* AppDelegate.m */,
 				F724468514D0C8A90009E001 /* Login */,
