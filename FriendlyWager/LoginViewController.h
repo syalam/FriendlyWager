@@ -9,12 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface LoginViewController : UIViewController {
+    IBOutlet UIScrollView *scrollView;
     IBOutlet UIButton *loginButton;
     IBOutlet UIButton *newAccountButton;
     IBOutlet UITextField *userNameTextField;
     IBOutlet UITextField *passwordTextField;
-    IBOutlet UITextField *favoriteSportTextField;
-    IBOutlet UITextField *favoriteTeamTextField;
     IBOutlet UIButton *resetButton;
 }
 

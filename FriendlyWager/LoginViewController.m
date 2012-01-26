@@ -37,6 +37,8 @@
     [super viewDidLoad];
     self.title = @"Login";
     
+    scrollView.contentSize = CGSizeMake(320, 460);
+    
     [userNameTextField becomeFirstResponder];
     
     NSDictionary *navTitleAttributes = [[NSDictionary alloc]initWithObjectsAndKeys:

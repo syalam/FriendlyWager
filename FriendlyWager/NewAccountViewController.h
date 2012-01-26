@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface NewAccountViewController : UIViewController {
+    IBOutlet UIScrollView *scrollView;
     IBOutlet UITextField *userNameTextField;
     IBOutlet UITextField *passwordTextField;
     IBOutlet UITextField *favoriteSportTextField;

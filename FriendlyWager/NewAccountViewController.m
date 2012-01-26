@@ -34,7 +34,8 @@
 {
     [super viewDidLoad];
     self.title = @"New Account";
-    [userNameTextField becomeFirstResponder];
+    scrollView.contentSize = CGSizeMake(320, 470);
+    [emailAddressTextField becomeFirstResponder];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
     backButton.tintColor = [UIColor blackColor];
     self.navigationItem.leftBarButtonItem = backButton;

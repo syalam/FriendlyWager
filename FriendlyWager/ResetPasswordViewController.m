@@ -37,6 +37,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"Reset Password";
+    [emailAddressTextField becomeFirstResponder];
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
+    backButton.tintColor = [UIColor blackColor];
+    self.navigationItem.leftBarButtonItem = backButton;
 }
 
 - (void)viewDidUnload
@@ -54,8 +59,14 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - Button Clicks
 - (IBAction)resetButtonClicked:(id)sender {
     [PFUser requestPasswordResetForEmailInBackground:emailAddressTextField.text];
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (void)backButtonClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 @end

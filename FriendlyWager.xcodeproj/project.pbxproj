@@ -298,6 +298,7 @@
 				F714E17314A1A88400E24956 /* AppDelegate.m */,
 				F724468514D0C8A90009E001 /* Login */,
 				F724469114D0FECB0009E001 /* New Account */,
+				8C4AA61B14D13C7200A6013F /* Reset Password */,
 				F714E1A214A1B00000E24956 /* Home */,
 				F714E1ED14A1BE2600E24956 /* Ledger */,
 				F7CDD73714ABD1FD0038FE6B /* Make a Wager */,
@@ -313,7 +314,6 @@
 				F7CDD80914B16BEE0038FE6B /* New Wager */,
 				F743CA0314A6C22F006B533B /* Score Detail */,
 				F714E16A14A1A88400E24956 /* Supporting Files */,
-				8C4AA61B14D13C7200A6013F /* Reset Password */,
 			);
 			path = FriendlyWager;
 			sourceTree = "<group>";
