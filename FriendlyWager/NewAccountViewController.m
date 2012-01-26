@@ -7,6 +7,7 @@
 //
 
 #import "NewAccountViewController.h"
+#import <Parse/Parse.h>
 
 @implementation NewAccountViewController
 
@@ -55,7 +56,23 @@
 #pragma mark - Button Clicks
 
 - (IBAction)submitButtonClicked:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    PFUser *user = [PFUser user];
+    user.username = userNameTextField.text;
+    user.password = passwordTextField.text;
+    [user setObject:favoriteSportTextField.text forKey:@"favorite_sport"];
+    [user setObject:favoriteTeamTextField forKey:@"favorite_team"];
+    
+    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            // Hooray! Let them use the app now.
+            NSLog(@"success!");
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            NSString *errorString = [[error userInfo] objectForKey:@"error"];
+            NSLog(@"Error: %@", errorString);
+
+        }
+    }];
 }
 
 - (void)backButtonClicked:(id)sender {
