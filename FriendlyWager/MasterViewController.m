@@ -11,6 +11,7 @@
 #import "TabsViewController.h"
 #import "MakeAWagerViewController.h"
 #import "LoginViewController.h"
+#import "LoginOptionsViewController.h"
 
 @implementation MasterViewController
 
@@ -61,7 +62,7 @@
 {
     PFUser *currentUser = [PFUser currentUser];
     if (!currentUser) {
-        LoginViewController *loginVc = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
+        LoginOptionsViewController *loginVc = [[LoginOptionsViewController alloc]initWithNibName:@"LoginOptionsViewController" bundle:nil];
         UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
         [self.navigationController presentModalViewController:navc animated:NO];
     }
@@ -112,7 +113,7 @@
 
 - (void)signOutButtonClicked:(id)sender {
     [PFUser logOut];
-    LoginViewController *loginVc = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
+    LoginOptionsViewController *loginVc = [[LoginOptionsViewController alloc]initWithNibName:@"LoginOptionsViewController" bundle:nil];
     UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
     [self.navigationController presentModalViewController:navc animated:YES];
 }

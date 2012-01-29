@@ -28,6 +28,8 @@
 		F714E1FF14A1D0CD00E24956 /* BHTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1F714A1D0CD00E24956 /* BHTabStyle.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F714E20014A1D0CD00E24956 /* BHTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1F914A1D0CD00E24956 /* BHTabsView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F714E20214A1D0CD00E24956 /* BHTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1FD14A1D0CD00E24956 /* BHTabView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F71E4E6214D5433500B24CB6 /* LoginOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F71E4E6014D5433500B24CB6 /* LoginOptionsViewController.m */; };
+		F71E4E6314D5433500B24CB6 /* LoginOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F71E4E6114D5433500B24CB6 /* LoginOptionsViewController.xib */; };
 		F724468A14D0C8D80009E001 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F724468814D0C8D80009E001 /* LoginViewController.m */; };
 		F724468B14D0C8D80009E001 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F724468914D0C8D80009E001 /* LoginViewController.xib */; };
 		F724469514D0FF110009E001 /* NewAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F724469314D0FF110009E001 /* NewAccountViewController.m */; };
@@ -129,6 +131,9 @@
 		F714E1F914A1D0CD00E24956 /* BHTabsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabsView.m; sourceTree = "<group>"; };
 		F714E1FC14A1D0CD00E24956 /* BHTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHTabView.h; sourceTree = "<group>"; };
 		F714E1FD14A1D0CD00E24956 /* BHTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabView.m; sourceTree = "<group>"; };
+		F71E4E5F14D5433500B24CB6 /* LoginOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginOptionsViewController.h; sourceTree = "<group>"; };
+		F71E4E6014D5433500B24CB6 /* LoginOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginOptionsViewController.m; sourceTree = "<group>"; };
+		F71E4E6114D5433500B24CB6 /* LoginOptionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginOptionsViewController.xib; sourceTree = "<group>"; };
 		F724468714D0C8D80009E001 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		F724468814D0C8D80009E001 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		F724468914D0C8D80009E001 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -386,12 +391,31 @@
 			name = "Tab src";
 			sourceTree = "<group>";
 		};
-		F724468514D0C8A90009E001 /* Login */ = {
+		F71E4E5D14D542EF00B24CB6 /* Login Options */ = {
+			isa = PBXGroup;
+			children = (
+				F71E4E5F14D5433500B24CB6 /* LoginOptionsViewController.h */,
+				F71E4E6014D5433500B24CB6 /* LoginOptionsViewController.m */,
+				F71E4E6114D5433500B24CB6 /* LoginOptionsViewController.xib */,
+			);
+			name = "Login Options";
+			sourceTree = "<group>";
+		};
+		F71E4E5E14D542FB00B24CB6 /* Friendly Wager Login */ = {
 			isa = PBXGroup;
 			children = (
 				F724468714D0C8D80009E001 /* LoginViewController.h */,
 				F724468814D0C8D80009E001 /* LoginViewController.m */,
 				F724468914D0C8D80009E001 /* LoginViewController.xib */,
+			);
+			name = "Friendly Wager Login";
+			sourceTree = "<group>";
+		};
+		F724468514D0C8A90009E001 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				F71E4E5E14D542FB00B24CB6 /* Friendly Wager Login */,
+				F71E4E5D14D542EF00B24CB6 /* Login Options */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -672,6 +696,7 @@
 				F724468B14D0C8D80009E001 /* LoginViewController.xib in Resources */,
 				F724469614D0FF110009E001 /* NewAccountViewController.xib in Resources */,
 				8C4AA62114D13CCE00A6013F /* ResetPasswordViewController.xib in Resources */,
+				F71E4E6314D5433500B24CB6 /* LoginOptionsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,6 +760,7 @@
 				F724468A14D0C8D80009E001 /* LoginViewController.m in Sources */,
 				F724469514D0FF110009E001 /* NewAccountViewController.m in Sources */,
 				8C4AA62014D13CCE00A6013F /* ResetPasswordViewController.m in Sources */,
+				F71E4E6214D5433500B24CB6 /* LoginOptionsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -37,7 +37,7 @@
     [super viewDidLoad];
     self.title = @"Login";
     
-    scrollView.contentSize = CGSizeMake(320, 460);
+    scrollView.contentSize = CGSizeMake(320, 490);
     
     [userNameTextField becomeFirstResponder];
     
@@ -47,7 +47,11 @@
     self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
     
     UIBarButtonItem *loginNavButton = [[UIBarButtonItem alloc]initWithTitle:@"Sign In" style:UIBarButtonItemStyleBordered target:self action:@selector(loginButtonClicked:)];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
+    
+    backButton.tintColor = [UIColor blackColor];
     loginNavButton.tintColor = [UIColor blackColor];
+    self.navigationItem.leftBarButtonItem = backButton;
     self.navigationItem.rightBarButtonItem = loginNavButton;
 
 }
@@ -95,6 +99,10 @@
 - (IBAction)resetButtonClicked:(id)sender {
     ResetPasswordViewController *resetPasswordVC = [[ResetPasswordViewController alloc]initWithNibName:@"ResetPasswordViewController" bundle:nil];
     [self.navigationController pushViewController:resetPasswordVC animated:YES];
+}
+
+- (void)backButtonClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
