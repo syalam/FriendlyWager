@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface FacebookFriendsViewController : UITableViewController <PF_FBRequestDelegate, PF_FBSessionDelegate>
+@interface FacebookFriendsViewController : UITableViewController <PF_FBRequestDelegate, PF_FBSessionDelegate> {
+
+}
+
+@property (nonatomic, retain) NSMutableArray *contentList;
 
 @end

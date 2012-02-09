@@ -93,6 +93,7 @@
     user.username = [result objectForKey:@"username"];
     user.email = [result objectForKey:@"email"];
     [user saveInBackground];
+    [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {

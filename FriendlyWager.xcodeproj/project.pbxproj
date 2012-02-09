@@ -70,6 +70,7 @@
 		F7B971F114E38A0800C683B9 /* FacebookFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B971EF14E38A0800C683B9 /* FacebookFriendsViewController.xib */; };
 		F7B9720314E44B9B00C683B9 /* OpponentSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B9720114E44B9B00C683B9 /* OpponentSearchViewController.m */; };
 		F7B9720414E44B9B00C683B9 /* OpponentSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B9720214E44B9B00C683B9 /* OpponentSearchViewController.xib */; };
+		F7B9721014E47AF000C683B9 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B9720F14E47AF000C683B9 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F7CDD73C14ABD23C0038FE6B /* MakeAWagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7CDD73A14ABD23C0038FE6B /* MakeAWagerViewController.m */; };
 		F7CDD73D14ABD23C0038FE6B /* MakeAWagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CDD73B14ABD23C0038FE6B /* MakeAWagerViewController.xib */; };
 		F7CDD77614ABF3410038FE6B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CDD77414ABF3410038FE6B /* AddressBook.framework */; };
@@ -196,6 +197,8 @@
 		F7B9720014E44B9B00C683B9 /* OpponentSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpponentSearchViewController.h; sourceTree = "<group>"; };
 		F7B9720114E44B9B00C683B9 /* OpponentSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpponentSearchViewController.m; sourceTree = "<group>"; };
 		F7B9720214E44B9B00C683B9 /* OpponentSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpponentSearchViewController.xib; sourceTree = "<group>"; };
+		F7B9720E14E47AF000C683B9 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		F7B9720F14E47AF000C683B9 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		F7CDD73914ABD23C0038FE6B /* MakeAWagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakeAWagerViewController.h; sourceTree = "<group>"; };
 		F7CDD73A14ABD23C0038FE6B /* MakeAWagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakeAWagerViewController.m; sourceTree = "<group>"; };
 		F7CDD73B14ABD23C0038FE6B /* MakeAWagerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MakeAWagerViewController.xib; sourceTree = "<group>"; };
@@ -582,6 +585,15 @@
 			name = "Opponent Search";
 			sourceTree = "<group>";
 		};
+		F7B9720D14E47AD300C683B9 /* JSON Kit */ = {
+			isa = PBXGroup;
+			children = (
+				F7B9720E14E47AF000C683B9 /* JSONKit.h */,
+				F7B9720F14E47AF000C683B9 /* JSONKit.m */,
+			);
+			name = "JSON Kit";
+			sourceTree = "<group>";
+		};
 		F7CDD73714ABD1FD0038FE6B /* Make a Wager */ = {
 			isa = PBXGroup;
 			children = (
@@ -595,6 +607,7 @@
 		F7CDD73E14ABDC820038FE6B /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F7B9720D14E47AD300C683B9 /* JSON Kit */,
 				F7342CDE14C4F1DD00AC0819 /* Expanding TextView */,
 				F7CDD73F14ABDC970038FE6B /* Multiple Contact Selector */,
 				F714E1F314A1D0A000E24956 /* Tab src */,
@@ -797,6 +810,7 @@
 				F71E4E6214D5433500B24CB6 /* LoginOptionsViewController.m in Sources */,
 				F7B971F014E38A0800C683B9 /* FacebookFriendsViewController.m in Sources */,
 				F7B9720314E44B9B00C683B9 /* OpponentSearchViewController.m in Sources */,
+				F7B9721014E47AF000C683B9 /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

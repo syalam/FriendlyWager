@@ -7,9 +7,11 @@
 //
 
 #import "FacebookFriendsViewController.h"
+#import "JSONKit.h"
 #import "AppDelegate.h"
 
 @implementation FacebookFriendsViewController
+@synthesize contentList;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -38,8 +40,10 @@
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     [delegate facebook].accessToken = [user facebookAccessToken];
     [delegate facebook].expirationDate = [user facebookExpirationDate];
+        
+    NSString *fql = @"SELECT uid, name FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me())";
+    //NSString *fql = @"SELECT uid, name FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1";
     
-    NSString *fql = @"SELECT uid FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1";
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:fql, @"q", nil];
     
     [[delegate facebook] requestWithGraphPath:@"fql" andParams:params andHttpMethod:@"GET" andDelegate:self];
@@ -89,7 +93,10 @@
 }
 
 - (void)request:(PF_FBRequest *)request didLoad:(id)result {
-    
+    NSMutableArray *resultSetArray = [[NSMutableArray alloc]initWithCapacity:1];
+    resultSetArray = [result objectForKey:@"data"];
+    [self setContentList:resultSetArray];
+    [self.tableView reloadData];
 }
 
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
@@ -101,13 +108,13 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 0;
+    return contentList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -118,7 +125,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    
+    cell.textLabel.text = [[contentList objectAtIndex:indexPath.row]valueForKey:@"name"];
     // Configure the cell...
     
     return cell;
