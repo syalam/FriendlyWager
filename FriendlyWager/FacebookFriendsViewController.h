@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
-@interface FacebookFriendsViewController : UITableViewController
+@interface FacebookFriendsViewController : UITableViewController <PF_FBRequestDelegate, PF_FBSessionDelegate>
 
 @end

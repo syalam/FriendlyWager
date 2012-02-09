@@ -7,18 +7,20 @@
 //
 
 #import "AppDelegate.h"
-#import <Parse/Parse.h>
 
 #import "MasterViewController.h"
+#import "LoginOptionsViewController.h"
 
 @implementation AppDelegate
-
 @synthesize window = _window;
 @synthesize navigationController = _navigationController;
+@synthesize facebook;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [Parse setFacebookApplicationId:@"287216318005845"];
+    
+    facebook = [[PF_Facebook alloc] initWithAppId:@"287216318005845" andDelegate:self];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     MasterViewController *masterViewController = [[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil];
@@ -75,5 +77,6 @@
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [[PFUser facebook] handleOpenURL:url]; 
 }
+
 
 @end

@@ -8,7 +8,8 @@
 
 #import "LoginOptionsViewController.h"
 #import "LoginViewController.h"
-#import <Parse/Parse.h>
+#import "AppDelegate.h"
+
 
 @implementation LoginOptionsViewController
 
@@ -69,14 +70,33 @@
     [PFUser logInWithFacebook:permissions block:^(PFUser *user, NSError *error) {
         if (!user) {
             NSLog(@"Uh oh. The user cancelled the Facebook login.");
-        } else if (user.isNew) {
-            NSLog(@"User with facebook id %@ signed up and logged in!", user.facebookId);
-            [self.navigationController dismissModalViewControllerAnimated:YES];
-        } else {
-            NSLog(@"User with facebook id %@ logged in!", user.facebookId);
-            [self.navigationController dismissModalViewControllerAnimated:YES];
+        }
+        else {
+            NSLog(@"User with facebook id %@ logged in!", user.username);
+            
+            //get user's details from facebook
+            AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+            [delegate facebook].accessToken = [user facebookAccessToken];
+            [delegate facebook].expirationDate = [user facebookExpirationDate];
+            [[delegate facebook]requestWithGraphPath:@"me" andDelegate:self];
         }
     }];
+}
+
+- (void)request:(PF_FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
+    NSLog(@"received response");
+}
+
+- (void)request:(PF_FBRequest *)request didLoad:(id)result {
+    //save the users username and email address to parse
+    PFUser *user = [PFUser currentUser];
+    user.username = [result objectForKey:@"username"];
+    user.email = [result objectForKey:@"email"];
+    [user saveInBackground];
+}
+
+- (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
+    
 }
 
 @end

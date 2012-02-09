@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
-@interface LoginOptionsViewController : UIViewController {
+@interface LoginOptionsViewController : UIViewController <PF_FBRequestDelegate, PF_FBSessionDelegate, PF_FBDialogDelegate> {
     IBOutlet UIButton *friendlyWagerButton;
     IBOutlet UIButton *facebookLoginButton;
 }

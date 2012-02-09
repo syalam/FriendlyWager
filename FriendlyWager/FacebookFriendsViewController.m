@@ -7,6 +7,7 @@
 //
 
 #import "FacebookFriendsViewController.h"
+#import "AppDelegate.h"
 
 @implementation FacebookFriendsViewController
 
@@ -33,11 +34,20 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    PFUser *user = [PFUser currentUser];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    [delegate facebook].accessToken = [user facebookAccessToken];
+    [delegate facebook].expirationDate = [user facebookExpirationDate];
+    
+    NSString *fql = @"SELECT uid FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1";
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:fql, @"q", nil];
+    
+    [[delegate facebook] requestWithGraphPath:@"fql" andParams:params andHttpMethod:@"GET" andDelegate:self];
+    
+
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
+    backButton.tintColor = [UIColor blackColor];
+    self.navigationItem.leftBarButtonItem = backButton;
 }
 
 - (void)viewDidUnload
@@ -73,18 +83,29 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - Facebook Callback Methods
+- (void)request:(PF_FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
+    NSLog(@"received response");
+}
+
+- (void)request:(PF_FBRequest *)request didLoad:(id)result {
+    
+}
+
+- (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
+    
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return 0;
 }
@@ -153,6 +174,12 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+#pragma mark - Button Clicks
+
+-(void)backButtonClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

@@ -64,7 +64,6 @@
     user.email = emailAddressTextField.text;
     [user setObject:favoriteSportTextField.text forKey:@"favorite_sport"];
     [user setObject:favoriteTeamTextField.text forKey:@"favorite_team"];
-    
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             // Hooray! Let them use the app now.

@@ -9,6 +9,8 @@
 #import "MakeAWagerViewController.h"
 #import "TabsViewController.h"
 #import "MyActionViewController.h"
+#import "FacebookFriendsViewController.h"
+#import "OpponentSearchViewController.h"
 
 @implementation MakeAWagerViewController
 
@@ -45,7 +47,7 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
     
-    NSArray *tableContentsArray = [[NSArray alloc]initWithObjects:@"A Facebook Friend", @"A Twitter Follower", @"A Contact", @"A Random Opponent", nil];
+    NSArray *tableContentsArray = [[NSArray alloc]initWithObjects:@"A Facebook Friend", @"A Twitter Follower", @"A Contact", @"Search for Opponent", @"A Random Opponent", nil];
     
     NSMutableArray *wagersArray = [[NSMutableArray alloc]initWithCapacity:1];
     
@@ -117,8 +119,8 @@
     
     
     if ([contentForThisRow isEqualToString:@"A Facebook Friend"]) {
-        alert = [[UIAlertView alloc]initWithTitle:@"Unavailable" message:@"FacebookConnect has not been configured" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+        FacebookFriendsViewController *facebookFriends = [[FacebookFriendsViewController alloc]initWithNibName:@"FacebookFriendsViewController" bundle:nil];
+        [self.navigationController pushViewController:facebookFriends animated:YES];
     }
     else if ([contentForThisRow isEqualToString:@"A Twitter Follower"]) {
         alert = [[UIAlertView alloc]initWithTitle:@"Unavailable" message:@"TwitterConnect has not been configured" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -138,6 +140,10 @@
         navc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         [self presentModalViewController:navc animated:YES];
         
+    }
+    else if (indexPath.section == 3) {
+        OpponentSearchViewController *search = [[OpponentSearchViewController alloc]initWithNibName:@"OpponentSearchViewController" bundle:nil];
+        [self.navigationController pushViewController:search animated:YES];
     }
 }
 
