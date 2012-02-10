@@ -35,7 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.title = @"Facebook Friends";
     PFUser *user = [PFUser currentUser];
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     [delegate facebook].accessToken = [user facebookAccessToken];
