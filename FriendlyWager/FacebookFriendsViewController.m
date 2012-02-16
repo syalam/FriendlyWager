@@ -41,8 +41,9 @@
     [delegate facebook].accessToken = [user facebookAccessToken];
     [delegate facebook].expirationDate = [user facebookExpirationDate];
         
-    NSString *fql = @"SELECT uid, name FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me())";
-    //NSString *fql = @"SELECT uid, name FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1";
+    NSString *getAllFriends = @"{'getAllFriends':'SELECT uid, name, username FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) order by name asc'";
+    NSString *getFWFriends = @"'getFWFriends':'SELECT uid, name FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1'}";
+    NSString *fql = [NSString stringWithFormat:@"%@%,%@", getAllFriends, getFWFriends];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:fql, @"q", nil];
     
@@ -93,10 +94,34 @@
 }
 
 - (void)request:(PF_FBRequest *)request didLoad:(id)result {
-    NSMutableArray *resultSetArray = [[NSMutableArray alloc]initWithCapacity:1];
-    resultSetArray = [result objectForKey:@"data"];
-    [self setContentList:resultSetArray];
-    [self.tableView reloadData];
+    if ([result objectForKey:@"data"]) {
+        NSMutableArray *resultSetArray = [[NSMutableArray alloc]initWithCapacity:1];
+        NSMutableArray *resultSetArray1 = [[NSMutableArray alloc]initWithCapacity:1];
+        NSMutableArray *allFbFriends = [[NSMutableArray alloc]initWithCapacity:1];
+        NSMutableArray *FWFriends = [[NSMutableArray alloc]initWithCapacity:1];
+        NSMutableDictionary *resultSetDictionary = [[NSMutableDictionary alloc]initWithDictionary:result];
+        for (id key in resultSetDictionary) {
+            resultSetArray1 = [resultSetDictionary valueForKey:key];
+            allFbFriends = [[resultSetArray1 objectAtIndex:0]valueForKey:@"fql_result_set"];
+            FWFriends = [[resultSetArray1 objectAtIndex:1]valueForKey:@"fql_result_set"];
+        }
+        NSString *allFbUid;
+        NSString *fwFbUid;
+        for (NSUInteger i = 0; i < allFbFriends.count; i++) {
+            for (NSUInteger c = 0; c < FWFriends.count; c++) {
+                allFbUid = [NSString stringWithFormat:@"%@",[[allFbFriends objectAtIndex:i]valueForKey:@"uid"]];
+                fwFbUid = [NSString stringWithFormat:@"%@",[[FWFriends objectAtIndex:c]valueForKey:@"uid"]];
+                if ([allFbUid isEqualToString:fwFbUid]) {
+                    [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"YES", @"isFW", nil]];
+                }
+                else {
+                    [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"NO", @"isFW", nil]];
+                }
+            }
+        }
+        [self setContentList:resultSetArray];
+        [self.tableView reloadData];
+    }
 }
 
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
@@ -122,11 +147,15 @@
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    if ([[[contentList objectAtIndex:indexPath.row]valueForKey:@"isFW"]isEqualToString:@"YES"]) {
+        UILabel *fwLabel = [[UILabel alloc]initWithFrame:CGRectMake(260, 12, 40, 20)];
+        fwLabel.text = @"FW";
+        [cell addSubview:fwLabel];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-    cell.textLabel.text = [[contentList objectAtIndex:indexPath.row]valueForKey:@"name"];
-    // Configure the cell...
+    
+    cell.textLabel.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"]valueForKey:@"name"];
     
     return cell;
 }
