@@ -52,6 +52,9 @@
                     self.account = [_accounts objectAtIndex:0];
                     [self fetchFollowers];
                 }
+                else {
+                    
+                }
             }];
         }
         
@@ -189,8 +192,6 @@
                                           requestMethod:TWRequestMethodGET];
     [request setAccount:self.account];    
     [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-        NSString *responseString = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
-        NSLog(@"%@", responseString);
         if ([urlResponse statusCode] == 200) {
             NSError *jsonError = nil;
             NSMutableArray *followerIds = [[NSMutableArray alloc]initWithCapacity:1];
@@ -205,7 +206,6 @@
                     else {
                         param1 = [followerIds objectAtIndex:i];
                     }
-                    NSLog(@"%@", param1);
                     
                 }
                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:param1, @"user_id", nil];
@@ -213,8 +213,6 @@
                 TWRequest *request = [[TWRequest alloc] initWithURL:url parameters:params requestMethod:TWRequestMethodGET];
                 [request setAccount:self.account];    
                 [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-                    NSString *responseString = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
-                    NSLog(@"%@", responseString);
                     if ([urlResponse statusCode] == 200) {
                         NSError *jsonError = nil;
                         id jsonResult = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
@@ -226,7 +224,8 @@
                 }];
             }
             else {
-                NSString *message = [NSString stringWithFormat:@"Could not parse your timeline: %@", [jsonError localizedDescription]];
+                NSString *message = [NSString stringWithFormat:@"Could not parse your followers list: %@", [jsonError localizedDescription]];
+                [SVProgressHUD dismiss];
                 [[[UIAlertView alloc] initWithTitle:@"Error" 
                                             message:message
                                            delegate:nil 
@@ -234,12 +233,22 @@
                                   otherButtonTitles:nil] show];
             }
         }
+        else if ([urlResponse statusCode] == 401) {
+            [SVProgressHUD dismiss];
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Please login to your Twitter Account in the iPhone Settings menu" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: nil] show];
+        }
     }];
 
 }
 
 #pragma mark - Button Clicks
 -(void)backButtonClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - UIAlertView Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
