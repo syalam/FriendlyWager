@@ -194,25 +194,38 @@
     [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
         if ([urlResponse statusCode] == 200) {
             NSError *jsonError = nil;
-            NSMutableArray *followerIds = [[NSMutableArray alloc]initWithCapacity:1];
+            followerIds = [[NSMutableArray alloc]initWithCapacity:1];
             id jsonResult = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
             if (jsonResult != nil) {
                 followerIds = [jsonResult valueForKey:@"ids"];
                 NSString *param1;
-                for (NSUInteger i = 0; i < followerIds.count; i++) {
-                    if (param1 != NULL) {
-                        param1 = [NSString stringWithFormat:@"%@,%@", param1, [followerIds objectAtIndex:i]];
+                if (followerIds.count > 100) {
+                    followerDataCount = 100;
+                    for (NSUInteger i = 0; i < 100; i++) {
+                        if (param1 != NULL) {
+                            param1 = [NSString stringWithFormat:@"%@,%@", param1, [followerIds objectAtIndex:i]];
+                        }
+                        else {
+                            param1 = [followerIds objectAtIndex:i];
+                        }
                     }
-                    else {
-                        param1 = [followerIds objectAtIndex:i];
+                }
+                else {
+                    for (NSUInteger i = 0; i < followerIds.count; i++) {
+                        if (param1 != NULL) {
+                            param1 = [NSString stringWithFormat:@"%@,%@", param1, [followerIds objectAtIndex:i]];
+                        }
+                        else {
+                            param1 = [followerIds objectAtIndex:i];
+                        }
                     }
-                    
                 }
                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:param1, @"user_id", nil];
                 NSURL *url = [NSURL URLWithString:@"http://api.twitter.com/1/users/lookup.json"];
                 TWRequest *request = [[TWRequest alloc] initWithURL:url parameters:params requestMethod:TWRequestMethodGET];
                 [request setAccount:self.account];    
                 [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+                    NSLog(@"%d", [urlResponse statusCode]); 
                     if ([urlResponse statusCode] == 200) {
                         NSError *jsonError = nil;
                         id jsonResult = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
@@ -241,6 +254,41 @@
 
 }
 
+- (void)fetchMoreFollowers {
+    NSUInteger paramsToPass;
+    NSString *param;
+    if (followerIds.count > (followerDataCount + 100)) {
+        paramsToPass = followerDataCount + 100;
+    }
+    else {
+        paramsToPass = (followerDataCount + 100) - followerIds.count;
+    }
+    
+    for (NSUInteger i = paramsToPass - 100; i < paramsToPass; i++) {
+        if (param != NULL) {
+            param = [NSString stringWithFormat:@"%@,%@", param, [followerIds objectAtIndex:i]];
+        }
+        else {
+            param = [followerIds objectAtIndex:i];
+        }
+    }
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:param, @"user_id", nil];
+    NSURL *url = [NSURL URLWithString:@"http://api.twitter.com/1/users/lookup.json"];
+    TWRequest *request = [[TWRequest alloc] initWithURL:url parameters:params requestMethod:TWRequestMethodGET];
+    [request setAccount:self.account];    
+    [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+        NSLog(@"%d", [urlResponse statusCode]); 
+        if ([urlResponse statusCode] == 200) {
+            NSError *jsonError = nil;
+            id jsonResult = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+            self.followers = jsonResult;
+            [self.contentList addObjectsFromArray:_followers];
+            [self.tableView reloadData];
+        }
+    }];
+
+}
+
 #pragma mark - Button Clicks
 -(void)backButtonClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -250,6 +298,16 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
+    if(self.tableView.contentOffset.y >= (self.tableView.contentSize.height - self.tableView.bounds.size.height)) {
+        //fetchingMoreMessages = YES;
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fetchOlderMessages) object:nil];
+        [self performSelector:@selector(fetchMoreFollowers) withObject:nil afterDelay:0];
+    }
 }
 
 @end

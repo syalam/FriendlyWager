@@ -11,7 +11,8 @@
 #import <Accounts/Accounts.h>
 
 @interface TwitterFollowersViewController : UITableViewController {
-    
+    NSUInteger followerDataCount;
+    NSMutableArray *followerIds;
 }
 
 @property (strong, nonatomic) ACAccountStore *accountStore;
@@ -21,5 +22,6 @@
 @property (nonatomic, retain) NSMutableArray* contentList;
 
 - (void)fetchFollowers;
+- (void)fetchMoreFollowers;
 
 @end
