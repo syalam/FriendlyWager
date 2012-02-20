@@ -296,8 +296,11 @@
             if ([urlResponse statusCode] == 200) {
                 NSError *jsonError = nil;
                 id jsonResult = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
-                self.followers = jsonResult;
-                [self.contentList addObjectsFromArray:_followers];
+                NSMutableArray *addedFollowers = [[NSMutableArray alloc]initWithCapacity:1];
+                addedFollowers = [_followers mutableCopy];
+                _followers = jsonResult;
+                [addedFollowers addObjectsFromArray:_followers];
+                [self setContentList:addedFollowers];
                 [self.tableView reloadData];
             }
         }];
