@@ -10,6 +10,7 @@
 #import "TabsViewController.h"
 #import "MyActionViewController.h"
 #import "FacebookFriendsViewController.h"
+#import "TwitterFollowersViewController.h"
 #import "OpponentSearchViewController.h"
 
 @implementation MakeAWagerViewController
@@ -40,6 +41,7 @@
     [super viewDidLoad];
     wagerTableView.dataSource = self;
     wagerTableView.delegate = self;
+    
     
     self.title = @"Make A Wager";
     NSDictionary *navTitleAttributes = [[NSDictionary alloc]initWithObjectsAndKeys:
@@ -110,7 +112,6 @@
 
 #pragma mark - TableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIAlertView *alert;
     NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
     id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
     
@@ -123,8 +124,8 @@
         [self.navigationController pushViewController:facebookFriends animated:YES];
     }
     else if ([contentForThisRow isEqualToString:@"A Twitter Follower"]) {
-        alert = [[UIAlertView alloc]initWithTitle:@"Unavailable" message:@"TwitterConnect has not been configured" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+        TwitterFollowersViewController *twitterFollowers = [[TwitterFollowersViewController alloc]initWithNibName:@"TwitterFollowersViewController" bundle:nil];
+        [self.navigationController pushViewController:twitterFollowers animated:YES];
     }
     else if ([contentForThisRow isEqualToString:@"A Contact"]) {
         [self presentModalViewController:picker animated:YES];

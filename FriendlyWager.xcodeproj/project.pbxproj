@@ -90,6 +90,12 @@
 		F7D2AF1A14C7F7DF00472ED3 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D2AF1914C7F7DF00472ED3 /* libz.1.1.3.dylib */; };
 		F7D2AF1C14C7F7ED00472ED3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D2AF1B14C7F7ED00472ED3 /* Security.framework */; };
 		F7D2AF1E14C7F7F300472ED3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D2AF1D14C7F7F300472ED3 /* QuartzCore.framework */; };
+		F7D70C2414F0B987001F8525 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D70C2314F0B987001F8525 /* Twitter.framework */; };
+		F7D70C2E14F0BC12001F8525 /* TwitterFollowersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D70C2C14F0BC12001F8525 /* TwitterFollowersViewController.m */; };
+		F7D70C2F14F0BC12001F8525 /* TwitterFollowersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D70C2D14F0BC12001F8525 /* TwitterFollowersViewController.xib */; };
+		F7D70C3114F18B6E001F8525 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D70C3014F18B6D001F8525 /* Accounts.framework */; };
+		F7D70C3F14F1EE9A001F8525 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F7D70C3C14F1EE9A001F8525 /* SVProgressHUD.bundle */; };
+		F7D70C4014F1EE9A001F8525 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D70C3E14F1EE9A001F8525 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -222,6 +228,14 @@
 		F7D2AF1914C7F7DF00472ED3 /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
 		F7D2AF1B14C7F7ED00472ED3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		F7D2AF1D14C7F7F300472ED3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		F7D70C2314F0B987001F8525 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		F7D70C2B14F0BC12001F8525 /* TwitterFollowersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFollowersViewController.h; sourceTree = "<group>"; };
+		F7D70C2C14F0BC12001F8525 /* TwitterFollowersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterFollowersViewController.m; sourceTree = "<group>"; };
+		F7D70C2D14F0BC12001F8525 /* TwitterFollowersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwitterFollowersViewController.xib; sourceTree = "<group>"; };
+		F7D70C3014F18B6D001F8525 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		F7D70C3C14F1EE9A001F8525 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		F7D70C3D14F1EE9A001F8525 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		F7D70C3E14F1EE9A001F8525 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +243,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7D70C3114F18B6E001F8525 /* Accounts.framework in Frameworks */,
+				F7D70C2414F0B987001F8525 /* Twitter.framework in Frameworks */,
 				F7D2AF1E14C7F7F300472ED3 /* QuartzCore.framework in Frameworks */,
 				F7D2AF1C14C7F7ED00472ED3 /* Security.framework in Frameworks */,
 				F7D2AF1A14C7F7DF00472ED3 /* libz.1.1.3.dylib in Frameworks */,
@@ -291,6 +307,8 @@
 		F714E16214A1A88400E24956 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F7D70C3014F18B6D001F8525 /* Accounts.framework */,
+				F7D70C2314F0B987001F8525 /* Twitter.framework */,
 				F7D2AEF814C7F59000472ED3 /* AudioToolbox.framework */,
 				F7D2AF1D14C7F7F300472ED3 /* QuartzCore.framework */,
 				F7D2AF1B14C7F7ED00472ED3 /* Security.framework */,
@@ -320,6 +338,7 @@
 				F714E1A214A1B00000E24956 /* Home */,
 				F714E1ED14A1BE2600E24956 /* Ledger */,
 				F7CDD73714ABD1FD0038FE6B /* Make a Wager */,
+				F7D70C2A14F0BBEB001F8525 /* Twitter Followers */,
 				F7B971FE14E44B6900C683B9 /* Opponent Search */,
 				F7B971EB14E389CF00C683B9 /* Facebook Friends */,
 				F743C96714A2EF39006B533B /* Tab Screen */,
@@ -607,6 +626,7 @@
 		F7CDD73E14ABDC820038FE6B /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F7D70C3614F1EE54001F8525 /* HUD */,
 				F7B9720D14E47AD300C683B9 /* JSON Kit */,
 				F7342CDE14C4F1DD00AC0819 /* Expanding TextView */,
 				F7CDD73F14ABDC970038FE6B /* Multiple Contact Selector */,
@@ -640,6 +660,26 @@
 				F7CDD80C14B16C380038FE6B /* NewWagerViewController.xib */,
 			);
 			name = "New Wager";
+			sourceTree = "<group>";
+		};
+		F7D70C2A14F0BBEB001F8525 /* Twitter Followers */ = {
+			isa = PBXGroup;
+			children = (
+				F7D70C2B14F0BC12001F8525 /* TwitterFollowersViewController.h */,
+				F7D70C2C14F0BC12001F8525 /* TwitterFollowersViewController.m */,
+				F7D70C2D14F0BC12001F8525 /* TwitterFollowersViewController.xib */,
+			);
+			name = "Twitter Followers";
+			sourceTree = "<group>";
+		};
+		F7D70C3614F1EE54001F8525 /* HUD */ = {
+			isa = PBXGroup;
+			children = (
+				F7D70C3C14F1EE9A001F8525 /* SVProgressHUD.bundle */,
+				F7D70C3D14F1EE9A001F8525 /* SVProgressHUD.h */,
+				F7D70C3E14F1EE9A001F8525 /* SVProgressHUD.m */,
+			);
+			name = HUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -744,6 +784,8 @@
 				F71E4E6314D5433500B24CB6 /* LoginOptionsViewController.xib in Resources */,
 				F7B971F114E38A0800C683B9 /* FacebookFriendsViewController.xib in Resources */,
 				F7B9720414E44B9B00C683B9 /* OpponentSearchViewController.xib in Resources */,
+				F7D70C2F14F0BC12001F8525 /* TwitterFollowersViewController.xib in Resources */,
+				F7D70C3F14F1EE9A001F8525 /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -811,6 +853,8 @@
 				F7B971F014E38A0800C683B9 /* FacebookFriendsViewController.m in Sources */,
 				F7B9720314E44B9B00C683B9 /* OpponentSearchViewController.m in Sources */,
 				F7B9721014E47AF000C683B9 /* JSONKit.m in Sources */,
+				F7D70C2E14F0BC12001F8525 /* TwitterFollowersViewController.m in Sources */,
+				F7D70C4014F1EE9A001F8525 /* SVProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
