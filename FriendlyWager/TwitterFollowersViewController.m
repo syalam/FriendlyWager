@@ -266,14 +266,27 @@
         }
         followerDataCount = followerDataCount + paramsToPass;
         
-        for (NSUInteger i = paramsToPass - 100; i < paramsToPass; i++) {
-            if (param != NULL) {
-                param = [NSString stringWithFormat:@"%@,%@", param, [followerIds objectAtIndex:i]];
-            }
-            else {
-                param = [followerIds objectAtIndex:i];
+        if (paramsToPass > 100) {
+            for (NSUInteger i = paramsToPass - 100; i < paramsToPass; i++) {
+                if (param != NULL) {
+                    param = [NSString stringWithFormat:@"%@,%@", param, [followerIds objectAtIndex:i]];
+                }
+                else {
+                    param = [followerIds objectAtIndex:i];
+                }
             }
         }
+        else {
+            for (NSUInteger i = paramsToPass - followerIds.count; i < paramsToPass; i++) {
+                if (param != NULL) {
+                    param = [NSString stringWithFormat:@"%@,%@", param, [followerIds objectAtIndex:i]];
+                }
+                else {
+                    param = [followerIds objectAtIndex:i];
+                }
+            }
+        }
+
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:param, @"user_id", nil];
         NSURL *url = [NSURL URLWithString:@"http://api.twitter.com/1/users/lookup.json"];
         TWRequest *request = [[TWRequest alloc] initWithURL:url parameters:params requestMethod:TWRequestMethodGET];
