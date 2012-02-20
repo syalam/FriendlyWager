@@ -257,36 +257,38 @@
 - (void)fetchMoreFollowers {
     NSUInteger paramsToPass;
     NSString *param;
-    if (followerIds.count > (followerDataCount + 100)) {
-        paramsToPass = followerDataCount + 100;
-    }
-    else {
-        paramsToPass = (followerDataCount + 100) - followerIds.count;
-    }
-    
-    for (NSUInteger i = paramsToPass - 100; i < paramsToPass; i++) {
-        if (param != NULL) {
-            param = [NSString stringWithFormat:@"%@,%@", param, [followerIds objectAtIndex:i]];
+    if (followerDataCount < followerIds.count) {
+        if (followerIds.count > (followerDataCount + 100)) {
+            paramsToPass = followerDataCount + 100;
         }
         else {
-            param = [followerIds objectAtIndex:i];
+            paramsToPass = (followerDataCount + 100) - followerIds.count;
         }
+        followerDataCount = followerDataCount + paramsToPass;
+        
+        for (NSUInteger i = paramsToPass - 100; i < paramsToPass; i++) {
+            if (param != NULL) {
+                param = [NSString stringWithFormat:@"%@,%@", param, [followerIds objectAtIndex:i]];
+            }
+            else {
+                param = [followerIds objectAtIndex:i];
+            }
+        }
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:param, @"user_id", nil];
+        NSURL *url = [NSURL URLWithString:@"http://api.twitter.com/1/users/lookup.json"];
+        TWRequest *request = [[TWRequest alloc] initWithURL:url parameters:params requestMethod:TWRequestMethodGET];
+        [request setAccount:self.account];    
+        [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+            NSLog(@"%d", [urlResponse statusCode]); 
+            if ([urlResponse statusCode] == 200) {
+                NSError *jsonError = nil;
+                id jsonResult = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+                self.followers = jsonResult;
+                [self.contentList addObjectsFromArray:_followers];
+                [self.tableView reloadData];
+            }
+        }];
     }
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:param, @"user_id", nil];
-    NSURL *url = [NSURL URLWithString:@"http://api.twitter.com/1/users/lookup.json"];
-    TWRequest *request = [[TWRequest alloc] initWithURL:url parameters:params requestMethod:TWRequestMethodGET];
-    [request setAccount:self.account];    
-    [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-        NSLog(@"%d", [urlResponse statusCode]); 
-        if ([urlResponse statusCode] == 200) {
-            NSError *jsonError = nil;
-            id jsonResult = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
-            self.followers = jsonResult;
-            [self.contentList addObjectsFromArray:_followers];
-            [self.tableView reloadData];
-        }
-    }];
-
 }
 
 #pragma mark - Button Clicks

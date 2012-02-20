@@ -29,33 +29,5 @@
          landmarkName = "-fetchSearchResults"
          landmarkType = "5">
       </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "FriendlyWager/TwitterFollowersViewController.m"
-         timestampString = "351457480.143117"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "304"
-         endingLineNumber = "304"
-         landmarkName = "-scrollViewDidScroll:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "FriendlyWager/TwitterFollowersViewController.m"
-         timestampString = "351457501.358569"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "257"
-         endingLineNumber = "257"
-         landmarkName = "-fetchMoreFollowers"
-         landmarkType = "5">
-      </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
