@@ -15,6 +15,7 @@
 @synthesize accountStore = _accountStore;
 @synthesize followers = _followers;
 @synthesize contentList;
+@synthesize activityIndicator = _activityIndicator;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -40,6 +41,8 @@
     [super viewDidLoad];
     
     self.title = @"Twitter Followers";
+    
+    [self.activityIndicator startAnimating];
     
     [SVProgressHUD showWithStatus:@"Fetching Twitter Followers"];
     if (_accountStore == nil) {    
@@ -73,6 +76,7 @@
 
 - (void)viewDidUnload
 {
+    [self setActivityIndicator:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

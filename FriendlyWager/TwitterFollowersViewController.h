@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSArray *accounts;
 @property (nonatomic, retain) NSMutableArray *followers;
 @property (nonatomic, retain) NSMutableArray* contentList;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 - (void)fetchFollowers;
 - (void)fetchMoreFollowers;
