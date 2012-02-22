@@ -91,6 +91,7 @@
     //save the users username and email address to parse
     PFUser *user = [PFUser currentUser];
     user.username = [result objectForKey:@"username"];
+    [user setObject:[result objectForKey:@"name"] forKey:@"name"];
     user.email = [result objectForKey:@"email"];
     [user saveInBackground];
     [self.navigationController dismissModalViewControllerAnimated:YES];

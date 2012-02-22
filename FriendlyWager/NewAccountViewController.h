@@ -10,6 +10,8 @@
 
 @interface NewAccountViewController : UIViewController {
     IBOutlet UIScrollView *scrollView;
+    IBOutlet UITextField *firstNameTextField;
+    IBOutlet UITextField *lastNameTextField;
     IBOutlet UITextField *userNameTextField;
     IBOutlet UITextField *passwordTextField;
     IBOutlet UITextField *favoriteSportTextField;
@@ -19,5 +21,7 @@
 }
 
 - (IBAction)submitButtonClicked:(id)sender;
+
+- (void)displayAlert:(NSString *)message;
 
 @end

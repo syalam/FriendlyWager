@@ -345,7 +345,7 @@
 				F743C97814A3AB7B006B533B /* My Action */,
 				F743C9D814A586B4006B533B /* Action Summary */,
 				F743C9DF14A5BA2A006B533B /* Action Detail */,
-				F7342CD714C4F13100AC0819 /* Chat */,
+				F7342CD714C4F13100AC0819 /* Trash Talk */,
 				F743C97E14A3B016006B533B /* Rankings */,
 				F743C9F314A67CD6006B533B /* Rankings Detail */,
 				F743C98414A3B135006B533B /* Scores */,
@@ -464,14 +464,14 @@
 			name = "New Account";
 			sourceTree = "<group>";
 		};
-		F7342CD714C4F13100AC0819 /* Chat */ = {
+		F7342CD714C4F13100AC0819 /* Trash Talk */ = {
 			isa = PBXGroup;
 			children = (
 				F7342CD914C4F15600AC0819 /* ChatViewController.h */,
 				F7342CDA14C4F15600AC0819 /* ChatViewController.m */,
 				F7342CDB14C4F15600AC0819 /* ChatViewController.xib */,
 			);
-			name = Chat;
+			name = "Trash Talk";
 			sourceTree = "<group>";
 		};
 		F7342CDE14C4F1DD00AC0819 /* Expanding TextView */ = {
@@ -902,8 +902,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Friendly Wager, Inc.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Friendly Wager, Inc.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -918,8 +918,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "DCD92A3A-4A6D-49FF-A411-AFAE58F4AFD9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DCD92A3A-4A6D-49FF-A411-AFAE58F4AFD9";
+				PROVISIONING_PROFILE = "7B632B35-10A5-4B92-A3DB-2F3412DD6001";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7B632B35-10A5-4B92-A3DB-2F3412DD6001";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -930,8 +930,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Friendly Wager, Inc.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Friendly Wager, Inc.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -940,8 +940,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "DCD92A3A-4A6D-49FF-A411-AFAE58F4AFD9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DCD92A3A-4A6D-49FF-A411-AFAE58F4AFD9";
+				PROVISIONING_PROFILE = "7B632B35-10A5-4B92-A3DB-2F3412DD6001";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7B632B35-10A5-4B92-A3DB-2F3412DD6001";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -960,8 +960,8 @@
 				GCC_PREFIX_HEADER = "FriendlyWager/FriendlyWager-Prefix.pch";
 				INFOPLIST_FILE = "FriendlyWager/FriendlyWager-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A956CC5B-D8CD-4D87-A2E9-BD8C6689CDA8";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A956CC5B-D8CD-4D87-A2E9-BD8C6689CDA8";
+				PROVISIONING_PROFILE = "7B632B35-10A5-4B92-A3DB-2F3412DD6001";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7B632B35-10A5-4B92-A3DB-2F3412DD6001";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -979,8 +979,8 @@
 				GCC_PREFIX_HEADER = "FriendlyWager/FriendlyWager-Prefix.pch";
 				INFOPLIST_FILE = "FriendlyWager/FriendlyWager-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A956CC5B-D8CD-4D87-A2E9-BD8C6689CDA8";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A956CC5B-D8CD-4D87-A2E9-BD8C6689CDA8";
+				PROVISIONING_PROFILE = "7B632B35-10A5-4B92-A3DB-2F3412DD6001";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7B632B35-10A5-4B92-A3DB-2F3412DD6001";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

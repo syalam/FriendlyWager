@@ -69,7 +69,7 @@
     wagerButton.titleLabel.textAlignment = UITextAlignmentCenter;
     wagerButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
     
-    [chatButton setTitle:[NSString stringWithFormat:@"%@\n%@", @"Chat", opponent] forState:UIControlStateNormal];
+    [chatButton setTitle:[NSString stringWithFormat:@"%@\n%@", @"Trash Talk", opponent] forState:UIControlStateNormal];
     chatButton.titleLabel.textAlignment = UITextAlignmentCenter;
     chatButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
     
@@ -104,9 +104,17 @@
     
     [self.navigationController pushViewController:sports animated:YES];
 }
-- (IBAction)chatButtonClicked:(id)sender {
-    ChatViewController *chatVc = [[ChatViewController alloc]initWithNibName:@"ChatViewController" bundle:nil];
-    [self.navigationController pushViewController:chatVc animated:YES];
+- (IBAction)chatButtonClicked:(id)sender { 
+    PFUser *currentUser = [PFUser currentUser];
+    if ([currentUser hasFacebook]) {
+        ChatViewController *chatVc = [[ChatViewController alloc]initWithNibName:@"ChatViewController" bundle:nil];
+        [self.navigationController pushViewController:chatVc animated:YES];
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Facebook Sign In Required" message:@"You must sign in with a facebook account to use this feature" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign In", nil];
+        [alert show];
+    }
+
 }
 
 #pragma mark - Table view data source

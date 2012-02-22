@@ -34,8 +34,8 @@
 {
     [super viewDidLoad];
     self.title = @"New Account";
-    scrollView.contentSize = CGSizeMake(320, 470);
-    [emailAddressTextField becomeFirstResponder];
+    scrollView.contentSize = CGSizeMake(320, 550);
+    [firstNameTextField becomeFirstResponder];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
     backButton.tintColor = [UIColor blackColor];
     self.navigationItem.leftBarButtonItem = backButton;
@@ -58,40 +58,71 @@
 #pragma mark - Button Clicks
 
 - (IBAction)submitButtonClicked:(id)sender {
-    PFUser *user = [PFUser user];
-    user.username = userNameTextField.text;
-    user.password = passwordTextField.text;
-    user.email = emailAddressTextField.text;
-    [user setObject:favoriteSportTextField.text forKey:@"favorite_sport"];
-    [user setObject:favoriteTeamTextField.text forKey:@"favorite_team"];
-    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            // Hooray! Let them use the app now.
-            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Success" 
-                                                                message:@"New user created!" 
-                                                               delegate:self 
-                                                      cancelButtonTitle:@"OK" 
-                                                      otherButtonTitles:nil];
-            [alertView show];
-            
-            [self.navigationController popViewControllerAnimated:YES];
-        } else {
-            NSString *errorString = [[error userInfo] objectForKey:@"error"];
-            
-            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
-                                                                message:errorString
-                                                               delegate:self 
-                                                      cancelButtonTitle:@"OK" 
-                                                      otherButtonTitles:nil];
-            [alertView show];
-
-
-        }
-    }];
+    if ([firstNameTextField.text isEqualToString:@""]) {
+        [self displayAlert:@"Please enter your first name"];
+    }
+    else if ([lastNameTextField.text isEqualToString:@""]) {
+        [self displayAlert:@"Please enter your last name"];
+    }
+    else if ([emailAddressTextField.text isEqualToString:@""]) {
+        [self displayAlert:@"Please enter your email address"];
+    }
+    else if ([userNameTextField.text isEqualToString:@""]) {
+        [self displayAlert:@"Please enter your username"];
+    }
+    else if ([passwordTextField.text isEqualToString:@""]) {
+        [self displayAlert:@"Please enter a password"];
+    }
+    else if ([favoriteSportTextField.text isEqualToString:@""]) {
+        [self displayAlert:@"Please enter your favorite sport"];
+    }
+    else if ([favoriteTeamTextField.text isEqualToString:@""]) {
+        [self displayAlert:@"Please enter your favorite team"];
+    }
+    else {
+        PFUser *user = [PFUser user];
+        user.username = userNameTextField.text;
+        user.password = passwordTextField.text;
+        user.email = emailAddressTextField.text;
+        [user setObject:[NSString stringWithFormat:@"%@ %@", firstNameTextField.text, lastNameTextField.text] forKey:@"name"];
+        [user setObject:favoriteSportTextField.text forKey:@"favorite_sport"];
+        [user setObject:favoriteTeamTextField.text forKey:@"favorite_team"];
+        [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (!error) {
+                // Hooray! Let them use the app now.
+                UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Success" 
+                                                                    message:@"New user created!" 
+                                                                   delegate:self 
+                                                          cancelButtonTitle:@"OK" 
+                                                          otherButtonTitles:nil];
+                [alertView show];
+                
+                [self.navigationController dismissModalViewControllerAnimated:YES];
+            } else {
+                NSString *errorString = [[error userInfo] objectForKey:@"error"];
+                
+                UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
+                                                                    message:errorString
+                                                                   delegate:self 
+                                                          cancelButtonTitle:@"OK" 
+                                                          otherButtonTitles:nil];
+                [alertView show];
+                
+                
+            }
+        }];
+    }
 }
 
 - (void)backButtonClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+#pragma mark - Display alert
+- (void)displayAlert:(NSString *)message {
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
 
 @end

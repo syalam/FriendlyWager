@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface MyActionSummaryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UIScrollView *scrollView;
