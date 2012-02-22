@@ -7,8 +7,11 @@
 //
 
 #import "ChatViewController.h"
+#import "AppDelegate.h"
+#import "JSONKit.h"
 
 @implementation ChatViewController
+@synthesize contentList = _contentList;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,6 +39,10 @@
     chatTableView.delegate = self;
     chatTableView.dataSource = self;
     
+    currentAPICall = kAPIGetFromFeed;
+    [self sendFacebookRequest];
+
+    
     [self createTextView];
     
     [textView becomeFirstResponder];
@@ -52,8 +59,11 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:([chatContent count] - 1) inSection:0];
-    [chatTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if (_contentList.count > 0) {
+        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:([_contentList count] - 1) inSection:0];
+        [chatTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+
 }
 
 - (void)viewDidUnload
@@ -144,7 +154,7 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return chatContent.count;
+    return _contentList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -155,10 +165,10 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:11.0];
-    cell.textLabel.text = [chatFrom objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"from"]valueForKey:@"name"];
     cell.detailTextLabel.textColor = [UIColor blackColor];
     cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:18.0];
-    cell.detailTextLabel.text = [chatContent objectAtIndex:indexPath.row];
+    cell.detailTextLabel.text = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"message"];
     
     return cell;
 }
@@ -166,13 +176,60 @@
 #pragma mark - Button Clicks
 - (void)sendButtonClicked:(id)sender {
     if (textView.text) {
-        [chatFrom addObject:@"Jim"];
-        [chatContent addObject:textView.text];
+        currentAPICall = kAPIPostToFeed;
+        [self sendFacebookRequest];
         textView.text = NULL;
-        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:([chatContent count] - 1) inSection:0];
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please enter some text before sending" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+}
+
+#pragma mark - Facebook Delegate Methods
+
+- (void)sendFacebookRequest {
+    PFUser *user = [PFUser currentUser];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    [delegate facebook].accessToken = [user facebookAccessToken];
+    [delegate facebook].expirationDate = [user facebookExpirationDate];
+    if (currentAPICall == kAPIPostToFeed) {
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:textView.text, @"message", nil];
+        [[delegate facebook]requestWithGraphPath:@"me/feed" andParams:params andHttpMethod:@"POST" andDelegate:self];
+    }
+    else if (currentAPICall == kAPIGetFromFeed) {
+        [[delegate facebook]requestWithGraphPath:@"me/feed" andDelegate:self];
+    }
+}
+
+- (void)request:(PF_FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
+    NSLog(@"received response");
+}
+
+- (void)request:(PF_FBRequest *)request didLoad:(id)result {
+    if (currentAPICall == kAPIGetFromFeed) {
+        NSString *resultJSON = [result JSONString];
+        NSLog(@"%@", resultJSON);
+        NSMutableArray *resultArray = [result objectForKey:@"data"];
+        NSMutableArray *resultToDisplay = [[NSMutableArray alloc]initWithCapacity:1];
+        for (NSUInteger i = 0; i < resultArray.count; i++) {
+            if ([[[[resultArray objectAtIndex:i]valueForKey:@"application"]valueForKey:@"id"]isEqualToString:@"287216318005845"]) {
+                [resultToDisplay addObject:[resultArray objectAtIndex:i]];            
+            }
+        }
+        [self setContentList:resultToDisplay];
+        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:([_contentList count] - 1) inSection:0];
         [chatTableView reloadData];
         [chatTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
+    else if (currentAPICall == kAPIPostToFeed) {
+        currentAPICall = kAPIGetFromFeed;
+        [self sendFacebookRequest];
+    }
+}
+
+- (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
+    
 }
 
 @end

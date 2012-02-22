@@ -164,6 +164,28 @@
     
 }
 
+#pragma mark - UIAlertView Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
+        PFUser *user = [PFUser currentUser];
+        [user linkToFacebook:permissions block:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                ChatViewController *chatVc = [[ChatViewController alloc]initWithNibName:@"ChatViewController" bundle:nil];
+                [self.navigationController pushViewController:chatVc animated:YES];
+            }
+            else {
+                
+                UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
+                                                                    message:@"This facebook account is associated with another user"
+                                                                   delegate:self 
+                                                          cancelButtonTitle:@"OK" 
+                                                          otherButtonTitles:nil];
+                [alertView show];
+            }
+        }];
+    }
+}
 
 
 

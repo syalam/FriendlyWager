@@ -66,14 +66,13 @@
 
 
 - (IBAction)facebookLoginButtonClicked:(id)sender {
-    NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", nil];
+    NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
     [PFUser logInWithFacebook:permissions block:^(PFUser *user, NSError *error) {
         if (!user) {
             NSLog(@"Uh oh. The user cancelled the Facebook login.");
         }
         else {
             NSLog(@"User with facebook id %@ logged in!", user.username);
-            
             //get user's details from facebook
             AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
             [delegate facebook].accessToken = [user facebookAccessToken];
