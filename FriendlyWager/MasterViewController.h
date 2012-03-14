@@ -15,6 +15,7 @@
     IBOutlet UIButton *scoresButton;
     IBOutlet UIButton *makeWagerButton;
     IBOutlet UIButton *rankingsButton;
+    IBOutlet UIButton *infoButton;
 }
 
 - (IBAction)myLedgerButtonClicked:(id)sender;
@@ -22,5 +23,6 @@
 - (IBAction)scoresButtonClicked:(id)sender;
 - (IBAction)makeWagerButtonClicked:(id)sender;
 - (IBAction)rankingsButtonClicked:(id)sender;
+- (IBAction)infoButtonClicked:(id)sender;
 
 @end

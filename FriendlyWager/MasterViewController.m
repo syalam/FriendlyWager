@@ -12,6 +12,7 @@
 #import "MakeAWagerViewController.h"
 #import "LoginViewController.h"
 #import "LoginOptionsViewController.h"
+#import "TrashTalkViewController.h"
 
 @implementation MasterViewController
 
@@ -109,6 +110,11 @@
     UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:makeWager];
     navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:navController animated:YES];
+}
+
+- (IBAction)infoButtonClicked:(id)sender {
+    TrashTalkViewController *trashTalk = [[TrashTalkViewController alloc]initWithNibName:@"TrashTalkViewController" bundle:nil];
+    [self.navigationController pushViewController:trashTalk animated:YES];
 }
 
 - (void)signOutButtonClicked:(id)sender {

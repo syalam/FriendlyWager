@@ -63,7 +63,6 @@
         NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:([_contentList count] - 1) inSection:0];
         [chatTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
-
 }
 
 - (void)viewDidUnload
@@ -229,7 +228,7 @@
 }
 
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
-    
+    NSLog(@"%@", error);
 }
 
 @end

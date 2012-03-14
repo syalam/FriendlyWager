@@ -107,8 +107,6 @@
                                                           cancelButtonTitle:@"OK" 
                                                           otherButtonTitles:nil];
                 [alertView show];
-                
-                
             }
         }];
     }

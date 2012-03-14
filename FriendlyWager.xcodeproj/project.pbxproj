@@ -66,6 +66,10 @@
 		F743CA0814A6C26C006B533B /* ScoreDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F743CA0614A6C26C006B533B /* ScoreDetailViewController.xib */; };
 		F74C0F0414B424C0006F3D99 /* SMContactsSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = F74C0F0314B424C0006F3D99 /* SMContactsSelector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F785721F14A26ED20028AD5E /* BHTabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F785721E14A26ED20028AD5E /* BHTabsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F7A08FC615100DC200471D3C /* TrashTalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A08FC415100DC200471D3C /* TrashTalkViewController.m */; };
+		F7A08FC715100DC200471D3C /* TrashTalkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7A08FC515100DC200471D3C /* TrashTalkViewController.xib */; };
+		F7A08FD11510216600471D3C /* NewTrashTalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A08FCF1510216600471D3C /* NewTrashTalkViewController.m */; };
+		F7A08FD21510216600471D3C /* NewTrashTalkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7A08FD01510216600471D3C /* NewTrashTalkViewController.xib */; };
 		F7B971F014E38A0800C683B9 /* FacebookFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B971EE14E38A0800C683B9 /* FacebookFriendsViewController.m */; };
 		F7B971F114E38A0800C683B9 /* FacebookFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B971EF14E38A0800C683B9 /* FacebookFriendsViewController.xib */; };
 		F7B9720314E44B9B00C683B9 /* OpponentSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B9720114E44B9B00C683B9 /* OpponentSearchViewController.m */; };
@@ -197,6 +201,12 @@
 		F74C0F0314B424C0006F3D99 /* SMContactsSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMContactsSelector.m; sourceTree = "<group>"; };
 		F785721D14A26ED20028AD5E /* BHTabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHTabsViewController.h; sourceTree = "<group>"; };
 		F785721E14A26ED20028AD5E /* BHTabsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabsViewController.m; sourceTree = "<group>"; };
+		F7A08FC315100DC200471D3C /* TrashTalkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrashTalkViewController.h; sourceTree = "<group>"; };
+		F7A08FC415100DC200471D3C /* TrashTalkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrashTalkViewController.m; sourceTree = "<group>"; };
+		F7A08FC515100DC200471D3C /* TrashTalkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrashTalkViewController.xib; sourceTree = "<group>"; };
+		F7A08FCE1510216600471D3C /* NewTrashTalkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTrashTalkViewController.h; sourceTree = "<group>"; };
+		F7A08FCF1510216600471D3C /* NewTrashTalkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTrashTalkViewController.m; sourceTree = "<group>"; };
+		F7A08FD01510216600471D3C /* NewTrashTalkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewTrashTalkViewController.xib; sourceTree = "<group>"; };
 		F7B971ED14E38A0800C683B9 /* FacebookFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookFriendsViewController.h; sourceTree = "<group>"; };
 		F7B971EE14E38A0800C683B9 /* FacebookFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookFriendsViewController.m; sourceTree = "<group>"; };
 		F7B971EF14E38A0800C683B9 /* FacebookFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FacebookFriendsViewController.xib; sourceTree = "<group>"; };
@@ -330,6 +340,7 @@
 		F714E16914A1A88400E24956 /* FriendlyWager */ = {
 			isa = PBXGroup;
 			children = (
+				F7A08FBD15100BE100471D3C /* Trash Talk */,
 				F714E17214A1A88400E24956 /* AppDelegate.h */,
 				F714E17314A1A88400E24956 /* AppDelegate.m */,
 				F724468514D0C8A90009E001 /* Login */,
@@ -345,7 +356,7 @@
 				F743C97814A3AB7B006B533B /* My Action */,
 				F743C9D814A586B4006B533B /* Action Summary */,
 				F743C9DF14A5BA2A006B533B /* Action Detail */,
-				F7342CD714C4F13100AC0819 /* Trash Talk */,
+				F7342CD714C4F13100AC0819 /* Chat */,
 				F743C97E14A3B016006B533B /* Rankings */,
 				F743C9F314A67CD6006B533B /* Rankings Detail */,
 				F743C98414A3B135006B533B /* Scores */,
@@ -464,14 +475,14 @@
 			name = "New Account";
 			sourceTree = "<group>";
 		};
-		F7342CD714C4F13100AC0819 /* Trash Talk */ = {
+		F7342CD714C4F13100AC0819 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
 				F7342CD914C4F15600AC0819 /* ChatViewController.h */,
 				F7342CDA14C4F15600AC0819 /* ChatViewController.m */,
 				F7342CDB14C4F15600AC0819 /* ChatViewController.xib */,
 			);
-			name = "Trash Talk";
+			name = Chat;
 			sourceTree = "<group>";
 		};
 		F7342CDE14C4F1DD00AC0819 /* Expanding TextView */ = {
@@ -582,6 +593,27 @@
 				F743CA0614A6C26C006B533B /* ScoreDetailViewController.xib */,
 			);
 			name = "Score Detail";
+			sourceTree = "<group>";
+		};
+		F7A08FBD15100BE100471D3C /* Trash Talk */ = {
+			isa = PBXGroup;
+			children = (
+				F7A08FC8151020BC00471D3C /* New Trash Talk */,
+				F7A08FC315100DC200471D3C /* TrashTalkViewController.h */,
+				F7A08FC415100DC200471D3C /* TrashTalkViewController.m */,
+				F7A08FC515100DC200471D3C /* TrashTalkViewController.xib */,
+			);
+			name = "Trash Talk";
+			sourceTree = "<group>";
+		};
+		F7A08FC8151020BC00471D3C /* New Trash Talk */ = {
+			isa = PBXGroup;
+			children = (
+				F7A08FCE1510216600471D3C /* NewTrashTalkViewController.h */,
+				F7A08FCF1510216600471D3C /* NewTrashTalkViewController.m */,
+				F7A08FD01510216600471D3C /* NewTrashTalkViewController.xib */,
+			);
+			name = "New Trash Talk";
 			sourceTree = "<group>";
 		};
 		F7B971EB14E389CF00C683B9 /* Facebook Friends */ = {
@@ -786,6 +818,8 @@
 				F7B9720414E44B9B00C683B9 /* OpponentSearchViewController.xib in Resources */,
 				F7D70C2F14F0BC12001F8525 /* TwitterFollowersViewController.xib in Resources */,
 				F7D70C3F14F1EE9A001F8525 /* SVProgressHUD.bundle in Resources */,
+				F7A08FC715100DC200471D3C /* TrashTalkViewController.xib in Resources */,
+				F7A08FD21510216600471D3C /* NewTrashTalkViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -855,6 +889,8 @@
 				F7B9721014E47AF000C683B9 /* JSONKit.m in Sources */,
 				F7D70C2E14F0BC12001F8525 /* TwitterFollowersViewController.m in Sources */,
 				F7D70C4014F1EE9A001F8525 /* SVProgressHUD.m in Sources */,
+				F7A08FC615100DC200471D3C /* TrashTalkViewController.m in Sources */,
+				F7A08FD11510216600471D3C /* NewTrashTalkViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
