@@ -43,7 +43,14 @@
     [newWager removeObjectForKey:@"opponent"];
     NSDictionary *navTitleAttributes = [[NSDictionary alloc]initWithObjectsAndKeys:
                        [UIColor blackColor], UITextAttributeTextColor, nil];
+    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_HOME_Logo"]];
+    self.navigationItem.titleView = titleImageView;
+    
     self.title = @"Friendly Wager";
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_HOME_BG"]]];
+    
+    [bottomView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_HOME_BottomBar"]]];
+    
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
     

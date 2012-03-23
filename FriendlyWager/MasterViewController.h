@@ -16,6 +16,7 @@
     IBOutlet UIButton *makeWagerButton;
     IBOutlet UIButton *rankingsButton;
     IBOutlet UIButton *infoButton;
+    IBOutlet UIView *bottomView;
 }
 
 - (IBAction)myLedgerButtonClicked:(id)sender;

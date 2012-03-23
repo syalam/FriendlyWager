@@ -53,7 +53,10 @@
     //Initialize Tab View
     NSArray *vcs = [NSArray arrayWithObjects:self.vc1, self.vc2, self.vc3, nil];
     
-    self.title = @"Friendly Wager";
+    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_PG2_Logo"]];
+    self.navigationItem.titleView = titleImageView;
+    
+    //self.title = @"Friendly Wager";
     NSDictionary *navTitleAttributes = [[NSDictionary alloc]initWithObjectsAndKeys:
                                         [UIColor blackColor], UITextAttributeTextColor, nil];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -69,9 +72,20 @@
     [self.view addSubview:viewController.view];
     //[self.window makeKeyAndVisible];
     
-    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc]initWithTitle:@"Home" style:UIBarButtonItemStyleBordered target:self action:@selector(homeButtonClicked:)];
-    homeButton.tintColor = [UIColor blackColor];
-    self.navigationItem.leftBarButtonItem = homeButton;
+    //UIBarButtonItem *homeButton = [[UIBarButtonItem alloc]initWithTitle:@"Home" style:UIBarButtonItemStyleBordered target:self action:@selector(homeButtonClicked:)];
+    //homeButton.tintColor = [UIColor blackColor];
+    
+    UIImage *homeButtonImage = [UIImage imageNamed:@"FW_PG2_HomeButton"];
+    UIButton *homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    homeButton.bounds = CGRectMake( 0, 0, homeButtonImage.size.width, homeButtonImage.size.height );
+    [homeButton setImage:homeButtonImage forState:UIControlStateNormal];
+    [homeButton addTarget:self action:@selector(homeButtonClicked:) forControlEvents:UIControlStateNormal];
+    
+    UIBarButtonItem *homeNavButton = [[UIBarButtonItem alloc] initWithCustomView:homeButton];
+    [homeNavButton setTarget:self];
+    [homeNavButton setAction:@selector(homeButtonClicked:)];
+
+    self.navigationItem.leftBarButtonItem = homeNavButton;
     
 }
 

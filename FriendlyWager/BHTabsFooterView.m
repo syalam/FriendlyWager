@@ -14,8 +14,7 @@
 
   CGFloat bigValue = 1e6;
 
-  CGRect r = CGRectMake(-bigValue, self.frame.size.height - self.style.tabBarHeight - 0.5,
-                        self.frame.size.width + bigValue, bigValue);
+  CGRect r = CGRectMake(-bigValue, self.frame.size.height - self.style.tabBarHeight - 0.5, self.frame.size.width + bigValue, bigValue);
 
   CGContextSaveGState(context);
   CGContextSetShadow(context, CGSizeZero, self.style.shadowRadius);

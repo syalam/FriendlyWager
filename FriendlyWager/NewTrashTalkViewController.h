@@ -7,9 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
-@interface NewTrashTalkViewController : UIViewController {
+typedef enum apiCall {
+    kAPIPostToFeed,
+    kAPIGetFromFeed,
+}apiCall;
+
+@interface NewTrashTalkViewController : UIViewController <PF_FBRequestDelegate, PF_FBSessionDelegate, PF_FBDialogDelegate> {
     IBOutlet UITextView *trashTalkTextView;
+    IBOutlet UISwitch *fbSwitch;
+    int currentAPICall;
 }
+
+- (IBAction)FBSwitchSelected:(id)sender;
+- (void)sendFacebookRequest;
+
 
 @end

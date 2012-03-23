@@ -130,7 +130,7 @@ enum { kTagTabBase = 100 };
     
     // The view that contains the tab views is located across the top.
     
-    CGRect tabsViewFrame = CGRectMake(0, 0, frame.size.width, self.style.tabsViewHeight);
+    CGRect tabsViewFrame = CGRectMake(0, 30, frame.size.width, self.style.tabsViewHeight);
     self.tabsContainerView = [[[BHTabsView alloc] initWithFrame:tabsViewFrame] autorelease];
     self.tabsContainerView.backgroundColor = [UIColor clearColor];
     self.tabsContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -171,10 +171,8 @@ enum { kTagTabBase = 100 };
     
     self.tabsContainerView.tabViews = allTabViews;
     
-    CGRect footerFrame = CGRectMake(0, tabsViewFrame.size.height - self.style.tabBarHeight - self.style.shadowRadius,
-                                    tabsViewFrame.size.width,
-                                    self.style.tabBarHeight + self.style.shadowRadius);
-    
+    CGRect footerFrame = CGRectMake(0, tabsViewFrame.size.height - self.style.tabBarHeight - self.style.shadowRadius, tabsViewFrame.size.width, self.style.tabBarHeight + self.style.shadowRadius);
+
     self.footerView = [[[BHTabsFooterView alloc] initWithFrame:footerFrame] autorelease];
     self.footerView.backgroundColor = [UIColor clearColor];
     self.footerView.style = self.style;

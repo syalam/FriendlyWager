@@ -75,6 +75,50 @@
 		F7B9720314E44B9B00C683B9 /* OpponentSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B9720114E44B9B00C683B9 /* OpponentSearchViewController.m */; };
 		F7B9720414E44B9B00C683B9 /* OpponentSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B9720214E44B9B00C683B9 /* OpponentSearchViewController.xib */; };
 		F7B9721014E47AF000C683B9 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B9720F14E47AF000C683B9 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F7BA8543151CEC2F0034A0C1 /* FW_HOME_?_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA852E151CEC2F0034A0C1 /* FW_HOME_?_button@2x.png */; };
+		F7BA8544151CEC2F0034A0C1 /* FW_HOME_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA852F151CEC2F0034A0C1 /* FW_HOME_BG@2x.png */; };
+		F7BA8545151CEC2F0034A0C1 /* FW_HOME_BottomBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8530151CEC2F0034A0C1 /* FW_HOME_BottomBar@2x.png */; };
+		F7BA8546151CEC2F0034A0C1 /* FW_HOME_Ledger_button@2x.psd in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8531151CEC2F0034A0C1 /* FW_HOME_Ledger_button@2x.psd */; };
+		F7BA8547151CEC2F0034A0C1 /* FW_HOME_Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8532151CEC2F0034A0C1 /* FW_HOME_Logo@2x.png */; };
+		F7BA8548151CEC2F0034A0C1 /* FW_HOME_My Action_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8533151CEC2F0034A0C1 /* FW_HOME_My Action_button@2x.png */; };
+		F7BA8549151CEC2F0034A0C1 /* FW_HOME_Ranking_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8534151CEC2F0034A0C1 /* FW_HOME_Ranking_button@2x.png */; };
+		F7BA854A151CEC2F0034A0C1 /* FW_HOME_Scores_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8535151CEC2F0034A0C1 /* FW_HOME_Scores_button@2x.png */; };
+		F7BA854B151CEC2F0034A0C1 /* FW_HOME_TopBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8536151CEC2F0034A0C1 /* FW_HOME_TopBar@2x.png */; };
+		F7BA854C151CEC2F0034A0C1 /* FW_HOME_Wager_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8537151CEC2F0034A0C1 /* FW_HOME_Wager_button@2x.png */; };
+		F7BA854D151CEC2F0034A0C1 /* FW_HOME_?_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8539151CEC2F0034A0C1 /* FW_HOME_?_button.png */; };
+		F7BA854E151CEC2F0034A0C1 /* FW_HOME_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA853A151CEC2F0034A0C1 /* FW_HOME_BG.png */; };
+		F7BA854F151CEC2F0034A0C1 /* FW_HOME_BottomBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA853B151CEC2F0034A0C1 /* FW_HOME_BottomBar.png */; };
+		F7BA8550151CEC2F0034A0C1 /* FW_HOME_Ledger_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA853C151CEC2F0034A0C1 /* FW_HOME_Ledger_button.png */; };
+		F7BA8551151CEC2F0034A0C1 /* FW_HOME_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA853D151CEC2F0034A0C1 /* FW_HOME_Logo.png */; };
+		F7BA8552151CEC2F0034A0C1 /* FW_HOME_My Action_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA853E151CEC2F0034A0C1 /* FW_HOME_My Action_button.png */; };
+		F7BA8553151CEC2F0034A0C1 /* FW_HOME_Ranking_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA853F151CEC2F0034A0C1 /* FW_HOME_Ranking_button.png */; };
+		F7BA8554151CEC2F0034A0C1 /* FW_HOME_Scores_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8540151CEC2F0034A0C1 /* FW_HOME_Scores_button.png */; };
+		F7BA8555151CEC2F0034A0C1 /* FW_HOME_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8541151CEC2F0034A0C1 /* FW_HOME_TopBar.png */; };
+		F7BA8556151CEC2F0034A0C1 /* FW_HOME_Wager_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8542151CEC2F0034A0C1 /* FW_HOME_Wager_button.png */; };
+		F7BA8576151CF8D30034A0C1 /* FW_PG2_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA855D151CF8D30034A0C1 /* FW_PG2_BG@2x.png */; };
+		F7BA8577151CF8D30034A0C1 /* FW_PG2_BillSmith_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA855E151CF8D30034A0C1 /* FW_PG2_BillSmith_Button@2x.png */; };
+		F7BA8578151CF8D30034A0C1 /* FW_PG2_HomeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA855F151CF8D30034A0C1 /* FW_PG2_HomeButton@2x.png */; };
+		F7BA8579151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8560151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button@2x.png */; };
+		F7BA857A151CF8D30034A0C1 /* FW_PG2_Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8561151CF8D30034A0C1 /* FW_PG2_Logo@2x.png */; };
+		F7BA857B151CF8D30034A0C1 /* FW_PG2_MyAction_Tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8562151CF8D30034A0C1 /* FW_PG2_MyAction_Tab@2x.png */; };
+		F7BA857C151CF8D30034A0C1 /* FW_PG2_Rank_Tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8563151CF8D30034A0C1 /* FW_PG2_Rank_Tab@2x.png */; };
+		F7BA857D151CF8D30034A0C1 /* FW_PG2_Scores_Tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8564151CF8D30034A0C1 /* FW_PG2_Scores_Tab@2x.png */; };
+		F7BA857E151CF8D30034A0C1 /* FW_PG2_Shading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8565151CF8D30034A0C1 /* FW_PG2_Shading@2x.png */; };
+		F7BA857F151CF8D30034A0C1 /* FW_PG2_SteveBird_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8566151CF8D30034A0C1 /* FW_PG2_SteveBird_Button@2x.png */; };
+		F7BA8580151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8567151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button@2x.png */; };
+		F7BA8581151CF8D30034A0C1 /* FW_PG2_TopBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8568151CF8D30034A0C1 /* FW_PG2_TopBar@2x.png */; };
+		F7BA8582151CF8D30034A0C1 /* FW_PG2_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA856A151CF8D30034A0C1 /* FW_PG2_BG.png */; };
+		F7BA8583151CF8D30034A0C1 /* FW_PG2_BillSmith_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA856B151CF8D30034A0C1 /* FW_PG2_BillSmith_Button.png */; };
+		F7BA8584151CF8D30034A0C1 /* FW_PG2_HomeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA856C151CF8D30034A0C1 /* FW_PG2_HomeButton.png */; };
+		F7BA8585151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA856D151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button.png */; };
+		F7BA8586151CF8D30034A0C1 /* FW_PG2_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA856E151CF8D30034A0C1 /* FW_PG2_Logo.png */; };
+		F7BA8587151CF8D30034A0C1 /* FW_PG2_MyAction_Tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA856F151CF8D30034A0C1 /* FW_PG2_MyAction_Tab.png */; };
+		F7BA8588151CF8D30034A0C1 /* FW_PG2_Rank_Tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8570151CF8D30034A0C1 /* FW_PG2_Rank_Tab.png */; };
+		F7BA8589151CF8D30034A0C1 /* FW_PG2_Scores_Tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8571151CF8D30034A0C1 /* FW_PG2_Scores_Tab.png */; };
+		F7BA858A151CF8D30034A0C1 /* FW_PG2_Shading.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8572151CF8D30034A0C1 /* FW_PG2_Shading.png */; };
+		F7BA858B151CF8D30034A0C1 /* FW_PG2_SteveBird_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8573151CF8D30034A0C1 /* FW_PG2_SteveBird_Button.png */; };
+		F7BA858C151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8574151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button.png */; };
+		F7BA858D151CF8D30034A0C1 /* FW_PG2_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8575151CF8D30034A0C1 /* FW_PG2_TopBar.png */; };
 		F7CDD73C14ABD23C0038FE6B /* MakeAWagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7CDD73A14ABD23C0038FE6B /* MakeAWagerViewController.m */; };
 		F7CDD73D14ABD23C0038FE6B /* MakeAWagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CDD73B14ABD23C0038FE6B /* MakeAWagerViewController.xib */; };
 		F7CDD77614ABF3410038FE6B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CDD77414ABF3410038FE6B /* AddressBook.framework */; };
@@ -215,6 +259,50 @@
 		F7B9720214E44B9B00C683B9 /* OpponentSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpponentSearchViewController.xib; sourceTree = "<group>"; };
 		F7B9720E14E47AF000C683B9 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		F7B9720F14E47AF000C683B9 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		F7BA852E151CEC2F0034A0C1 /* FW_HOME_?_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_HOME_?_button@2x.png"; sourceTree = "<group>"; };
+		F7BA852F151CEC2F0034A0C1 /* FW_HOME_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_HOME_BG@2x.png"; sourceTree = "<group>"; };
+		F7BA8530151CEC2F0034A0C1 /* FW_HOME_BottomBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_HOME_BottomBar@2x.png"; sourceTree = "<group>"; };
+		F7BA8531151CEC2F0034A0C1 /* FW_HOME_Ledger_button@2x.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FW_HOME_Ledger_button@2x.psd"; sourceTree = "<group>"; };
+		F7BA8532151CEC2F0034A0C1 /* FW_HOME_Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_HOME_Logo@2x.png"; sourceTree = "<group>"; };
+		F7BA8533151CEC2F0034A0C1 /* FW_HOME_My Action_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_HOME_My Action_button@2x.png"; sourceTree = "<group>"; };
+		F7BA8534151CEC2F0034A0C1 /* FW_HOME_Ranking_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_HOME_Ranking_button@2x.png"; sourceTree = "<group>"; };
+		F7BA8535151CEC2F0034A0C1 /* FW_HOME_Scores_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_HOME_Scores_button@2x.png"; sourceTree = "<group>"; };
+		F7BA8536151CEC2F0034A0C1 /* FW_HOME_TopBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_HOME_TopBar@2x.png"; sourceTree = "<group>"; };
+		F7BA8537151CEC2F0034A0C1 /* FW_HOME_Wager_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_HOME_Wager_button@2x.png"; sourceTree = "<group>"; };
+		F7BA8539151CEC2F0034A0C1 /* FW_HOME_?_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_HOME_?_button.png"; sourceTree = "<group>"; };
+		F7BA853A151CEC2F0034A0C1 /* FW_HOME_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_HOME_BG.png; sourceTree = "<group>"; };
+		F7BA853B151CEC2F0034A0C1 /* FW_HOME_BottomBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_HOME_BottomBar.png; sourceTree = "<group>"; };
+		F7BA853C151CEC2F0034A0C1 /* FW_HOME_Ledger_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_HOME_Ledger_button.png; sourceTree = "<group>"; };
+		F7BA853D151CEC2F0034A0C1 /* FW_HOME_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_HOME_Logo.png; sourceTree = "<group>"; };
+		F7BA853E151CEC2F0034A0C1 /* FW_HOME_My Action_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_HOME_My Action_button.png"; sourceTree = "<group>"; };
+		F7BA853F151CEC2F0034A0C1 /* FW_HOME_Ranking_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_HOME_Ranking_button.png; sourceTree = "<group>"; };
+		F7BA8540151CEC2F0034A0C1 /* FW_HOME_Scores_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_HOME_Scores_button.png; sourceTree = "<group>"; };
+		F7BA8541151CEC2F0034A0C1 /* FW_HOME_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_HOME_TopBar.png; sourceTree = "<group>"; };
+		F7BA8542151CEC2F0034A0C1 /* FW_HOME_Wager_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_HOME_Wager_button.png; sourceTree = "<group>"; };
+		F7BA855D151CF8D30034A0C1 /* FW_PG2_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_BG@2x.png"; sourceTree = "<group>"; };
+		F7BA855E151CF8D30034A0C1 /* FW_PG2_BillSmith_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_BillSmith_Button@2x.png"; sourceTree = "<group>"; };
+		F7BA855F151CF8D30034A0C1 /* FW_PG2_HomeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_HomeButton@2x.png"; sourceTree = "<group>"; };
+		F7BA8560151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_JohnTaylor_Button@2x.png"; sourceTree = "<group>"; };
+		F7BA8561151CF8D30034A0C1 /* FW_PG2_Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_Logo@2x.png"; sourceTree = "<group>"; };
+		F7BA8562151CF8D30034A0C1 /* FW_PG2_MyAction_Tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_MyAction_Tab@2x.png"; sourceTree = "<group>"; };
+		F7BA8563151CF8D30034A0C1 /* FW_PG2_Rank_Tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_Rank_Tab@2x.png"; sourceTree = "<group>"; };
+		F7BA8564151CF8D30034A0C1 /* FW_PG2_Scores_Tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_Scores_Tab@2x.png"; sourceTree = "<group>"; };
+		F7BA8565151CF8D30034A0C1 /* FW_PG2_Shading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_Shading@2x.png"; sourceTree = "<group>"; };
+		F7BA8566151CF8D30034A0C1 /* FW_PG2_SteveBird_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_SteveBird_Button@2x.png"; sourceTree = "<group>"; };
+		F7BA8567151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_TimmyJones_Button@2x.png"; sourceTree = "<group>"; };
+		F7BA8568151CF8D30034A0C1 /* FW_PG2_TopBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_TopBar@2x.png"; sourceTree = "<group>"; };
+		F7BA856A151CF8D30034A0C1 /* FW_PG2_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_BG.png; sourceTree = "<group>"; };
+		F7BA856B151CF8D30034A0C1 /* FW_PG2_BillSmith_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_BillSmith_Button.png; sourceTree = "<group>"; };
+		F7BA856C151CF8D30034A0C1 /* FW_PG2_HomeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_HomeButton.png; sourceTree = "<group>"; };
+		F7BA856D151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_JohnTaylor_Button.png; sourceTree = "<group>"; };
+		F7BA856E151CF8D30034A0C1 /* FW_PG2_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_Logo.png; sourceTree = "<group>"; };
+		F7BA856F151CF8D30034A0C1 /* FW_PG2_MyAction_Tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_MyAction_Tab.png; sourceTree = "<group>"; };
+		F7BA8570151CF8D30034A0C1 /* FW_PG2_Rank_Tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_Rank_Tab.png; sourceTree = "<group>"; };
+		F7BA8571151CF8D30034A0C1 /* FW_PG2_Scores_Tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_Scores_Tab.png; sourceTree = "<group>"; };
+		F7BA8572151CF8D30034A0C1 /* FW_PG2_Shading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_Shading.png; sourceTree = "<group>"; };
+		F7BA8573151CF8D30034A0C1 /* FW_PG2_SteveBird_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_SteveBird_Button.png; sourceTree = "<group>"; };
+		F7BA8574151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_TimmyJones_Button.png; sourceTree = "<group>"; };
+		F7BA8575151CF8D30034A0C1 /* FW_PG2_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_TopBar.png; sourceTree = "<group>"; };
 		F7CDD73914ABD23C0038FE6B /* MakeAWagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakeAWagerViewController.h; sourceTree = "<group>"; };
 		F7CDD73A14ABD23C0038FE6B /* MakeAWagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakeAWagerViewController.m; sourceTree = "<group>"; };
 		F7CDD73B14ABD23C0038FE6B /* MakeAWagerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MakeAWagerViewController.xib; sourceTree = "<group>"; };
@@ -300,6 +388,7 @@
 				F714E16914A1A88400E24956 /* FriendlyWager */,
 				F7CDD73E14ABDC820038FE6B /* Helper Classes */,
 				F714E18D14A1A88400E24956 /* FriendlyWagerTests */,
+				F7BA852A151CEC100034A0C1 /* Resources */,
 				F714E16214A1A88400E24956 /* Frameworks */,
 				F714E16014A1A88400E24956 /* Products */,
 			);
@@ -340,9 +429,9 @@
 		F714E16914A1A88400E24956 /* FriendlyWager */ = {
 			isa = PBXGroup;
 			children = (
-				F7A08FBD15100BE100471D3C /* Trash Talk */,
 				F714E17214A1A88400E24956 /* AppDelegate.h */,
 				F714E17314A1A88400E24956 /* AppDelegate.m */,
+				F7A08FBD15100BE100471D3C /* Trash Talk */,
 				F724468514D0C8A90009E001 /* Login */,
 				F724469114D0FECB0009E001 /* New Account */,
 				8C4AA61B14D13C7200A6013F /* Reset Password */,
@@ -645,6 +734,106 @@
 			name = "JSON Kit";
 			sourceTree = "<group>";
 		};
+		F7BA852A151CEC100034A0C1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA855B151CF8D20034A0C1 /* Page 2 */,
+				F7BA852C151CEC2F0034A0C1 /* Home Page */,
+			);
+			name = Resources;
+			path = FriendlyWager;
+			sourceTree = "<group>";
+		};
+		F7BA852C151CEC2F0034A0C1 /* Home Page */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA852D151CEC2F0034A0C1 /* 144 */,
+				F7BA8538151CEC2F0034A0C1 /* 72 */,
+			);
+			path = "Home Page";
+			sourceTree = "<group>";
+		};
+		F7BA852D151CEC2F0034A0C1 /* 144 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA852E151CEC2F0034A0C1 /* FW_HOME_?_button@2x.png */,
+				F7BA852F151CEC2F0034A0C1 /* FW_HOME_BG@2x.png */,
+				F7BA8530151CEC2F0034A0C1 /* FW_HOME_BottomBar@2x.png */,
+				F7BA8531151CEC2F0034A0C1 /* FW_HOME_Ledger_button@2x.psd */,
+				F7BA8532151CEC2F0034A0C1 /* FW_HOME_Logo@2x.png */,
+				F7BA8533151CEC2F0034A0C1 /* FW_HOME_My Action_button@2x.png */,
+				F7BA8534151CEC2F0034A0C1 /* FW_HOME_Ranking_button@2x.png */,
+				F7BA8535151CEC2F0034A0C1 /* FW_HOME_Scores_button@2x.png */,
+				F7BA8536151CEC2F0034A0C1 /* FW_HOME_TopBar@2x.png */,
+				F7BA8537151CEC2F0034A0C1 /* FW_HOME_Wager_button@2x.png */,
+			);
+			path = 144;
+			sourceTree = "<group>";
+		};
+		F7BA8538151CEC2F0034A0C1 /* 72 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA8539151CEC2F0034A0C1 /* FW_HOME_?_button.png */,
+				F7BA853A151CEC2F0034A0C1 /* FW_HOME_BG.png */,
+				F7BA853B151CEC2F0034A0C1 /* FW_HOME_BottomBar.png */,
+				F7BA853C151CEC2F0034A0C1 /* FW_HOME_Ledger_button.png */,
+				F7BA853D151CEC2F0034A0C1 /* FW_HOME_Logo.png */,
+				F7BA853E151CEC2F0034A0C1 /* FW_HOME_My Action_button.png */,
+				F7BA853F151CEC2F0034A0C1 /* FW_HOME_Ranking_button.png */,
+				F7BA8540151CEC2F0034A0C1 /* FW_HOME_Scores_button.png */,
+				F7BA8541151CEC2F0034A0C1 /* FW_HOME_TopBar.png */,
+				F7BA8542151CEC2F0034A0C1 /* FW_HOME_Wager_button.png */,
+			);
+			path = 72;
+			sourceTree = "<group>";
+		};
+		F7BA855B151CF8D20034A0C1 /* Page 2 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA855C151CF8D30034A0C1 /* 144 */,
+				F7BA8569151CF8D30034A0C1 /* 72 */,
+			);
+			path = "Page 2";
+			sourceTree = "<group>";
+		};
+		F7BA855C151CF8D30034A0C1 /* 144 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA855D151CF8D30034A0C1 /* FW_PG2_BG@2x.png */,
+				F7BA855E151CF8D30034A0C1 /* FW_PG2_BillSmith_Button@2x.png */,
+				F7BA855F151CF8D30034A0C1 /* FW_PG2_HomeButton@2x.png */,
+				F7BA8560151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button@2x.png */,
+				F7BA8561151CF8D30034A0C1 /* FW_PG2_Logo@2x.png */,
+				F7BA8562151CF8D30034A0C1 /* FW_PG2_MyAction_Tab@2x.png */,
+				F7BA8563151CF8D30034A0C1 /* FW_PG2_Rank_Tab@2x.png */,
+				F7BA8564151CF8D30034A0C1 /* FW_PG2_Scores_Tab@2x.png */,
+				F7BA8565151CF8D30034A0C1 /* FW_PG2_Shading@2x.png */,
+				F7BA8566151CF8D30034A0C1 /* FW_PG2_SteveBird_Button@2x.png */,
+				F7BA8567151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button@2x.png */,
+				F7BA8568151CF8D30034A0C1 /* FW_PG2_TopBar@2x.png */,
+			);
+			path = 144;
+			sourceTree = "<group>";
+		};
+		F7BA8569151CF8D30034A0C1 /* 72 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA856A151CF8D30034A0C1 /* FW_PG2_BG.png */,
+				F7BA856B151CF8D30034A0C1 /* FW_PG2_BillSmith_Button.png */,
+				F7BA856C151CF8D30034A0C1 /* FW_PG2_HomeButton.png */,
+				F7BA856D151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button.png */,
+				F7BA856E151CF8D30034A0C1 /* FW_PG2_Logo.png */,
+				F7BA856F151CF8D30034A0C1 /* FW_PG2_MyAction_Tab.png */,
+				F7BA8570151CF8D30034A0C1 /* FW_PG2_Rank_Tab.png */,
+				F7BA8571151CF8D30034A0C1 /* FW_PG2_Scores_Tab.png */,
+				F7BA8572151CF8D30034A0C1 /* FW_PG2_Shading.png */,
+				F7BA8573151CF8D30034A0C1 /* FW_PG2_SteveBird_Button.png */,
+				F7BA8574151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button.png */,
+				F7BA8575151CF8D30034A0C1 /* FW_PG2_TopBar.png */,
+			);
+			path = 72;
+			sourceTree = "<group>";
+		};
 		F7CDD73714ABD1FD0038FE6B /* Make a Wager */ = {
 			isa = PBXGroup;
 			children = (
@@ -820,6 +1009,50 @@
 				F7D70C3F14F1EE9A001F8525 /* SVProgressHUD.bundle in Resources */,
 				F7A08FC715100DC200471D3C /* TrashTalkViewController.xib in Resources */,
 				F7A08FD21510216600471D3C /* NewTrashTalkViewController.xib in Resources */,
+				F7BA8543151CEC2F0034A0C1 /* FW_HOME_?_button@2x.png in Resources */,
+				F7BA8544151CEC2F0034A0C1 /* FW_HOME_BG@2x.png in Resources */,
+				F7BA8545151CEC2F0034A0C1 /* FW_HOME_BottomBar@2x.png in Resources */,
+				F7BA8546151CEC2F0034A0C1 /* FW_HOME_Ledger_button@2x.psd in Resources */,
+				F7BA8547151CEC2F0034A0C1 /* FW_HOME_Logo@2x.png in Resources */,
+				F7BA8548151CEC2F0034A0C1 /* FW_HOME_My Action_button@2x.png in Resources */,
+				F7BA8549151CEC2F0034A0C1 /* FW_HOME_Ranking_button@2x.png in Resources */,
+				F7BA854A151CEC2F0034A0C1 /* FW_HOME_Scores_button@2x.png in Resources */,
+				F7BA854B151CEC2F0034A0C1 /* FW_HOME_TopBar@2x.png in Resources */,
+				F7BA854C151CEC2F0034A0C1 /* FW_HOME_Wager_button@2x.png in Resources */,
+				F7BA854D151CEC2F0034A0C1 /* FW_HOME_?_button.png in Resources */,
+				F7BA854E151CEC2F0034A0C1 /* FW_HOME_BG.png in Resources */,
+				F7BA854F151CEC2F0034A0C1 /* FW_HOME_BottomBar.png in Resources */,
+				F7BA8550151CEC2F0034A0C1 /* FW_HOME_Ledger_button.png in Resources */,
+				F7BA8551151CEC2F0034A0C1 /* FW_HOME_Logo.png in Resources */,
+				F7BA8552151CEC2F0034A0C1 /* FW_HOME_My Action_button.png in Resources */,
+				F7BA8553151CEC2F0034A0C1 /* FW_HOME_Ranking_button.png in Resources */,
+				F7BA8554151CEC2F0034A0C1 /* FW_HOME_Scores_button.png in Resources */,
+				F7BA8555151CEC2F0034A0C1 /* FW_HOME_TopBar.png in Resources */,
+				F7BA8556151CEC2F0034A0C1 /* FW_HOME_Wager_button.png in Resources */,
+				F7BA8576151CF8D30034A0C1 /* FW_PG2_BG@2x.png in Resources */,
+				F7BA8577151CF8D30034A0C1 /* FW_PG2_BillSmith_Button@2x.png in Resources */,
+				F7BA8578151CF8D30034A0C1 /* FW_PG2_HomeButton@2x.png in Resources */,
+				F7BA8579151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button@2x.png in Resources */,
+				F7BA857A151CF8D30034A0C1 /* FW_PG2_Logo@2x.png in Resources */,
+				F7BA857B151CF8D30034A0C1 /* FW_PG2_MyAction_Tab@2x.png in Resources */,
+				F7BA857C151CF8D30034A0C1 /* FW_PG2_Rank_Tab@2x.png in Resources */,
+				F7BA857D151CF8D30034A0C1 /* FW_PG2_Scores_Tab@2x.png in Resources */,
+				F7BA857E151CF8D30034A0C1 /* FW_PG2_Shading@2x.png in Resources */,
+				F7BA857F151CF8D30034A0C1 /* FW_PG2_SteveBird_Button@2x.png in Resources */,
+				F7BA8580151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button@2x.png in Resources */,
+				F7BA8581151CF8D30034A0C1 /* FW_PG2_TopBar@2x.png in Resources */,
+				F7BA8582151CF8D30034A0C1 /* FW_PG2_BG.png in Resources */,
+				F7BA8583151CF8D30034A0C1 /* FW_PG2_BillSmith_Button.png in Resources */,
+				F7BA8584151CF8D30034A0C1 /* FW_PG2_HomeButton.png in Resources */,
+				F7BA8585151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button.png in Resources */,
+				F7BA8586151CF8D30034A0C1 /* FW_PG2_Logo.png in Resources */,
+				F7BA8587151CF8D30034A0C1 /* FW_PG2_MyAction_Tab.png in Resources */,
+				F7BA8588151CF8D30034A0C1 /* FW_PG2_Rank_Tab.png in Resources */,
+				F7BA8589151CF8D30034A0C1 /* FW_PG2_Scores_Tab.png in Resources */,
+				F7BA858A151CF8D30034A0C1 /* FW_PG2_Shading.png in Resources */,
+				F7BA858B151CF8D30034A0C1 /* FW_PG2_SteveBird_Button.png in Resources */,
+				F7BA858C151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button.png in Resources */,
+				F7BA858D151CF8D30034A0C1 /* FW_PG2_TopBar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

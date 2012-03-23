@@ -7,6 +7,8 @@
 //
 
 #import "NewTrashTalkViewController.h"
+#import "JSONKit.h"
+#import "AppDelegate.h"
 
 @interface NewTrashTalkViewController ()
 
@@ -61,7 +63,70 @@
 }
 
 - (void)submitButtonClicked:(id)sender {
-    
+    [self sendFacebookRequest];
+}
+
+- (IBAction)FBSwitchSelected:(id)sender {
+    if (fbSwitch.on) {
+        PFUser *user = [PFUser currentUser];
+        if ([user hasFacebook]) {
+            [fbSwitch setOn:YES];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Facebook Sign In Required" message:@"You must sign in with a facebook account to use this feature" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign In", nil];
+            [alert show];
+        }
+    }
+}
+
+#pragma mark - Facebook delegate methods
+
+- (void)sendFacebookRequest {
+    PFUser *user = [PFUser currentUser];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    [delegate facebook].accessToken = [user facebookAccessToken];
+    [delegate facebook].expirationDate = [user facebookExpirationDate];
+    if (currentAPICall == kAPIPostToFeed) {
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkTextView.text, @"message", nil];
+        [[delegate facebook]requestWithGraphPath:@"me/feed" andParams:params andHttpMethod:@"POST" andDelegate:self];
+    }
+}
+
+- (void)request:(PF_FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
+    NSLog(@"received response");
+}
+
+- (void)request:(PF_FBRequest *)request didLoad:(id)result {
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+}
+
+- (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
+    NSLog(@"%@", error);
+}
+
+
+#pragma mark - UIAlertView Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
+        PFUser *user = [PFUser currentUser];
+        [user linkToFacebook:permissions block:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                [fbSwitch setOn:YES animated:YES];
+            }
+            else {
+                UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
+                                                                    message:@"This facebook account is associated with another user"
+                                                                   delegate:self 
+                                                          cancelButtonTitle:@"OK" 
+                                                          otherButtonTitles:nil];
+                [alertView show];
+            }
+        }];
+    }
+    else {
+        [fbSwitch setOn:NO animated:YES];
+    }
 }
 
 @end

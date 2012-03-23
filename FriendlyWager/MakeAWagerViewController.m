@@ -120,8 +120,15 @@
     
     
     if ([contentForThisRow isEqualToString:@"A Facebook Friend"]) {
-        FacebookFriendsViewController *facebookFriends = [[FacebookFriendsViewController alloc]initWithNibName:@"FacebookFriendsViewController" bundle:nil];
-        [self.navigationController pushViewController:facebookFriends animated:YES];
+        PFUser *currentUser = [PFUser currentUser];
+        if ([currentUser hasFacebook]) {
+            FacebookFriendsViewController *facebookFriends = [[FacebookFriendsViewController alloc]initWithNibName:@"FacebookFriendsViewController" bundle:nil];
+            [self.navigationController pushViewController:facebookFriends animated:YES];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Facebook Sign In Required" message:@"You must sign in with a facebook account to use this feature" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign In", nil];
+            [alert show];
+        }        
     }
     else if ([contentForThisRow isEqualToString:@"A Twitter Follower"]) {
         TwitterFollowersViewController *twitterFollowers = [[TwitterFollowersViewController alloc]initWithNibName:@"TwitterFollowersViewController" bundle:nil];
@@ -146,6 +153,7 @@
         OpponentSearchViewController *search = [[OpponentSearchViewController alloc]initWithNibName:@"OpponentSearchViewController" bundle:nil];
         [self.navigationController pushViewController:search animated:YES];
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - Button Clicks
@@ -187,6 +195,29 @@
 - (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker;
 {
 	[self dismissModalViewControllerAnimated:YES];
+}
+
+
+#pragma mark - UIAlertView Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
+        PFUser *user = [PFUser currentUser];
+        [user linkToFacebook:permissions block:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                FacebookFriendsViewController *facebookFriends = [[FacebookFriendsViewController alloc]initWithNibName:@"FacebookFriendsViewController" bundle:nil];
+                [self.navigationController pushViewController:facebookFriends animated:YES];
+            }
+            else {
+                UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
+                                                                    message:@"This facebook account is associated with another user"
+                                                                   delegate:self 
+                                                          cancelButtonTitle:@"OK" 
+                                                          otherButtonTitles:nil];
+                [alertView show];
+            }
+        }];
+    }
 }
 
 
