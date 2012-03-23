@@ -62,6 +62,9 @@
     
     //wagerView.hidden = YES;
     
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG5_BG"]]];
+    
+    
     //Set labels with name of currently selected opponent
     wagersWithLabel.text = [NSString stringWithFormat:@"%@ %@", @"Wagers With", opponent];
     
@@ -145,6 +148,7 @@
         wagerType.backgroundColor = [UIColor clearColor];
         wagerCount.backgroundColor = [UIColor clearColor];
         
+        cell.backgroundColor = [UIColor clearColor];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [cell addSubview:wagerType];
         [cell addSubview:wagerCount];
