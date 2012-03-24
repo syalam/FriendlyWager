@@ -49,6 +49,8 @@
     
     newWagerVisible = NO;
     
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG9_BG"]]];
+    
     leftArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"NVG", @"team1", @"14", @"team1Score", @"CAR", @"team2", @"7", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"SF", @"team1", @"10", @"team1Score", @"AZ", @"team2", @"20", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"BUF", @"team1", @"2", @"team1Score", @"WAS", @"team2", @"27", @"team2Score", nil], nil];
     
     rightArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"SD", @"team1", @"13", @"team1Score", @"KC", @"team2", @"3", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"NO", @"team1", @"15", @"team1Score", @"ATL", @"team2", @"22", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"OAK", @"team1", @"28", @"team1Score", @"CHI", @"team2", @"29", @"team2Score", nil], nil];
@@ -146,6 +148,7 @@
         [cell addSubview:leftButton];
         [cell addSubview:rightButton];
     }
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 

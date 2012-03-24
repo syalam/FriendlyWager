@@ -46,6 +46,15 @@
     actionHistoryTableView.dataSource = self;
     
     detailWithPersonLabel.text = [NSString stringWithFormat:@"%@ %@ %@", wagerOfType, @"with", opponent];
+    if ([wagerOfType isEqualToString:@"Current"]) {
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG6_BG"]]];
+    }
+    else if ([wagerOfType isEqualToString:@"Pending"]) {
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG7_BG"]]];
+    }
+    else {
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG8_BG"]]];
+    }
     
     
     detailTableContents = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"8/2/11", @"date", @"Cubs", @"team", @"+4", @"odds", @"L", @"winLose", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"8/15/11", @"date", @"Suns", @"team", @"-4", @"odds", @"W", @"winLose", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"8/20/11", @"date", @"Cardinals", @"team", @"-3", @"odds", @"W", @"winLose", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"9/3/11", @"date", @"Bears", @"team", @"-40", @"odds", @"L", @"winLose", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"10/2/11", @"date", @"Cubs", @"team", @"+9", @"odds", @"W", @"winLose", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"11/7/11", @"date", @"Dodgers", @"team", @"+4", @"odds", @"W", @"winLose", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"11/22/11", @"date", @"Heat", @"team", @"+13", @"odds", @"W", @"winLose", nil], nil];

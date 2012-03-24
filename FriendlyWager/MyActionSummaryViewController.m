@@ -163,7 +163,7 @@
     id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
     
     MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil wagerType:[contentForThisRow objectForKey:@"type"] opponentName:opponent];
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController pushViewController:actionDetail animated:YES];
     
 }

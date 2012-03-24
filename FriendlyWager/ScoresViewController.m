@@ -63,7 +63,7 @@
     else {
         opponentLabel.hidden = YES;
     }
-    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG9_BG"]]];
     
     NSArray *nflFootball = [[NSArray alloc]initWithObjects:@"NFL Football", nil];
     NSArray *collegeFootball = [[NSArray alloc]initWithObjects:@"College Football", nil];
@@ -110,7 +110,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
+    cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.text = contentForThisRow;
     return cell;
 }
