@@ -79,7 +79,7 @@
     UIButton *homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     homeButton.bounds = CGRectMake( 0, 0, homeButtonImage.size.width, homeButtonImage.size.height );
     [homeButton setImage:homeButtonImage forState:UIControlStateNormal];
-    [homeButton addTarget:self action:@selector(homeButtonClicked:) forControlEvents:UIControlStateNormal];
+    [homeButton addTarget:self action:@selector(homeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *homeNavButton = [[UIBarButtonItem alloc] initWithCustomView:homeButton];
     [homeNavButton setTarget:self];
