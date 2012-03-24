@@ -63,7 +63,7 @@
     else {
         opponentLabel.hidden = YES;
     }
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG9_BG"]]];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG3_BG"]]];
     
     NSArray *nflFootball = [[NSArray alloc]initWithObjects:@"NFL Football", nil];
     NSArray *collegeFootball = [[NSArray alloc]initWithObjects:@"College Football", nil];
@@ -124,6 +124,7 @@
     else {
         scoreSummary = [[ScoreSummaryViewController alloc]initWithNibName:@"ScoreSummaryViewController" bundle:nil];
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController pushViewController:scoreSummary animated:YES];
 }
 

@@ -47,6 +47,8 @@
     scoreDetailTableView.delegate = self;
     scoreDetailTableView.dataSource = self;
     
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG10_BG"]]];
+    
     NSString *team = [scoreDataDictionary objectForKey:@"team1"];
     NSString *score = [scoreDataDictionary objectForKey:@"team1Score"];
     NSDictionary *team1Dictionary = [[NSDictionary alloc]initWithObjectsAndKeys: team, @"team", score, @"teamScore", nil];
@@ -128,6 +130,7 @@
             [cell addSubview:oddsLabel];
         }
     }
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 
