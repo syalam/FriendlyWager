@@ -361,6 +361,42 @@
 		F7BA8793151D4EDF0034A0C1 /* FW_PG14_Scores_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8783151D4EDF0034A0C1 /* FW_PG14_Scores_tab.png */; };
 		F7BA8794151D4EDF0034A0C1 /* FW_PG14_Shading.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8784151D4EDF0034A0C1 /* FW_PG14_Shading.png */; };
 		F7BA8795151D4EDF0034A0C1 /* FW_PG14_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8785151D4EDF0034A0C1 /* FW_PG14_TopBar.png */; };
+		F7BA87A7151D511F0034A0C1 /* FW_PG15_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8798151D511F0034A0C1 /* FW_PG15_BG@2x.png */; };
+		F7BA87A8151D511F0034A0C1 /* FW_PG15_HomeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8799151D511F0034A0C1 /* FW_PG15_HomeButton@2x.png */; };
+		F7BA87A9151D511F0034A0C1 /* FW_PG15_Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA879A151D511F0034A0C1 /* FW_PG15_Logo@2x.png */; };
+		F7BA87AA151D511F0034A0C1 /* FW_PG15_MyLedger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA879B151D511F0034A0C1 /* FW_PG15_MyLedger@2x.png */; };
+		F7BA87AB151D511F0034A0C1 /* FW_PG15_Shading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA879C151D511F0034A0C1 /* FW_PG15_Shading@2x.png */; };
+		F7BA87AC151D511F0034A0C1 /* FW_PG15_TopBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA879D151D511F0034A0C1 /* FW_PG15_TopBar@2x.png */; };
+		F7BA87AD151D511F0034A0C1 /* FW_PG15_Total Points@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA879E151D511F0034A0C1 /* FW_PG15_Total Points@2x.png */; };
+		F7BA87AE151D511F0034A0C1 /* FW_PG15_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87A0151D511F0034A0C1 /* FW_PG15_BG.png */; };
+		F7BA87AF151D511F0034A0C1 /* FW_PG15_HomeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87A1151D511F0034A0C1 /* FW_PG15_HomeButton.png */; };
+		F7BA87B0151D511F0034A0C1 /* FW_PG15_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87A2151D511F0034A0C1 /* FW_PG15_Logo.png */; };
+		F7BA87B1151D511F0034A0C1 /* FW_PG15_MyLedger.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87A3151D511F0034A0C1 /* FW_PG15_MyLedger.png */; };
+		F7BA87B2151D511F0034A0C1 /* FW_PG15_Shading.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87A4151D511F0034A0C1 /* FW_PG15_Shading.png */; };
+		F7BA87B3151D511F0034A0C1 /* FW_PG15_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87A5151D511F0034A0C1 /* FW_PG15_TopBar.png */; };
+		F7BA87B4151D511F0034A0C1 /* FW_PG15_Total Points.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87A6151D511F0034A0C1 /* FW_PG15_Total Points.png */; };
+		F7BA87C2151D53660034A0C1 /* FW_PG16_Back_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87B7151D53660034A0C1 /* FW_PG16_Back_Button@2x.png */; };
+		F7BA87C3151D53660034A0C1 /* FW_PG16_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87B8151D53660034A0C1 /* FW_PG16_BG@2x.png */; };
+		F7BA87C4151D53660034A0C1 /* FW_PG16_Hi_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87B9151D53660034A0C1 /* FW_PG16_Hi_Button@2x.png */; };
+		F7BA87C5151D53660034A0C1 /* FW_PG16_Post_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87BA151D53660034A0C1 /* FW_PG16_Post_Button@2x.png */; };
+		F7BA87C6151D53660034A0C1 /* FW_PG16_TopBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87BB151D53660034A0C1 /* FW_PG16_TopBar@2x.png */; };
+		F7BA87C7151D53660034A0C1 /* FW_PG16_Back_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87BD151D53660034A0C1 /* FW_PG16_Back_Button.png */; };
+		F7BA87C8151D53660034A0C1 /* FW_PG16_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87BE151D53660034A0C1 /* FW_PG16_BG.png */; };
+		F7BA87C9151D53660034A0C1 /* FW_PG16_Hi_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87BF151D53660034A0C1 /* FW_PG16_Hi_Button.png */; };
+		F7BA87CA151D53660034A0C1 /* FW_PG16_Post_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87C0151D53660034A0C1 /* FW_PG16_Post_Button.png */; };
+		F7BA87CB151D53660034A0C1 /* FW_PG16_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87C1151D53660034A0C1 /* FW_PG16_TopBar.png */; };
+		F7BA87DB151D54430034A0C1 /* FW_PG17_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87CE151D54430034A0C1 /* FW_PG17_BG@2x.png */; };
+		F7BA87DC151D54430034A0C1 /* FW_PG17_Cancel_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87CF151D54430034A0C1 /* FW_PG17_Cancel_Button@2x.png */; };
+		F7BA87DD151D54430034A0C1 /* FW_PG17_MockKeypad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87D0151D54430034A0C1 /* FW_PG17_MockKeypad@2x.png */; };
+		F7BA87DE151D54430034A0C1 /* FW_PG17_NewTrashTalk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87D1151D54430034A0C1 /* FW_PG17_NewTrashTalk@2x.png */; };
+		F7BA87DF151D54430034A0C1 /* FW_PG17_Send_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87D2151D54430034A0C1 /* FW_PG17_Send_Button@2x.png */; };
+		F7BA87E0151D54430034A0C1 /* FW_PG17_TopBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87D3151D54430034A0C1 /* FW_PG17_TopBar@2x.png */; };
+		F7BA87E1151D54430034A0C1 /* FW_PG17_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87D5151D54430034A0C1 /* FW_PG17_BG.png */; };
+		F7BA87E2151D54430034A0C1 /* FW_PG17_Cancel_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87D6151D54430034A0C1 /* FW_PG17_Cancel_Button.png */; };
+		F7BA87E3151D54430034A0C1 /* FW_PG17_MockKeypad.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87D7151D54430034A0C1 /* FW_PG17_MockKeypad.png */; };
+		F7BA87E4151D54430034A0C1 /* FW_PG17_NewTrashTalk.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87D8151D54430034A0C1 /* FW_PG17_NewTrashTalk.png */; };
+		F7BA87E5151D54430034A0C1 /* FW_PG17_Send_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87D9151D54430034A0C1 /* FW_PG17_Send_Button.png */; };
+		F7BA87E6151D54430034A0C1 /* FW_PG17_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA87DA151D54430034A0C1 /* FW_PG17_TopBar.png */; };
 		F7CDD73C14ABD23C0038FE6B /* MakeAWagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7CDD73A14ABD23C0038FE6B /* MakeAWagerViewController.m */; };
 		F7CDD73D14ABD23C0038FE6B /* MakeAWagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CDD73B14ABD23C0038FE6B /* MakeAWagerViewController.xib */; };
 		F7CDD77614ABF3410038FE6B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CDD77414ABF3410038FE6B /* AddressBook.framework */; };
@@ -787,6 +823,42 @@
 		F7BA8783151D4EDF0034A0C1 /* FW_PG14_Scores_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG14_Scores_tab.png; sourceTree = "<group>"; };
 		F7BA8784151D4EDF0034A0C1 /* FW_PG14_Shading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG14_Shading.png; sourceTree = "<group>"; };
 		F7BA8785151D4EDF0034A0C1 /* FW_PG14_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG14_TopBar.png; sourceTree = "<group>"; };
+		F7BA8798151D511F0034A0C1 /* FW_PG15_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG15_BG@2x.png"; sourceTree = "<group>"; };
+		F7BA8799151D511F0034A0C1 /* FW_PG15_HomeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG15_HomeButton@2x.png"; sourceTree = "<group>"; };
+		F7BA879A151D511F0034A0C1 /* FW_PG15_Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG15_Logo@2x.png"; sourceTree = "<group>"; };
+		F7BA879B151D511F0034A0C1 /* FW_PG15_MyLedger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG15_MyLedger@2x.png"; sourceTree = "<group>"; };
+		F7BA879C151D511F0034A0C1 /* FW_PG15_Shading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG15_Shading@2x.png"; sourceTree = "<group>"; };
+		F7BA879D151D511F0034A0C1 /* FW_PG15_TopBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG15_TopBar@2x.png"; sourceTree = "<group>"; };
+		F7BA879E151D511F0034A0C1 /* FW_PG15_Total Points@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG15_Total Points@2x.png"; sourceTree = "<group>"; };
+		F7BA87A0151D511F0034A0C1 /* FW_PG15_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG15_BG.png; sourceTree = "<group>"; };
+		F7BA87A1151D511F0034A0C1 /* FW_PG15_HomeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG15_HomeButton.png; sourceTree = "<group>"; };
+		F7BA87A2151D511F0034A0C1 /* FW_PG15_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG15_Logo.png; sourceTree = "<group>"; };
+		F7BA87A3151D511F0034A0C1 /* FW_PG15_MyLedger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG15_MyLedger.png; sourceTree = "<group>"; };
+		F7BA87A4151D511F0034A0C1 /* FW_PG15_Shading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG15_Shading.png; sourceTree = "<group>"; };
+		F7BA87A5151D511F0034A0C1 /* FW_PG15_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG15_TopBar.png; sourceTree = "<group>"; };
+		F7BA87A6151D511F0034A0C1 /* FW_PG15_Total Points.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG15_Total Points.png"; sourceTree = "<group>"; };
+		F7BA87B7151D53660034A0C1 /* FW_PG16_Back_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG16_Back_Button@2x.png"; sourceTree = "<group>"; };
+		F7BA87B8151D53660034A0C1 /* FW_PG16_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG16_BG@2x.png"; sourceTree = "<group>"; };
+		F7BA87B9151D53660034A0C1 /* FW_PG16_Hi_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG16_Hi_Button@2x.png"; sourceTree = "<group>"; };
+		F7BA87BA151D53660034A0C1 /* FW_PG16_Post_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG16_Post_Button@2x.png"; sourceTree = "<group>"; };
+		F7BA87BB151D53660034A0C1 /* FW_PG16_TopBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG16_TopBar@2x.png"; sourceTree = "<group>"; };
+		F7BA87BD151D53660034A0C1 /* FW_PG16_Back_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG16_Back_Button.png; sourceTree = "<group>"; };
+		F7BA87BE151D53660034A0C1 /* FW_PG16_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG16_BG.png; sourceTree = "<group>"; };
+		F7BA87BF151D53660034A0C1 /* FW_PG16_Hi_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG16_Hi_Button.png; sourceTree = "<group>"; };
+		F7BA87C0151D53660034A0C1 /* FW_PG16_Post_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG16_Post_Button.png; sourceTree = "<group>"; };
+		F7BA87C1151D53660034A0C1 /* FW_PG16_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG16_TopBar.png; sourceTree = "<group>"; };
+		F7BA87CE151D54430034A0C1 /* FW_PG17_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG17_BG@2x.png"; sourceTree = "<group>"; };
+		F7BA87CF151D54430034A0C1 /* FW_PG17_Cancel_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG17_Cancel_Button@2x.png"; sourceTree = "<group>"; };
+		F7BA87D0151D54430034A0C1 /* FW_PG17_MockKeypad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG17_MockKeypad@2x.png"; sourceTree = "<group>"; };
+		F7BA87D1151D54430034A0C1 /* FW_PG17_NewTrashTalk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG17_NewTrashTalk@2x.png"; sourceTree = "<group>"; };
+		F7BA87D2151D54430034A0C1 /* FW_PG17_Send_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG17_Send_Button@2x.png"; sourceTree = "<group>"; };
+		F7BA87D3151D54430034A0C1 /* FW_PG17_TopBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG17_TopBar@2x.png"; sourceTree = "<group>"; };
+		F7BA87D5151D54430034A0C1 /* FW_PG17_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG17_BG.png; sourceTree = "<group>"; };
+		F7BA87D6151D54430034A0C1 /* FW_PG17_Cancel_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG17_Cancel_Button.png; sourceTree = "<group>"; };
+		F7BA87D7151D54430034A0C1 /* FW_PG17_MockKeypad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG17_MockKeypad.png; sourceTree = "<group>"; };
+		F7BA87D8151D54430034A0C1 /* FW_PG17_NewTrashTalk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG17_NewTrashTalk.png; sourceTree = "<group>"; };
+		F7BA87D9151D54430034A0C1 /* FW_PG17_Send_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG17_Send_Button.png; sourceTree = "<group>"; };
+		F7BA87DA151D54430034A0C1 /* FW_PG17_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG17_TopBar.png; sourceTree = "<group>"; };
 		F7CDD73914ABD23C0038FE6B /* MakeAWagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakeAWagerViewController.h; sourceTree = "<group>"; };
 		F7CDD73A14ABD23C0038FE6B /* MakeAWagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakeAWagerViewController.m; sourceTree = "<group>"; };
 		F7CDD73B14ABD23C0038FE6B /* MakeAWagerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MakeAWagerViewController.xib; sourceTree = "<group>"; };
@@ -1221,6 +1293,9 @@
 		F7BA852A151CEC100034A0C1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F7BA87CC151D54400034A0C1 /* New Trash Talk */,
+				F7BA87B5151D53630034A0C1 /* Trash Talk Wall */,
+				F7BA8796151D511D0034A0C1 /* My Ledger */,
 				F7BA8773151D4EDC0034A0C1 /* Rankings by City */,
 				F7BA8750151D4E9B0034A0C1 /* Rankings by Sport */,
 				F7BA872D151D4DEE0034A0C1 /* Ranking by Wins */,
@@ -1861,6 +1936,114 @@
 			path = 72;
 			sourceTree = "<group>";
 		};
+		F7BA8796151D511D0034A0C1 /* My Ledger */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA8797151D511F0034A0C1 /* 144 */,
+				F7BA879F151D511F0034A0C1 /* 72 */,
+			);
+			name = "My Ledger";
+			path = "Page 15";
+			sourceTree = "<group>";
+		};
+		F7BA8797151D511F0034A0C1 /* 144 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA8798151D511F0034A0C1 /* FW_PG15_BG@2x.png */,
+				F7BA8799151D511F0034A0C1 /* FW_PG15_HomeButton@2x.png */,
+				F7BA879A151D511F0034A0C1 /* FW_PG15_Logo@2x.png */,
+				F7BA879B151D511F0034A0C1 /* FW_PG15_MyLedger@2x.png */,
+				F7BA879C151D511F0034A0C1 /* FW_PG15_Shading@2x.png */,
+				F7BA879D151D511F0034A0C1 /* FW_PG15_TopBar@2x.png */,
+				F7BA879E151D511F0034A0C1 /* FW_PG15_Total Points@2x.png */,
+			);
+			path = 144;
+			sourceTree = "<group>";
+		};
+		F7BA879F151D511F0034A0C1 /* 72 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA87A0151D511F0034A0C1 /* FW_PG15_BG.png */,
+				F7BA87A1151D511F0034A0C1 /* FW_PG15_HomeButton.png */,
+				F7BA87A2151D511F0034A0C1 /* FW_PG15_Logo.png */,
+				F7BA87A3151D511F0034A0C1 /* FW_PG15_MyLedger.png */,
+				F7BA87A4151D511F0034A0C1 /* FW_PG15_Shading.png */,
+				F7BA87A5151D511F0034A0C1 /* FW_PG15_TopBar.png */,
+				F7BA87A6151D511F0034A0C1 /* FW_PG15_Total Points.png */,
+			);
+			path = 72;
+			sourceTree = "<group>";
+		};
+		F7BA87B5151D53630034A0C1 /* Trash Talk Wall */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA87B6151D53660034A0C1 /* 144 */,
+				F7BA87BC151D53660034A0C1 /* 72 */,
+			);
+			name = "Trash Talk Wall";
+			path = "Page 16";
+			sourceTree = "<group>";
+		};
+		F7BA87B6151D53660034A0C1 /* 144 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA87B7151D53660034A0C1 /* FW_PG16_Back_Button@2x.png */,
+				F7BA87B8151D53660034A0C1 /* FW_PG16_BG@2x.png */,
+				F7BA87B9151D53660034A0C1 /* FW_PG16_Hi_Button@2x.png */,
+				F7BA87BA151D53660034A0C1 /* FW_PG16_Post_Button@2x.png */,
+				F7BA87BB151D53660034A0C1 /* FW_PG16_TopBar@2x.png */,
+			);
+			path = 144;
+			sourceTree = "<group>";
+		};
+		F7BA87BC151D53660034A0C1 /* 72 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA87BD151D53660034A0C1 /* FW_PG16_Back_Button.png */,
+				F7BA87BE151D53660034A0C1 /* FW_PG16_BG.png */,
+				F7BA87BF151D53660034A0C1 /* FW_PG16_Hi_Button.png */,
+				F7BA87C0151D53660034A0C1 /* FW_PG16_Post_Button.png */,
+				F7BA87C1151D53660034A0C1 /* FW_PG16_TopBar.png */,
+			);
+			path = 72;
+			sourceTree = "<group>";
+		};
+		F7BA87CC151D54400034A0C1 /* New Trash Talk */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA87CD151D54430034A0C1 /* 144 */,
+				F7BA87D4151D54430034A0C1 /* 72 */,
+			);
+			name = "New Trash Talk";
+			path = "Page 17";
+			sourceTree = "<group>";
+		};
+		F7BA87CD151D54430034A0C1 /* 144 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA87CE151D54430034A0C1 /* FW_PG17_BG@2x.png */,
+				F7BA87CF151D54430034A0C1 /* FW_PG17_Cancel_Button@2x.png */,
+				F7BA87D0151D54430034A0C1 /* FW_PG17_MockKeypad@2x.png */,
+				F7BA87D1151D54430034A0C1 /* FW_PG17_NewTrashTalk@2x.png */,
+				F7BA87D2151D54430034A0C1 /* FW_PG17_Send_Button@2x.png */,
+				F7BA87D3151D54430034A0C1 /* FW_PG17_TopBar@2x.png */,
+			);
+			path = 144;
+			sourceTree = "<group>";
+		};
+		F7BA87D4151D54430034A0C1 /* 72 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA87D5151D54430034A0C1 /* FW_PG17_BG.png */,
+				F7BA87D6151D54430034A0C1 /* FW_PG17_Cancel_Button.png */,
+				F7BA87D7151D54430034A0C1 /* FW_PG17_MockKeypad.png */,
+				F7BA87D8151D54430034A0C1 /* FW_PG17_NewTrashTalk.png */,
+				F7BA87D9151D54430034A0C1 /* FW_PG17_Send_Button.png */,
+				F7BA87DA151D54430034A0C1 /* FW_PG17_TopBar.png */,
+			);
+			path = 72;
+			sourceTree = "<group>";
+		};
 		F7CDD73714ABD1FD0038FE6B /* Make a Wager */ = {
 			isa = PBXGroup;
 			children = (
@@ -2322,6 +2505,42 @@
 				F7BA8793151D4EDF0034A0C1 /* FW_PG14_Scores_tab.png in Resources */,
 				F7BA8794151D4EDF0034A0C1 /* FW_PG14_Shading.png in Resources */,
 				F7BA8795151D4EDF0034A0C1 /* FW_PG14_TopBar.png in Resources */,
+				F7BA87A7151D511F0034A0C1 /* FW_PG15_BG@2x.png in Resources */,
+				F7BA87A8151D511F0034A0C1 /* FW_PG15_HomeButton@2x.png in Resources */,
+				F7BA87A9151D511F0034A0C1 /* FW_PG15_Logo@2x.png in Resources */,
+				F7BA87AA151D511F0034A0C1 /* FW_PG15_MyLedger@2x.png in Resources */,
+				F7BA87AB151D511F0034A0C1 /* FW_PG15_Shading@2x.png in Resources */,
+				F7BA87AC151D511F0034A0C1 /* FW_PG15_TopBar@2x.png in Resources */,
+				F7BA87AD151D511F0034A0C1 /* FW_PG15_Total Points@2x.png in Resources */,
+				F7BA87AE151D511F0034A0C1 /* FW_PG15_BG.png in Resources */,
+				F7BA87AF151D511F0034A0C1 /* FW_PG15_HomeButton.png in Resources */,
+				F7BA87B0151D511F0034A0C1 /* FW_PG15_Logo.png in Resources */,
+				F7BA87B1151D511F0034A0C1 /* FW_PG15_MyLedger.png in Resources */,
+				F7BA87B2151D511F0034A0C1 /* FW_PG15_Shading.png in Resources */,
+				F7BA87B3151D511F0034A0C1 /* FW_PG15_TopBar.png in Resources */,
+				F7BA87B4151D511F0034A0C1 /* FW_PG15_Total Points.png in Resources */,
+				F7BA87C2151D53660034A0C1 /* FW_PG16_Back_Button@2x.png in Resources */,
+				F7BA87C3151D53660034A0C1 /* FW_PG16_BG@2x.png in Resources */,
+				F7BA87C4151D53660034A0C1 /* FW_PG16_Hi_Button@2x.png in Resources */,
+				F7BA87C5151D53660034A0C1 /* FW_PG16_Post_Button@2x.png in Resources */,
+				F7BA87C6151D53660034A0C1 /* FW_PG16_TopBar@2x.png in Resources */,
+				F7BA87C7151D53660034A0C1 /* FW_PG16_Back_Button.png in Resources */,
+				F7BA87C8151D53660034A0C1 /* FW_PG16_BG.png in Resources */,
+				F7BA87C9151D53660034A0C1 /* FW_PG16_Hi_Button.png in Resources */,
+				F7BA87CA151D53660034A0C1 /* FW_PG16_Post_Button.png in Resources */,
+				F7BA87CB151D53660034A0C1 /* FW_PG16_TopBar.png in Resources */,
+				F7BA87DB151D54430034A0C1 /* FW_PG17_BG@2x.png in Resources */,
+				F7BA87DC151D54430034A0C1 /* FW_PG17_Cancel_Button@2x.png in Resources */,
+				F7BA87DD151D54430034A0C1 /* FW_PG17_MockKeypad@2x.png in Resources */,
+				F7BA87DE151D54430034A0C1 /* FW_PG17_NewTrashTalk@2x.png in Resources */,
+				F7BA87DF151D54430034A0C1 /* FW_PG17_Send_Button@2x.png in Resources */,
+				F7BA87E0151D54430034A0C1 /* FW_PG17_TopBar@2x.png in Resources */,
+				F7BA87E1151D54430034A0C1 /* FW_PG17_BG.png in Resources */,
+				F7BA87E2151D54430034A0C1 /* FW_PG17_Cancel_Button.png in Resources */,
+				F7BA87E3151D54430034A0C1 /* FW_PG17_MockKeypad.png in Resources */,
+				F7BA87E4151D54430034A0C1 /* FW_PG17_NewTrashTalk.png in Resources */,
+				F7BA87E5151D54430034A0C1 /* FW_PG17_Send_Button.png in Resources */,
+				F7BA87E6151D54430034A0C1 /* FW_PG17_TopBar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

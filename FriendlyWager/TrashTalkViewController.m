@@ -31,7 +31,11 @@
     
     self.title = @"Feed";
     
-    NSMutableArray *trashTalk = [[NSMutableArray alloc]initWithObjects:@"hi", nil];
+    
+    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG16_BG"]]];
+    
+    NSMutableArray *trashTalk = [[NSMutableArray alloc]initWithObjects:@"Sample Trash Talk", nil];
     [self setContentList:trashTalk];
     
     UIBarButtonItem *newTrashTalkButton = [[UIBarButtonItem alloc]initWithTitle:@"Post" style:UIBarButtonItemStyleBordered target:self action:@selector(newTrashTalkButtonClicked:)];

@@ -30,6 +30,12 @@
     [super viewDidLoad];
     [trashTalkTextView becomeFirstResponder];
     
+    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_PG17_NewTrashTalk"]];
+    self.navigationItem.titleView = titleImageView;
+    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG17_BG"]]];
+    
+    
     NSDictionary *navTitleAttributes = [[NSDictionary alloc]initWithObjectsAndKeys:
                                         [UIColor blackColor], UITextAttributeTextColor, nil];
     self.title = @"New Trash Talk";

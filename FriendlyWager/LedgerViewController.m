@@ -40,6 +40,13 @@
     ledgerDataTeam = [[NSMutableArray alloc]initWithObjects:@"Cardinals", @"Cubs", @"Diamondbacks", @"Suns", @"Cayotes", nil];
     ledgerDataWinLoss = [[NSMutableArray alloc]initWithObjects:@"W", @"W", @"L", @"W", @"L", nil];
     
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG15_BG"]]];
+    
+    
+    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_PG15_MyLedger"]];
+    self.navigationItem.titleView = titleImageView;
+    
+    
     
     //Navigation Bar Settings
     
@@ -50,8 +57,15 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
     
-    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc]initWithTitle:@"Home" style:UIBarButtonItemStyleBordered target:self action:@selector(homeButtonClicked:)];
-    homeButton.tintColor = [UIColor blackColor];
+    UIImage *homeButtonImage = [UIImage imageNamed:@"FW_PG15_HomeButton"];
+    UIButton *customHomeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    customHomeButton.bounds = CGRectMake( 0, 0, homeButtonImage.size.width, homeButtonImage.size.height );
+    [customHomeButton setImage:homeButtonImage forState:UIControlStateNormal];
+    [customHomeButton addTarget:self action:@selector(homeButtonClicked:) forControlEvents:UIControlStateNormal];
+    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithCustomView:customHomeButton];
+    
+    /*UIBarButtonItem *homeButton = [[UIBarButtonItem alloc]initWithTitle:@"Home" style:UIBarButtonItemStyleBordered target:self action:@selector(homeButtonClicked:)];
+    homeButton.tintColor = [UIColor blackColor];*/
     self.navigationItem.leftBarButtonItem = homeButton;
 }
 
@@ -88,6 +102,11 @@
     UILabel *opponentLabel = [[UILabel alloc]initWithFrame:CGRectMake(85, 15, 105, 20)];
     UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(200, 15, 90, 20)];
     UILabel *winLossLabel = [[UILabel alloc]initWithFrame:CGRectMake(290, 15, 15, 20)];
+    
+    dateLabel.backgroundColor = [UIColor clearColor];
+    opponentLabel.backgroundColor = [UIColor clearColor];
+    teamLabel.backgroundColor = [UIColor clearColor];
+    winLossLabel.backgroundColor = [UIColor clearColor];
     
     dateLabel.font = [UIFont systemFontOfSize:14.0];
     opponentLabel.font = [UIFont systemFontOfSize:14.0];
