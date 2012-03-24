@@ -273,6 +273,94 @@
 		F7BA86D4151D4A9A0034A0C1 /* FW_PG10_Shading.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86BA151D4A9A0034A0C1 /* FW_PG10_Shading.png */; };
 		F7BA86D5151D4A9A0034A0C1 /* FW_PG10_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86BB151D4A9A0034A0C1 /* FW_PG10_TopBar.png */; };
 		F7BA86D6151D4A9A0034A0C1 /* FW_PG10_Vito_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86BC151D4A9A0034A0C1 /* FW_PG10_Vito_Button.png */; };
+		F7BA86F2151D4C3E0034A0C1 /* FW_PG4_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86D9151D4C3E0034A0C1 /* FW_PG4_BG@2x.png */; };
+		F7BA86F3151D4C3E0034A0C1 /* FW_PG4_City_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86DA151D4C3E0034A0C1 /* FW_PG4_City_button@2x.png */; };
+		F7BA86F4151D4C3E0034A0C1 /* FW_PG4_HomeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86DB151D4C3E0034A0C1 /* FW_PG4_HomeButton@2x.png */; };
+		F7BA86F5151D4C3E0034A0C1 /* FW_PG4_Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86DC151D4C3E0034A0C1 /* FW_PG4_Logo@2x.png */; };
+		F7BA86F6151D4C3E0034A0C1 /* FW_PG4_MyAction_tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86DD151D4C3E0034A0C1 /* FW_PG4_MyAction_tab@2x.png */; };
+		F7BA86F7151D4C3E0034A0C1 /* FW_PG4_Points_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86DE151D4C3E0034A0C1 /* FW_PG4_Points_button@2x.png */; };
+		F7BA86F8151D4C3E0034A0C1 /* FW_PG4_Rank_Tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86DF151D4C3E0034A0C1 /* FW_PG4_Rank_Tab@2x.png */; };
+		F7BA86F9151D4C3E0034A0C1 /* FW_PG4_Scores_tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86E0151D4C3E0034A0C1 /* FW_PG4_Scores_tab@2x.png */; };
+		F7BA86FA151D4C3E0034A0C1 /* FW_PG4_Shading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86E1151D4C3E0034A0C1 /* FW_PG4_Shading@2x.png */; };
+		F7BA86FB151D4C3E0034A0C1 /* FW_PG4_Sport_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86E2151D4C3E0034A0C1 /* FW_PG4_Sport_button@2x.png */; };
+		F7BA86FC151D4C3E0034A0C1 /* FW_PG4_TopBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86E3151D4C3E0034A0C1 /* FW_PG4_TopBar@2x.png */; };
+		F7BA86FD151D4C3E0034A0C1 /* FW_PG4_Wins_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86E4151D4C3E0034A0C1 /* FW_PG4_Wins_button@2x.png */; };
+		F7BA86FE151D4C3E0034A0C1 /* FW_PG4_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86E6151D4C3E0034A0C1 /* FW_PG4_BG.png */; };
+		F7BA86FF151D4C3E0034A0C1 /* FW_PG4_City_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86E7151D4C3E0034A0C1 /* FW_PG4_City_button.png */; };
+		F7BA8700151D4C3E0034A0C1 /* FW_PG4_HomeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86E8151D4C3E0034A0C1 /* FW_PG4_HomeButton.png */; };
+		F7BA8701151D4C3E0034A0C1 /* FW_PG4_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86E9151D4C3E0034A0C1 /* FW_PG4_Logo.png */; };
+		F7BA8702151D4C3E0034A0C1 /* FW_PG4_MyAction_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86EA151D4C3E0034A0C1 /* FW_PG4_MyAction_tab.png */; };
+		F7BA8703151D4C3E0034A0C1 /* FW_PG4_Points_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86EB151D4C3E0034A0C1 /* FW_PG4_Points_button.png */; };
+		F7BA8704151D4C3E0034A0C1 /* FW_PG4_Rank_Tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86EC151D4C3E0034A0C1 /* FW_PG4_Rank_Tab.png */; };
+		F7BA8705151D4C3E0034A0C1 /* FW_PG4_Scores_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86ED151D4C3E0034A0C1 /* FW_PG4_Scores_tab.png */; };
+		F7BA8706151D4C3E0034A0C1 /* FW_PG4_Shading.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86EE151D4C3E0034A0C1 /* FW_PG4_Shading.png */; };
+		F7BA8707151D4C3E0034A0C1 /* FW_PG4_Sport_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86EF151D4C3E0034A0C1 /* FW_PG4_Sport_button.png */; };
+		F7BA8708151D4C3E0034A0C1 /* FW_PG4_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86F0151D4C3E0034A0C1 /* FW_PG4_TopBar.png */; };
+		F7BA8709151D4C3E0034A0C1 /* FW_PG4_Wins_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA86F1151D4C3E0034A0C1 /* FW_PG4_Wins_button.png */; };
+		F7BA871D151D4D530034A0C1 /* FW_PG11_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA870C151D4D530034A0C1 /* FW_PG11_BG@2x.png */; };
+		F7BA871E151D4D530034A0C1 /* FW_PG11_HomeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA870D151D4D530034A0C1 /* FW_PG11_HomeButton@2x.png */; };
+		F7BA871F151D4D530034A0C1 /* FW_PG11_Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA870E151D4D530034A0C1 /* FW_PG11_Logo@2x.png */; };
+		F7BA8720151D4D530034A0C1 /* FW_PG11_MyAction_tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA870F151D4D530034A0C1 /* FW_PG11_MyAction_tab@2x.png */; };
+		F7BA8721151D4D530034A0C1 /* FW_PG11_Rank_Tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8710151D4D530034A0C1 /* FW_PG11_Rank_Tab@2x.png */; };
+		F7BA8722151D4D530034A0C1 /* FW_PG11_Scores_tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8711151D4D530034A0C1 /* FW_PG11_Scores_tab@2x.png */; };
+		F7BA8723151D4D530034A0C1 /* FW_PG11_Shading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8712151D4D530034A0C1 /* FW_PG11_Shading@2x.png */; };
+		F7BA8724151D4D530034A0C1 /* FW_PG11_TopBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8713151D4D530034A0C1 /* FW_PG11_TopBar@2x.png */; };
+		F7BA8725151D4D530034A0C1 /* FW_PG11_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8715151D4D530034A0C1 /* FW_PG11_BG.png */; };
+		F7BA8726151D4D530034A0C1 /* FW_PG11_HomeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8716151D4D530034A0C1 /* FW_PG11_HomeButton.png */; };
+		F7BA8727151D4D530034A0C1 /* FW_PG11_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8717151D4D530034A0C1 /* FW_PG11_Logo.png */; };
+		F7BA8728151D4D530034A0C1 /* FW_PG11_MyAction_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8718151D4D530034A0C1 /* FW_PG11_MyAction_tab.png */; };
+		F7BA8729151D4D530034A0C1 /* FW_PG11_Rank_Tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8719151D4D530034A0C1 /* FW_PG11_Rank_Tab.png */; };
+		F7BA872A151D4D530034A0C1 /* FW_PG11_Scores_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA871A151D4D530034A0C1 /* FW_PG11_Scores_tab.png */; };
+		F7BA872B151D4D530034A0C1 /* FW_PG11_Shading.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA871B151D4D530034A0C1 /* FW_PG11_Shading.png */; };
+		F7BA872C151D4D530034A0C1 /* FW_PG11_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA871C151D4D530034A0C1 /* FW_PG11_TopBar.png */; };
+		F7BA8740151D4DF00034A0C1 /* FW_PG12_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA872F151D4DF00034A0C1 /* FW_PG12_BG@2x.png */; };
+		F7BA8741151D4DF00034A0C1 /* FW_PG12_HomeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8730151D4DF00034A0C1 /* FW_PG12_HomeButton@2x.png */; };
+		F7BA8742151D4DF00034A0C1 /* FW_PG12_Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8731151D4DF00034A0C1 /* FW_PG12_Logo@2x.png */; };
+		F7BA8743151D4DF00034A0C1 /* FW_PG12_MyAction_tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8732151D4DF00034A0C1 /* FW_PG12_MyAction_tab@2x.png */; };
+		F7BA8744151D4DF00034A0C1 /* FW_PG12_Rank_Tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8733151D4DF00034A0C1 /* FW_PG12_Rank_Tab@2x.png */; };
+		F7BA8745151D4DF00034A0C1 /* FW_PG12_Scores_tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8734151D4DF00034A0C1 /* FW_PG12_Scores_tab@2x.png */; };
+		F7BA8746151D4DF00034A0C1 /* FW_PG12_Shading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8735151D4DF00034A0C1 /* FW_PG12_Shading@2x.png */; };
+		F7BA8747151D4DF00034A0C1 /* FW_PG12_TopBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8736151D4DF00034A0C1 /* FW_PG12_TopBar@2x.png */; };
+		F7BA8748151D4DF00034A0C1 /* FW_PG12_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8738151D4DF00034A0C1 /* FW_PG12_BG.png */; };
+		F7BA8749151D4DF00034A0C1 /* FW_PG12_HomeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8739151D4DF00034A0C1 /* FW_PG12_HomeButton.png */; };
+		F7BA874A151D4DF00034A0C1 /* FW_PG12_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA873A151D4DF00034A0C1 /* FW_PG12_Logo.png */; };
+		F7BA874B151D4DF00034A0C1 /* FW_PG12_MyAction_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA873B151D4DF00034A0C1 /* FW_PG12_MyAction_tab.png */; };
+		F7BA874C151D4DF00034A0C1 /* FW_PG12_Rank_Tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA873C151D4DF00034A0C1 /* FW_PG12_Rank_Tab.png */; };
+		F7BA874D151D4DF00034A0C1 /* FW_PG12_Scores_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA873D151D4DF00034A0C1 /* FW_PG12_Scores_tab.png */; };
+		F7BA874E151D4DF00034A0C1 /* FW_PG12_Shading.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA873E151D4DF00034A0C1 /* FW_PG12_Shading.png */; };
+		F7BA874F151D4DF00034A0C1 /* FW_PG12_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA873F151D4DF00034A0C1 /* FW_PG12_TopBar.png */; };
+		F7BA8763151D4E9D0034A0C1 /* FW_PG13_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8752151D4E9D0034A0C1 /* FW_PG13_BG@2x.png */; };
+		F7BA8764151D4E9D0034A0C1 /* FW_PG13_HomeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8753151D4E9D0034A0C1 /* FW_PG13_HomeButton@2x.png */; };
+		F7BA8765151D4E9D0034A0C1 /* FW_PG13_Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8754151D4E9D0034A0C1 /* FW_PG13_Logo@2x.png */; };
+		F7BA8766151D4E9D0034A0C1 /* FW_PG13_MyAction_tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8755151D4E9D0034A0C1 /* FW_PG13_MyAction_tab@2x.png */; };
+		F7BA8767151D4E9D0034A0C1 /* FW_PG13_Rank_Tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8756151D4E9D0034A0C1 /* FW_PG13_Rank_Tab@2x.png */; };
+		F7BA8768151D4E9D0034A0C1 /* FW_PG13_Scores_tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8757151D4E9D0034A0C1 /* FW_PG13_Scores_tab@2x.png */; };
+		F7BA8769151D4E9D0034A0C1 /* FW_PG13_Shading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8758151D4E9D0034A0C1 /* FW_PG13_Shading@2x.png */; };
+		F7BA876A151D4E9D0034A0C1 /* FW_PG13_TopBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8759151D4E9D0034A0C1 /* FW_PG13_TopBar@2x.png */; };
+		F7BA876B151D4E9D0034A0C1 /* FW_PG13_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA875B151D4E9D0034A0C1 /* FW_PG13_BG.png */; };
+		F7BA876C151D4E9D0034A0C1 /* FW_PG13_HomeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA875C151D4E9D0034A0C1 /* FW_PG13_HomeButton.png */; };
+		F7BA876D151D4E9D0034A0C1 /* FW_PG13_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA875D151D4E9D0034A0C1 /* FW_PG13_Logo.png */; };
+		F7BA876E151D4E9D0034A0C1 /* FW_PG13_MyAction_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA875E151D4E9D0034A0C1 /* FW_PG13_MyAction_tab.png */; };
+		F7BA876F151D4E9D0034A0C1 /* FW_PG13_Rank_Tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA875F151D4E9D0034A0C1 /* FW_PG13_Rank_Tab.png */; };
+		F7BA8770151D4E9D0034A0C1 /* FW_PG13_Scores_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8760151D4E9D0034A0C1 /* FW_PG13_Scores_tab.png */; };
+		F7BA8771151D4E9D0034A0C1 /* FW_PG13_Shading.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8761151D4E9D0034A0C1 /* FW_PG13_Shading.png */; };
+		F7BA8772151D4E9D0034A0C1 /* FW_PG13_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8762151D4E9D0034A0C1 /* FW_PG13_TopBar.png */; };
+		F7BA8786151D4EDF0034A0C1 /* FW_PG14_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8775151D4EDF0034A0C1 /* FW_PG14_BG@2x.png */; };
+		F7BA8787151D4EDF0034A0C1 /* FW_PG14_HomeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8776151D4EDF0034A0C1 /* FW_PG14_HomeButton@2x.png */; };
+		F7BA8788151D4EDF0034A0C1 /* FW_PG14_Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8777151D4EDF0034A0C1 /* FW_PG14_Logo@2x.png */; };
+		F7BA8789151D4EDF0034A0C1 /* FW_PG14_MyAction_tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8778151D4EDF0034A0C1 /* FW_PG14_MyAction_tab@2x.png */; };
+		F7BA878A151D4EDF0034A0C1 /* FW_PG14_Rank_Tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8779151D4EDF0034A0C1 /* FW_PG14_Rank_Tab@2x.png */; };
+		F7BA878B151D4EDF0034A0C1 /* FW_PG14_Scores_tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA877A151D4EDF0034A0C1 /* FW_PG14_Scores_tab@2x.png */; };
+		F7BA878C151D4EDF0034A0C1 /* FW_PG14_Shading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA877B151D4EDF0034A0C1 /* FW_PG14_Shading@2x.png */; };
+		F7BA878D151D4EDF0034A0C1 /* FW_PG14_TopBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA877C151D4EDF0034A0C1 /* FW_PG14_TopBar@2x.png */; };
+		F7BA878E151D4EDF0034A0C1 /* FW_PG14_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA877E151D4EDF0034A0C1 /* FW_PG14_BG.png */; };
+		F7BA878F151D4EDF0034A0C1 /* FW_PG14_HomeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA877F151D4EDF0034A0C1 /* FW_PG14_HomeButton.png */; };
+		F7BA8790151D4EDF0034A0C1 /* FW_PG14_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8780151D4EDF0034A0C1 /* FW_PG14_Logo.png */; };
+		F7BA8791151D4EDF0034A0C1 /* FW_PG14_MyAction_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8781151D4EDF0034A0C1 /* FW_PG14_MyAction_tab.png */; };
+		F7BA8792151D4EDF0034A0C1 /* FW_PG14_Rank_Tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8782151D4EDF0034A0C1 /* FW_PG14_Rank_Tab.png */; };
+		F7BA8793151D4EDF0034A0C1 /* FW_PG14_Scores_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8783151D4EDF0034A0C1 /* FW_PG14_Scores_tab.png */; };
+		F7BA8794151D4EDF0034A0C1 /* FW_PG14_Shading.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8784151D4EDF0034A0C1 /* FW_PG14_Shading.png */; };
+		F7BA8795151D4EDF0034A0C1 /* FW_PG14_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8785151D4EDF0034A0C1 /* FW_PG14_TopBar.png */; };
 		F7CDD73C14ABD23C0038FE6B /* MakeAWagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7CDD73A14ABD23C0038FE6B /* MakeAWagerViewController.m */; };
 		F7CDD73D14ABD23C0038FE6B /* MakeAWagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CDD73B14ABD23C0038FE6B /* MakeAWagerViewController.xib */; };
 		F7CDD77614ABF3410038FE6B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CDD77414ABF3410038FE6B /* AddressBook.framework */; };
@@ -611,6 +699,94 @@
 		F7BA86BA151D4A9A0034A0C1 /* FW_PG10_Shading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG10_Shading.png; sourceTree = "<group>"; };
 		F7BA86BB151D4A9A0034A0C1 /* FW_PG10_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG10_TopBar.png; sourceTree = "<group>"; };
 		F7BA86BC151D4A9A0034A0C1 /* FW_PG10_Vito_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG10_Vito_Button.png; sourceTree = "<group>"; };
+		F7BA86D9151D4C3E0034A0C1 /* FW_PG4_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG4_BG@2x.png"; sourceTree = "<group>"; };
+		F7BA86DA151D4C3E0034A0C1 /* FW_PG4_City_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG4_City_button@2x.png"; sourceTree = "<group>"; };
+		F7BA86DB151D4C3E0034A0C1 /* FW_PG4_HomeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG4_HomeButton@2x.png"; sourceTree = "<group>"; };
+		F7BA86DC151D4C3E0034A0C1 /* FW_PG4_Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG4_Logo@2x.png"; sourceTree = "<group>"; };
+		F7BA86DD151D4C3E0034A0C1 /* FW_PG4_MyAction_tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG4_MyAction_tab@2x.png"; sourceTree = "<group>"; };
+		F7BA86DE151D4C3E0034A0C1 /* FW_PG4_Points_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG4_Points_button@2x.png"; sourceTree = "<group>"; };
+		F7BA86DF151D4C3E0034A0C1 /* FW_PG4_Rank_Tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG4_Rank_Tab@2x.png"; sourceTree = "<group>"; };
+		F7BA86E0151D4C3E0034A0C1 /* FW_PG4_Scores_tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG4_Scores_tab@2x.png"; sourceTree = "<group>"; };
+		F7BA86E1151D4C3E0034A0C1 /* FW_PG4_Shading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG4_Shading@2x.png"; sourceTree = "<group>"; };
+		F7BA86E2151D4C3E0034A0C1 /* FW_PG4_Sport_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG4_Sport_button@2x.png"; sourceTree = "<group>"; };
+		F7BA86E3151D4C3E0034A0C1 /* FW_PG4_TopBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG4_TopBar@2x.png"; sourceTree = "<group>"; };
+		F7BA86E4151D4C3E0034A0C1 /* FW_PG4_Wins_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG4_Wins_button@2x.png"; sourceTree = "<group>"; };
+		F7BA86E6151D4C3E0034A0C1 /* FW_PG4_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG4_BG.png; sourceTree = "<group>"; };
+		F7BA86E7151D4C3E0034A0C1 /* FW_PG4_City_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG4_City_button.png; sourceTree = "<group>"; };
+		F7BA86E8151D4C3E0034A0C1 /* FW_PG4_HomeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG4_HomeButton.png; sourceTree = "<group>"; };
+		F7BA86E9151D4C3E0034A0C1 /* FW_PG4_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG4_Logo.png; sourceTree = "<group>"; };
+		F7BA86EA151D4C3E0034A0C1 /* FW_PG4_MyAction_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG4_MyAction_tab.png; sourceTree = "<group>"; };
+		F7BA86EB151D4C3E0034A0C1 /* FW_PG4_Points_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG4_Points_button.png; sourceTree = "<group>"; };
+		F7BA86EC151D4C3E0034A0C1 /* FW_PG4_Rank_Tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG4_Rank_Tab.png; sourceTree = "<group>"; };
+		F7BA86ED151D4C3E0034A0C1 /* FW_PG4_Scores_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG4_Scores_tab.png; sourceTree = "<group>"; };
+		F7BA86EE151D4C3E0034A0C1 /* FW_PG4_Shading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG4_Shading.png; sourceTree = "<group>"; };
+		F7BA86EF151D4C3E0034A0C1 /* FW_PG4_Sport_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG4_Sport_button.png; sourceTree = "<group>"; };
+		F7BA86F0151D4C3E0034A0C1 /* FW_PG4_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG4_TopBar.png; sourceTree = "<group>"; };
+		F7BA86F1151D4C3E0034A0C1 /* FW_PG4_Wins_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG4_Wins_button.png; sourceTree = "<group>"; };
+		F7BA870C151D4D530034A0C1 /* FW_PG11_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG11_BG@2x.png"; sourceTree = "<group>"; };
+		F7BA870D151D4D530034A0C1 /* FW_PG11_HomeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG11_HomeButton@2x.png"; sourceTree = "<group>"; };
+		F7BA870E151D4D530034A0C1 /* FW_PG11_Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG11_Logo@2x.png"; sourceTree = "<group>"; };
+		F7BA870F151D4D530034A0C1 /* FW_PG11_MyAction_tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG11_MyAction_tab@2x.png"; sourceTree = "<group>"; };
+		F7BA8710151D4D530034A0C1 /* FW_PG11_Rank_Tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG11_Rank_Tab@2x.png"; sourceTree = "<group>"; };
+		F7BA8711151D4D530034A0C1 /* FW_PG11_Scores_tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG11_Scores_tab@2x.png"; sourceTree = "<group>"; };
+		F7BA8712151D4D530034A0C1 /* FW_PG11_Shading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG11_Shading@2x.png"; sourceTree = "<group>"; };
+		F7BA8713151D4D530034A0C1 /* FW_PG11_TopBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG11_TopBar@2x.png"; sourceTree = "<group>"; };
+		F7BA8715151D4D530034A0C1 /* FW_PG11_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG11_BG.png; sourceTree = "<group>"; };
+		F7BA8716151D4D530034A0C1 /* FW_PG11_HomeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG11_HomeButton.png; sourceTree = "<group>"; };
+		F7BA8717151D4D530034A0C1 /* FW_PG11_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG11_Logo.png; sourceTree = "<group>"; };
+		F7BA8718151D4D530034A0C1 /* FW_PG11_MyAction_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG11_MyAction_tab.png; sourceTree = "<group>"; };
+		F7BA8719151D4D530034A0C1 /* FW_PG11_Rank_Tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG11_Rank_Tab.png; sourceTree = "<group>"; };
+		F7BA871A151D4D530034A0C1 /* FW_PG11_Scores_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG11_Scores_tab.png; sourceTree = "<group>"; };
+		F7BA871B151D4D530034A0C1 /* FW_PG11_Shading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG11_Shading.png; sourceTree = "<group>"; };
+		F7BA871C151D4D530034A0C1 /* FW_PG11_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG11_TopBar.png; sourceTree = "<group>"; };
+		F7BA872F151D4DF00034A0C1 /* FW_PG12_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG12_BG@2x.png"; sourceTree = "<group>"; };
+		F7BA8730151D4DF00034A0C1 /* FW_PG12_HomeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG12_HomeButton@2x.png"; sourceTree = "<group>"; };
+		F7BA8731151D4DF00034A0C1 /* FW_PG12_Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG12_Logo@2x.png"; sourceTree = "<group>"; };
+		F7BA8732151D4DF00034A0C1 /* FW_PG12_MyAction_tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG12_MyAction_tab@2x.png"; sourceTree = "<group>"; };
+		F7BA8733151D4DF00034A0C1 /* FW_PG12_Rank_Tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG12_Rank_Tab@2x.png"; sourceTree = "<group>"; };
+		F7BA8734151D4DF00034A0C1 /* FW_PG12_Scores_tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG12_Scores_tab@2x.png"; sourceTree = "<group>"; };
+		F7BA8735151D4DF00034A0C1 /* FW_PG12_Shading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG12_Shading@2x.png"; sourceTree = "<group>"; };
+		F7BA8736151D4DF00034A0C1 /* FW_PG12_TopBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG12_TopBar@2x.png"; sourceTree = "<group>"; };
+		F7BA8738151D4DF00034A0C1 /* FW_PG12_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG12_BG.png; sourceTree = "<group>"; };
+		F7BA8739151D4DF00034A0C1 /* FW_PG12_HomeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG12_HomeButton.png; sourceTree = "<group>"; };
+		F7BA873A151D4DF00034A0C1 /* FW_PG12_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG12_Logo.png; sourceTree = "<group>"; };
+		F7BA873B151D4DF00034A0C1 /* FW_PG12_MyAction_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG12_MyAction_tab.png; sourceTree = "<group>"; };
+		F7BA873C151D4DF00034A0C1 /* FW_PG12_Rank_Tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG12_Rank_Tab.png; sourceTree = "<group>"; };
+		F7BA873D151D4DF00034A0C1 /* FW_PG12_Scores_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG12_Scores_tab.png; sourceTree = "<group>"; };
+		F7BA873E151D4DF00034A0C1 /* FW_PG12_Shading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG12_Shading.png; sourceTree = "<group>"; };
+		F7BA873F151D4DF00034A0C1 /* FW_PG12_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG12_TopBar.png; sourceTree = "<group>"; };
+		F7BA8752151D4E9D0034A0C1 /* FW_PG13_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG13_BG@2x.png"; sourceTree = "<group>"; };
+		F7BA8753151D4E9D0034A0C1 /* FW_PG13_HomeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG13_HomeButton@2x.png"; sourceTree = "<group>"; };
+		F7BA8754151D4E9D0034A0C1 /* FW_PG13_Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG13_Logo@2x.png"; sourceTree = "<group>"; };
+		F7BA8755151D4E9D0034A0C1 /* FW_PG13_MyAction_tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG13_MyAction_tab@2x.png"; sourceTree = "<group>"; };
+		F7BA8756151D4E9D0034A0C1 /* FW_PG13_Rank_Tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG13_Rank_Tab@2x.png"; sourceTree = "<group>"; };
+		F7BA8757151D4E9D0034A0C1 /* FW_PG13_Scores_tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG13_Scores_tab@2x.png"; sourceTree = "<group>"; };
+		F7BA8758151D4E9D0034A0C1 /* FW_PG13_Shading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG13_Shading@2x.png"; sourceTree = "<group>"; };
+		F7BA8759151D4E9D0034A0C1 /* FW_PG13_TopBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG13_TopBar@2x.png"; sourceTree = "<group>"; };
+		F7BA875B151D4E9D0034A0C1 /* FW_PG13_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG13_BG.png; sourceTree = "<group>"; };
+		F7BA875C151D4E9D0034A0C1 /* FW_PG13_HomeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG13_HomeButton.png; sourceTree = "<group>"; };
+		F7BA875D151D4E9D0034A0C1 /* FW_PG13_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG13_Logo.png; sourceTree = "<group>"; };
+		F7BA875E151D4E9D0034A0C1 /* FW_PG13_MyAction_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG13_MyAction_tab.png; sourceTree = "<group>"; };
+		F7BA875F151D4E9D0034A0C1 /* FW_PG13_Rank_Tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG13_Rank_Tab.png; sourceTree = "<group>"; };
+		F7BA8760151D4E9D0034A0C1 /* FW_PG13_Scores_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG13_Scores_tab.png; sourceTree = "<group>"; };
+		F7BA8761151D4E9D0034A0C1 /* FW_PG13_Shading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG13_Shading.png; sourceTree = "<group>"; };
+		F7BA8762151D4E9D0034A0C1 /* FW_PG13_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG13_TopBar.png; sourceTree = "<group>"; };
+		F7BA8775151D4EDF0034A0C1 /* FW_PG14_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG14_BG@2x.png"; sourceTree = "<group>"; };
+		F7BA8776151D4EDF0034A0C1 /* FW_PG14_HomeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG14_HomeButton@2x.png"; sourceTree = "<group>"; };
+		F7BA8777151D4EDF0034A0C1 /* FW_PG14_Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG14_Logo@2x.png"; sourceTree = "<group>"; };
+		F7BA8778151D4EDF0034A0C1 /* FW_PG14_MyAction_tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG14_MyAction_tab@2x.png"; sourceTree = "<group>"; };
+		F7BA8779151D4EDF0034A0C1 /* FW_PG14_Rank_Tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG14_Rank_Tab@2x.png"; sourceTree = "<group>"; };
+		F7BA877A151D4EDF0034A0C1 /* FW_PG14_Scores_tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG14_Scores_tab@2x.png"; sourceTree = "<group>"; };
+		F7BA877B151D4EDF0034A0C1 /* FW_PG14_Shading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG14_Shading@2x.png"; sourceTree = "<group>"; };
+		F7BA877C151D4EDF0034A0C1 /* FW_PG14_TopBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG14_TopBar@2x.png"; sourceTree = "<group>"; };
+		F7BA877E151D4EDF0034A0C1 /* FW_PG14_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG14_BG.png; sourceTree = "<group>"; };
+		F7BA877F151D4EDF0034A0C1 /* FW_PG14_HomeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG14_HomeButton.png; sourceTree = "<group>"; };
+		F7BA8780151D4EDF0034A0C1 /* FW_PG14_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG14_Logo.png; sourceTree = "<group>"; };
+		F7BA8781151D4EDF0034A0C1 /* FW_PG14_MyAction_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG14_MyAction_tab.png; sourceTree = "<group>"; };
+		F7BA8782151D4EDF0034A0C1 /* FW_PG14_Rank_Tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG14_Rank_Tab.png; sourceTree = "<group>"; };
+		F7BA8783151D4EDF0034A0C1 /* FW_PG14_Scores_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG14_Scores_tab.png; sourceTree = "<group>"; };
+		F7BA8784151D4EDF0034A0C1 /* FW_PG14_Shading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG14_Shading.png; sourceTree = "<group>"; };
+		F7BA8785151D4EDF0034A0C1 /* FW_PG14_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG14_TopBar.png; sourceTree = "<group>"; };
 		F7CDD73914ABD23C0038FE6B /* MakeAWagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakeAWagerViewController.h; sourceTree = "<group>"; };
 		F7CDD73A14ABD23C0038FE6B /* MakeAWagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakeAWagerViewController.m; sourceTree = "<group>"; };
 		F7CDD73B14ABD23C0038FE6B /* MakeAWagerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MakeAWagerViewController.xib; sourceTree = "<group>"; };
@@ -1045,6 +1221,11 @@
 		F7BA852A151CEC100034A0C1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F7BA8773151D4EDC0034A0C1 /* Rankings by City */,
+				F7BA8750151D4E9B0034A0C1 /* Rankings by Sport */,
+				F7BA872D151D4DEE0034A0C1 /* Ranking by Wins */,
+				F7BA870A151D4D510034A0C1 /* Ranking by Points */,
+				F7BA86D7151D4C3C0034A0C1 /* Rankings */,
 				F7BA86A0151D4A990034A0C1 /* Score Detail */,
 				F7BA8669151D49FE0034A0C1 /* Scores */,
 				F7BA862E151D472B0034A0C1 /* Scores Summary */,
@@ -1472,6 +1653,214 @@
 			path = 72;
 			sourceTree = "<group>";
 		};
+		F7BA86D7151D4C3C0034A0C1 /* Rankings */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA86D8151D4C3E0034A0C1 /* 144 */,
+				F7BA86E5151D4C3E0034A0C1 /* 72 */,
+			);
+			name = Rankings;
+			path = "Page 4";
+			sourceTree = "<group>";
+		};
+		F7BA86D8151D4C3E0034A0C1 /* 144 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA86D9151D4C3E0034A0C1 /* FW_PG4_BG@2x.png */,
+				F7BA86DA151D4C3E0034A0C1 /* FW_PG4_City_button@2x.png */,
+				F7BA86DB151D4C3E0034A0C1 /* FW_PG4_HomeButton@2x.png */,
+				F7BA86DC151D4C3E0034A0C1 /* FW_PG4_Logo@2x.png */,
+				F7BA86DD151D4C3E0034A0C1 /* FW_PG4_MyAction_tab@2x.png */,
+				F7BA86DE151D4C3E0034A0C1 /* FW_PG4_Points_button@2x.png */,
+				F7BA86DF151D4C3E0034A0C1 /* FW_PG4_Rank_Tab@2x.png */,
+				F7BA86E0151D4C3E0034A0C1 /* FW_PG4_Scores_tab@2x.png */,
+				F7BA86E1151D4C3E0034A0C1 /* FW_PG4_Shading@2x.png */,
+				F7BA86E2151D4C3E0034A0C1 /* FW_PG4_Sport_button@2x.png */,
+				F7BA86E3151D4C3E0034A0C1 /* FW_PG4_TopBar@2x.png */,
+				F7BA86E4151D4C3E0034A0C1 /* FW_PG4_Wins_button@2x.png */,
+			);
+			path = 144;
+			sourceTree = "<group>";
+		};
+		F7BA86E5151D4C3E0034A0C1 /* 72 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA86E6151D4C3E0034A0C1 /* FW_PG4_BG.png */,
+				F7BA86E7151D4C3E0034A0C1 /* FW_PG4_City_button.png */,
+				F7BA86E8151D4C3E0034A0C1 /* FW_PG4_HomeButton.png */,
+				F7BA86E9151D4C3E0034A0C1 /* FW_PG4_Logo.png */,
+				F7BA86EA151D4C3E0034A0C1 /* FW_PG4_MyAction_tab.png */,
+				F7BA86EB151D4C3E0034A0C1 /* FW_PG4_Points_button.png */,
+				F7BA86EC151D4C3E0034A0C1 /* FW_PG4_Rank_Tab.png */,
+				F7BA86ED151D4C3E0034A0C1 /* FW_PG4_Scores_tab.png */,
+				F7BA86EE151D4C3E0034A0C1 /* FW_PG4_Shading.png */,
+				F7BA86EF151D4C3E0034A0C1 /* FW_PG4_Sport_button.png */,
+				F7BA86F0151D4C3E0034A0C1 /* FW_PG4_TopBar.png */,
+				F7BA86F1151D4C3E0034A0C1 /* FW_PG4_Wins_button.png */,
+			);
+			path = 72;
+			sourceTree = "<group>";
+		};
+		F7BA870A151D4D510034A0C1 /* Ranking by Points */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA870B151D4D530034A0C1 /* 144 */,
+				F7BA8714151D4D530034A0C1 /* 72 */,
+			);
+			name = "Ranking by Points";
+			path = "Page 11";
+			sourceTree = "<group>";
+		};
+		F7BA870B151D4D530034A0C1 /* 144 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA870C151D4D530034A0C1 /* FW_PG11_BG@2x.png */,
+				F7BA870D151D4D530034A0C1 /* FW_PG11_HomeButton@2x.png */,
+				F7BA870E151D4D530034A0C1 /* FW_PG11_Logo@2x.png */,
+				F7BA870F151D4D530034A0C1 /* FW_PG11_MyAction_tab@2x.png */,
+				F7BA8710151D4D530034A0C1 /* FW_PG11_Rank_Tab@2x.png */,
+				F7BA8711151D4D530034A0C1 /* FW_PG11_Scores_tab@2x.png */,
+				F7BA8712151D4D530034A0C1 /* FW_PG11_Shading@2x.png */,
+				F7BA8713151D4D530034A0C1 /* FW_PG11_TopBar@2x.png */,
+			);
+			path = 144;
+			sourceTree = "<group>";
+		};
+		F7BA8714151D4D530034A0C1 /* 72 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA8715151D4D530034A0C1 /* FW_PG11_BG.png */,
+				F7BA8716151D4D530034A0C1 /* FW_PG11_HomeButton.png */,
+				F7BA8717151D4D530034A0C1 /* FW_PG11_Logo.png */,
+				F7BA8718151D4D530034A0C1 /* FW_PG11_MyAction_tab.png */,
+				F7BA8719151D4D530034A0C1 /* FW_PG11_Rank_Tab.png */,
+				F7BA871A151D4D530034A0C1 /* FW_PG11_Scores_tab.png */,
+				F7BA871B151D4D530034A0C1 /* FW_PG11_Shading.png */,
+				F7BA871C151D4D530034A0C1 /* FW_PG11_TopBar.png */,
+			);
+			path = 72;
+			sourceTree = "<group>";
+		};
+		F7BA872D151D4DEE0034A0C1 /* Ranking by Wins */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA872E151D4DF00034A0C1 /* 144 */,
+				F7BA8737151D4DF00034A0C1 /* 72 */,
+			);
+			name = "Ranking by Wins";
+			path = "Page 12";
+			sourceTree = "<group>";
+		};
+		F7BA872E151D4DF00034A0C1 /* 144 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA872F151D4DF00034A0C1 /* FW_PG12_BG@2x.png */,
+				F7BA8730151D4DF00034A0C1 /* FW_PG12_HomeButton@2x.png */,
+				F7BA8731151D4DF00034A0C1 /* FW_PG12_Logo@2x.png */,
+				F7BA8732151D4DF00034A0C1 /* FW_PG12_MyAction_tab@2x.png */,
+				F7BA8733151D4DF00034A0C1 /* FW_PG12_Rank_Tab@2x.png */,
+				F7BA8734151D4DF00034A0C1 /* FW_PG12_Scores_tab@2x.png */,
+				F7BA8735151D4DF00034A0C1 /* FW_PG12_Shading@2x.png */,
+				F7BA8736151D4DF00034A0C1 /* FW_PG12_TopBar@2x.png */,
+			);
+			path = 144;
+			sourceTree = "<group>";
+		};
+		F7BA8737151D4DF00034A0C1 /* 72 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA8738151D4DF00034A0C1 /* FW_PG12_BG.png */,
+				F7BA8739151D4DF00034A0C1 /* FW_PG12_HomeButton.png */,
+				F7BA873A151D4DF00034A0C1 /* FW_PG12_Logo.png */,
+				F7BA873B151D4DF00034A0C1 /* FW_PG12_MyAction_tab.png */,
+				F7BA873C151D4DF00034A0C1 /* FW_PG12_Rank_Tab.png */,
+				F7BA873D151D4DF00034A0C1 /* FW_PG12_Scores_tab.png */,
+				F7BA873E151D4DF00034A0C1 /* FW_PG12_Shading.png */,
+				F7BA873F151D4DF00034A0C1 /* FW_PG12_TopBar.png */,
+			);
+			path = 72;
+			sourceTree = "<group>";
+		};
+		F7BA8750151D4E9B0034A0C1 /* Rankings by Sport */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA8751151D4E9D0034A0C1 /* 144 */,
+				F7BA875A151D4E9D0034A0C1 /* 72 */,
+			);
+			name = "Rankings by Sport";
+			path = "Page 13";
+			sourceTree = "<group>";
+		};
+		F7BA8751151D4E9D0034A0C1 /* 144 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA8752151D4E9D0034A0C1 /* FW_PG13_BG@2x.png */,
+				F7BA8753151D4E9D0034A0C1 /* FW_PG13_HomeButton@2x.png */,
+				F7BA8754151D4E9D0034A0C1 /* FW_PG13_Logo@2x.png */,
+				F7BA8755151D4E9D0034A0C1 /* FW_PG13_MyAction_tab@2x.png */,
+				F7BA8756151D4E9D0034A0C1 /* FW_PG13_Rank_Tab@2x.png */,
+				F7BA8757151D4E9D0034A0C1 /* FW_PG13_Scores_tab@2x.png */,
+				F7BA8758151D4E9D0034A0C1 /* FW_PG13_Shading@2x.png */,
+				F7BA8759151D4E9D0034A0C1 /* FW_PG13_TopBar@2x.png */,
+			);
+			path = 144;
+			sourceTree = "<group>";
+		};
+		F7BA875A151D4E9D0034A0C1 /* 72 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA875B151D4E9D0034A0C1 /* FW_PG13_BG.png */,
+				F7BA875C151D4E9D0034A0C1 /* FW_PG13_HomeButton.png */,
+				F7BA875D151D4E9D0034A0C1 /* FW_PG13_Logo.png */,
+				F7BA875E151D4E9D0034A0C1 /* FW_PG13_MyAction_tab.png */,
+				F7BA875F151D4E9D0034A0C1 /* FW_PG13_Rank_Tab.png */,
+				F7BA8760151D4E9D0034A0C1 /* FW_PG13_Scores_tab.png */,
+				F7BA8761151D4E9D0034A0C1 /* FW_PG13_Shading.png */,
+				F7BA8762151D4E9D0034A0C1 /* FW_PG13_TopBar.png */,
+			);
+			path = 72;
+			sourceTree = "<group>";
+		};
+		F7BA8773151D4EDC0034A0C1 /* Rankings by City */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA8774151D4EDF0034A0C1 /* 144 */,
+				F7BA877D151D4EDF0034A0C1 /* 72 */,
+			);
+			name = "Rankings by City";
+			path = "Page 14";
+			sourceTree = "<group>";
+		};
+		F7BA8774151D4EDF0034A0C1 /* 144 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA8775151D4EDF0034A0C1 /* FW_PG14_BG@2x.png */,
+				F7BA8776151D4EDF0034A0C1 /* FW_PG14_HomeButton@2x.png */,
+				F7BA8777151D4EDF0034A0C1 /* FW_PG14_Logo@2x.png */,
+				F7BA8778151D4EDF0034A0C1 /* FW_PG14_MyAction_tab@2x.png */,
+				F7BA8779151D4EDF0034A0C1 /* FW_PG14_Rank_Tab@2x.png */,
+				F7BA877A151D4EDF0034A0C1 /* FW_PG14_Scores_tab@2x.png */,
+				F7BA877B151D4EDF0034A0C1 /* FW_PG14_Shading@2x.png */,
+				F7BA877C151D4EDF0034A0C1 /* FW_PG14_TopBar@2x.png */,
+			);
+			path = 144;
+			sourceTree = "<group>";
+		};
+		F7BA877D151D4EDF0034A0C1 /* 72 */ = {
+			isa = PBXGroup;
+			children = (
+				F7BA877E151D4EDF0034A0C1 /* FW_PG14_BG.png */,
+				F7BA877F151D4EDF0034A0C1 /* FW_PG14_HomeButton.png */,
+				F7BA8780151D4EDF0034A0C1 /* FW_PG14_Logo.png */,
+				F7BA8781151D4EDF0034A0C1 /* FW_PG14_MyAction_tab.png */,
+				F7BA8782151D4EDF0034A0C1 /* FW_PG14_Rank_Tab.png */,
+				F7BA8783151D4EDF0034A0C1 /* FW_PG14_Scores_tab.png */,
+				F7BA8784151D4EDF0034A0C1 /* FW_PG14_Shading.png */,
+				F7BA8785151D4EDF0034A0C1 /* FW_PG14_TopBar.png */,
+			);
+			path = 72;
+			sourceTree = "<group>";
+		};
 		F7CDD73714ABD1FD0038FE6B /* Make a Wager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1845,6 +2234,94 @@
 				F7BA86D4151D4A9A0034A0C1 /* FW_PG10_Shading.png in Resources */,
 				F7BA86D5151D4A9A0034A0C1 /* FW_PG10_TopBar.png in Resources */,
 				F7BA86D6151D4A9A0034A0C1 /* FW_PG10_Vito_Button.png in Resources */,
+				F7BA86F2151D4C3E0034A0C1 /* FW_PG4_BG@2x.png in Resources */,
+				F7BA86F3151D4C3E0034A0C1 /* FW_PG4_City_button@2x.png in Resources */,
+				F7BA86F4151D4C3E0034A0C1 /* FW_PG4_HomeButton@2x.png in Resources */,
+				F7BA86F5151D4C3E0034A0C1 /* FW_PG4_Logo@2x.png in Resources */,
+				F7BA86F6151D4C3E0034A0C1 /* FW_PG4_MyAction_tab@2x.png in Resources */,
+				F7BA86F7151D4C3E0034A0C1 /* FW_PG4_Points_button@2x.png in Resources */,
+				F7BA86F8151D4C3E0034A0C1 /* FW_PG4_Rank_Tab@2x.png in Resources */,
+				F7BA86F9151D4C3E0034A0C1 /* FW_PG4_Scores_tab@2x.png in Resources */,
+				F7BA86FA151D4C3E0034A0C1 /* FW_PG4_Shading@2x.png in Resources */,
+				F7BA86FB151D4C3E0034A0C1 /* FW_PG4_Sport_button@2x.png in Resources */,
+				F7BA86FC151D4C3E0034A0C1 /* FW_PG4_TopBar@2x.png in Resources */,
+				F7BA86FD151D4C3E0034A0C1 /* FW_PG4_Wins_button@2x.png in Resources */,
+				F7BA86FE151D4C3E0034A0C1 /* FW_PG4_BG.png in Resources */,
+				F7BA86FF151D4C3E0034A0C1 /* FW_PG4_City_button.png in Resources */,
+				F7BA8700151D4C3E0034A0C1 /* FW_PG4_HomeButton.png in Resources */,
+				F7BA8701151D4C3E0034A0C1 /* FW_PG4_Logo.png in Resources */,
+				F7BA8702151D4C3E0034A0C1 /* FW_PG4_MyAction_tab.png in Resources */,
+				F7BA8703151D4C3E0034A0C1 /* FW_PG4_Points_button.png in Resources */,
+				F7BA8704151D4C3E0034A0C1 /* FW_PG4_Rank_Tab.png in Resources */,
+				F7BA8705151D4C3E0034A0C1 /* FW_PG4_Scores_tab.png in Resources */,
+				F7BA8706151D4C3E0034A0C1 /* FW_PG4_Shading.png in Resources */,
+				F7BA8707151D4C3E0034A0C1 /* FW_PG4_Sport_button.png in Resources */,
+				F7BA8708151D4C3E0034A0C1 /* FW_PG4_TopBar.png in Resources */,
+				F7BA8709151D4C3E0034A0C1 /* FW_PG4_Wins_button.png in Resources */,
+				F7BA871D151D4D530034A0C1 /* FW_PG11_BG@2x.png in Resources */,
+				F7BA871E151D4D530034A0C1 /* FW_PG11_HomeButton@2x.png in Resources */,
+				F7BA871F151D4D530034A0C1 /* FW_PG11_Logo@2x.png in Resources */,
+				F7BA8720151D4D530034A0C1 /* FW_PG11_MyAction_tab@2x.png in Resources */,
+				F7BA8721151D4D530034A0C1 /* FW_PG11_Rank_Tab@2x.png in Resources */,
+				F7BA8722151D4D530034A0C1 /* FW_PG11_Scores_tab@2x.png in Resources */,
+				F7BA8723151D4D530034A0C1 /* FW_PG11_Shading@2x.png in Resources */,
+				F7BA8724151D4D530034A0C1 /* FW_PG11_TopBar@2x.png in Resources */,
+				F7BA8725151D4D530034A0C1 /* FW_PG11_BG.png in Resources */,
+				F7BA8726151D4D530034A0C1 /* FW_PG11_HomeButton.png in Resources */,
+				F7BA8727151D4D530034A0C1 /* FW_PG11_Logo.png in Resources */,
+				F7BA8728151D4D530034A0C1 /* FW_PG11_MyAction_tab.png in Resources */,
+				F7BA8729151D4D530034A0C1 /* FW_PG11_Rank_Tab.png in Resources */,
+				F7BA872A151D4D530034A0C1 /* FW_PG11_Scores_tab.png in Resources */,
+				F7BA872B151D4D530034A0C1 /* FW_PG11_Shading.png in Resources */,
+				F7BA872C151D4D530034A0C1 /* FW_PG11_TopBar.png in Resources */,
+				F7BA8740151D4DF00034A0C1 /* FW_PG12_BG@2x.png in Resources */,
+				F7BA8741151D4DF00034A0C1 /* FW_PG12_HomeButton@2x.png in Resources */,
+				F7BA8742151D4DF00034A0C1 /* FW_PG12_Logo@2x.png in Resources */,
+				F7BA8743151D4DF00034A0C1 /* FW_PG12_MyAction_tab@2x.png in Resources */,
+				F7BA8744151D4DF00034A0C1 /* FW_PG12_Rank_Tab@2x.png in Resources */,
+				F7BA8745151D4DF00034A0C1 /* FW_PG12_Scores_tab@2x.png in Resources */,
+				F7BA8746151D4DF00034A0C1 /* FW_PG12_Shading@2x.png in Resources */,
+				F7BA8747151D4DF00034A0C1 /* FW_PG12_TopBar@2x.png in Resources */,
+				F7BA8748151D4DF00034A0C1 /* FW_PG12_BG.png in Resources */,
+				F7BA8749151D4DF00034A0C1 /* FW_PG12_HomeButton.png in Resources */,
+				F7BA874A151D4DF00034A0C1 /* FW_PG12_Logo.png in Resources */,
+				F7BA874B151D4DF00034A0C1 /* FW_PG12_MyAction_tab.png in Resources */,
+				F7BA874C151D4DF00034A0C1 /* FW_PG12_Rank_Tab.png in Resources */,
+				F7BA874D151D4DF00034A0C1 /* FW_PG12_Scores_tab.png in Resources */,
+				F7BA874E151D4DF00034A0C1 /* FW_PG12_Shading.png in Resources */,
+				F7BA874F151D4DF00034A0C1 /* FW_PG12_TopBar.png in Resources */,
+				F7BA8763151D4E9D0034A0C1 /* FW_PG13_BG@2x.png in Resources */,
+				F7BA8764151D4E9D0034A0C1 /* FW_PG13_HomeButton@2x.png in Resources */,
+				F7BA8765151D4E9D0034A0C1 /* FW_PG13_Logo@2x.png in Resources */,
+				F7BA8766151D4E9D0034A0C1 /* FW_PG13_MyAction_tab@2x.png in Resources */,
+				F7BA8767151D4E9D0034A0C1 /* FW_PG13_Rank_Tab@2x.png in Resources */,
+				F7BA8768151D4E9D0034A0C1 /* FW_PG13_Scores_tab@2x.png in Resources */,
+				F7BA8769151D4E9D0034A0C1 /* FW_PG13_Shading@2x.png in Resources */,
+				F7BA876A151D4E9D0034A0C1 /* FW_PG13_TopBar@2x.png in Resources */,
+				F7BA876B151D4E9D0034A0C1 /* FW_PG13_BG.png in Resources */,
+				F7BA876C151D4E9D0034A0C1 /* FW_PG13_HomeButton.png in Resources */,
+				F7BA876D151D4E9D0034A0C1 /* FW_PG13_Logo.png in Resources */,
+				F7BA876E151D4E9D0034A0C1 /* FW_PG13_MyAction_tab.png in Resources */,
+				F7BA876F151D4E9D0034A0C1 /* FW_PG13_Rank_Tab.png in Resources */,
+				F7BA8770151D4E9D0034A0C1 /* FW_PG13_Scores_tab.png in Resources */,
+				F7BA8771151D4E9D0034A0C1 /* FW_PG13_Shading.png in Resources */,
+				F7BA8772151D4E9D0034A0C1 /* FW_PG13_TopBar.png in Resources */,
+				F7BA8786151D4EDF0034A0C1 /* FW_PG14_BG@2x.png in Resources */,
+				F7BA8787151D4EDF0034A0C1 /* FW_PG14_HomeButton@2x.png in Resources */,
+				F7BA8788151D4EDF0034A0C1 /* FW_PG14_Logo@2x.png in Resources */,
+				F7BA8789151D4EDF0034A0C1 /* FW_PG14_MyAction_tab@2x.png in Resources */,
+				F7BA878A151D4EDF0034A0C1 /* FW_PG14_Rank_Tab@2x.png in Resources */,
+				F7BA878B151D4EDF0034A0C1 /* FW_PG14_Scores_tab@2x.png in Resources */,
+				F7BA878C151D4EDF0034A0C1 /* FW_PG14_Shading@2x.png in Resources */,
+				F7BA878D151D4EDF0034A0C1 /* FW_PG14_TopBar@2x.png in Resources */,
+				F7BA878E151D4EDF0034A0C1 /* FW_PG14_BG.png in Resources */,
+				F7BA878F151D4EDF0034A0C1 /* FW_PG14_HomeButton.png in Resources */,
+				F7BA8790151D4EDF0034A0C1 /* FW_PG14_Logo.png in Resources */,
+				F7BA8791151D4EDF0034A0C1 /* FW_PG14_MyAction_tab.png in Resources */,
+				F7BA8792151D4EDF0034A0C1 /* FW_PG14_Rank_Tab.png in Resources */,
+				F7BA8793151D4EDF0034A0C1 /* FW_PG14_Scores_tab.png in Resources */,
+				F7BA8794151D4EDF0034A0C1 /* FW_PG14_Shading.png in Resources */,
+				F7BA8795151D4EDF0034A0C1 /* FW_PG14_TopBar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

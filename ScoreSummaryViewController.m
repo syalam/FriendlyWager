@@ -148,6 +148,7 @@
         [cell addSubview:leftButton];
         [cell addSubview:rightButton];
     }
+    cell.accessoryType = UITableViewCellAccessoryNone;
     cell.backgroundColor = [UIColor clearColor];
     return cell;
 }

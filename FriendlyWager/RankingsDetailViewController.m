@@ -48,6 +48,19 @@
     
     rankingsByLabel.text = rankBy;
     
+    if ([rankBy isEqualToString:@"Rankings By Points"]) {
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG11_BG"]]];
+    }
+    else if ([rankBy isEqualToString:@"Rankings By Wins"]) {
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG12_BG"]]];
+    }
+    else if ([rankBy isEqualToString:@"Ranking By Sport"]) {
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG13_BG"]]];
+    }
+    else if ([rankBy isEqualToString:@"Rankings By City"]) {
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG14_BG"]]];
+    }
+    
     pointsArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Rick Lewis", @"name", @"Chicago", @"city", @"190", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Sam Smith", @"name", @"Los Angeles", @"city", @"170", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Jon Floyo", @"name", @"San Francisco", @"city", @"160", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Chris Cook", @"name", @"New York", @"city", @"120", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Frodo Baggins", @"name", @"Bag End", @"city", @"108", @"points", nil], nil];
     
     cityArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Chicago", @"city", @"76, 110", @"rank", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"San Diego", @"city", @"60, 105", @"rank", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Portland", @"city", @"50, 62", @"rank", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Miami", @"city", @"2, 110", @"rank", nil] , nil];
@@ -94,6 +107,10 @@
         UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 15, 115, 20)];
         UILabel *pointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(270, 15, 30, 20)];
         
+        nameLabel.backgroundColor = [UIColor clearColor];
+        cityLabel.backgroundColor = [UIColor clearColor];
+        pointsLabel.backgroundColor = [UIColor clearColor];
+        
         nameLabel.text = [[pointsArray objectAtIndex:indexPath.row]objectForKey:@"name"];
         cityLabel.text = [[pointsArray objectAtIndex:indexPath.row]objectForKey:@"city"];
         pointsLabel.text = [[pointsArray objectAtIndex:indexPath.row]objectForKey:@"points"];
@@ -106,13 +123,16 @@
         UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(60, 15, 115, 20)];
         UILabel *rankLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 15, 60, 20)];
         
+        cityLabel.backgroundColor = [UIColor clearColor];
+        rankLabel.backgroundColor = [UIColor clearColor];
+        
         cityLabel.text = [[cityArray objectAtIndex:indexPath.row]objectForKey:@"city"];
         rankLabel.text = [[cityArray objectAtIndex:indexPath.row]objectForKey:@"rank"];
         
         [cell addSubview:cityLabel];
         [cell addSubview:rankLabel];
     }
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 

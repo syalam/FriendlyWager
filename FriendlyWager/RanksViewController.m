@@ -39,6 +39,8 @@
     ranksTableView.dataSource = self;
     ranksTableView.delegate = self;
     
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG4_BG"]]];
+    
     rankingsByPoints = [[NSArray alloc]initWithObjects:@"Rankings By Points", nil];
     rankingsByWins = [[NSArray alloc]initWithObjects:@"Rankings By Wins", nil];
     rankingsBySport = [[NSArray alloc]initWithObjects:@"Ranking By Sport", nil];
@@ -82,7 +84,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-
+    cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.text = contentForThisRow;
     return cell;
 }
@@ -91,6 +93,7 @@
     NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
     id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
     RankingsDetailViewController *rankingDetails = [[RankingsDetailViewController alloc]initWithNibName:@"RankingsDetailViewController" bundle:nil rankingBy:contentForThisRow];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController pushViewController:rankingDetails animated:YES];
     
 }
