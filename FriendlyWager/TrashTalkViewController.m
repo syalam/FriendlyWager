@@ -38,12 +38,32 @@
     NSMutableArray *trashTalk = [[NSMutableArray alloc]initWithObjects:@"Sample Trash Talk", nil];
     [self setContentList:trashTalk];
     
-    UIBarButtonItem *newTrashTalkButton = [[UIBarButtonItem alloc]initWithTitle:@"Post" style:UIBarButtonItemStyleBordered target:self action:@selector(newTrashTalkButtonClicked:)];
-    newTrashTalkButton.tintColor = [UIColor blackColor];
+    
+    UIImage *postButtonImage = [UIImage imageNamed:@"FW_PG16_Post_Button"];
+    UIButton *customPostButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    customPostButton.bounds = CGRectMake( 0, 0, postButtonImage.size.width, postButtonImage.size.height );
+    [customPostButton setImage:postButtonImage forState:UIControlStateNormal];
+    [customPostButton addTarget:self action:@selector(newTrashTalkButtonClicked:) forControlEvents:UIControlStateNormal];
+    
+    UIBarButtonItem *newTrashTalkButton = [[UIBarButtonItem alloc] initWithCustomView:customPostButton];
+    
+    
+    /*UIBarButtonItem *newTrashTalkButton = [[UIBarButtonItem alloc]initWithTitle:@"Post" style:UIBarButtonItemStyleBordered target:self action:@selector(newTrashTalkButtonClicked:)];
+    newTrashTalkButton.tintColor = [UIColor blackColor];*/
+    
     self.navigationItem.rightBarButtonItem = newTrashTalkButton;
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
-    backButton.tintColor = [UIColor blackColor];
+    
+    UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+    UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
+    [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlStateNormal];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
+    
+    /*UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
+    backButton.tintColor = [UIColor blackColor];*/
+    
     self.navigationItem.leftBarButtonItem = backButton;
 }
 

@@ -42,12 +42,32 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
     
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonClicked:)];
-    cancelButton.tintColor = [UIColor blackColor];
+    
+    UIImage *cancelButtonImage = [UIImage imageNamed:@"FW_PG16_Post_Button"];
+    UIButton *customCancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    customCancelButton.bounds = CGRectMake( 0, 0, cancelButtonImage.size.width, cancelButtonImage.size.height );
+    [customCancelButton setImage:cancelButtonImage forState:UIControlStateNormal];
+    [customCancelButton addTarget:self action:@selector(cancelButtonClicked:) forControlEvents:UIControlStateNormal];
+    
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:customCancelButton];
+
+    
+    /*UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonClicked:)];
+    cancelButton.tintColor = [UIColor blackColor];*/
+    
     self.navigationItem.leftBarButtonItem = cancelButton;
     
-    UIBarButtonItem *submitButton = [[UIBarButtonItem alloc]initWithTitle:@"Send" style:UIBarButtonItemStyleDone target:self action:@selector(submitButtonClicked:)];
-    submitButton.tintColor = [UIColor blackColor];
+    
+    UIImage *sendButtonImage = [UIImage imageNamed:@"FW_PG17_Send_Button"];
+    UIButton *customSendButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    customSendButton.bounds = CGRectMake( 0, 0, sendButtonImage.size.width, sendButtonImage.size.height );
+    [customSendButton setImage:sendButtonImage forState:UIControlStateNormal];
+    [customSendButton addTarget:self action:@selector(submitButtonClicked:) forControlEvents:UIControlStateNormal];
+    UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithCustomView:customSendButton];
+    
+    /*UIBarButtonItem *submitButton = [[UIBarButtonItem alloc]initWithTitle:@"Send" style:UIBarButtonItemStyleDone target:self action:@selector(submitButtonClicked:)];
+    submitButton.tintColor = [UIColor blackColor];*/
+    
     self.navigationItem.rightBarButtonItem = submitButton;
 }
 
