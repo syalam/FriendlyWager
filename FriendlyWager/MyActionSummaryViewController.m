@@ -76,27 +76,40 @@
     chatButton.titleLabel.textAlignment = UITextAlignmentCenter;
     chatButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
     
-    UITextView *wagerButtonTextView = [[UITextView alloc]initWithFrame:CGRectMake(0, 30, wagerButton.frame.size.width, wagerButton.frame.size.height)];
-    wagerButtonTextView.text = [NSString stringWithFormat:@"%@\n%@", @"Wager", opponent];
-    wagerButtonTextView.font = [UIFont boldSystemFontOfSize:15];
-    wagerButtonTextView.textAlignment = UITextAlignmentCenter;
-    wagerButtonTextView.backgroundColor = [UIColor clearColor];
-    wagerButtonTextView.textColor = [UIColor whiteColor];
-    wagerButtonTextView.editable = NO;
-    wagerButtonTextView.scrollEnabled = NO;
+    UILabel *wagerLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 35, wagerButton.frame.size.width, 20)];
+    wagerLabel.text = @"Wager";
+    wagerLabel.textAlignment = UITextAlignmentCenter;
+    wagerLabel.backgroundColor = [UIColor clearColor];
+    wagerLabel.textColor = [UIColor whiteColor];
+    wagerLabel.font = [UIFont boldSystemFontOfSize:16];
     
-    [wagerButton addSubview:wagerButtonTextView];
+    UILabel *wagerOpponentLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 60, wagerButton.frame.size.width, 20)];
+    wagerOpponentLabel.text = opponent;
+    wagerOpponentLabel.textAlignment = UITextAlignmentCenter;
+    wagerOpponentLabel.backgroundColor = [UIColor clearColor];
+    wagerOpponentLabel.textColor = [UIColor whiteColor];
+    wagerOpponentLabel.font = [UIFont boldSystemFontOfSize:16];
     
-    UITextView *chatButtonTextView = [[UITextView alloc]initWithFrame:CGRectMake(0, 30, chatButton.frame.size.width, chatButton.frame.size.height)];
-    chatButtonTextView.text = [NSString stringWithFormat:@"%@\n%@", @"Trash Talk", opponent];
-    chatButtonTextView.font = [UIFont boldSystemFontOfSize:15];
-    chatButtonTextView.textAlignment = UITextAlignmentCenter;
-    chatButtonTextView.backgroundColor = [UIColor clearColor];
-    chatButtonTextView.textColor = [UIColor whiteColor];
-    chatButtonTextView.editable = NO;
-    chatButtonTextView.scrollEnabled = NO;
+    [wagerButton addSubview:wagerLabel];
+    [wagerButton addSubview:wagerOpponentLabel];
     
-    [chatButton addSubview:chatButtonTextView];
+    
+    UILabel *trashTalkLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 35, chatButton.frame.size.width, 20)];
+    trashTalkLabel.text = @"Trash Talk";
+    trashTalkLabel.textAlignment = UITextAlignmentCenter;
+    trashTalkLabel.backgroundColor = [UIColor clearColor];
+    trashTalkLabel.textColor = [UIColor whiteColor];
+    trashTalkLabel.font = [UIFont boldSystemFontOfSize:16];
+    
+    UILabel *trashTalkOpponentLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 60, chatButton.frame.size.width, 20)];
+    trashTalkOpponentLabel.text = opponent;
+    trashTalkOpponentLabel.textAlignment = UITextAlignmentCenter;
+    trashTalkOpponentLabel.backgroundColor = [UIColor clearColor];
+    trashTalkOpponentLabel.textColor = [UIColor whiteColor];
+    trashTalkOpponentLabel.font = [UIFont boldSystemFontOfSize:16];
+    
+    [chatButton addSubview:trashTalkLabel];
+    [chatButton addSubview:trashTalkOpponentLabel];
     
     //Set datasource and delegate for table view
     wagersTableView.dataSource = self;

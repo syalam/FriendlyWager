@@ -83,8 +83,9 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG4_City_button"]];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.textAlignment = UITextAlignmentCenter;
     cell.textLabel.text = contentForThisRow;
     return cell;
 }

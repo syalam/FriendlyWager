@@ -106,12 +106,19 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         if (indexPath.section == 0) {
-            UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 10, 100, 20)];
-            UILabel *scoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(240, 10, 40, 20)];
+            UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 12, 100, 20)];
+            UILabel *scoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(240, 12, 40, 20)];
             teamLabel.backgroundColor = [UIColor clearColor];
             scoreLabel.backgroundColor = [UIColor clearColor];
             teamLabel.text = [contentForThisRow objectForKey:@"team"];
             scoreLabel.text = [contentForThisRow objectForKey:@"teamScore"];
+            
+            teamLabel.textColor = [UIColor whiteColor];
+            teamLabel.font = [UIFont boldSystemFontOfSize:18];
+            
+            scoreLabel.textColor = [UIColor whiteColor];
+            scoreLabel.font = [UIFont boldSystemFontOfSize:18];
+            
             [cell addSubview:teamLabel];
             [cell addSubview:scoreLabel];
         }
@@ -125,13 +132,24 @@
             opponentLabel.text = [contentForThisRow objectForKey:@"opponent"];
             wageredLabel.text = [contentForThisRow objectForKey:@"wagered"];
             oddsLabel.text = [contentForThisRow objectForKey:@"odds"];
+            
+            opponentLabel.textColor = [UIColor whiteColor];
+            opponentLabel.font = [UIFont boldSystemFontOfSize:18];
+            
+            wageredLabel.textColor = [UIColor whiteColor];
+            wageredLabel.font = [UIFont boldSystemFontOfSize:18];
+            
+            oddsLabel.textColor = [UIColor whiteColor];
+            oddsLabel.font = [UIFont boldSystemFontOfSize:18];
+            
             [cell addSubview:opponentLabel];
             [cell addSubview:wageredLabel];
             [cell addSubview:oddsLabel];
         }
     }
     cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG10_BillSmith_Button"]];
+    
     return cell;
 }
 

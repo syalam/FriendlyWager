@@ -109,8 +109,10 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG3_TableViewCell"]];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.textAlignment = UITextAlignmentCenter;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.text = contentForThisRow;
     return cell;
 }

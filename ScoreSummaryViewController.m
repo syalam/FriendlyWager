@@ -95,14 +95,17 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         //Configure buttons
-        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
         leftButton.tag = indexPath.row;
         rightButton.tag = indexPath.row;
         [leftButton setFrame:CGRectMake(30, 10, 120, 80)];
         [rightButton setFrame:CGRectMake(170, 10, 120, 80)];
         [leftButton addTarget:self action:@selector(leftButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [rightButton addTarget:self action:@selector(rightButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [leftButton setBackgroundImage:[UIImage imageNamed:@"FW_PG9_ScoreButton"] forState:UIControlStateNormal];
+        [rightButton setBackgroundImage:[UIImage imageNamed:@"FW_PG9_ScoreButton"] forState:UIControlStateNormal];
         
         //Configure labels which will be used in buttons
         UILabel *team1Label = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 50, 20)];
@@ -111,12 +114,23 @@
         UILabel *team2ScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(80, 50, 20, 20)];
         team1Label.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team1"];
         team2Label.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team2"];
-        team1ScoreLabel.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team1Score"];
-        team2ScoreLabel.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team2Score"];
+        team1Label.textColor = [UIColor whiteColor];
+        team2Label.textColor = [UIColor whiteColor];
+        team1Label.font = [UIFont boldSystemFontOfSize:16];
+        team2Label.font = [UIFont boldSystemFontOfSize:16];
         team1Label.backgroundColor = [UIColor clearColor];
         team2Label.backgroundColor = [UIColor clearColor];
+        
+        team1ScoreLabel.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team1Score"];
+        team2ScoreLabel.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team2Score"];
         team1ScoreLabel.backgroundColor = [UIColor clearColor];
         team2ScoreLabel.backgroundColor = [UIColor clearColor];
+        team1ScoreLabel.textColor = [UIColor whiteColor];
+        team2ScoreLabel.textColor = [UIColor whiteColor];
+        team1ScoreLabel.font = [UIFont boldSystemFontOfSize:16];
+        team2ScoreLabel.font = [UIFont boldSystemFontOfSize:16];
+        
+        
         
         //add the labels to the buttons as sub-views
         [leftButton addSubview:team1Label];
@@ -133,10 +147,20 @@
         team2LabelRight.text = [[rightArray objectAtIndex:indexPath.row]objectForKey:@"team2"];
         team1ScoreLabelRight.text = [[rightArray objectAtIndex:indexPath.row]objectForKey:@"team1Score"];
         team2ScoreLabelRight.text = [[rightArray objectAtIndex:indexPath.row]objectForKey:@"team2Score"];
+        team1LabelRight.textColor = [UIColor whiteColor];
+        team1LabelRight.font = [UIFont boldSystemFontOfSize:16];
         team1LabelRight.backgroundColor = [UIColor clearColor];
         team2LabelRight.backgroundColor = [UIColor clearColor];
+        team2LabelRight.textColor = [UIColor whiteColor];
+        team2LabelRight.font = [UIFont boldSystemFontOfSize:16];
+        
         team1ScoreLabelRight.backgroundColor = [UIColor clearColor];
+        team1ScoreLabelRight.font = [UIFont boldSystemFontOfSize:16];
+        team1ScoreLabelRight.textColor = [UIColor whiteColor];
+        
         team2ScoreLabelRight.backgroundColor = [UIColor clearColor];
+        team2ScoreLabelRight.textColor = [UIColor whiteColor];
+        team2ScoreLabelRight.font = [UIFont boldSystemFontOfSize:16];
         
         //Configure labels which will be used in buttons
         [rightButton addSubview:team1LabelRight];

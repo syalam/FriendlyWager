@@ -27,6 +27,10 @@
 		F7075CDC15217E29007A7DE1 /* FW_PG2_TableViewCell.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CDB15217E29007A7DE1 /* FW_PG2_TableViewCell.png */; };
 		F7075CDE152181E5007A7DE1 /* FW_PG5_TableviewCell.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CDD152181E5007A7DE1 /* FW_PG5_TableviewCell.png */; };
 		F7075CE0152181F0007A7DE1 /* FW_PG5_TableviewCell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CDF152181F0007A7DE1 /* FW_PG5_TableviewCell@2x.png */; };
+		F7075CE2152220B7007A7DE1 /* FW_PG3_TableViewCell.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CE1152220B7007A7DE1 /* FW_PG3_TableViewCell.png */; };
+		F7075CE4152220C5007A7DE1 /* FW_PG3_TableViewCell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CE3152220C5007A7DE1 /* FW_PG3_TableViewCell@2x.png */; };
+		F7075CE615222476007A7DE1 /* FW_PG9_ScoreButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CE515222476007A7DE1 /* FW_PG9_ScoreButton.png */; };
+		F7075CE815222494007A7DE1 /* FW_PG9_ScoreButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CE715222494007A7DE1 /* FW_PG9_ScoreButton@2x.png */; };
 		F714E16414A1A88400E24956 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F714E16314A1A88400E24956 /* UIKit.framework */; };
 		F714E16614A1A88400E24956 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F714E16514A1A88400E24956 /* Foundation.framework */; };
 		F714E16814A1A88400E24956 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F714E16714A1A88400E24956 /* CoreGraphics.framework */; };
@@ -208,7 +212,6 @@
 		F7BA862C151D44F60034A0C1 /* FW_PG8_Shading.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA861C151D44F60034A0C1 /* FW_PG8_Shading.png */; };
 		F7BA862D151D44F60034A0C1 /* FW_PG8_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA861D151D44F60034A0C1 /* FW_PG8_TopBar.png */; };
 		F7BA864D151D472D0034A0C1 /* FW_PG9_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8630151D472D0034A0C1 /* FW_PG9_BG@2x.png */; };
-		F7BA864E151D472D0034A0C1 /* FW_PG9_BottomLeft_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8631151D472D0034A0C1 /* FW_PG9_BottomLeft_button@2x.png */; };
 		F7BA864F151D472D0034A0C1 /* FW_PG9_BottomRight_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8632151D472D0034A0C1 /* FW_PG9_BottomRight_button@2x.png */; };
 		F7BA8650151D472D0034A0C1 /* FW_PG9_HomeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8633151D472D0034A0C1 /* FW_PG9_HomeButton@2x.png */; };
 		F7BA8651151D472D0034A0C1 /* FW_PG9_Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8634151D472D0034A0C1 /* FW_PG9_Logo@2x.png */; };
@@ -222,7 +225,6 @@
 		F7BA8659151D472D0034A0C1 /* FW_PG9_TopLeft_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA863C151D472D0034A0C1 /* FW_PG9_TopLeft_button@2x.png */; };
 		F7BA865A151D472D0034A0C1 /* FW_PG9_TopRight_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA863D151D472D0034A0C1 /* FW_PG9_TopRight_button@2x.png */; };
 		F7BA865B151D472D0034A0C1 /* FW_PG9_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA863F151D472D0034A0C1 /* FW_PG9_BG.png */; };
-		F7BA865C151D472D0034A0C1 /* FW_PG9_BottomLeft_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8640151D472D0034A0C1 /* FW_PG9_BottomLeft_button.png */; };
 		F7BA865D151D472D0034A0C1 /* FW_PG9_BottomRight_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8641151D472D0034A0C1 /* FW_PG9_BottomRight_button.png */; };
 		F7BA865E151D472D0034A0C1 /* FW_PG9_HomeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8642151D472D0034A0C1 /* FW_PG9_HomeButton.png */; };
 		F7BA865F151D472D0034A0C1 /* FW_PG9_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8643151D472D0034A0C1 /* FW_PG9_Logo.png */; };
@@ -237,7 +239,6 @@
 		F7BA8668151D472D0034A0C1 /* FW_PG9_TopRight_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA864C151D472D0034A0C1 /* FW_PG9_TopRight_button.png */; };
 		F7BA8686151D4A000034A0C1 /* FW_PG2_Shading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA866B151D4A000034A0C1 /* FW_PG2_Shading@2x.png */; };
 		F7BA8687151D4A000034A0C1 /* FW_PG3_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA866C151D4A000034A0C1 /* FW_PG3_BG@2x.png */; };
-		F7BA8688151D4A000034A0C1 /* FW_PG3_CollBBall_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA866D151D4A000034A0C1 /* FW_PG3_CollBBall_button@2x.png */; };
 		F7BA8689151D4A000034A0C1 /* FW_PG3_CollFoot_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA866E151D4A000034A0C1 /* FW_PG3_CollFoot_button@2x.png */; };
 		F7BA868A151D4A000034A0C1 /* FW_PG3_HomeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA866F151D4A000034A0C1 /* FW_PG3_HomeButton@2x.png */; };
 		F7BA868B151D4A000034A0C1 /* FW_PG3_Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8670151D4A000034A0C1 /* FW_PG3_Logo@2x.png */; };
@@ -249,7 +250,6 @@
 		F7BA8691151D4A000034A0C1 /* FW_PG3_Scores_Tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8676151D4A000034A0C1 /* FW_PG3_Scores_Tab@2x.png */; };
 		F7BA8692151D4A000034A0C1 /* FW_PG3_TopBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8677151D4A000034A0C1 /* FW_PG3_TopBar@2x.png */; };
 		F7BA8693151D4A000034A0C1 /* FW_PG3_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8679151D4A000034A0C1 /* FW_PG3_BG.png */; };
-		F7BA8694151D4A000034A0C1 /* FW_PG3_CollBBall_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA867A151D4A000034A0C1 /* FW_PG3_CollBBall_button.png */; };
 		F7BA8695151D4A000034A0C1 /* FW_PG3_CollFoot_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA867B151D4A000034A0C1 /* FW_PG3_CollFoot_button.png */; };
 		F7BA8696151D4A000034A0C1 /* FW_PG3_HomeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA867C151D4A000034A0C1 /* FW_PG3_HomeButton.png */; };
 		F7BA8697151D4A000034A0C1 /* FW_PG3_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA867D151D4A000034A0C1 /* FW_PG3_Logo.png */; };
@@ -470,6 +470,10 @@
 		F7075CDB15217E29007A7DE1 /* FW_PG2_TableViewCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_TableViewCell.png; sourceTree = "<group>"; };
 		F7075CDD152181E5007A7DE1 /* FW_PG5_TableviewCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG5_TableviewCell.png; sourceTree = "<group>"; };
 		F7075CDF152181F0007A7DE1 /* FW_PG5_TableviewCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG5_TableviewCell@2x.png"; sourceTree = "<group>"; };
+		F7075CE1152220B7007A7DE1 /* FW_PG3_TableViewCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG3_TableViewCell.png; sourceTree = "<group>"; };
+		F7075CE3152220C5007A7DE1 /* FW_PG3_TableViewCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG3_TableViewCell@2x.png"; sourceTree = "<group>"; };
+		F7075CE515222476007A7DE1 /* FW_PG9_ScoreButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FW_PG9_ScoreButton.png; path = ../144/FW_PG9_ScoreButton.png; sourceTree = "<group>"; };
+		F7075CE715222494007A7DE1 /* FW_PG9_ScoreButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG9_ScoreButton@2x.png"; sourceTree = "<group>"; };
 		F714E15F14A1A88400E24956 /* FriendlyWager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FriendlyWager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F714E16314A1A88400E24956 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F714E16514A1A88400E24956 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -684,7 +688,6 @@
 		F7BA861C151D44F60034A0C1 /* FW_PG8_Shading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG8_Shading.png; sourceTree = "<group>"; };
 		F7BA861D151D44F60034A0C1 /* FW_PG8_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG8_TopBar.png; sourceTree = "<group>"; };
 		F7BA8630151D472D0034A0C1 /* FW_PG9_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG9_BG@2x.png"; sourceTree = "<group>"; };
-		F7BA8631151D472D0034A0C1 /* FW_PG9_BottomLeft_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG9_BottomLeft_button@2x.png"; sourceTree = "<group>"; };
 		F7BA8632151D472D0034A0C1 /* FW_PG9_BottomRight_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG9_BottomRight_button@2x.png"; sourceTree = "<group>"; };
 		F7BA8633151D472D0034A0C1 /* FW_PG9_HomeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG9_HomeButton@2x.png"; sourceTree = "<group>"; };
 		F7BA8634151D472D0034A0C1 /* FW_PG9_Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG9_Logo@2x.png"; sourceTree = "<group>"; };
@@ -698,7 +701,6 @@
 		F7BA863C151D472D0034A0C1 /* FW_PG9_TopLeft_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG9_TopLeft_button@2x.png"; sourceTree = "<group>"; };
 		F7BA863D151D472D0034A0C1 /* FW_PG9_TopRight_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG9_TopRight_button@2x.png"; sourceTree = "<group>"; };
 		F7BA863F151D472D0034A0C1 /* FW_PG9_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG9_BG.png; sourceTree = "<group>"; };
-		F7BA8640151D472D0034A0C1 /* FW_PG9_BottomLeft_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG9_BottomLeft_button.png; sourceTree = "<group>"; };
 		F7BA8641151D472D0034A0C1 /* FW_PG9_BottomRight_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG9_BottomRight_button.png; sourceTree = "<group>"; };
 		F7BA8642151D472D0034A0C1 /* FW_PG9_HomeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG9_HomeButton.png; sourceTree = "<group>"; };
 		F7BA8643151D472D0034A0C1 /* FW_PG9_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG9_Logo.png; sourceTree = "<group>"; };
@@ -713,7 +715,6 @@
 		F7BA864C151D472D0034A0C1 /* FW_PG9_TopRight_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG9_TopRight_button.png; sourceTree = "<group>"; };
 		F7BA866B151D4A000034A0C1 /* FW_PG2_Shading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_Shading@2x.png"; sourceTree = "<group>"; };
 		F7BA866C151D4A000034A0C1 /* FW_PG3_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG3_BG@2x.png"; sourceTree = "<group>"; };
-		F7BA866D151D4A000034A0C1 /* FW_PG3_CollBBall_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG3_CollBBall_button@2x.png"; sourceTree = "<group>"; };
 		F7BA866E151D4A000034A0C1 /* FW_PG3_CollFoot_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG3_CollFoot_button@2x.png"; sourceTree = "<group>"; };
 		F7BA866F151D4A000034A0C1 /* FW_PG3_HomeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG3_HomeButton@2x.png"; sourceTree = "<group>"; };
 		F7BA8670151D4A000034A0C1 /* FW_PG3_Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG3_Logo@2x.png"; sourceTree = "<group>"; };
@@ -725,7 +726,6 @@
 		F7BA8676151D4A000034A0C1 /* FW_PG3_Scores_Tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG3_Scores_Tab@2x.png"; sourceTree = "<group>"; };
 		F7BA8677151D4A000034A0C1 /* FW_PG3_TopBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG3_TopBar@2x.png"; sourceTree = "<group>"; };
 		F7BA8679151D4A000034A0C1 /* FW_PG3_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG3_BG.png; sourceTree = "<group>"; };
-		F7BA867A151D4A000034A0C1 /* FW_PG3_CollBBall_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG3_CollBBall_button.png; sourceTree = "<group>"; };
 		F7BA867B151D4A000034A0C1 /* FW_PG3_CollFoot_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG3_CollFoot_button.png; sourceTree = "<group>"; };
 		F7BA867C151D4A000034A0C1 /* FW_PG3_HomeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG3_HomeButton.png; sourceTree = "<group>"; };
 		F7BA867D151D4A000034A0C1 /* FW_PG3_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG3_Logo.png; sourceTree = "<group>"; };
@@ -1639,8 +1639,8 @@
 		F7BA862F151D472D0034A0C1 /* 144 */ = {
 			isa = PBXGroup;
 			children = (
+				F7075CE715222494007A7DE1 /* FW_PG9_ScoreButton@2x.png */,
 				F7BA8630151D472D0034A0C1 /* FW_PG9_BG@2x.png */,
-				F7BA8631151D472D0034A0C1 /* FW_PG9_BottomLeft_button@2x.png */,
 				F7BA8632151D472D0034A0C1 /* FW_PG9_BottomRight_button@2x.png */,
 				F7BA8633151D472D0034A0C1 /* FW_PG9_HomeButton@2x.png */,
 				F7BA8634151D472D0034A0C1 /* FW_PG9_Logo@2x.png */,
@@ -1660,8 +1660,8 @@
 		F7BA863E151D472D0034A0C1 /* 72 */ = {
 			isa = PBXGroup;
 			children = (
+				F7075CE515222476007A7DE1 /* FW_PG9_ScoreButton.png */,
 				F7BA863F151D472D0034A0C1 /* FW_PG9_BG.png */,
-				F7BA8640151D472D0034A0C1 /* FW_PG9_BottomLeft_button.png */,
 				F7BA8641151D472D0034A0C1 /* FW_PG9_BottomRight_button.png */,
 				F7BA8642151D472D0034A0C1 /* FW_PG9_HomeButton.png */,
 				F7BA8643151D472D0034A0C1 /* FW_PG9_Logo.png */,
@@ -1691,9 +1691,9 @@
 		F7BA866A151D4A000034A0C1 /* 144 */ = {
 			isa = PBXGroup;
 			children = (
+				F7075CE3152220C5007A7DE1 /* FW_PG3_TableViewCell@2x.png */,
 				F7BA866B151D4A000034A0C1 /* FW_PG2_Shading@2x.png */,
 				F7BA866C151D4A000034A0C1 /* FW_PG3_BG@2x.png */,
-				F7BA866D151D4A000034A0C1 /* FW_PG3_CollBBall_button@2x.png */,
 				F7BA866E151D4A000034A0C1 /* FW_PG3_CollFoot_button@2x.png */,
 				F7BA866F151D4A000034A0C1 /* FW_PG3_HomeButton@2x.png */,
 				F7BA8670151D4A000034A0C1 /* FW_PG3_Logo@2x.png */,
@@ -1711,8 +1711,8 @@
 		F7BA8678151D4A000034A0C1 /* 72 */ = {
 			isa = PBXGroup;
 			children = (
+				F7075CE1152220B7007A7DE1 /* FW_PG3_TableViewCell.png */,
 				F7BA8679151D4A000034A0C1 /* FW_PG3_BG.png */,
-				F7BA867A151D4A000034A0C1 /* FW_PG3_CollBBall_button.png */,
 				F7BA867B151D4A000034A0C1 /* FW_PG3_CollFoot_button.png */,
 				F7BA867C151D4A000034A0C1 /* FW_PG3_HomeButton.png */,
 				F7BA867D151D4A000034A0C1 /* FW_PG3_Logo.png */,
@@ -2384,7 +2384,6 @@
 				F7BA862C151D44F60034A0C1 /* FW_PG8_Shading.png in Resources */,
 				F7BA862D151D44F60034A0C1 /* FW_PG8_TopBar.png in Resources */,
 				F7BA864D151D472D0034A0C1 /* FW_PG9_BG@2x.png in Resources */,
-				F7BA864E151D472D0034A0C1 /* FW_PG9_BottomLeft_button@2x.png in Resources */,
 				F7BA864F151D472D0034A0C1 /* FW_PG9_BottomRight_button@2x.png in Resources */,
 				F7BA8650151D472D0034A0C1 /* FW_PG9_HomeButton@2x.png in Resources */,
 				F7BA8651151D472D0034A0C1 /* FW_PG9_Logo@2x.png in Resources */,
@@ -2398,7 +2397,6 @@
 				F7BA8659151D472D0034A0C1 /* FW_PG9_TopLeft_button@2x.png in Resources */,
 				F7BA865A151D472D0034A0C1 /* FW_PG9_TopRight_button@2x.png in Resources */,
 				F7BA865B151D472D0034A0C1 /* FW_PG9_BG.png in Resources */,
-				F7BA865C151D472D0034A0C1 /* FW_PG9_BottomLeft_button.png in Resources */,
 				F7BA865D151D472D0034A0C1 /* FW_PG9_BottomRight_button.png in Resources */,
 				F7BA865E151D472D0034A0C1 /* FW_PG9_HomeButton.png in Resources */,
 				F7BA865F151D472D0034A0C1 /* FW_PG9_Logo.png in Resources */,
@@ -2413,7 +2411,6 @@
 				F7BA8668151D472D0034A0C1 /* FW_PG9_TopRight_button.png in Resources */,
 				F7BA8686151D4A000034A0C1 /* FW_PG2_Shading@2x.png in Resources */,
 				F7BA8687151D4A000034A0C1 /* FW_PG3_BG@2x.png in Resources */,
-				F7BA8688151D4A000034A0C1 /* FW_PG3_CollBBall_button@2x.png in Resources */,
 				F7BA8689151D4A000034A0C1 /* FW_PG3_CollFoot_button@2x.png in Resources */,
 				F7BA868A151D4A000034A0C1 /* FW_PG3_HomeButton@2x.png in Resources */,
 				F7BA868B151D4A000034A0C1 /* FW_PG3_Logo@2x.png in Resources */,
@@ -2425,7 +2422,6 @@
 				F7BA8691151D4A000034A0C1 /* FW_PG3_Scores_Tab@2x.png in Resources */,
 				F7BA8692151D4A000034A0C1 /* FW_PG3_TopBar@2x.png in Resources */,
 				F7BA8693151D4A000034A0C1 /* FW_PG3_BG.png in Resources */,
-				F7BA8694151D4A000034A0C1 /* FW_PG3_CollBBall_button.png in Resources */,
 				F7BA8695151D4A000034A0C1 /* FW_PG3_CollFoot_button.png in Resources */,
 				F7BA8696151D4A000034A0C1 /* FW_PG3_HomeButton.png in Resources */,
 				F7BA8697151D4A000034A0C1 /* FW_PG3_Logo.png in Resources */,
@@ -2605,6 +2601,10 @@
 				F7075CDC15217E29007A7DE1 /* FW_PG2_TableViewCell.png in Resources */,
 				F7075CDE152181E5007A7DE1 /* FW_PG5_TableviewCell.png in Resources */,
 				F7075CE0152181F0007A7DE1 /* FW_PG5_TableviewCell@2x.png in Resources */,
+				F7075CE2152220B7007A7DE1 /* FW_PG3_TableViewCell.png in Resources */,
+				F7075CE4152220C5007A7DE1 /* FW_PG3_TableViewCell@2x.png in Resources */,
+				F7075CE615222476007A7DE1 /* FW_PG9_ScoreButton.png in Resources */,
+				F7075CE815222494007A7DE1 /* FW_PG9_ScoreButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
