@@ -74,13 +74,15 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UILabel *opponentLabel = [[UILabel alloc]initWithFrame:CGRectMake(47, 15, 105, 20)];
-    UILabel *wagersLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 15, 25, 20)];
+    UILabel *opponentLabel = [[UILabel alloc]initWithFrame:CGRectMake(47, 10, 105, 20)];
+    UILabel *wagersLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 10, 25, 20)];
     
-    opponentLabel.font = [UIFont systemFontOfSize:14.0];
-    wagersLabel.font = [UIFont systemFontOfSize:14.0];
+    opponentLabel.font = [UIFont boldSystemFontOfSize:14.0];
+    wagersLabel.font = [UIFont boldSystemFontOfSize:14.0];
     opponentLabel.backgroundColor = [UIColor clearColor];
     wagersLabel.backgroundColor = [UIColor clearColor];
+    opponentLabel.textColor = [UIColor whiteColor];
+    wagersLabel.textColor = [UIColor whiteColor];
     
     opponentLabel.text = [myActionOpponentArray objectAtIndex:indexPath.row];
     wagersLabel.text = [myActionWagersArray objectAtIndex:indexPath.row];
@@ -91,9 +93,10 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.backgroundColor = [UIColor clearColor];
+    //cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG2_TableViewCell"]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     [cell.contentView addSubview:opponentLabel];
     [cell.contentView addSubview:wagersLabel];
     

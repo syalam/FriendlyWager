@@ -70,10 +70,6 @@
         viewController = [[BHTabsViewController alloc] initWithViewControllers:vcs style:[BHTabStyle defaultStyle]];
     }
     [self.view addSubview:viewController.view];
-    //[self.window makeKeyAndVisible];
-    
-    //UIBarButtonItem *homeButton = [[UIBarButtonItem alloc]initWithTitle:@"Home" style:UIBarButtonItemStyleBordered target:self action:@selector(homeButtonClicked:)];
-    //homeButton.tintColor = [UIColor blackColor];
     
     UIImage *homeButtonImage = [UIImage imageNamed:@"FW_PG2_HomeButton"];
     UIButton *homeButton = [UIButton buttonWithType:UIButtonTypeCustom];

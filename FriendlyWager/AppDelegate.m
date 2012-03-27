@@ -28,7 +28,7 @@
     self.window.rootViewController = self.navigationController;
     
     if ([UINavigationBar respondsToSelector:@selector(appearance)]) {
-        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"FW_HOME_TopBar"] forBarMetrics:UIBarMetricsDefault];
+        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"FW_TopBar"] forBarMetrics:UIBarMetricsDefault];
     }
 
     

@@ -9,6 +9,24 @@
 /* Begin PBXBuildFile section */
 		8C4AA62014D13CCE00A6013F /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4AA61D14D13CCE00A6013F /* ResetPasswordViewController.m */; };
 		8C4AA62114D13CCE00A6013F /* ResetPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4AA61E14D13CCE00A6013F /* ResetPasswordViewController.xib */; };
+		F7075CCB15216F89007A7DE1 /* FW_BackButton_Custom.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CBD15216F89007A7DE1 /* FW_BackButton_Custom.png */; };
+		F7075CCC15216F89007A7DE1 /* FW_BackButton_Custom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CBE15216F89007A7DE1 /* FW_BackButton_Custom@2x.png */; };
+		F7075CCD15216F89007A7DE1 /* FW_CancelButton_Custom.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CBF15216F89007A7DE1 /* FW_CancelButton_Custom.png */; };
+		F7075CCE15216F89007A7DE1 /* FW_CancelButton_Custom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CC015216F89007A7DE1 /* FW_CancelButton_Custom@2x.png */; };
+		F7075CCF15216F89007A7DE1 /* FW_HomeButtonCustom.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CC115216F89007A7DE1 /* FW_HomeButtonCustom.png */; };
+		F7075CD015216F89007A7DE1 /* FW_HomeButtonCustom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CC215216F89007A7DE1 /* FW_HomeButtonCustom@2x.png */; };
+		F7075CD115216F89007A7DE1 /* FW_PostButton_Custom.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CC315216F89007A7DE1 /* FW_PostButton_Custom.png */; };
+		F7075CD215216F89007A7DE1 /* FW_PostButton_Custom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CC415216F89007A7DE1 /* FW_PostButton_Custom@2x.png */; };
+		F7075CD315216F89007A7DE1 /* FW_SendButton_Custom.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CC515216F89007A7DE1 /* FW_SendButton_Custom.png */; };
+		F7075CD415216F89007A7DE1 /* FW_SendButton_Custom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CC615216F89007A7DE1 /* FW_SendButton_Custom@2x.png */; };
+		F7075CD515216F89007A7DE1 /* FW_SignOutButton_Custom.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CC715216F89007A7DE1 /* FW_SignOutButton_Custom.png */; };
+		F7075CD615216F89007A7DE1 /* FW_SignOutButton_Custom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CC815216F89007A7DE1 /* FW_SignOutButton_Custom@2x.png */; };
+		F7075CD715216F89007A7DE1 /* FW_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CC915216F89007A7DE1 /* FW_TopBar.png */; };
+		F7075CD815216F89007A7DE1 /* FW_TopBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CCA15216F89007A7DE1 /* FW_TopBar@2x.png */; };
+		F7075CDA15217E21007A7DE1 /* FW_PG2_TableViewCell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CD915217E21007A7DE1 /* FW_PG2_TableViewCell@2x.png */; };
+		F7075CDC15217E29007A7DE1 /* FW_PG2_TableViewCell.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CDB15217E29007A7DE1 /* FW_PG2_TableViewCell.png */; };
+		F7075CDE152181E5007A7DE1 /* FW_PG5_TableviewCell.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CDD152181E5007A7DE1 /* FW_PG5_TableviewCell.png */; };
+		F7075CE0152181F0007A7DE1 /* FW_PG5_TableviewCell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CDF152181F0007A7DE1 /* FW_PG5_TableviewCell@2x.png */; };
 		F714E16414A1A88400E24956 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F714E16314A1A88400E24956 /* UIKit.framework */; };
 		F714E16614A1A88400E24956 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F714E16514A1A88400E24956 /* Foundation.framework */; };
 		F714E16814A1A88400E24956 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F714E16714A1A88400E24956 /* CoreGraphics.framework */; };
@@ -96,7 +114,6 @@
 		F7BA8555151CEC2F0034A0C1 /* FW_HOME_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8541151CEC2F0034A0C1 /* FW_HOME_TopBar.png */; };
 		F7BA8556151CEC2F0034A0C1 /* FW_HOME_Wager_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8542151CEC2F0034A0C1 /* FW_HOME_Wager_button.png */; };
 		F7BA8576151CF8D30034A0C1 /* FW_PG2_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA855D151CF8D30034A0C1 /* FW_PG2_BG@2x.png */; };
-		F7BA8577151CF8D30034A0C1 /* FW_PG2_BillSmith_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA855E151CF8D30034A0C1 /* FW_PG2_BillSmith_Button@2x.png */; };
 		F7BA8578151CF8D30034A0C1 /* FW_PG2_HomeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA855F151CF8D30034A0C1 /* FW_PG2_HomeButton@2x.png */; };
 		F7BA8579151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8560151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button@2x.png */; };
 		F7BA857A151CF8D30034A0C1 /* FW_PG2_Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8561151CF8D30034A0C1 /* FW_PG2_Logo@2x.png */; };
@@ -108,7 +125,6 @@
 		F7BA8580151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8567151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button@2x.png */; };
 		F7BA8581151CF8D30034A0C1 /* FW_PG2_TopBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8568151CF8D30034A0C1 /* FW_PG2_TopBar@2x.png */; };
 		F7BA8582151CF8D30034A0C1 /* FW_PG2_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA856A151CF8D30034A0C1 /* FW_PG2_BG.png */; };
-		F7BA8583151CF8D30034A0C1 /* FW_PG2_BillSmith_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA856B151CF8D30034A0C1 /* FW_PG2_BillSmith_Button.png */; };
 		F7BA8584151CF8D30034A0C1 /* FW_PG2_HomeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA856C151CF8D30034A0C1 /* FW_PG2_HomeButton.png */; };
 		F7BA8585151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA856D151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button.png */; };
 		F7BA8586151CF8D30034A0C1 /* FW_PG2_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA856E151CF8D30034A0C1 /* FW_PG2_Logo.png */; };
@@ -120,7 +136,6 @@
 		F7BA858C151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8574151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button.png */; };
 		F7BA858D151CF8D30034A0C1 /* FW_PG2_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8575151CF8D30034A0C1 /* FW_PG2_TopBar.png */; };
 		F7BA85AB151D32940034A0C1 /* FW_PG5_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8590151D32940034A0C1 /* FW_PG5_BG@2x.png */; };
-		F7BA85AC151D32940034A0C1 /* FW_PG5_Current_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8591151D32940034A0C1 /* FW_PG5_Current_button@2x.png */; };
 		F7BA85AD151D32940034A0C1 /* FW_PG5_history_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8592151D32940034A0C1 /* FW_PG5_history_button@2x.png */; };
 		F7BA85AE151D32940034A0C1 /* FW_PG5_HomeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8593151D32940034A0C1 /* FW_PG5_HomeButton@2x.png */; };
 		F7BA85AF151D32940034A0C1 /* FW_PG5_Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8594151D32940034A0C1 /* FW_PG5_Logo@2x.png */; };
@@ -133,7 +148,6 @@
 		F7BA85B6151D32940034A0C1 /* FW_PG5_TrashTalk_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA859B151D32940034A0C1 /* FW_PG5_TrashTalk_button@2x.png */; };
 		F7BA85B7151D32940034A0C1 /* FW_PG5_WagerBill_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA859C151D32940034A0C1 /* FW_PG5_WagerBill_button@2x.png */; };
 		F7BA85B8151D32940034A0C1 /* FW_PG5_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA859E151D32940034A0C1 /* FW_PG5_BG.png */; };
-		F7BA85B9151D32940034A0C1 /* FW_PG5_Current_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA859F151D32940034A0C1 /* FW_PG5_Current_button.png */; };
 		F7BA85BA151D32940034A0C1 /* FW_PG5_history_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA85A0151D32940034A0C1 /* FW_PG5_history_button.png */; };
 		F7BA85BB151D32940034A0C1 /* FW_PG5_HomeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA85A1151D32940034A0C1 /* FW_PG5_HomeButton.png */; };
 		F7BA85BC151D32940034A0C1 /* FW_PG5_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA85A2151D32940034A0C1 /* FW_PG5_Logo.png */; };
@@ -438,6 +452,24 @@
 		8C4AA61C14D13CCE00A6013F /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = ResetPasswordViewController.h; sourceTree = "<group>"; };
 		8C4AA61D14D13CCE00A6013F /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordViewController.m; sourceTree = "<group>"; };
 		8C4AA61E14D13CCE00A6013F /* ResetPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResetPasswordViewController.xib; sourceTree = "<group>"; };
+		F7075CBD15216F89007A7DE1 /* FW_BackButton_Custom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FW_BackButton_Custom.png; path = Images/FW_BackButton_Custom.png; sourceTree = "<group>"; };
+		F7075CBE15216F89007A7DE1 /* FW_BackButton_Custom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "FW_BackButton_Custom@2x.png"; path = "Images/FW_BackButton_Custom@2x.png"; sourceTree = "<group>"; };
+		F7075CBF15216F89007A7DE1 /* FW_CancelButton_Custom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FW_CancelButton_Custom.png; path = Images/FW_CancelButton_Custom.png; sourceTree = "<group>"; };
+		F7075CC015216F89007A7DE1 /* FW_CancelButton_Custom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "FW_CancelButton_Custom@2x.png"; path = "Images/FW_CancelButton_Custom@2x.png"; sourceTree = "<group>"; };
+		F7075CC115216F89007A7DE1 /* FW_HomeButtonCustom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FW_HomeButtonCustom.png; path = Images/FW_HomeButtonCustom.png; sourceTree = "<group>"; };
+		F7075CC215216F89007A7DE1 /* FW_HomeButtonCustom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "FW_HomeButtonCustom@2x.png"; path = "Images/FW_HomeButtonCustom@2x.png"; sourceTree = "<group>"; };
+		F7075CC315216F89007A7DE1 /* FW_PostButton_Custom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FW_PostButton_Custom.png; path = Images/FW_PostButton_Custom.png; sourceTree = "<group>"; };
+		F7075CC415216F89007A7DE1 /* FW_PostButton_Custom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "FW_PostButton_Custom@2x.png"; path = "Images/FW_PostButton_Custom@2x.png"; sourceTree = "<group>"; };
+		F7075CC515216F89007A7DE1 /* FW_SendButton_Custom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FW_SendButton_Custom.png; path = Images/FW_SendButton_Custom.png; sourceTree = "<group>"; };
+		F7075CC615216F89007A7DE1 /* FW_SendButton_Custom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "FW_SendButton_Custom@2x.png"; path = "Images/FW_SendButton_Custom@2x.png"; sourceTree = "<group>"; };
+		F7075CC715216F89007A7DE1 /* FW_SignOutButton_Custom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FW_SignOutButton_Custom.png; path = Images/FW_SignOutButton_Custom.png; sourceTree = "<group>"; };
+		F7075CC815216F89007A7DE1 /* FW_SignOutButton_Custom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "FW_SignOutButton_Custom@2x.png"; path = "Images/FW_SignOutButton_Custom@2x.png"; sourceTree = "<group>"; };
+		F7075CC915216F89007A7DE1 /* FW_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FW_TopBar.png; path = Images/FW_TopBar.png; sourceTree = "<group>"; };
+		F7075CCA15216F89007A7DE1 /* FW_TopBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "FW_TopBar@2x.png"; path = "Images/FW_TopBar@2x.png"; sourceTree = "<group>"; };
+		F7075CD915217E21007A7DE1 /* FW_PG2_TableViewCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_TableViewCell@2x.png"; sourceTree = "<group>"; };
+		F7075CDB15217E29007A7DE1 /* FW_PG2_TableViewCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_TableViewCell.png; sourceTree = "<group>"; };
+		F7075CDD152181E5007A7DE1 /* FW_PG5_TableviewCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG5_TableviewCell.png; sourceTree = "<group>"; };
+		F7075CDF152181F0007A7DE1 /* FW_PG5_TableviewCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG5_TableviewCell@2x.png"; sourceTree = "<group>"; };
 		F714E15F14A1A88400E24956 /* FriendlyWager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FriendlyWager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F714E16314A1A88400E24956 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F714E16514A1A88400E24956 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -558,7 +590,6 @@
 		F7BA8541151CEC2F0034A0C1 /* FW_HOME_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_HOME_TopBar.png; sourceTree = "<group>"; };
 		F7BA8542151CEC2F0034A0C1 /* FW_HOME_Wager_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_HOME_Wager_button.png; sourceTree = "<group>"; };
 		F7BA855D151CF8D30034A0C1 /* FW_PG2_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_BG@2x.png"; sourceTree = "<group>"; };
-		F7BA855E151CF8D30034A0C1 /* FW_PG2_BillSmith_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_BillSmith_Button@2x.png"; sourceTree = "<group>"; };
 		F7BA855F151CF8D30034A0C1 /* FW_PG2_HomeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_HomeButton@2x.png"; sourceTree = "<group>"; };
 		F7BA8560151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_JohnTaylor_Button@2x.png"; sourceTree = "<group>"; };
 		F7BA8561151CF8D30034A0C1 /* FW_PG2_Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_Logo@2x.png"; sourceTree = "<group>"; };
@@ -570,7 +601,6 @@
 		F7BA8567151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_TimmyJones_Button@2x.png"; sourceTree = "<group>"; };
 		F7BA8568151CF8D30034A0C1 /* FW_PG2_TopBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG2_TopBar@2x.png"; sourceTree = "<group>"; };
 		F7BA856A151CF8D30034A0C1 /* FW_PG2_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_BG.png; sourceTree = "<group>"; };
-		F7BA856B151CF8D30034A0C1 /* FW_PG2_BillSmith_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_BillSmith_Button.png; sourceTree = "<group>"; };
 		F7BA856C151CF8D30034A0C1 /* FW_PG2_HomeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_HomeButton.png; sourceTree = "<group>"; };
 		F7BA856D151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_JohnTaylor_Button.png; sourceTree = "<group>"; };
 		F7BA856E151CF8D30034A0C1 /* FW_PG2_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_Logo.png; sourceTree = "<group>"; };
@@ -582,7 +612,6 @@
 		F7BA8574151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_TimmyJones_Button.png; sourceTree = "<group>"; };
 		F7BA8575151CF8D30034A0C1 /* FW_PG2_TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG2_TopBar.png; sourceTree = "<group>"; };
 		F7BA8590151D32940034A0C1 /* FW_PG5_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG5_BG@2x.png"; sourceTree = "<group>"; };
-		F7BA8591151D32940034A0C1 /* FW_PG5_Current_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG5_Current_button@2x.png"; sourceTree = "<group>"; };
 		F7BA8592151D32940034A0C1 /* FW_PG5_history_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG5_history_button@2x.png"; sourceTree = "<group>"; };
 		F7BA8593151D32940034A0C1 /* FW_PG5_HomeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG5_HomeButton@2x.png"; sourceTree = "<group>"; };
 		F7BA8594151D32940034A0C1 /* FW_PG5_Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG5_Logo@2x.png"; sourceTree = "<group>"; };
@@ -595,7 +624,6 @@
 		F7BA859B151D32940034A0C1 /* FW_PG5_TrashTalk_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG5_TrashTalk_button@2x.png"; sourceTree = "<group>"; };
 		F7BA859C151D32940034A0C1 /* FW_PG5_WagerBill_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_PG5_WagerBill_button@2x.png"; sourceTree = "<group>"; };
 		F7BA859E151D32940034A0C1 /* FW_PG5_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG5_BG.png; sourceTree = "<group>"; };
-		F7BA859F151D32940034A0C1 /* FW_PG5_Current_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG5_Current_button.png; sourceTree = "<group>"; };
 		F7BA85A0151D32940034A0C1 /* FW_PG5_history_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG5_history_button.png; sourceTree = "<group>"; };
 		F7BA85A1151D32940034A0C1 /* FW_PG5_HomeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG5_HomeButton.png; sourceTree = "<group>"; };
 		F7BA85A2151D32940034A0C1 /* FW_PG5_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FW_PG5_Logo.png; sourceTree = "<group>"; };
@@ -936,6 +964,27 @@
 				8C4AA61E14D13CCE00A6013F /* ResetPasswordViewController.xib */,
 			);
 			name = "Reset Password";
+			sourceTree = "<group>";
+		};
+		F7075CBB15216F67007A7DE1 /* Misc Images */ = {
+			isa = PBXGroup;
+			children = (
+				F7075CBD15216F89007A7DE1 /* FW_BackButton_Custom.png */,
+				F7075CBE15216F89007A7DE1 /* FW_BackButton_Custom@2x.png */,
+				F7075CBF15216F89007A7DE1 /* FW_CancelButton_Custom.png */,
+				F7075CC015216F89007A7DE1 /* FW_CancelButton_Custom@2x.png */,
+				F7075CC115216F89007A7DE1 /* FW_HomeButtonCustom.png */,
+				F7075CC215216F89007A7DE1 /* FW_HomeButtonCustom@2x.png */,
+				F7075CC315216F89007A7DE1 /* FW_PostButton_Custom.png */,
+				F7075CC415216F89007A7DE1 /* FW_PostButton_Custom@2x.png */,
+				F7075CC515216F89007A7DE1 /* FW_SendButton_Custom.png */,
+				F7075CC615216F89007A7DE1 /* FW_SendButton_Custom@2x.png */,
+				F7075CC715216F89007A7DE1 /* FW_SignOutButton_Custom.png */,
+				F7075CC815216F89007A7DE1 /* FW_SignOutButton_Custom@2x.png */,
+				F7075CC915216F89007A7DE1 /* FW_TopBar.png */,
+				F7075CCA15216F89007A7DE1 /* FW_TopBar@2x.png */,
+			);
+			name = "Misc Images";
 			sourceTree = "<group>";
 		};
 		F714E15414A1A88400E24956 = {
@@ -1293,6 +1342,7 @@
 		F7BA852A151CEC100034A0C1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F7075CBB15216F67007A7DE1 /* Misc Images */,
 				F7BA87CC151D54400034A0C1 /* New Trash Talk */,
 				F7BA87B5151D53630034A0C1 /* Trash Talk Wall */,
 				F7BA8796151D511D0034A0C1 /* My Ledger */,
@@ -1371,8 +1421,8 @@
 		F7BA855C151CF8D30034A0C1 /* 144 */ = {
 			isa = PBXGroup;
 			children = (
+				F7075CD915217E21007A7DE1 /* FW_PG2_TableViewCell@2x.png */,
 				F7BA855D151CF8D30034A0C1 /* FW_PG2_BG@2x.png */,
-				F7BA855E151CF8D30034A0C1 /* FW_PG2_BillSmith_Button@2x.png */,
 				F7BA855F151CF8D30034A0C1 /* FW_PG2_HomeButton@2x.png */,
 				F7BA8560151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button@2x.png */,
 				F7BA8561151CF8D30034A0C1 /* FW_PG2_Logo@2x.png */,
@@ -1390,8 +1440,8 @@
 		F7BA8569151CF8D30034A0C1 /* 72 */ = {
 			isa = PBXGroup;
 			children = (
+				F7075CDB15217E29007A7DE1 /* FW_PG2_TableViewCell.png */,
 				F7BA856A151CF8D30034A0C1 /* FW_PG2_BG.png */,
-				F7BA856B151CF8D30034A0C1 /* FW_PG2_BillSmith_Button.png */,
 				F7BA856C151CF8D30034A0C1 /* FW_PG2_HomeButton.png */,
 				F7BA856D151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button.png */,
 				F7BA856E151CF8D30034A0C1 /* FW_PG2_Logo.png */,
@@ -1419,8 +1469,8 @@
 		F7BA858F151D32940034A0C1 /* 144 */ = {
 			isa = PBXGroup;
 			children = (
+				F7075CDF152181F0007A7DE1 /* FW_PG5_TableviewCell@2x.png */,
 				F7BA8590151D32940034A0C1 /* FW_PG5_BG@2x.png */,
-				F7BA8591151D32940034A0C1 /* FW_PG5_Current_button@2x.png */,
 				F7BA8592151D32940034A0C1 /* FW_PG5_history_button@2x.png */,
 				F7BA8593151D32940034A0C1 /* FW_PG5_HomeButton@2x.png */,
 				F7BA8594151D32940034A0C1 /* FW_PG5_Logo@2x.png */,
@@ -1439,8 +1489,8 @@
 		F7BA859D151D32940034A0C1 /* 72 */ = {
 			isa = PBXGroup;
 			children = (
+				F7075CDD152181E5007A7DE1 /* FW_PG5_TableviewCell.png */,
 				F7BA859E151D32940034A0C1 /* FW_PG5_BG.png */,
-				F7BA859F151D32940034A0C1 /* FW_PG5_Current_button.png */,
 				F7BA85A0151D32940034A0C1 /* FW_PG5_history_button.png */,
 				F7BA85A1151D32940034A0C1 /* FW_PG5_HomeButton.png */,
 				F7BA85A2151D32940034A0C1 /* FW_PG5_Logo.png */,
@@ -2240,7 +2290,6 @@
 				F7BA8555151CEC2F0034A0C1 /* FW_HOME_TopBar.png in Resources */,
 				F7BA8556151CEC2F0034A0C1 /* FW_HOME_Wager_button.png in Resources */,
 				F7BA8576151CF8D30034A0C1 /* FW_PG2_BG@2x.png in Resources */,
-				F7BA8577151CF8D30034A0C1 /* FW_PG2_BillSmith_Button@2x.png in Resources */,
 				F7BA8578151CF8D30034A0C1 /* FW_PG2_HomeButton@2x.png in Resources */,
 				F7BA8579151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button@2x.png in Resources */,
 				F7BA857A151CF8D30034A0C1 /* FW_PG2_Logo@2x.png in Resources */,
@@ -2252,7 +2301,6 @@
 				F7BA8580151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button@2x.png in Resources */,
 				F7BA8581151CF8D30034A0C1 /* FW_PG2_TopBar@2x.png in Resources */,
 				F7BA8582151CF8D30034A0C1 /* FW_PG2_BG.png in Resources */,
-				F7BA8583151CF8D30034A0C1 /* FW_PG2_BillSmith_Button.png in Resources */,
 				F7BA8584151CF8D30034A0C1 /* FW_PG2_HomeButton.png in Resources */,
 				F7BA8585151CF8D30034A0C1 /* FW_PG2_JohnTaylor_Button.png in Resources */,
 				F7BA8586151CF8D30034A0C1 /* FW_PG2_Logo.png in Resources */,
@@ -2264,7 +2312,6 @@
 				F7BA858C151CF8D30034A0C1 /* FW_PG2_TimmyJones_Button.png in Resources */,
 				F7BA858D151CF8D30034A0C1 /* FW_PG2_TopBar.png in Resources */,
 				F7BA85AB151D32940034A0C1 /* FW_PG5_BG@2x.png in Resources */,
-				F7BA85AC151D32940034A0C1 /* FW_PG5_Current_button@2x.png in Resources */,
 				F7BA85AD151D32940034A0C1 /* FW_PG5_history_button@2x.png in Resources */,
 				F7BA85AE151D32940034A0C1 /* FW_PG5_HomeButton@2x.png in Resources */,
 				F7BA85AF151D32940034A0C1 /* FW_PG5_Logo@2x.png in Resources */,
@@ -2277,7 +2324,6 @@
 				F7BA85B6151D32940034A0C1 /* FW_PG5_TrashTalk_button@2x.png in Resources */,
 				F7BA85B7151D32940034A0C1 /* FW_PG5_WagerBill_button@2x.png in Resources */,
 				F7BA85B8151D32940034A0C1 /* FW_PG5_BG.png in Resources */,
-				F7BA85B9151D32940034A0C1 /* FW_PG5_Current_button.png in Resources */,
 				F7BA85BA151D32940034A0C1 /* FW_PG5_history_button.png in Resources */,
 				F7BA85BB151D32940034A0C1 /* FW_PG5_HomeButton.png in Resources */,
 				F7BA85BC151D32940034A0C1 /* FW_PG5_Logo.png in Resources */,
@@ -2541,6 +2587,24 @@
 				F7BA87E4151D54430034A0C1 /* FW_PG17_NewTrashTalk.png in Resources */,
 				F7BA87E5151D54430034A0C1 /* FW_PG17_Send_Button.png in Resources */,
 				F7BA87E6151D54430034A0C1 /* FW_PG17_TopBar.png in Resources */,
+				F7075CCB15216F89007A7DE1 /* FW_BackButton_Custom.png in Resources */,
+				F7075CCC15216F89007A7DE1 /* FW_BackButton_Custom@2x.png in Resources */,
+				F7075CCD15216F89007A7DE1 /* FW_CancelButton_Custom.png in Resources */,
+				F7075CCE15216F89007A7DE1 /* FW_CancelButton_Custom@2x.png in Resources */,
+				F7075CCF15216F89007A7DE1 /* FW_HomeButtonCustom.png in Resources */,
+				F7075CD015216F89007A7DE1 /* FW_HomeButtonCustom@2x.png in Resources */,
+				F7075CD115216F89007A7DE1 /* FW_PostButton_Custom.png in Resources */,
+				F7075CD215216F89007A7DE1 /* FW_PostButton_Custom@2x.png in Resources */,
+				F7075CD315216F89007A7DE1 /* FW_SendButton_Custom.png in Resources */,
+				F7075CD415216F89007A7DE1 /* FW_SendButton_Custom@2x.png in Resources */,
+				F7075CD515216F89007A7DE1 /* FW_SignOutButton_Custom.png in Resources */,
+				F7075CD615216F89007A7DE1 /* FW_SignOutButton_Custom@2x.png in Resources */,
+				F7075CD715216F89007A7DE1 /* FW_TopBar.png in Resources */,
+				F7075CD815216F89007A7DE1 /* FW_TopBar@2x.png in Resources */,
+				F7075CDA15217E21007A7DE1 /* FW_PG2_TableViewCell@2x.png in Resources */,
+				F7075CDC15217E29007A7DE1 /* FW_PG2_TableViewCell.png in Resources */,
+				F7075CDE152181E5007A7DE1 /* FW_PG5_TableviewCell.png in Resources */,
+				F7075CE0152181F0007A7DE1 /* FW_PG5_TableviewCell@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

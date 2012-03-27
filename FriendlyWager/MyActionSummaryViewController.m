@@ -76,6 +76,28 @@
     chatButton.titleLabel.textAlignment = UITextAlignmentCenter;
     chatButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
     
+    UITextView *wagerButtonTextView = [[UITextView alloc]initWithFrame:CGRectMake(0, 30, wagerButton.frame.size.width, wagerButton.frame.size.height)];
+    wagerButtonTextView.text = [NSString stringWithFormat:@"%@\n%@", @"Wager", opponent];
+    wagerButtonTextView.font = [UIFont boldSystemFontOfSize:15];
+    wagerButtonTextView.textAlignment = UITextAlignmentCenter;
+    wagerButtonTextView.backgroundColor = [UIColor clearColor];
+    wagerButtonTextView.textColor = [UIColor whiteColor];
+    wagerButtonTextView.editable = NO;
+    wagerButtonTextView.scrollEnabled = NO;
+    
+    [wagerButton addSubview:wagerButtonTextView];
+    
+    UITextView *chatButtonTextView = [[UITextView alloc]initWithFrame:CGRectMake(0, 30, chatButton.frame.size.width, chatButton.frame.size.height)];
+    chatButtonTextView.text = [NSString stringWithFormat:@"%@\n%@", @"Trash Talk", opponent];
+    chatButtonTextView.font = [UIFont boldSystemFontOfSize:15];
+    chatButtonTextView.textAlignment = UITextAlignmentCenter;
+    chatButtonTextView.backgroundColor = [UIColor clearColor];
+    chatButtonTextView.textColor = [UIColor whiteColor];
+    chatButtonTextView.editable = NO;
+    chatButtonTextView.scrollEnabled = NO;
+    
+    [chatButton addSubview:chatButtonTextView];
+    
     //Set datasource and delegate for table view
     wagersTableView.dataSource = self;
     wagersTableView.delegate = self;
@@ -139,8 +161,11 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        UILabel *wagerType = [[UILabel alloc]initWithFrame:CGRectMake(47, 15, 105, 20)];
-        UILabel *wagerCount = [[UILabel alloc]initWithFrame:CGRectMake(255, 15, 25, 20)];
+        UILabel *wagerType = [[UILabel alloc]initWithFrame:CGRectMake(47, 10, 105, 20)];
+        UILabel *wagerCount = [[UILabel alloc]initWithFrame:CGRectMake(255, 10, 25, 20)];
+        
+        wagerType.font = [UIFont boldSystemFontOfSize:14];
+        wagerCount.font = [UIFont boldSystemFontOfSize:14];
         
         wagerType.text = [contentForThisRow objectForKey:@"type"];
         wagerCount.text = [contentForThisRow objectForKey:@"wagers"];
@@ -148,8 +173,12 @@
         wagerType.backgroundColor = [UIColor clearColor];
         wagerCount.backgroundColor = [UIColor clearColor];
         
-        cell.backgroundColor = [UIColor clearColor];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        wagerType.textColor = [UIColor whiteColor];
+        wagerCount.textColor = [UIColor whiteColor];
+        
+        cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG5_TableviewCell"]];
+        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell addSubview:wagerType];
         [cell addSubview:wagerCount];
     }

@@ -131,7 +131,7 @@ enum { kTagTabBase = 100 };
     // The view that contains the tab views is located across the top.
     
     //CGRect tabsViewFrame = CGRectMake(0, 20, frame.size.width, self.style.tabsViewHeight);
-    CGRect tabsViewFrame = CGRectMake(0, 30, frame.size.width, 75);
+    CGRect tabsViewFrame = CGRectMake(0, 0, frame.size.width, 50);
     self.tabsContainerView = [[[BHTabsView alloc] initWithFrame:tabsViewFrame] autorelease];
     self.tabsContainerView.backgroundColor = [UIColor clearColor];
     self.tabsContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
