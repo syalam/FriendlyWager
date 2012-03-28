@@ -58,7 +58,7 @@
     if (opponent) {
         opponentLabel.text = [NSString stringWithFormat:@"%@ %@", @"New Wager with", opponent];
         opponentLabel.backgroundColor = [UIColor clearColor];
-        [scoresTableView setFrame:CGRectMake(0, 40, 320, 420)];
+        [scoresTableView setFrame:CGRectMake(12, 40, 296, 420)];
     }
     else {
         opponentLabel.hidden = YES;

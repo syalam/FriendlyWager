@@ -85,6 +85,7 @@
     }
     cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG4_City_button"]];
     cell.textLabel.textColor = [UIColor whiteColor];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.textAlignment = UITextAlignmentCenter;
     cell.textLabel.text = contentForThisRow;
     return cell;

@@ -104,6 +104,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell addSubview:dateLabel];
     [cell addSubview:teamLabel];
     [cell addSubview:oddsLabel];

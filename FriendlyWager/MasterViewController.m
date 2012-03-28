@@ -54,8 +54,14 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
     
-    UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc]initWithTitle:@"Sign Out" style:UIBarButtonItemStyleBordered target:self action:@selector(signOutButtonClicked:)];
-    signOutButton.tintColor = [UIColor blackColor];
+    
+    UIImage *signOutButtonImage = [UIImage imageNamed:@"FW_SignOutButton_Custom"];
+    UIButton *signOutButtonItem = [UIButton buttonWithType:UIButtonTypeCustom];
+    signOutButtonItem.bounds = CGRectMake( 0, 0, signOutButtonImage.size.width, signOutButtonImage.size.height );
+    [signOutButtonItem setImage:signOutButtonImage forState:UIControlStateNormal];
+    [signOutButtonItem addTarget:self action:@selector(signOutButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc] initWithCustomView:signOutButtonItem];
     self.navigationItem.rightBarButtonItem = signOutButton;
 }
 

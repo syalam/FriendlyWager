@@ -142,11 +142,13 @@
             oddsLabel.textColor = [UIColor whiteColor];
             oddsLabel.font = [UIFont boldSystemFontOfSize:18];
             
+            
             [cell addSubview:opponentLabel];
             [cell addSubview:wageredLabel];
             [cell addSubview:oddsLabel];
         }
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG10_BillSmith_Button"]];
     
