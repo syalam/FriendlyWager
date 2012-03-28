@@ -15,6 +15,7 @@ typedef enum apiCall {
 }apiCall;
 
 @interface NewTrashTalkViewController : UIViewController <PF_FBRequestDelegate, PF_FBSessionDelegate, PF_FBDialogDelegate> {
+    PFObject *newTrashTalk;
     IBOutlet UITextView *trashTalkTextView;
     IBOutlet UISwitch *fbSwitch;
     int currentAPICall;

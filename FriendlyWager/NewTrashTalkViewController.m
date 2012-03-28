@@ -50,10 +50,6 @@
     [customCancelButton addTarget:self action:@selector(cancelButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:customCancelButton];
-
-    
-    /*UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonClicked:)];
-    cancelButton.tintColor = [UIColor blackColor];*/
     
     self.navigationItem.leftBarButtonItem = cancelButton;
     
@@ -64,9 +60,6 @@
     [customSendButton setImage:sendButtonImage forState:UIControlStateNormal];
     [customSendButton addTarget:self action:@selector(submitButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithCustomView:customSendButton];
-    
-    /*UIBarButtonItem *submitButton = [[UIBarButtonItem alloc]initWithTitle:@"Send" style:UIBarButtonItemStyleDone target:self action:@selector(submitButtonClicked:)];
-    submitButton.tintColor = [UIColor blackColor];*/
     
     self.navigationItem.rightBarButtonItem = submitButton;
 }
@@ -89,7 +82,26 @@
 }
 
 - (void)submitButtonClicked:(id)sender {
-    [self sendFacebookRequest];
+    newTrashTalk = [PFObject objectWithClassName:@"TrashTalkWall"];
+    [newTrashTalk setObject:trashTalkTextView.text forKey:@"trashTalkContent"];
+    [newTrashTalk setObject:[[PFUser currentUser]objectId] forKey:@"sender"];
+    [newTrashTalk setObject:[[PFUser currentUser]objectId] forKey:@"recipient"];
+    [newTrashTalk saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            if (fbSwitch.on) {
+                [self sendFacebookRequest];
+            }
+            else {
+                [self.navigationController dismissModalViewControllerAnimated:YES];
+            }
+        }
+        else {
+            NSLog(@"%@", error);
+        }
+    }];
+    
+    
+    
 }
 
 - (IBAction)FBSwitchSelected:(id)sender {
@@ -123,7 +135,14 @@
 }
 
 - (void)request:(PF_FBRequest *)request didLoad:(id)result {
-    [self.navigationController dismissModalViewControllerAnimated:YES];
+    NSLog(@"%@", [result objectForKey:@"id"]);
+    [newTrashTalk setObject:[result objectForKey:@"id"] forKey:@"fbID"];
+    [newTrashTalk saveInBackgroundWithBlock:^(BOOL succeded, NSError *error) {
+        if (succeded) {
+            [self.navigationController dismissModalViewControllerAnimated:YES];
+        } 
+    }];
+    
 }
 
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
