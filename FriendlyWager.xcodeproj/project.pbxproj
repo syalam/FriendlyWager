@@ -56,8 +56,6 @@
 		F724468B14D0C8D80009E001 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F724468914D0C8D80009E001 /* LoginViewController.xib */; };
 		F724469514D0FF110009E001 /* NewAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F724469314D0FF110009E001 /* NewAccountViewController.m */; };
 		F724469614D0FF110009E001 /* NewAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F724469414D0FF110009E001 /* NewAccountViewController.xib */; };
-		F7342CDC14C4F15600AC0819 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7342CDA14C4F15600AC0819 /* ChatViewController.m */; };
-		F7342CDD14C4F15600AC0819 /* ChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7342CDB14C4F15600AC0819 /* ChatViewController.xib */; };
 		F7342CE314C4F20600AC0819 /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7342CE014C4F20600AC0819 /* HPGrowingTextView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F7342CE414C4F20600AC0819 /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = F7342CE214C4F20600AC0819 /* HPTextViewInternal.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F7342CED14C4F21600AC0819 /* MessageEntryBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = F7342CE514C4F21600AC0819 /* MessageEntryBackground.png */; };
@@ -92,6 +90,8 @@
 		F7A08FC715100DC200471D3C /* TrashTalkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7A08FC515100DC200471D3C /* TrashTalkViewController.xib */; };
 		F7A08FD11510216600471D3C /* NewTrashTalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A08FCF1510216600471D3C /* NewTrashTalkViewController.m */; };
 		F7A08FD21510216600471D3C /* NewTrashTalkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7A08FD01510216600471D3C /* NewTrashTalkViewController.xib */; };
+		F7A70324152438C7007C7468 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A70322152438C7007C7468 /* ChatViewController.m */; };
+		F7A70325152438C7007C7468 /* ChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7A70323152438C7007C7468 /* ChatViewController.xib */; };
 		F7B971F014E38A0800C683B9 /* FacebookFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B971EE14E38A0800C683B9 /* FacebookFriendsViewController.m */; };
 		F7B971F114E38A0800C683B9 /* FacebookFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B971EF14E38A0800C683B9 /* FacebookFriendsViewController.xib */; };
 		F7B9720314E44B9B00C683B9 /* OpponentSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B9720114E44B9B00C683B9 /* OpponentSearchViewController.m */; };
@@ -513,9 +513,6 @@
 		F724469214D0FF110009E001 /* NewAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewAccountViewController.h; sourceTree = "<group>"; };
 		F724469314D0FF110009E001 /* NewAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewAccountViewController.m; sourceTree = "<group>"; };
 		F724469414D0FF110009E001 /* NewAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewAccountViewController.xib; sourceTree = "<group>"; };
-		F7342CD914C4F15600AC0819 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
-		F7342CDA14C4F15600AC0819 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
-		F7342CDB14C4F15600AC0819 /* ChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatViewController.xib; sourceTree = "<group>"; };
 		F7342CDF14C4F20600AC0819 /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
 		F7342CE014C4F20600AC0819 /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
 		F7342CE114C4F20600AC0819 /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
@@ -565,6 +562,9 @@
 		F7A08FCE1510216600471D3C /* NewTrashTalkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTrashTalkViewController.h; sourceTree = "<group>"; };
 		F7A08FCF1510216600471D3C /* NewTrashTalkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTrashTalkViewController.m; sourceTree = "<group>"; };
 		F7A08FD01510216600471D3C /* NewTrashTalkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewTrashTalkViewController.xib; sourceTree = "<group>"; };
+		F7A70321152438C7007C7468 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		F7A70322152438C7007C7468 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		F7A70323152438C7007C7468 /* ChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatViewController.xib; sourceTree = "<group>"; };
 		F7B971ED14E38A0800C683B9 /* FacebookFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookFriendsViewController.h; sourceTree = "<group>"; };
 		F7B971EE14E38A0800C683B9 /* FacebookFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookFriendsViewController.m; sourceTree = "<group>"; };
 		F7B971EF14E38A0800C683B9 /* FacebookFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FacebookFriendsViewController.xib; sourceTree = "<group>"; };
@@ -1037,6 +1037,7 @@
 				F714E17214A1A88400E24956 /* AppDelegate.h */,
 				F714E17314A1A88400E24956 /* AppDelegate.m */,
 				F7A08FBD15100BE100471D3C /* Trash Talk */,
+				F7A70327152438DE007C7468 /* Chat */,
 				F724468514D0C8A90009E001 /* Login */,
 				F724469114D0FECB0009E001 /* New Account */,
 				8C4AA61B14D13C7200A6013F /* Reset Password */,
@@ -1050,7 +1051,6 @@
 				F743C97814A3AB7B006B533B /* My Action */,
 				F743C9D814A586B4006B533B /* Action Summary */,
 				F743C9DF14A5BA2A006B533B /* Action Detail */,
-				F7342CD714C4F13100AC0819 /* Chat */,
 				F743C97E14A3B016006B533B /* Rankings */,
 				F743C9F314A67CD6006B533B /* Rankings Detail */,
 				F743C98414A3B135006B533B /* Scores */,
@@ -1167,16 +1167,6 @@
 				F724469414D0FF110009E001 /* NewAccountViewController.xib */,
 			);
 			name = "New Account";
-			sourceTree = "<group>";
-		};
-		F7342CD714C4F13100AC0819 /* Chat */ = {
-			isa = PBXGroup;
-			children = (
-				F7342CD914C4F15600AC0819 /* ChatViewController.h */,
-				F7342CDA14C4F15600AC0819 /* ChatViewController.m */,
-				F7342CDB14C4F15600AC0819 /* ChatViewController.xib */,
-			);
-			name = Chat;
 			sourceTree = "<group>";
 		};
 		F7342CDE14C4F1DD00AC0819 /* Expanding TextView */ = {
@@ -1308,6 +1298,16 @@
 				F7A08FD01510216600471D3C /* NewTrashTalkViewController.xib */,
 			);
 			name = "New Trash Talk";
+			sourceTree = "<group>";
+		};
+		F7A70327152438DE007C7468 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				F7A70321152438C7007C7468 /* ChatViewController.h */,
+				F7A70322152438C7007C7468 /* ChatViewController.m */,
+				F7A70323152438C7007C7468 /* ChatViewController.xib */,
+			);
+			name = Chat;
 			sourceTree = "<group>";
 		};
 		F7B971EB14E389CF00C683B9 /* Facebook Friends */ = {
@@ -2250,7 +2250,6 @@
 				F7CDD79914AC0AA60038FE6B /* SMContactsSelector.xib in Resources */,
 				F7CDD79B14AC0AA60038FE6B /* unchecked.png in Resources */,
 				F7CDD80E14B16C380038FE6B /* NewWagerViewController.xib in Resources */,
-				F7342CDD14C4F15600AC0819 /* ChatViewController.xib in Resources */,
 				F7342CED14C4F21600AC0819 /* MessageEntryBackground.png in Resources */,
 				F7342CEE14C4F21600AC0819 /* MessageEntryBackground@2x.png in Resources */,
 				F7342CEF14C4F21600AC0819 /* MessageEntryInputField.png in Resources */,
@@ -2605,6 +2604,7 @@
 				F7075CE4152220C5007A7DE1 /* FW_PG3_TableViewCell@2x.png in Resources */,
 				F7075CE615222476007A7DE1 /* FW_PG9_ScoreButton.png in Resources */,
 				F7075CE815222494007A7DE1 /* FW_PG9_ScoreButton@2x.png in Resources */,
+				F7A70325152438C7007C7468 /* ChatViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2662,7 +2662,6 @@
 				F7CDD79A14AC0AA60038FE6B /* UIAlertView+UITableView.m in Sources */,
 				F7CDD80D14B16C380038FE6B /* NewWagerViewController.m in Sources */,
 				F74C0F0414B424C0006F3D99 /* SMContactsSelector.m in Sources */,
-				F7342CDC14C4F15600AC0819 /* ChatViewController.m in Sources */,
 				F7342CE314C4F20600AC0819 /* HPGrowingTextView.m in Sources */,
 				F7342CE414C4F20600AC0819 /* HPTextViewInternal.m in Sources */,
 				F724468A14D0C8D80009E001 /* LoginViewController.m in Sources */,
@@ -2676,6 +2675,7 @@
 				F7D70C4014F1EE9A001F8525 /* SVProgressHUD.m in Sources */,
 				F7A08FC615100DC200471D3C /* TrashTalkViewController.m in Sources */,
 				F7A08FD11510216600471D3C /* NewTrashTalkViewController.m in Sources */,
+				F7A70324152438C7007C7468 /* ChatViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

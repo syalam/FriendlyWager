@@ -9,7 +9,9 @@
 #import "MyActionSummaryViewController.h"
 #import "MyActionDetailViewController.h"
 #import "ScoresViewController.h"
-#import "ChatViewController.h"
+#import "NewTrashTalkViewController.h"
+
+
 
 @implementation MyActionSummaryViewController
 @synthesize contentList;
@@ -143,7 +145,11 @@
     [self.navigationController pushViewController:sports animated:YES];
 }
 - (IBAction)chatButtonClicked:(id)sender { 
-    PFUser *currentUser = [PFUser currentUser];
+    NewTrashTalkViewController *trashTalk = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
+    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:trashTalk];
+    [self.navigationController presentModalViewController:navc animated:YES];
+    
+    /*PFUser *currentUser = [PFUser currentUser];
     if ([currentUser hasFacebook]) {
         ChatViewController *chatVc = [[ChatViewController alloc]initWithNibName:@"ChatViewController" bundle:nil];
         [self.navigationController pushViewController:chatVc animated:YES];
@@ -151,7 +157,7 @@
     else {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Facebook Sign In Required" message:@"You must sign in with a facebook account to use this feature" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign In", nil];
         [alert show];
-    }
+    }*/
 
 }
 
@@ -212,25 +218,7 @@
 
 #pragma mark - UIAlertView Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
-        PFUser *user = [PFUser currentUser];
-        [user linkToFacebook:permissions block:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                ChatViewController *chatVc = [[ChatViewController alloc]initWithNibName:@"ChatViewController" bundle:nil];
-                [self.navigationController pushViewController:chatVc animated:YES];
-            }
-            else {
-                
-                UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
-                                                                    message:@"This facebook account is associated with another user"
-                                                                   delegate:self 
-                                                          cancelButtonTitle:@"OK" 
-                                                          otherButtonTitles:nil];
-                [alertView show];
-            }
-        }];
-    }
+
 }
 
 

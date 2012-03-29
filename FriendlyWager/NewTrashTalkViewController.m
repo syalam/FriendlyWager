@@ -154,7 +154,6 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
-        PFUser *user = [PFUser currentUser];
         [user linkToFacebook:permissions block:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
                 [fbSwitch setOn:YES animated:YES];

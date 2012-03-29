@@ -7,6 +7,7 @@
 //
 
 #import "FacebookFriendsViewController.h"
+#import "TabsViewController.h"
 #import "JSONKit.h"
 #import "AppDelegate.h"
 
@@ -203,13 +204,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    if ([[[contentList objectAtIndex:indexPath.row]valueForKey:@"isFW"]isEqualToString:@"YES"]) {
+        NSUserDefaults *fwData = [NSUserDefaults alloc];
+        TabsViewController *newFBWager = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil];
+        [fwData setObject:[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"]valueForKey:@"name"] forKey:@"opponent"];
+        [self.navigationController pushViewController:newFBWager animated:YES];
+    }
+    else {
+        NSString *userName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"]valueForKey:@"name"];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:[NSString stringWithFormat:@"%@ %@ %@ %@", userName, @"is not a Friendly Wager user. Would you like to invite", userName, @"to Friendly Wager?"] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        [alert show];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - Button Clicks
