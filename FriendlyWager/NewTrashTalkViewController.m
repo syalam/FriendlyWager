@@ -29,6 +29,7 @@
 {
     [super viewDidLoad];
     [trashTalkTextView becomeFirstResponder];
+    user = [PFUser currentUser];
     
     UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_PG17_NewTrashTalk"]];
     self.navigationItem.titleView = titleImageView;
@@ -84,8 +85,9 @@
 - (void)submitButtonClicked:(id)sender {
     newTrashTalk = [PFObject objectWithClassName:@"TrashTalkWall"];
     [newTrashTalk setObject:trashTalkTextView.text forKey:@"trashTalkContent"];
-    [newTrashTalk setObject:[[PFUser currentUser]objectId] forKey:@"sender"];
-    [newTrashTalk setObject:[[PFUser currentUser]objectId] forKey:@"recipient"];
+    [newTrashTalk setObject:user forKey:@"sender"];
+    [newTrashTalk setObject:[user objectForKey:@"name"] forKey:@"senderName"];
+    [newTrashTalk setObject:user forKey:@"recipient"];
     [newTrashTalk saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             if (fbSwitch.on) {
@@ -106,7 +108,6 @@
 
 - (IBAction)FBSwitchSelected:(id)sender {
     if (fbSwitch.on) {
-        PFUser *user = [PFUser currentUser];
         if ([user hasFacebook]) {
             [fbSwitch setOn:YES];
         }
@@ -120,7 +121,6 @@
 #pragma mark - Facebook delegate methods
 
 - (void)sendFacebookRequest {
-    PFUser *user = [PFUser currentUser];
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     [delegate facebook].accessToken = [user facebookAccessToken];
     [delegate facebook].expirationDate = [user facebookExpirationDate];
