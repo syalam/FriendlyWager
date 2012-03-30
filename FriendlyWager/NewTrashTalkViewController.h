@@ -22,6 +22,8 @@ typedef enum apiCall {
     int currentAPICall;
 }
 
+@property (nonatomic, retain) PFUser *recipient;
+
 - (IBAction)FBSwitchSelected:(id)sender;
 - (void)sendFacebookRequest;
 

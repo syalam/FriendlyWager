@@ -16,6 +16,7 @@
 @synthesize vc1 = _vc1;
 @synthesize vc2 = _vc2;
 @synthesize vc3 = _vc3;
+@synthesize userToWagerObject = _userToWagerObject;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

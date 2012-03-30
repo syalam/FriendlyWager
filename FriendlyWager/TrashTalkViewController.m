@@ -19,10 +19,11 @@
 
 @implementation TrashTalkViewController
 @synthesize contentList;
+@synthesize  trashTalkTableView = _trashTalkTableView;
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
@@ -78,7 +79,7 @@
                 [trashTalkArray addObject:trashTalkItem];
             }
             [self setContentList:trashTalkArray];
-            [self.tableView reloadData];
+            [self.trashTalkTableView reloadData];
         }
     }];
 }
@@ -110,7 +111,7 @@
     
     CGFloat height = MAX(size.height, 44.0f);
     
-    return height + (CELL_CONTENT_MARGIN);
+    return height + (CELL_CONTENT_MARGIN * 2);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -129,6 +130,10 @@
     cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:12];
     cell.detailTextLabel.textColor = [UIColor blackColor];
     cell.detailTextLabel.text = [[contentList objectAtIndex:indexPath.row]objectForKey:@"trashTalkContent"];
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    cell.contentView.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 

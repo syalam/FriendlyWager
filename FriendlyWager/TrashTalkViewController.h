@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TrashTalkViewController : UITableViewController {
+@interface TrashTalkViewController : UIViewController {
     IBOutlet UIView *headerView;
 }
 
 
+@property (nonatomic, retain) IBOutlet UITableView *trashTalkTableView;
 @property (nonatomic, retain) NSMutableArray *contentList;
 
 @end

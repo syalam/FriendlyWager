@@ -10,6 +10,7 @@
 #import "TabsViewController.h"
 #import "JSONKit.h"
 #import "AppDelegate.h"
+#import "MyActionSummaryViewController.h"
 
 @implementation FacebookFriendsViewController
 @synthesize contentList;
@@ -206,10 +207,22 @@
 {
     if ([[[contentList objectAtIndex:indexPath.row]valueForKey:@"isFW"]isEqualToString:@"YES"]) {
         NSUserDefaults *fwData = [NSUserDefaults alloc];
-        TabsViewController *newFBWager = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil];
-        [fwData setObject:[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"]valueForKey:@"name"] forKey:@"opponent"];
-        [self.navigationController pushViewController:newFBWager animated:YES];
+        NSString *fbUid = [NSString stringWithFormat:@"%@", [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"]valueForKey:@"uid"]];
+        PFQuery *query = [PFQuery queryForUser];
+        [query whereKey:@"fbId" equalTo:fbUid];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            NSLog(@"%@", objects);
+            if (!error) {
+                for (PFUser *opponentUser in objects) {
+                    MyActionSummaryViewController *newFBWager = [[MyActionSummaryViewController alloc]initWithNibName:@"MyActionSummaryViewController" bundle:nil];
+                    newFBWager.userToWager = opponentUser;
+                    [fwData setObject:[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"]valueForKey:@"name"] forKey:@"opponent"];
+                    [self.navigationController pushViewController:newFBWager animated:YES];
+                }
+            }
+        }];
     }
+    
     else {
         NSString *userName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"]valueForKey:@"name"];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:[NSString stringWithFormat:@"%@ %@ %@ %@", userName, @"is not a Friendly Wager user. Would you like to invite", userName, @"to Friendly Wager?"] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];

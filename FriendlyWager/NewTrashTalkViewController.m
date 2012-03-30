@@ -15,6 +15,8 @@
 @end
 
 @implementation NewTrashTalkViewController
+@synthesize recipient = _recipient;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -87,7 +89,14 @@
     [newTrashTalk setObject:trashTalkTextView.text forKey:@"trashTalkContent"];
     [newTrashTalk setObject:user forKey:@"sender"];
     [newTrashTalk setObject:[user objectForKey:@"name"] forKey:@"senderName"];
-    [newTrashTalk setObject:user forKey:@"recipient"];
+    if (_recipient) {
+        [newTrashTalk setObject:_recipient forKey:@"recipient"];
+        [newTrashTalk setObject:[_recipient objectForKey:@"name"] forKey:@"recipientName"];
+    }
+    else {
+        [newTrashTalk setObject:user forKey:@"recipient"];
+        [newTrashTalk setObject:[user objectForKey:@"name"] forKey:@"recipientName"];
+    }
     [newTrashTalk saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             if (fbSwitch.on) {
@@ -109,7 +118,14 @@
 - (IBAction)FBSwitchSelected:(id)sender {
     if (fbSwitch.on) {
         if ([user hasFacebook]) {
-            [fbSwitch setOn:YES];
+            if ([_recipient objectForKey:@"fbId"]){
+                [fbSwitch setOn:YES];
+            }
+            else {
+                [fbSwitch setOn:NO];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Notice" message:[NSString stringWithFormat:@"%@'s %@", [_recipient objectForKey:@"name"], @"account is not linked to Facebook"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+            }
         }
         else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Facebook Sign In Required" message:@"You must sign in with a facebook account to use this feature" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign In", nil];
@@ -125,8 +141,15 @@
     [delegate facebook].accessToken = [user facebookAccessToken];
     [delegate facebook].expirationDate = [user facebookExpirationDate];
     if (currentAPICall == kAPIPostToFeed) {
+        NSString *postToWall;
+        if (_recipient) {
+            postToWall = [_recipient objectForKey:@"fbId"];
+        }
+        else {
+            postToWall = @"me";
+        }
         NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkTextView.text, @"message", nil];
-        [[delegate facebook]requestWithGraphPath:@"me/feed" andParams:params andHttpMethod:@"POST" andDelegate:self];
+        [[delegate facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", postToWall] andParams:params andHttpMethod:@"POST" andDelegate:self];
     }
 }
 
@@ -142,7 +165,6 @@
             [self.navigationController dismissModalViewControllerAnimated:YES];
         } 
     }];
-    
 }
 
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {

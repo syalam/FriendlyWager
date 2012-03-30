@@ -15,6 +15,7 @@
 
 @implementation MyActionSummaryViewController
 @synthesize contentList;
+@synthesize userToWager = _userToWager;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -68,7 +69,7 @@
     
     
     //Set labels with name of currently selected opponent
-    wagersWithLabel.text = [NSString stringWithFormat:@"%@ %@", @"Wagers With", opponent];
+    wagersWithLabel.text = [NSString stringWithFormat:@"%@ %@", @"Wagers With", [_userToWager objectForKey:@"name"]];
     
     [wagerButton setTitle:[NSString stringWithFormat:@"%@\n%@", @"Wager", opponent] forState:UIControlStateNormal];
     wagerButton.titleLabel.textAlignment = UITextAlignmentCenter;
@@ -86,7 +87,7 @@
     wagerLabel.font = [UIFont boldSystemFontOfSize:16];
     
     UILabel *wagerOpponentLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 60, wagerButton.frame.size.width, 20)];
-    wagerOpponentLabel.text = opponent;
+    wagerOpponentLabel.text = [_userToWager objectForKey:@"name"];
     wagerOpponentLabel.textAlignment = UITextAlignmentCenter;
     wagerOpponentLabel.backgroundColor = [UIColor clearColor];
     wagerOpponentLabel.textColor = [UIColor whiteColor];
@@ -104,7 +105,7 @@
     trashTalkLabel.font = [UIFont boldSystemFontOfSize:16];
     
     UILabel *trashTalkOpponentLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 60, chatButton.frame.size.width, 20)];
-    trashTalkOpponentLabel.text = opponent;
+    trashTalkOpponentLabel.text = [_userToWager objectForKey:@"name"];
     trashTalkOpponentLabel.textAlignment = UITextAlignmentCenter;
     trashTalkOpponentLabel.backgroundColor = [UIColor clearColor];
     trashTalkOpponentLabel.textColor = [UIColor whiteColor];
@@ -146,6 +147,7 @@
 }
 - (IBAction)chatButtonClicked:(id)sender { 
     NewTrashTalkViewController *trashTalk = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
+    trashTalk.recipient = _userToWager;
     UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:trashTalk];
     [self.navigationController presentModalViewController:navc animated:YES];
     

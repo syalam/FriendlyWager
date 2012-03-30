@@ -32,6 +32,7 @@
 - (IBAction)chatButtonClicked:(id)sender;
 
 @property (nonatomic, retain) NSArray* contentList;
+@property (nonatomic, retain)PFUser *userToWager;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil CurrentWagers:(NSString *)CurrentWagers opponentName:(NSString *)opponentName;
 

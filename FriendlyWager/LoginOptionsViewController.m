@@ -91,6 +91,7 @@
     PFUser *user = [PFUser currentUser];
     user.username = [result objectForKey:@"username"];
     [user setObject:[result objectForKey:@"name"] forKey:@"name"];
+    [user setObject:[result objectForKey:@"id"] forKey:@"fbId"];
     user.email = [result objectForKey:@"email"];
     [user saveInBackground];
     [self.navigationController dismissModalViewControllerAnimated:YES];
