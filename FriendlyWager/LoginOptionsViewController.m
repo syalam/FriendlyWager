@@ -41,7 +41,26 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
     
-    self.title = @"Login";
+    UILabel *fwLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, friendlyWagerButton.frame.size.width, friendlyWagerButton.frame.size.height)];
+    fwLabel.backgroundColor = [UIColor clearColor];
+    fwLabel.textColor = [UIColor whiteColor];
+    fwLabel.textAlignment = UITextAlignmentCenter;
+    fwLabel.font = [UIFont boldSystemFontOfSize:14];
+    fwLabel.text = @"Friendly Wager Account";
+    
+    [friendlyWagerButton addSubview:fwLabel];
+    
+    UILabel *fbLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, facebookLoginButton.frame.size.width, facebookLoginButton.frame.size.height)];
+    fbLabel.backgroundColor = [UIColor clearColor];
+    fbLabel.textColor = [UIColor whiteColor];
+    fbLabel.textAlignment = UITextAlignmentCenter;
+    fbLabel.font = [UIFont boldSystemFontOfSize:14];
+    fbLabel.text = @"Facebook";
+    
+    [facebookLoginButton addSubview:fbLabel];
+    
+    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_Login_NavBar"]];
+    self.navigationItem.titleView = titleImageView;
 }
 
 - (void)viewDidUnload

@@ -42,8 +42,10 @@
     wagerTableView.dataSource = self;
     wagerTableView.delegate = self;
     
+
+    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
+    self.navigationItem.titleView = titleImageView;
     
-    self.title = @"Make A Wager";
     NSDictionary *navTitleAttributes = [[NSDictionary alloc]initWithObjectsAndKeys:
                                         [UIColor blackColor], UITextAttributeTextColor, nil];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];

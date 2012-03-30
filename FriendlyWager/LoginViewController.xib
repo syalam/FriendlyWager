@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1280</int>
-		<string key="IBDocument.SystemVersion">11C74</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1938</string>
-		<string key="IBDocument.AppKitVersion">1138.23</string>
-		<string key="IBDocument.HIToolboxVersion">567.00</string>
+		<int key="IBDocument.SystemTarget">1296</int>
+		<string key="IBDocument.SystemVersion">11D50b</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
+		<string key="IBDocument.AppKitVersion">1138.32</string>
+		<string key="IBDocument.HIToolboxVersion">568.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">933</string>
+			<string key="NS.object.0">1179</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBUITextField</string>
@@ -108,13 +108,11 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{20, 98}, {280, 37}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
-								<reference key="NSNextKeyView" ref="740575651"/>
+								<reference key="NSNextKeyView" ref="867711183"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<int key="IBUIButtonType">1</int>
-								<string key="IBUINormalTitle">Sign In</string>
 								<object class="NSColor" key="IBUIHighlightedTitleColor" id="197062866">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
@@ -126,6 +124,10 @@
 								<object class="NSColor" key="IBUINormalTitleShadowColor" id="1056437876">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC41AA</bytes>
+								</object>
+								<object class="NSCustomResource" key="IBUINormalImage" id="964985745">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">FW_CreateNewAccount_button.png</string>
 								</object>
 								<object class="IBUIFontDescription" key="IBUIFontDescription" id="708858709">
 									<int key="type">2</int>
@@ -142,19 +144,18 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{20, 188}, {280, 37}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
-								<reference key="NSNextKeyView" ref="867711183"/>
+								<reference key="NSNextKeyView"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<int key="IBUIButtonType">1</int>
-								<string key="IBUINormalTitle">Create a New Account</string>
 								<reference key="IBUIHighlightedTitleColor" ref="197062866"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="1056437876"/>
+								<reference key="IBUINormalImage" ref="964985745"/>
 								<reference key="IBUIFontDescription" ref="708858709"/>
 								<reference key="IBUIFont" ref="57286257"/>
 							</object>
@@ -163,19 +164,18 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{20, 143}, {280, 37}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="740575651"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<int key="IBUIButtonType">1</int>
-								<string key="IBUINormalTitle">Reset Password</string>
 								<reference key="IBUIHighlightedTitleColor" ref="197062866"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="1056437876"/>
+								<reference key="IBUINormalImage" ref="964985745"/>
 								<reference key="IBUIFontDescription" ref="708858709"/>
 								<reference key="IBUIFont" ref="57286257"/>
 							</object>
@@ -375,8 +375,16 @@
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
+			<real value="1296" key="NS.object.0"/>
+		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<string key="IBCocoaTouchPluginVersion">933</string>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NS.key.0">FW_CreateNewAccount_button.png</string>
+			<string key="NS.object.0">{296, 44}</string>
+		</object>
+		<string key="IBCocoaTouchPluginVersion">1179</string>
 	</data>
 </archive>

@@ -33,11 +33,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"New Account";
+    
+    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_NewAccount_NavBar"]];
+    self.navigationItem.titleView = titleImageView;
+    
     scrollView.contentSize = CGSizeMake(320, 550);
     [firstNameTextField becomeFirstResponder];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
-    backButton.tintColor = [UIColor blackColor];
+    
+    UILabel *signInLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, submitButton.frame.size.width, submitButton.frame.size.height)];
+    signInLabel.backgroundColor = [UIColor clearColor];
+    signInLabel.textColor = [UIColor whiteColor];
+    signInLabel.textAlignment = UITextAlignmentCenter;
+    signInLabel.font = [UIFont boldSystemFontOfSize:14];
+    signInLabel.text = @"Submit";
+    
+    [submitButton addSubview:signInLabel];
+    
+    UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+    UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
+    [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
+    
     self.navigationItem.leftBarButtonItem = backButton;
 }
 

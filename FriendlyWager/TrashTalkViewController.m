@@ -35,8 +35,8 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Feed";
-    
+    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_PG16_Feed"]];
+    self.navigationItem.titleView = titleImageView;
     
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG16_BG"]]];
@@ -75,6 +75,7 @@
         PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
         [queryForTrashTalk whereKey:@"recipient" equalTo:_opponent];
         [queryForTrashTalk whereKey:@"sender" equalTo:[PFUser currentUser]];
+        [queryForTrashTalk orderByDescending:@"updatedAt"];
         [queryForTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
                 NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
@@ -90,14 +91,32 @@
     else {
         PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
         [queryForTrashTalk whereKey:@"recipient" equalTo:[PFUser currentUser]];
+        [queryForTrashTalk orderByDescending:@"updatedAt"];
         [queryForTrashTalk findObjectsInBackgroundWithBlock:^ (NSArray *objects, NSError *error) {
             if (!error) {
                 NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
                 for (PFObject *trashTalkItem in objects) {
-                    [trashTalkArray addObject:trashTalkItem];
+                    [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
                 }
-                [self setContentList:trashTalkArray];
-                [self.trashTalkTableView reloadData];
+                PFQuery *queryForSentTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
+                [queryForSentTrashTalk whereKey:@"sender" equalTo:[PFUser currentUser]];
+                [queryForSentTrashTalk whereKey:@"recipient" notEqualTo:[PFUser currentUser]];
+                [queryForTrashTalk orderByDescending:@"updatedAt"];
+                [queryForSentTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                    if (!error) {
+                        for (PFObject *sentTrashTalkItem in objects) {
+                            [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:sentTrashTalkItem, @"data", sentTrashTalkItem.updatedAt, @"date", nil]];
+                        }
+                        
+                        NSSortDescriptor *dateDescriptor = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
+                        NSArray *descriptors = [NSArray arrayWithObjects:dateDescriptor, nil];
+                        NSArray * sortedArray = [trashTalkArray sortedArrayUsingDescriptors:descriptors];
+                        NSLog(@"%@", sortedArray);
+                        
+                        [self setContentList:trashTalkArray];
+                        [self.trashTalkTableView reloadData];
+                    } 
+                }];
             }
         }];
     }
@@ -122,7 +141,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    NSString *text = [[contentList objectAtIndex:indexPath.row]objectForKey:@"trashTalkContent"];
+    NSString *text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
     
     CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
     
@@ -139,8 +158,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     
-    NSString *senderName = [[contentList objectAtIndex:indexPath.row]objectForKey:@"senderName"];
-    NSString *recipientName = [[contentList objectAtIndex:indexPath.row]objectForKey:@"recipientName"];
+    NSString *senderName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"senderName"];
+    NSString *recipientName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"recipientName"];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
@@ -156,7 +175,7 @@
     cell.detailTextLabel.numberOfLines = 12;
     cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:12];
     cell.detailTextLabel.textColor = [UIColor blackColor];
-    cell.detailTextLabel.text = [[contentList objectAtIndex:indexPath.row]objectForKey:@"trashTalkContent"];
+    cell.detailTextLabel.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];

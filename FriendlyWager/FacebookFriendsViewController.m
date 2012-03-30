@@ -37,7 +37,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"Facebook Friends";
+    
+    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
+    self.navigationItem.titleView = titleImageView;
+    
     PFUser *user = [PFUser currentUser];
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     [delegate facebook].accessToken = [user facebookAccessToken];
@@ -52,8 +55,13 @@
     [[delegate facebook] requestWithGraphPath:@"fql" andParams:params andHttpMethod:@"GET" andDelegate:self];
     
 
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
-    backButton.tintColor = [UIColor blackColor];
+    UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+    UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
+    [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
+    
     self.navigationItem.leftBarButtonItem = backButton;
 }
 

@@ -35,7 +35,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"Login";
+    
+    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_Login_NavBar"]];
+    self.navigationItem.titleView = titleImageView;
     
     scrollView.contentSize = CGSizeMake(320, 490);
     
@@ -46,12 +48,50 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
     
-    UIBarButtonItem *loginNavButton = [[UIBarButtonItem alloc]initWithTitle:@"Sign In" style:UIBarButtonItemStyleBordered target:self action:@selector(loginButtonClicked:)];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
     
-    backButton.tintColor = [UIColor blackColor];
-    loginNavButton.tintColor = [UIColor blackColor];
+    UILabel *signInLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, loginButton.frame.size.width, loginButton.frame.size.height)];
+    signInLabel.backgroundColor = [UIColor clearColor];
+    signInLabel.textColor = [UIColor whiteColor];
+    signInLabel.textAlignment = UITextAlignmentCenter;
+    signInLabel.font = [UIFont boldSystemFontOfSize:14];
+    signInLabel.text = @"Sign In";
+    
+    UILabel *resetPasswordLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, resetButton.frame.size.width, resetButton.frame.size.height)];
+    resetPasswordLabel.backgroundColor = [UIColor clearColor];
+    resetPasswordLabel.textColor = [UIColor whiteColor];
+    resetPasswordLabel.textAlignment = UITextAlignmentCenter;
+    resetPasswordLabel.font = [UIFont boldSystemFontOfSize:14];
+    resetPasswordLabel.text = @"Reset Password";
+    
+    
+    UILabel *newAccountLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, newAccountButton.frame.size.width, newAccountButton.frame.size.height)];
+    newAccountLabel.backgroundColor = [UIColor clearColor];
+    newAccountLabel.textColor = [UIColor whiteColor];
+    newAccountLabel.textAlignment = UITextAlignmentCenter;
+    newAccountLabel.font = [UIFont boldSystemFontOfSize:14];
+    newAccountLabel.text = @"Create a New Account";
+    
+    [loginButton addSubview:signInLabel];
+    [resetButton addSubview:resetPasswordLabel];
+    [newAccountButton addSubview:newAccountLabel];
+    
+    UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+    UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
+    [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     self.navigationItem.leftBarButtonItem = backButton;
+
+    UIImage *loginButtonImage = [UIImage imageNamed:@"FW_SignIn_NavButton"];
+    UIButton *customLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    customLoginButton.bounds = CGRectMake(0, 0, loginButtonImage.size.width, loginButtonImage.size.height);
+    [customLoginButton setImage:loginButtonImage forState:UIControlStateNormal];
+    [customLoginButton addTarget:self action:@selector(loginButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    UIBarButtonItem *loginNavButton = [[UIBarButtonItem alloc]initWithCustomView:customLoginButton];
     self.navigationItem.rightBarButtonItem = loginNavButton;
 
 }
