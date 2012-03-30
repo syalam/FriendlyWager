@@ -20,6 +20,7 @@
 @implementation TrashTalkViewController
 @synthesize contentList;
 @synthesize  trashTalkTableView = _trashTalkTableView;
+@synthesize opponent = _opponent;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -70,18 +71,36 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
-    [queryForTrashTalk whereKey:@"recipient" equalTo:[PFUser currentUser]];
-    [queryForTrashTalk findObjectsInBackgroundWithBlock:^ (NSArray *objects, NSError *error) {
-        if (!error) {
-            NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
-            for (PFObject *trashTalkItem in objects) {
-                [trashTalkArray addObject:trashTalkItem];
+    if (_opponent) {
+        PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
+        [queryForTrashTalk whereKey:@"recipient" equalTo:_opponent];
+        [queryForTrashTalk whereKey:@"sender" equalTo:[PFUser currentUser]];
+        [queryForTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
+                for (PFObject *trashTalkItem in objects) {
+                    [trashTalkArray addObject:trashTalkItem];
+                }
+                [self setContentList:trashTalkArray];
+                [self.trashTalkTableView reloadData];
             }
-            [self setContentList:trashTalkArray];
-            [self.trashTalkTableView reloadData];
-        }
-    }];
+        }];
+
+    }
+    else {
+        PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
+        [queryForTrashTalk whereKey:@"recipient" equalTo:[PFUser currentUser]];
+        [queryForTrashTalk findObjectsInBackgroundWithBlock:^ (NSArray *objects, NSError *error) {
+            if (!error) {
+                NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
+                for (PFObject *trashTalkItem in objects) {
+                    [trashTalkArray addObject:trashTalkItem];
+                }
+                [self setContentList:trashTalkArray];
+                [self.trashTalkTableView reloadData];
+            }
+        }];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -120,9 +139,17 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     
+    NSString *senderName = [[contentList objectAtIndex:indexPath.row]objectForKey:@"senderName"];
+    NSString *recipientName = [[contentList objectAtIndex:indexPath.row]objectForKey:@"recipientName"];
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
-    cell.textLabel.text = [[contentList objectAtIndex:indexPath.row]objectForKey:@"senderName"];
+    if (![senderName isEqualToString:recipientName]) {
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ > %@", senderName, recipientName];
+    }
+    else {
+        cell.textLabel.text = senderName;
+    }
     cell.textLabel.textColor = [UIColor blueColor];
     
     cell.detailTextLabel.lineBreakMode = UILineBreakModeWordWrap;
@@ -201,12 +228,20 @@
 #pragma mark - Button click action methods
 -(void)newTrashTalkButtonClicked:(id)sender {
     NewTrashTalkViewController *new = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
+    if (_opponent) {
+        new.recipient = _opponent;
+    }
     UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:new];
     [self.navigationController presentModalViewController:navc animated:YES];
 }
 
 -(void)backButtonClicked:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (_opponent) {
+        [self.navigationController dismissModalViewControllerAnimated:YES];
+    }
+    else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 

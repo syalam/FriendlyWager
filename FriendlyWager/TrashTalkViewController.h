@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface TrashTalkViewController : UIViewController {
     IBOutlet UIView *headerView;
 }
 
-
+@property (nonatomic, retain) PFUser *opponent;
 @property (nonatomic, retain) IBOutlet UITableView *trashTalkTableView;
 @property (nonatomic, retain) NSMutableArray *contentList;
 

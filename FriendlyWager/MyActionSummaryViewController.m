@@ -10,6 +10,7 @@
 #import "MyActionDetailViewController.h"
 #import "ScoresViewController.h"
 #import "NewTrashTalkViewController.h"
+#import "TrashTalkViewController.h"
 
 
 
@@ -124,6 +125,18 @@
     
     wagersArray = [[NSArray alloc]initWithObjects:currentWagersArray, pendingWagersArray, historyWagersArray, nil];
     [self setContentList:wagersArray];
+    
+    UIImage *homeButtonImage = [UIImage imageNamed:@"FW_PG2_HomeButton"];
+    UIButton *homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    homeButton.bounds = CGRectMake( 0, 0, homeButtonImage.size.width, homeButtonImage.size.height );
+    [homeButton setImage:homeButtonImage forState:UIControlStateNormal];
+    [homeButton addTarget:self action:@selector(homeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *homeNavButton = [[UIBarButtonItem alloc] initWithCustomView:homeButton];
+    [homeNavButton setTarget:self];
+    [homeNavButton setAction:@selector(homeButtonClicked:)];
+    
+    self.navigationItem.leftBarButtonItem = homeNavButton;
 }
 
 - (void)viewDidUnload
@@ -140,27 +153,20 @@
 }
 
 #pragma mark - Button Clicks
+- (void)homeButtonClicked:(id)sender {
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+}
+
 - (IBAction)wagerButtonClicked:(id)sender {
     ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil opponentName:opponent];
     
     [self.navigationController pushViewController:sports animated:YES];
 }
 - (IBAction)chatButtonClicked:(id)sender { 
-    NewTrashTalkViewController *trashTalk = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
-    trashTalk.recipient = _userToWager;
+    TrashTalkViewController *trashTalk = [[TrashTalkViewController alloc]initWithNibName:@"TrashTalkViewController" bundle:nil];
+    trashTalk.opponent = _userToWager;
     UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:trashTalk];
     [self.navigationController presentModalViewController:navc animated:YES];
-    
-    /*PFUser *currentUser = [PFUser currentUser];
-    if ([currentUser hasFacebook]) {
-        ChatViewController *chatVc = [[ChatViewController alloc]initWithNibName:@"ChatViewController" bundle:nil];
-        [self.navigationController pushViewController:chatVc animated:YES];
-    }
-    else {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Facebook Sign In Required" message:@"You must sign in with a facebook account to use this feature" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign In", nil];
-        [alert show];
-    }*/
-
 }
 
 #pragma mark - Table view data source
