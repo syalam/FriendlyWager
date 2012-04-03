@@ -174,29 +174,36 @@
 
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
     NSLog(@"%@", error);
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:[NSString stringWithFormat:@"Unable to share this message with %@ on Facebook", [_recipient objectForKey:@"name"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 
 #pragma mark - UIAlertView Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
-        [user linkToFacebook:permissions block:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                [fbSwitch setOn:YES animated:YES];
-            }
-            else {
-                UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
-                                                                    message:@"This facebook account is associated with another user"
-                                                                   delegate:self 
-                                                          cancelButtonTitle:@"OK" 
-                                                          otherButtonTitles:nil];
-                [alertView show];
-            }
-        }];
+    if (currentAPICall == kAPIPostToFeed) {
+        [self.navigationController popViewControllerAnimated:YES];
     }
     else {
-        [fbSwitch setOn:NO animated:YES];
+        if (buttonIndex == 1) {
+            NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
+            [user linkToFacebook:permissions block:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    [fbSwitch setOn:YES animated:YES];
+                }
+                else {
+                    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
+                                                                        message:@"This facebook account is associated with another user"
+                                                                       delegate:self 
+                                                              cancelButtonTitle:@"OK" 
+                                                              otherButtonTitles:nil];
+                    [alertView show];
+                }
+            }];
+        }
+        else {
+            [fbSwitch setOn:NO animated:YES];
+        }
     }
 }
 
