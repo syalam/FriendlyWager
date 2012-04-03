@@ -19,9 +19,10 @@ typedef enum apiCall {
     PFUser *user;
     IBOutlet UITextView *trashTalkTextView;
     IBOutlet UISwitch *fbSwitch;
-    IBOutlet UINavigationBar *navBar;
-    IBOutlet UINavigationItem *navItem;
+    IBOutlet UILabel *postToFbLabel;
     int currentAPICall;
+    
+    NSUserDefaults *fwData;
 }
 
 @property (nonatomic, retain) PFUser *recipient;

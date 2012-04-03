@@ -34,19 +34,16 @@
     user = [PFUser currentUser];
     
     UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_PG17_NewTrashTalk"]];
-    //self.navigationItem.titleView = titleImageView;
-    [self.navigationController setNavigationBarHidden:YES];
-    navItem.titleView = titleImageView;
-    
+    self.navigationItem.titleView = titleImageView;
+    [self.navigationController setNavigationBarHidden:NO];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG17_BG"]]];
     
-    
-    NSDictionary *navTitleAttributes = [[NSDictionary alloc]initWithObjectsAndKeys:
-                                        [UIColor blackColor], UITextAttributeTextColor, nil];
-    self.title = @"New Trash Talk";
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
-    
+    fwData = [NSUserDefaults alloc];
+    if ([fwData boolForKey:@"tabView"]) {
+        [trashTalkTextView setFrame:CGRectMake(0, 0, 320, 120)];
+        [fbSwitch setFrame:CGRectMake(227, 75, 79, 27)];
+        [postToFbLabel setFrame:CGRectMake(15, 75, 149, 21)];
+    }
     
     UIImage *cancelButtonImage = [UIImage imageNamed:@"FW_PG17_Cancel_Button"];
     UIButton *customCancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -56,8 +53,7 @@
     
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:customCancelButton];
     
-    //self.navigationItem.leftBarButtonItem = cancelButton;
-    navItem.leftBarButtonItem = cancelButton;
+    self.navigationItem.leftBarButtonItem = cancelButton;
     
     UIImage *sendButtonImage = [UIImage imageNamed:@"FW_PG16_Post_Button"];
     UIButton *customSendButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -66,8 +62,11 @@
     [customSendButton addTarget:self action:@selector(submitButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithCustomView:customSendButton];
     
-    //self.navigationItem.rightBarButtonItem = submitButton;
-    navItem.rightBarButtonItem = submitButton;
+    self.navigationItem.rightBarButtonItem = submitButton;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidUnload

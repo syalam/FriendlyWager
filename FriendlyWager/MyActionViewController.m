@@ -35,11 +35,13 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    NSUserDefaults *newWager = [NSUserDefaults alloc];
+    /*NSUserDefaults *newWager = [NSUserDefaults alloc];
     if ([newWager objectForKey:@"opponent"]) {
         MyActionSummaryViewController *actionSummary = [[MyActionSummaryViewController alloc]initWithNibName:@"MyActionSummaryViewController" bundle:nil newWager:YES opponentName:[newWager objectForKey:@"opponent"]];
         [self.navigationController pushViewController:actionSummary animated:NO];
-    }
+    }*/
+    
+    fwData = [NSUserDefaults alloc];
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG2_BG"]]];
     
@@ -66,6 +68,16 @@
     
     //myActionOpponentArray = [[NSMutableArray alloc]initWithObjects:@"Bill Smith", @"John Taylor", @"Timmy Jones", @"Steve Bird", nil];
     //myActionWagersArray = [[NSMutableArray alloc]initWithObjects:@"2", @"36", @"7", @"19", nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if ([fwData boolForKey:@"tabView"]) {
+        [self.navigationController setNavigationBarHidden:YES];
+    }
+    else {
+        [self.navigationController setNavigationBarHidden:NO];
+    }
 }
 
 - (void)viewDidUnload

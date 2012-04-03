@@ -17,6 +17,8 @@
     NSMutableArray *myActionOpponentArray;
     NSMutableArray *myActionWagersArray;
     
+    NSUserDefaults *fwData;
+    
     BOOL newWagerBool;
 }
 

@@ -144,7 +144,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (![fwData boolForKey:@"tabView"]) {
+    if ([fwData boolForKey:@"tabView"]) {
+        [self.navigationController setNavigationBarHidden:YES];
+    }
+    else {
         [self.navigationController setNavigationBarHidden:NO];
     }
 }

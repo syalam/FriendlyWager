@@ -11,11 +11,9 @@
 			<string key="NS.object.0">1179</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
-			<string>IBUINavigationItem</string>
-			<string>IBUITableView</string>
-			<string>IBUIView</string>
-			<string>IBUINavigationBar</string>
 			<string>IBProxyObject</string>
+			<string>IBUIView</string>
+			<string>IBUITableView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -40,7 +38,7 @@
 					<object class="IBUITableView" id="873029372">
 						<reference key="NSNextResponder" ref="751167801"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{0, 44}, {320, 416}}</string>
+						<string key="NSFrameSize">{320, 460}</string>
 						<reference key="NSSuperview" ref="751167801"/>
 						<reference key="NSNextKeyView"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -59,21 +57,6 @@
 						<float key="IBUIRowHeight">44</float>
 						<float key="IBUISectionHeaderHeight">22</float>
 						<float key="IBUISectionFooterHeight">22</float>
-					</object>
-					<object class="IBUINavigationBar" id="456289309">
-						<reference key="NSNextResponder" ref="751167801"/>
-						<int key="NSvFlags">290</int>
-						<string key="NSFrameSize">{320, 44}</string>
-						<reference key="NSSuperview" ref="751167801"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<array key="IBUIItems">
-							<object class="IBUINavigationItem" id="635118633">
-								<reference key="IBUINavigationBar" ref="456289309"/>
-								<string key="IBUITitle">Title</string>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-							</object>
-						</array>
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 460}</string>
@@ -107,22 +90,6 @@
 						<reference key="destination" ref="873029372"/>
 					</object>
 					<int key="connectionID">26</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">navItem</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="635118633"/>
-					</object>
-					<int key="connectionID">33</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">navBar</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="456289309"/>
-					</object>
-					<int key="connectionID">34</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -165,7 +132,6 @@
 						<reference key="object" ref="751167801"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="873029372"/>
-							<reference ref="456289309"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -173,19 +139,6 @@
 						<int key="objectID">4</int>
 						<reference key="object" ref="873029372"/>
 						<reference key="parent" ref="751167801"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">31</int>
-						<reference key="object" ref="456289309"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="635118633"/>
-						</array>
-						<reference key="parent" ref="751167801"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">32</int>
-						<reference key="object" ref="635118633"/>
-						<reference key="parent" ref="456289309"/>
 					</object>
 				</array>
 			</object>
@@ -195,8 +148,6 @@
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="24.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="31.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="32.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>

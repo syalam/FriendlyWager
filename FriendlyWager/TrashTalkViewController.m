@@ -36,9 +36,9 @@
     [super viewDidLoad];
     
     UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_PG16_Feed"]];
-    [self.navigationController setNavigationBarHidden:YES];
-    navItem.titleView = titleImageView;
-    //self.navigationItem.titleView = titleImageView;
+    [self.navigationController setNavigationBarHidden:NO];
+    //navItem.titleView = titleImageView;
+    self.navigationItem.titleView = titleImageView;
 
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG16_BG"]]];
@@ -51,8 +51,8 @@
     
     UIBarButtonItem *newTrashTalkButton = [[UIBarButtonItem alloc] initWithCustomView:customPostButton];
     
-    //self.navigationItem.rightBarButtonItem = newTrashTalkButton;
-    navItem.rightBarButtonItem = newTrashTalkButton;
+    self.navigationItem.rightBarButtonItem = newTrashTalkButton;
+    //navItem.rightBarButtonItem = newTrashTalkButton;
     
     UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -61,8 +61,8 @@
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
-    //self.navigationItem.leftBarButtonItem = backButton;
-    navItem.leftBarButtonItem = backButton;
+    self.navigationItem.leftBarButtonItem = backButton;
+    //navItem.leftBarButtonItem = backButton;
 }
 
 - (void)viewDidUnload
