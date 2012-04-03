@@ -7,16 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface MyActionDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UILabel *detailWithPersonLabel;
     IBOutlet UITableView *actionHistoryTableView;
     
     NSString *wagerOfType;
-    NSString *opponent;
+    //NSString *opponent;
     
     NSArray *detailTableContents;
 }
+
+@property (nonatomic, retain) PFObject *opponent;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil wagerType:(NSString *)wagerType opponentName:(NSString *)opponentName;
 

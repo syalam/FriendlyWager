@@ -9,6 +9,7 @@
 #import "MyActionDetailViewController.h"
 
 @implementation MyActionDetailViewController
+@synthesize opponent = _opponent;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -24,7 +25,7 @@
     if (self) {
         // Custom initialization
         wagerOfType = wagerType;
-        opponent = opponentName;
+        //opponent = opponentName;
     }
     return self;
 }
@@ -45,7 +46,7 @@
     actionHistoryTableView.delegate = self;
     actionHistoryTableView.dataSource = self;
     
-    detailWithPersonLabel.text = [NSString stringWithFormat:@"%@ %@ %@", wagerOfType, @"with", opponent];
+    detailWithPersonLabel.text = [NSString stringWithFormat:@"%@ %@ %@", wagerOfType, @"with", [_opponent objectForKey:@"name"]];
     if ([wagerOfType isEqualToString:@"Current"]) {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG6_BG"]]];
     }
