@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface MyActionViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UITableView *myActionTableView;

@@ -17,6 +17,8 @@
     IBOutlet UIButton *rankingsButton;
     IBOutlet UIButton *infoButton;
     IBOutlet UIView *bottomView;
+    
+    NSUserDefaults *fwData;
 }
 
 - (IBAction)myLedgerButtonClicked:(id)sender;

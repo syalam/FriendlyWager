@@ -61,10 +61,13 @@
 {
     [super viewDidLoad];
     
+    fwData = [NSUserDefaults alloc];
+    
     //Set Scrollview size
     scrollView.contentSize = CGSizeMake(320, 560);
     
     //wagerView.hidden = YES;
+    [self.presentingViewController.navigationController setNavigationBarHidden:YES]; 
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG5_BG"]]];
     
@@ -139,6 +142,13 @@
     self.navigationItem.leftBarButtonItem = homeNavButton;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (![fwData boolForKey:@"tabView"]) {
+        [self.navigationController setNavigationBarHidden:NO];
+    }
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -165,8 +175,9 @@
 - (IBAction)chatButtonClicked:(id)sender { 
     TrashTalkViewController *trashTalk = [[TrashTalkViewController alloc]initWithNibName:@"TrashTalkViewController" bundle:nil];
     trashTalk.opponent = _userToWager;
-    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:trashTalk];
-    [self.navigationController presentModalViewController:navc animated:YES];
+    [self.navigationController pushViewController:trashTalk animated:YES];
+    //UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:trashTalk];
+    //[self.navigationController presentModalViewController:navc animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -209,7 +220,6 @@
         [cell addSubview:wagerType];
         [cell addSubview:wagerCount];
     }
-    
     return cell;
 }
 

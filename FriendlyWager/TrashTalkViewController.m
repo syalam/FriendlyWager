@@ -36,8 +36,10 @@
     [super viewDidLoad];
     
     UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_PG16_Feed"]];
-    self.navigationItem.titleView = titleImageView;
-    
+    [self.navigationController setNavigationBarHidden:YES];
+    navItem.titleView = titleImageView;
+    //self.navigationItem.titleView = titleImageView;
+
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG16_BG"]]];
     
@@ -49,8 +51,8 @@
     
     UIBarButtonItem *newTrashTalkButton = [[UIBarButtonItem alloc] initWithCustomView:customPostButton];
     
-    self.navigationItem.rightBarButtonItem = newTrashTalkButton;
-    
+    //self.navigationItem.rightBarButtonItem = newTrashTalkButton;
+    navItem.rightBarButtonItem = newTrashTalkButton;
     
     UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -59,7 +61,8 @@
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
-    self.navigationItem.leftBarButtonItem = backButton;
+    //self.navigationItem.leftBarButtonItem = backButton;
+    navItem.leftBarButtonItem = backButton;
 }
 
 - (void)viewDidUnload
@@ -250,17 +253,19 @@
     if (_opponent) {
         new.recipient = _opponent;
     }
-    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:new];
-    [self.navigationController presentModalViewController:navc animated:YES];
+    [self.navigationController pushViewController:new animated:YES];
+    //UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:new];
+    //[self.navigationController presentModalViewController:navc animated:YES];
 }
 
 -(void)backButtonClicked:(id)sender {
-    if (_opponent) {
+    //[self.navigationController setNavigationBarHidden:NO];
+    /*if (_opponent) {
         [self.navigationController dismissModalViewControllerAnimated:YES];
-    }
-    else {
+    }*/
+    //else {
         [self.navigationController popViewControllerAnimated:YES];
-    }
+    //}
 }
 
 

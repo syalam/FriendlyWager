@@ -26,6 +26,7 @@
     
     BOOL newWagerBool;
     
+    NSUserDefaults *fwData;
 }
 
 - (IBAction)wagerButtonClicked:(id)sender;

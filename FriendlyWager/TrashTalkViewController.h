@@ -11,6 +11,8 @@
 
 @interface TrashTalkViewController : UIViewController {
     IBOutlet UIView *headerView;
+    IBOutlet UINavigationItem *navItem;
+    IBOutlet UINavigationBar *navBar;
 }
 
 @property (nonatomic, retain) PFUser *opponent;

@@ -45,10 +45,27 @@
     
     myActionTableView.dataSource = self;
     myActionTableView.delegate = self;
+    
+    PFQuery *queryForUsers = [PFQuery queryForUser];
+    [queryForUsers whereKey:@"name" notEqualTo:@""];
+    [queryForUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            myActionOpponentArray = [[NSMutableArray alloc]init];
+            myActionWagersArray = [[NSMutableArray alloc]init];
+            for (PFObject *user in objects) {
+                [myActionOpponentArray addObject:user];
+                [myActionWagersArray addObject:@"2"];
+                [myActionTableView reloadData];
+            }
+        }
+     else {
+         NSLog(@"%@", error);
+     }
+    }];
 
     
-    myActionOpponentArray = [[NSMutableArray alloc]initWithObjects:@"Bill Smith", @"John Taylor", @"Timmy Jones", @"Steve Bird", nil];
-    myActionWagersArray = [[NSMutableArray alloc]initWithObjects:@"2", @"36", @"7", @"19", nil];
+    //myActionOpponentArray = [[NSMutableArray alloc]initWithObjects:@"Bill Smith", @"John Taylor", @"Timmy Jones", @"Steve Bird", nil];
+    //myActionWagersArray = [[NSMutableArray alloc]initWithObjects:@"2", @"36", @"7", @"19", nil];
 }
 
 - (void)viewDidUnload
@@ -84,7 +101,7 @@
     opponentLabel.textColor = [UIColor whiteColor];
     wagersLabel.textColor = [UIColor whiteColor];
     
-    opponentLabel.text = [myActionOpponentArray objectAtIndex:indexPath.row];
+    opponentLabel.text = [[myActionOpponentArray objectAtIndex:indexPath.row ]objectForKey:@"name"];
     wagersLabel.text = [myActionWagersArray objectAtIndex:indexPath.row];
     
     static NSString *CellIdentifier = @"MyActionTableViewCell";
@@ -107,6 +124,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     MyActionSummaryViewController *actionSummary = [[MyActionSummaryViewController alloc]initWithNibName:@"MyActionSummaryViewController" bundle:nil CurrentWagers:[myActionWagersArray objectAtIndex:indexPath.row] opponentName:[myActionOpponentArray objectAtIndex:indexPath.row]];
+    actionSummary.userToWager = [myActionOpponentArray objectAtIndex:indexPath.row];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController pushViewController:actionSummary animated:YES];
 }

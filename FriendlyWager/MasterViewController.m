@@ -39,8 +39,11 @@
 {
     [super viewDidLoad];
     
-    NSUserDefaults *newWager = [NSUserDefaults alloc];
-    [newWager removeObjectForKey:@"opponent"];
+    //NSUserDefaults *newWager = [NSUserDefaults alloc];
+    //[newWager removeObjectForKey:@"opponent"];
+    
+    fwData = [NSUserDefaults alloc];
+    
     NSDictionary *navTitleAttributes = [[NSDictionary alloc]initWithObjectsAndKeys:
                        [UIColor blackColor], UITextAttributeTextColor, nil];
     UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_HOME_Logo"]];
@@ -74,12 +77,14 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [self.navigationController setNavigationBarHidden:NO];
     PFUser *currentUser = [PFUser currentUser];
     if (!currentUser) {
         LoginOptionsViewController *loginVc = [[LoginOptionsViewController alloc]initWithNibName:@"LoginOptionsViewController" bundle:nil];
         UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
         [self.navigationController presentModalViewController:navc animated:NO];
     }
+    [fwData setBool:NO forKey:@"tabView"];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -98,18 +103,21 @@
 }
 
 - (IBAction)myActionButtonClicked:(id)sender {
+    [fwData setBool:YES forKey:@"tabView"];
     TabsViewController *tabs = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil tabIndex:0];
     UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:tabs];
     navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:navController animated:YES];
 }
 - (IBAction)rankingsButtonClicked:(id)sender {
+    [fwData setBool:YES forKey:@"tabView"];
     TabsViewController *tabs = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil tabIndex:2];
     UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:tabs];
     navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:navController animated:YES];
 }
 - (IBAction)scoresButtonClicked:(id)sender {
+    [fwData setBool:YES forKey:@"tabView"];
     TabsViewController *tabs = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil tabIndex:1];
     UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:tabs];
     navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;

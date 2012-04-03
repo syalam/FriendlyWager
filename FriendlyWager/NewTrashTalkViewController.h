@@ -19,6 +19,8 @@ typedef enum apiCall {
     PFUser *user;
     IBOutlet UITextView *trashTalkTextView;
     IBOutlet UISwitch *fbSwitch;
+    IBOutlet UINavigationBar *navBar;
+    IBOutlet UINavigationItem *navItem;
     int currentAPICall;
 }
 

@@ -34,7 +34,9 @@
     user = [PFUser currentUser];
     
     UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_PG17_NewTrashTalk"]];
-    self.navigationItem.titleView = titleImageView;
+    //self.navigationItem.titleView = titleImageView;
+    [self.navigationController setNavigationBarHidden:YES];
+    navItem.titleView = titleImageView;
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG17_BG"]]];
     
@@ -54,8 +56,8 @@
     
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:customCancelButton];
     
-    self.navigationItem.leftBarButtonItem = cancelButton;
-    
+    //self.navigationItem.leftBarButtonItem = cancelButton;
+    navItem.leftBarButtonItem = cancelButton;
     
     UIImage *sendButtonImage = [UIImage imageNamed:@"FW_PG16_Post_Button"];
     UIButton *customSendButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -64,7 +66,8 @@
     [customSendButton addTarget:self action:@selector(submitButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithCustomView:customSendButton];
     
-    self.navigationItem.rightBarButtonItem = submitButton;
+    //self.navigationItem.rightBarButtonItem = submitButton;
+    navItem.rightBarButtonItem = submitButton;
 }
 
 - (void)viewDidUnload
@@ -81,7 +84,8 @@
 
 #pragma mark - Button Clicks
 - (void)cancelButtonClicked:(id)sender {
-    [self.navigationController dismissModalViewControllerAnimated:YES];
+    //[self.navigationController dismissModalViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)submitButtonClicked:(id)sender {
@@ -103,7 +107,8 @@
                 [self sendFacebookRequest];
             }
             else {
-                [self.navigationController dismissModalViewControllerAnimated:YES];
+                //[self.navigationController dismissModalViewControllerAnimated:YES];
+                [self.navigationController popViewControllerAnimated:YES];
             }
         }
         else {
@@ -162,7 +167,8 @@
     [newTrashTalk setObject:[result objectForKey:@"id"] forKey:@"fbID"];
     [newTrashTalk saveInBackgroundWithBlock:^(BOOL succeded, NSError *error) {
         if (succeded) {
-            [self.navigationController dismissModalViewControllerAnimated:YES];
+            //[self.navigationController dismissModalViewControllerAnimated:YES];
+            [self.navigationController popViewControllerAnimated:YES];
         } 
     }];
 }
