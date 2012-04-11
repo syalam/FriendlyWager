@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface ScoresViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UITableView *scoresTableView;
@@ -17,6 +18,7 @@
     
 }
 @property (nonatomic, retain) NSArray* contentList;
+@property (nonatomic, retain) PFObject* opponent;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil opponentName:(NSString *)opponentName;

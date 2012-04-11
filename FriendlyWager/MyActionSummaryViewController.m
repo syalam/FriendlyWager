@@ -171,8 +171,9 @@
 }
 
 - (IBAction)wagerButtonClicked:(id)sender {
-    ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil opponentName:opponent];
-    
+    //ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil opponentName:opponent];
+    ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
+    sports.opponent = _userToWager;
     [self.navigationController pushViewController:sports animated:YES];
 }
 - (IBAction)chatButtonClicked:(id)sender { 

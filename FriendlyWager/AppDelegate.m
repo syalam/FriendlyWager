@@ -10,6 +10,7 @@
 
 #import "MasterViewController.h"
 #import "LoginOptionsViewController.h"
+#import "Kiip.h"
 
 @implementation AppDelegate
 @synthesize window = _window;
@@ -21,6 +22,12 @@
     [Parse setFacebookApplicationId:@"287216318005845"];
     
     facebook = [[PF_Facebook alloc] initWithAppId:@"287216318005845" andDelegate:self];
+    
+    // Start and initialize when application starts
+    KPManager *manager = [[KPManager alloc] initWithKey:@"00c7493ed13c6d7ee3e5127f7cd0385e" secret:@"f70c0fb59c0b5f95db8d135057aff5c2"];
+    // Set the shared instance after initialization
+    // to allow easier access of the object throughout the project.
+    [KPManager setSharedManager:manager];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     MasterViewController *masterViewController = [[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil];

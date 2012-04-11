@@ -456,6 +456,22 @@
 		F7D70C3114F18B6E001F8525 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D70C3014F18B6D001F8525 /* Accounts.framework */; };
 		F7D70C3F14F1EE9A001F8525 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F7D70C3C14F1EE9A001F8525 /* SVProgressHUD.bundle */; };
 		F7D70C4014F1EE9A001F8525 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D70C3E14F1EE9A001F8525 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F7F050C0153604EC0000A95E /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = F7F05097153604EC0000A95E /* CHANGELOG.md */; };
+		F7F050C1153604EC0000A95E /* Kiip.html in Resources */ = {isa = PBXBuildFile; fileRef = F7F0509A153604EC0000A95E /* Kiip.html */; };
+		F7F050C7153604EC0000A95E /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = F7F050A8153604EC0000A95E /* index.html */; };
+		F7F050C9153604EC0000A95E /* toc.html in Resources */ = {isa = PBXBuildFile; fileRef = F7F050AA153604EC0000A95E /* toc.html */; };
+		F7F050CA153604EC0000A95E /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F050B3153604EC0000A95E /* close.png */; };
+		F7F050CB153604EC0000A95E /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F050B4153604EC0000A95E /* close@2x.png */; };
+		F7F050CC153604EC0000A95E /* notification-portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F050B5153604EC0000A95E /* notification-portrait.png */; };
+		F7F050CD153604EC0000A95E /* notification-portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F050B6153604EC0000A95E /* notification-portrait@2x.png */; };
+		F7F050CE153604EC0000A95E /* spinner-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F050B7153604EC0000A95E /* spinner-bg.png */; };
+		F7F050CF153604EC0000A95E /* spinner-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F050B8153604EC0000A95E /* spinner-bg@2x.png */; };
+		F7F050D0153604EC0000A95E /* libKiip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F050BA153604EC0000A95E /* libKiip.a */; };
+		F7F050D1153604EC0000A95E /* libKiip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F050BC153604EC0000A95E /* libKiip.a */; };
+		F7F050D2153604EC0000A95E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F7F050BD153604EC0000A95E /* README.md */; };
+		F7F050D3153604EC0000A95E /* libKiip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F050BF153604EC0000A95E /* libKiip.a */; };
+		F7F050D6153605A20000A95E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F050D5153605A20000A95E /* libz.dylib */; };
+		F7F050D8153605AF0000A95E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F050D7153605AF0000A95E /* libxml2.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -958,6 +974,33 @@
 		F7D70C3C14F1EE9A001F8525 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		F7D70C3D14F1EE9A001F8525 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		F7D70C3E14F1EE9A001F8525 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		F7F05097153604EC0000A95E /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
+		F7F0509A153604EC0000A95E /* Kiip.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; path = Kiip.html; sourceTree = "<group>"; };
+		F7F050A0153604EC0000A95E /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; path = index.html; sourceTree = "<group>"; };
+		F7F050A1153604EC0000A95E /* toc.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; path = toc.html; sourceTree = "<group>"; };
+		F7F050A2153604EC0000A95E /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; path = index.html; sourceTree = "<group>"; };
+		F7F050A3153604EC0000A95E /* toc.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; path = toc.html; sourceTree = "<group>"; };
+		F7F050A5153604EC0000A95E /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; path = index.html; sourceTree = "<group>"; };
+		F7F050A8153604EC0000A95E /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; path = index.html; sourceTree = "<group>"; };
+		F7F050A9153604EC0000A95E /* toc.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; path = toc.html; sourceTree = "<group>"; };
+		F7F050AA153604EC0000A95E /* toc.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; path = toc.html; sourceTree = "<group>"; };
+		F7F050AD153604EC0000A95E /* Kiip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kiip.h; sourceTree = "<group>"; };
+		F7F050AE153604EC0000A95E /* KPErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPErrors.h; sourceTree = "<group>"; };
+		F7F050AF153604EC0000A95E /* KPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPManager.h; sourceTree = "<group>"; };
+		F7F050B0153604EC0000A95E /* KPManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPManagerDelegate.h; sourceTree = "<group>"; };
+		F7F050B1153604EC0000A95E /* KPUIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPUIConstants.h; sourceTree = "<group>"; };
+		F7F050B3153604EC0000A95E /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		F7F050B4153604EC0000A95E /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
+		F7F050B5153604EC0000A95E /* notification-portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notification-portrait.png"; sourceTree = "<group>"; };
+		F7F050B6153604EC0000A95E /* notification-portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notification-portrait@2x.png"; sourceTree = "<group>"; };
+		F7F050B7153604EC0000A95E /* spinner-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spinner-bg.png"; sourceTree = "<group>"; };
+		F7F050B8153604EC0000A95E /* spinner-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spinner-bg@2x.png"; sourceTree = "<group>"; };
+		F7F050BA153604EC0000A95E /* libKiip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libKiip.a; sourceTree = "<group>"; };
+		F7F050BC153604EC0000A95E /* libKiip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libKiip.a; sourceTree = "<group>"; };
+		F7F050BD153604EC0000A95E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		F7F050BF153604EC0000A95E /* libKiip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libKiip.a; sourceTree = "<group>"; };
+		F7F050D5153605A20000A95E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		F7F050D7153605AF0000A95E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -965,21 +1008,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7F050D8153605AF0000A95E /* libxml2.dylib in Frameworks */,
+				F7F050D6153605A20000A95E /* libz.dylib in Frameworks */,
+				F7D2AF1614C7F7C300472ED3 /* SystemConfiguration.framework in Frameworks */,
+				F7D2AF1814C7F7CB00472ED3 /* MobileCoreServices.framework in Frameworks */,
+				F714E16814A1A88400E24956 /* CoreGraphics.framework in Frameworks */,
+				F7D2AF1414C7F7B700472ED3 /* CFNetwork.framework in Frameworks */,
+				F714E16614A1A88400E24956 /* Foundation.framework in Frameworks */,
 				F7D70C3114F18B6E001F8525 /* Accounts.framework in Frameworks */,
 				F7D70C2414F0B987001F8525 /* Twitter.framework in Frameworks */,
 				F7D2AF1E14C7F7F300472ED3 /* QuartzCore.framework in Frameworks */,
 				F7D2AF1C14C7F7ED00472ED3 /* Security.framework in Frameworks */,
 				F7D2AF1A14C7F7DF00472ED3 /* libz.1.1.3.dylib in Frameworks */,
-				F714E16814A1A88400E24956 /* CoreGraphics.framework in Frameworks */,
-				F7D2AF1814C7F7CB00472ED3 /* MobileCoreServices.framework in Frameworks */,
-				F7D2AF1614C7F7C300472ED3 /* SystemConfiguration.framework in Frameworks */,
-				F7D2AF1414C7F7B700472ED3 /* CFNetwork.framework in Frameworks */,
 				F7D2AEFA14C7F5F000472ED3 /* AudioToolbox.framework in Frameworks */,
 				F7CDD77614ABF3410038FE6B /* AddressBook.framework in Frameworks */,
 				F7CDD77714ABF3410038FE6B /* AddressBookUI.framework in Frameworks */,
 				F714E16414A1A88400E24956 /* UIKit.framework in Frameworks */,
-				F714E16614A1A88400E24956 /* Foundation.framework in Frameworks */,
 				F7D2AEF714C7F54500472ED3 /* Parse.framework in Frameworks */,
+				F7F050D0153604EC0000A95E /* libKiip.a in Frameworks */,
+				F7F050D1153604EC0000A95E /* libKiip.a in Frameworks */,
+				F7F050D3153604EC0000A95E /* libKiip.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1051,6 +1099,8 @@
 		F714E16214A1A88400E24956 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F7F050D7153605AF0000A95E /* libxml2.dylib */,
+				F7F050D5153605A20000A95E /* libz.dylib */,
 				F7D70C3014F18B6D001F8525 /* Accounts.framework */,
 				F7D70C2314F0B987001F8525 /* Twitter.framework */,
 				F7D2AEF814C7F59000472ED3 /* AudioToolbox.framework */,
@@ -2192,6 +2242,7 @@
 		F7CDD73E14ABDC820038FE6B /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F7F05096153604EC0000A95E /* Kiip-v1.0.17 */,
 				F7D70C3614F1EE54001F8525 /* HUD */,
 				F7B9720D14E47AD300C683B9 /* JSON Kit */,
 				F7342CDE14C4F1DD00AC0819 /* Expanding TextView */,
@@ -2246,6 +2297,166 @@
 				F7D70C3E14F1EE9A001F8525 /* SVProgressHUD.m */,
 			);
 			name = HUD;
+			sourceTree = "<group>";
+		};
+		F7F05096153604EC0000A95E /* Kiip-v1.0.17 */ = {
+			isa = PBXGroup;
+			children = (
+				F7F05097153604EC0000A95E /* CHANGELOG.md */,
+				F7F05098153604EC0000A95E /* Documentation */,
+				F7F050AC153604EC0000A95E /* Headers */,
+				F7F050B2153604EC0000A95E /* Images */,
+				F7F050B9153604EC0000A95E /* iphoneos */,
+				F7F050BB153604EC0000A95E /* iphonesimulator */,
+				F7F050BD153604EC0000A95E /* README.md */,
+				F7F050BE153604EC0000A95E /* universal */,
+			);
+			path = "Kiip-v1.0.17";
+			sourceTree = "<group>";
+		};
+		F7F05098153604EC0000A95E /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				F7F05099153604EC0000A95E /* css */,
+				F7F0509A153604EC0000A95E /* Kiip.html */,
+				F7F0509B153604EC0000A95E /* Kiip_h */,
+				F7F0509C153604EC0000A95E /* KPErrors_h */,
+				F7F0509D153604EC0000A95E /* KPManager_h */,
+				F7F050A4153604EC0000A95E /* KPManagerDelegate_h */,
+				F7F050AB153604EC0000A95E /* KPUIConstants_h */,
+			);
+			path = Documentation;
+			sourceTree = "<group>";
+		};
+		F7F05099153604EC0000A95E /* css */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = css;
+			sourceTree = "<group>";
+		};
+		F7F0509B153604EC0000A95E /* Kiip_h */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Kiip_h;
+			sourceTree = "<group>";
+		};
+		F7F0509C153604EC0000A95E /* KPErrors_h */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = KPErrors_h;
+			sourceTree = "<group>";
+		};
+		F7F0509D153604EC0000A95E /* KPManager_h */ = {
+			isa = PBXGroup;
+			children = (
+				F7F0509E153604EC0000A95E /* Classes */,
+				F7F050A2153604EC0000A95E /* index.html */,
+				F7F050A3153604EC0000A95E /* toc.html */,
+			);
+			path = KPManager_h;
+			sourceTree = "<group>";
+		};
+		F7F0509E153604EC0000A95E /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F7F0509F153604EC0000A95E /* KPManager */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F7F0509F153604EC0000A95E /* KPManager */ = {
+			isa = PBXGroup;
+			children = (
+				F7F050A0153604EC0000A95E /* index.html */,
+				F7F050A1153604EC0000A95E /* toc.html */,
+			);
+			path = KPManager;
+			sourceTree = "<group>";
+		};
+		F7F050A4153604EC0000A95E /* KPManagerDelegate_h */ = {
+			isa = PBXGroup;
+			children = (
+				F7F050A5153604EC0000A95E /* index.html */,
+				F7F050A6153604EC0000A95E /* Protocols */,
+				F7F050AA153604EC0000A95E /* toc.html */,
+			);
+			path = KPManagerDelegate_h;
+			sourceTree = "<group>";
+		};
+		F7F050A6153604EC0000A95E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				F7F050A7153604EC0000A95E /* KPManagerDelegate */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		F7F050A7153604EC0000A95E /* KPManagerDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				F7F050A8153604EC0000A95E /* index.html */,
+				F7F050A9153604EC0000A95E /* toc.html */,
+			);
+			path = KPManagerDelegate;
+			sourceTree = "<group>";
+		};
+		F7F050AB153604EC0000A95E /* KPUIConstants_h */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = KPUIConstants_h;
+			sourceTree = "<group>";
+		};
+		F7F050AC153604EC0000A95E /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				F7F050AD153604EC0000A95E /* Kiip.h */,
+				F7F050AE153604EC0000A95E /* KPErrors.h */,
+				F7F050AF153604EC0000A95E /* KPManager.h */,
+				F7F050B0153604EC0000A95E /* KPManagerDelegate.h */,
+				F7F050B1153604EC0000A95E /* KPUIConstants.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		F7F050B2153604EC0000A95E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				F7F050B3153604EC0000A95E /* close.png */,
+				F7F050B4153604EC0000A95E /* close@2x.png */,
+				F7F050B5153604EC0000A95E /* notification-portrait.png */,
+				F7F050B6153604EC0000A95E /* notification-portrait@2x.png */,
+				F7F050B7153604EC0000A95E /* spinner-bg.png */,
+				F7F050B8153604EC0000A95E /* spinner-bg@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		F7F050B9153604EC0000A95E /* iphoneos */ = {
+			isa = PBXGroup;
+			children = (
+				F7F050BA153604EC0000A95E /* libKiip.a */,
+			);
+			path = iphoneos;
+			sourceTree = "<group>";
+		};
+		F7F050BB153604EC0000A95E /* iphonesimulator */ = {
+			isa = PBXGroup;
+			children = (
+				F7F050BC153604EC0000A95E /* libKiip.a */,
+			);
+			path = iphonesimulator;
+			sourceTree = "<group>";
+		};
+		F7F050BE153604EC0000A95E /* universal */ = {
+			isa = PBXGroup;
+			children = (
+				F7F050BF153604EC0000A95E /* libKiip.a */,
+			);
+			path = universal;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2710,6 +2921,17 @@
 				F7A7035C15262858007C7468 /* FW_ResetPassword_button.png in Resources */,
 				F7A7035D15262858007C7468 /* FW_SignIn_Button.png in Resources */,
 				F7A7035E15262858007C7468 /* FW_SignIn_NavButton.png in Resources */,
+				F7F050C0153604EC0000A95E /* CHANGELOG.md in Resources */,
+				F7F050C1153604EC0000A95E /* Kiip.html in Resources */,
+				F7F050C7153604EC0000A95E /* index.html in Resources */,
+				F7F050C9153604EC0000A95E /* toc.html in Resources */,
+				F7F050CA153604EC0000A95E /* close.png in Resources */,
+				F7F050CB153604EC0000A95E /* close@2x.png in Resources */,
+				F7F050CC153604EC0000A95E /* notification-portrait.png in Resources */,
+				F7F050CD153604EC0000A95E /* notification-portrait@2x.png in Resources */,
+				F7F050CE153604EC0000A95E /* spinner-bg.png in Resources */,
+				F7F050CF153604EC0000A95E /* spinner-bg@2x.png in Resources */,
+				F7F050D2153604EC0000A95E /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2884,7 +3106,13 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FriendlyWager/FriendlyWager-Prefix.pch";
+				"HEADER_SEARCH_PATHS[arch=*]" = "FriendlyWager/Kiip-v1.0.17/Headers";
 				INFOPLIST_FILE = "FriendlyWager/FriendlyWager-Info.plist";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/FriendlyWager/Kiip-v1.0.17/$(PLATFORM_NAME)";
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-ObjC",
+					"-lKiip",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7B632B35-10A5-4B92-A3DB-2F3412DD6001";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7B632B35-10A5-4B92-A3DB-2F3412DD6001";
@@ -2903,7 +3131,13 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FriendlyWager/FriendlyWager-Prefix.pch";
+				"HEADER_SEARCH_PATHS[arch=*]" = "FriendlyWager/Kiip-v1.0.17/Headers";
 				INFOPLIST_FILE = "FriendlyWager/FriendlyWager-Info.plist";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/FriendlyWager/Kiip-v1.0.17/$(PLATFORM_NAME)";
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-ObjC",
+					"-lKiip",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7B632B35-10A5-4B92-A3DB-2F3412DD6001";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7B632B35-10A5-4B92-A3DB-2F3412DD6001";

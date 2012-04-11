@@ -12,6 +12,7 @@
 @implementation ScoresViewController
 
 @synthesize contentList;
+@synthesize opponent = _opponent;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -25,7 +26,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil opponentName:(NSString *)opponentName {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        opponent = opponentName;
+        //opponent = opponentName;
     }
     return self;
 }
@@ -55,10 +56,8 @@
     scoresTableView.dataSource = self;
     scoresTableView.delegate = self;
     
-    if (opponent) {
-        opponentLabel.text = [NSString stringWithFormat:@"%@ %@", @"New Wager with", opponent];
-        opponentLabel.backgroundColor = [UIColor clearColor];
-        [scoresTableView setFrame:CGRectMake(4, 40, 315, 420)];
+    if (_opponent) {
+        opponentLabel.text = [NSString stringWithFormat:@"%@ %@", @"New Wager with", [_opponent objectForKey:@"name"]];
     }
     else {
         opponentLabel.hidden = YES;
