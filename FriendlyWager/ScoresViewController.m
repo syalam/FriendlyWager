@@ -120,12 +120,9 @@
 
 #pragma mark - TableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ScoreSummaryViewController *scoreSummary;
-    if (opponent) {
-        scoreSummary = [[ScoreSummaryViewController alloc]initWithNibName:@"ScoreSummaryViewController" bundle:nil opponentName:opponent];
-    }
-    else {
-        scoreSummary = [[ScoreSummaryViewController alloc]initWithNibName:@"ScoreSummaryViewController" bundle:nil];
+    ScoreSummaryViewController *scoreSummary = [[ScoreSummaryViewController alloc]initWithNibName:@"ScoreSummaryViewController" bundle:nil];
+    if (_opponent) {
+        scoreSummary.opponent = _opponent;
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController pushViewController:scoreSummary animated:YES];

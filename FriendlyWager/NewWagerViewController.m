@@ -11,20 +11,13 @@
 @implementation NewWagerViewController
 
 @synthesize contentList;
+@synthesize opponent = _opponent;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-    }
-    return self;
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil opponent:(NSString *)opponentName {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        opponent = opponentName;
     }
     return self;
 }
@@ -51,7 +44,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSArray *firstSection = [[NSArray alloc]initWithObjects:opponent, nil];
+    NSArray *firstSection = [[NSArray alloc]initWithObjects:[_opponent objectForKey:@"name"], nil];
     NSArray *tableContentsArray = [[NSArray alloc]initWithObjects:firstSection, otherOpponents, nil];
     [self setContentList:tableContentsArray];
     [newWagerTableView reloadData];

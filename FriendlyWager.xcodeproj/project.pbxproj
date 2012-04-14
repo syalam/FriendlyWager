@@ -257,7 +257,6 @@
 		F7BA8666151D472D0034A0C1 /* FW_PG9_TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA864A151D472D0034A0C1 /* FW_PG9_TopBar.png */; };
 		F7BA8667151D472D0034A0C1 /* FW_PG9_TopLeft_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA864B151D472D0034A0C1 /* FW_PG9_TopLeft_button.png */; };
 		F7BA8668151D472D0034A0C1 /* FW_PG9_TopRight_button.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA864C151D472D0034A0C1 /* FW_PG9_TopRight_button.png */; };
-		F7BA8686151D4A000034A0C1 /* FW_PG2_Shading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA866B151D4A000034A0C1 /* FW_PG2_Shading@2x.png */; };
 		F7BA8687151D4A000034A0C1 /* FW_PG3_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA866C151D4A000034A0C1 /* FW_PG3_BG@2x.png */; };
 		F7BA8689151D4A000034A0C1 /* FW_PG3_CollFoot_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA866E151D4A000034A0C1 /* FW_PG3_CollFoot_button@2x.png */; };
 		F7BA868A151D4A000034A0C1 /* FW_PG3_HomeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA866F151D4A000034A0C1 /* FW_PG3_HomeButton@2x.png */; };
@@ -2504,7 +2503,7 @@
 		F714E15614A1A88400E24956 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = F714E15914A1A88400E24956 /* Build configuration list for PBXProject "FriendlyWager" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -2704,7 +2703,6 @@
 				F7BA8666151D472D0034A0C1 /* FW_PG9_TopBar.png in Resources */,
 				F7BA8667151D472D0034A0C1 /* FW_PG9_TopLeft_button.png in Resources */,
 				F7BA8668151D472D0034A0C1 /* FW_PG9_TopRight_button.png in Resources */,
-				F7BA8686151D4A000034A0C1 /* FW_PG2_Shading@2x.png in Resources */,
 				F7BA8687151D4A000034A0C1 /* FW_PG3_BG@2x.png in Resources */,
 				F7BA8689151D4A000034A0C1 /* FW_PG3_CollFoot_button@2x.png in Resources */,
 				F7BA868A151D4A000034A0C1 /* FW_PG3_HomeButton@2x.png in Resources */,

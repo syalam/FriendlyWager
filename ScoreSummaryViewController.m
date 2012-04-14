@@ -11,6 +11,7 @@
 #import "NewWagerViewController.h"
 
 @implementation ScoreSummaryViewController
+@synthesize opponent = _opponent;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,7 +46,6 @@
     
     scoreSummaryTableView.dataSource = self;
     scoreSummaryTableView.delegate = self;
-    
     
     newWagerVisible = NO;
     
@@ -186,12 +186,13 @@
 - (void)leftButtonClicked:(id)sender {
     NSUInteger index = [sender tag];
     NSDictionary *dataDictionary = [leftArray objectAtIndex:index];
-    if (!opponent) {
+    if (!_opponent) {
         ScoreDetailViewController *scoreDetail = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil scoreData:dataDictionary];
         [self.navigationController pushViewController:scoreDetail animated:YES];
     }
     else {
-        NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil opponent:opponent];
+        NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
+        newWager.opponent = _opponent;
         [self.navigationController pushViewController:newWager animated:YES];
     }
 }
@@ -199,12 +200,13 @@
 - (void)rightButtonClicked:(id)sender {
     NSUInteger index = [sender tag];
     NSDictionary *dataDictionary = [rightArray objectAtIndex:index];
-    if (!opponent) {
+    if (!_opponent) {
         ScoreDetailViewController *scoreDetail = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil scoreData:dataDictionary];
         [self.navigationController pushViewController:scoreDetail animated:YES];
     }
     else {
-        NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil opponent:opponent];
+        NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
+        newWager.opponent = _opponent;
         [self.navigationController pushViewController:newWager animated:YES];
     }
 }
