@@ -12,6 +12,7 @@
 
 @synthesize contentList;
 @synthesize opponent = _opponent;
+@synthesize gameDataDictionary = _gameDataDictionary;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,6 +39,7 @@
     newWagerTableView.dataSource = self;
     newWagerTableView.delegate = self;
     otherOpponents = [[NSMutableArray alloc]initWithCapacity:1];
+    NSLog(@"%@", _gameDataDictionary);
         
 }
 
@@ -75,6 +77,14 @@
 	[self.navigationController pushViewController:controller animated:YES];
 }
 
+- (IBAction)team1ButtonClicked:(id)sender {
+    
+}
+
+- (IBAction)team2ButtonClicked:(id)sender {
+    
+}
+
 #pragma mark - TableView Delegate Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return contentList.count;
@@ -92,10 +102,11 @@
     static NSString *CellIdentifier = @"NewWagerTableViewCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.textLabel.text = contentForThisRow;
-    }
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    
+    cell.textLabel.text = contentForThisRow;
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
@@ -129,7 +140,7 @@
     
     if([title isEqualToString:@"OK"]) {
         //[self.navigationController popToRootViewControllerAnimated:YES];
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -4)] animated:YES];
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -5)] animated:YES];
     }
 }
 

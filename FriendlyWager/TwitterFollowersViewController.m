@@ -42,7 +42,7 @@
     
     self.title = @"Twitter Followers";
     
-    [self.activityIndicator startAnimating];
+    //[self.activityIndicator startAnimating];
     
     [SVProgressHUD showWithStatus:@"Fetching Twitter Followers"];
     if (_accountStore == nil) {    
@@ -313,6 +313,7 @@
 
 #pragma mark - Button Clicks
 -(void)backButtonClicked:(id)sender {
+    [SVProgressHUD dismiss];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

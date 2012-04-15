@@ -12,16 +12,21 @@
 
 @interface NewWagerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SMContactsSelectorDelegate> {
     IBOutlet UITableView *newWagerTableView;
+    IBOutlet UIButton *team1Button;
+    IBOutlet UIButton *team2Button;
     IBOutlet UIButton *sendButton;
     IBOutlet UIButton *addOthersButton;
 
     NSMutableArray *otherOpponents;
 }
 
+- (IBAction)team1ButtonClicked:(id)sender;
+- (IBAction)team2ButtonClicked:(id)sender;
 - (IBAction)sendButtonClicked:(id)sender;
 - (IBAction)addOthersButtonClicked:(id)sender;
 
 @property (nonatomic, retain) NSArray* contentList;
+@property (nonatomic, retain) NSDictionary *gameDataDictionary;
 @property (nonatomic, retain) PFObject *opponent;
 
 @end
