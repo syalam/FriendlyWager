@@ -132,7 +132,7 @@
     
     if ([contentForThisRow isEqualToString:@"A Facebook Friend"]) {
         PFUser *currentUser = [PFUser currentUser];
-        if ([currentUser hasFacebook]) {
+        if ([PFFacebookUtils isLinkedWithUser:currentUser]) {
             FacebookFriendsViewController *facebookFriends = [[FacebookFriendsViewController alloc]initWithNibName:@"FacebookFriendsViewController" bundle:nil];
             [self.navigationController pushViewController:facebookFriends animated:YES];
         }
@@ -214,7 +214,8 @@
     if (buttonIndex == 1) {
         NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
         PFUser *user = [PFUser currentUser];
-        [user linkToFacebook:permissions block:^(BOOL succeeded, NSError *error) {
+        //[user linkToFacebook:permissions block:^(BOOL succeeded, NSError *error) {
+        [PFFacebookUtils linkUser:user permissions:permissions block:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
                 FacebookFriendsViewController *facebookFriends = [[FacebookFriendsViewController alloc]initWithNibName:@"FacebookFriendsViewController" bundle:nil];
                 [self.navigationController pushViewController:facebookFriends animated:YES];

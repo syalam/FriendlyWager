@@ -14,7 +14,7 @@ typedef enum apiCall {
     kAPIGetFromFeed,
 }apiCall;
 
-@interface NewTrashTalkViewController : UIViewController <PF_FBRequestDelegate, PF_FBSessionDelegate, PF_FBDialogDelegate> {
+@interface NewTrashTalkViewController : UIViewController <PF_FBRequestDelegate> {
     PFObject *newTrashTalk;
     PFUser *user;
     IBOutlet UITextView *trashTalkTextView;

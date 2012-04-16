@@ -188,16 +188,12 @@
 #pragma mark - Facebook Delegate Methods
 
 - (void)sendFacebookRequest {
-    PFUser *user = [PFUser currentUser];
-    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    [delegate facebook].accessToken = [user facebookAccessToken];
-    [delegate facebook].expirationDate = [user facebookExpirationDate];
     if (currentAPICall == kAPIPostToFeed) {
         NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:textView.text, @"message", nil];
-        [[delegate facebook]requestWithGraphPath:@"me/feed" andParams:params andHttpMethod:@"POST" andDelegate:self];
+        [[PFFacebookUtils facebook]requestWithGraphPath:@"me/feed" andParams:params andHttpMethod:@"POST" andDelegate:self];
     }
     else if (currentAPICall == kAPIGetFromFeed) {
-        [[delegate facebook]requestWithGraphPath:@"me/feed" andDelegate:self];
+        [[PFFacebookUtils facebook]requestWithGraphPath:@"me/feed" andDelegate:self];
     }
 }
 

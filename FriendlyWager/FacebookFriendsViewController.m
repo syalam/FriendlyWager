@@ -40,11 +40,6 @@
     
     UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
     self.navigationItem.titleView = titleImageView;
-    
-    PFUser *user = [PFUser currentUser];
-    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    [delegate facebook].accessToken = [user facebookAccessToken];
-    [delegate facebook].expirationDate = [user facebookExpirationDate];
         
     NSString *getAllFriends = @"{'getAllFriends':'SELECT uid, name, username FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) order by name asc'";
     NSString *getFWFriends = @"'getFWFriends':'SELECT uid, name FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1'}";
@@ -52,8 +47,8 @@
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:fql, @"q", nil];
     
-    [[delegate facebook] requestWithGraphPath:@"fql" andParams:params andHttpMethod:@"GET" andDelegate:self];
-    
+    [[PFFacebookUtils facebook]requestWithGraphPath:@"fql" andParams:params andDelegate:self];
+
 
     UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];

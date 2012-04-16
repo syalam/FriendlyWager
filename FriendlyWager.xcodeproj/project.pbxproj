@@ -441,7 +441,6 @@
 		F7CDD79B14AC0AA60038FE6B /* unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = F7CDD79514AC0AA60038FE6B /* unchecked.png */; };
 		F7CDD80D14B16C380038FE6B /* NewWagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7CDD80B14B16C380038FE6B /* NewWagerViewController.m */; };
 		F7CDD80E14B16C380038FE6B /* NewWagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CDD80C14B16C380038FE6B /* NewWagerViewController.xib */; };
-		F7D2AEF714C7F54500472ED3 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D2AEF614C7F54500472ED3 /* Parse.framework */; };
 		F7D2AEFA14C7F5F000472ED3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D2AEF814C7F59000472ED3 /* AudioToolbox.framework */; };
 		F7D2AF1414C7F7B700472ED3 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D2AF1314C7F7B700472ED3 /* CFNetwork.framework */; };
 		F7D2AF1614C7F7C300472ED3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D2AF1514C7F7C200472ED3 /* SystemConfiguration.framework */; };
@@ -471,6 +470,7 @@
 		F7F050D3153604EC0000A95E /* libKiip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F050BF153604EC0000A95E /* libKiip.a */; };
 		F7F050D6153605A20000A95E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F050D5153605A20000A95E /* libz.dylib */; };
 		F7F050D8153605AF0000A95E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F050D7153605AF0000A95E /* libxml2.dylib */; };
+		F7F877FE153BE4FB005E3B29 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F877FD153BE4FB005E3B29 /* Parse.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -957,7 +957,6 @@
 		F7CDD80A14B16C380038FE6B /* NewWagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewWagerViewController.h; sourceTree = "<group>"; };
 		F7CDD80B14B16C380038FE6B /* NewWagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewWagerViewController.m; sourceTree = "<group>"; };
 		F7CDD80C14B16C380038FE6B /* NewWagerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewWagerViewController.xib; sourceTree = "<group>"; };
-		F7D2AEF614C7F54500472ED3 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		F7D2AEF814C7F59000472ED3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		F7D2AF1314C7F7B700472ED3 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		F7D2AF1514C7F7C200472ED3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -1000,6 +999,7 @@
 		F7F050BF153604EC0000A95E /* libKiip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libKiip.a; sourceTree = "<group>"; };
 		F7F050D5153605A20000A95E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		F7F050D7153605AF0000A95E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		F7F877FD153BE4FB005E3B29 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1023,10 +1023,10 @@
 				F7CDD77614ABF3410038FE6B /* AddressBook.framework in Frameworks */,
 				F7CDD77714ABF3410038FE6B /* AddressBookUI.framework in Frameworks */,
 				F714E16414A1A88400E24956 /* UIKit.framework in Frameworks */,
-				F7D2AEF714C7F54500472ED3 /* Parse.framework in Frameworks */,
 				F7F050D0153604EC0000A95E /* libKiip.a in Frameworks */,
 				F7F050D1153604EC0000A95E /* libKiip.a in Frameworks */,
 				F7F050D3153604EC0000A95E /* libKiip.a in Frameworks */,
+				F7F877FE153BE4FB005E3B29 /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1098,6 +1098,7 @@
 		F714E16214A1A88400E24956 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F7F877FD153BE4FB005E3B29 /* Parse.framework */,
 				F7F050D7153605AF0000A95E /* libxml2.dylib */,
 				F7F050D5153605A20000A95E /* libz.dylib */,
 				F7D70C3014F18B6D001F8525 /* Accounts.framework */,
@@ -1109,7 +1110,6 @@
 				F7D2AF1714C7F7CB00472ED3 /* MobileCoreServices.framework */,
 				F7D2AF1514C7F7C200472ED3 /* SystemConfiguration.framework */,
 				F7D2AF1314C7F7B700472ED3 /* CFNetwork.framework */,
-				F7D2AEF614C7F54500472ED3 /* Parse.framework */,
 				F7CDD77414ABF3410038FE6B /* AddressBook.framework */,
 				F7CDD77514ABF3410038FE6B /* AddressBookUI.framework */,
 				F714E16314A1A88400E24956 /* UIKit.framework */,

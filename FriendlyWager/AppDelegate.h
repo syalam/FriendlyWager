@@ -9,12 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, PF_FBSessionDelegate> {
-    PF_Facebook *facebook;
+@interface AppDelegate : UIResponder <UIApplicationDelegate> {
+
 }
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *navigationController;
-@property (nonatomic, retain) PF_Facebook *facebook;
 
 @end

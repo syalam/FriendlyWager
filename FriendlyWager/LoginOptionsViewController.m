@@ -9,6 +9,7 @@
 #import "LoginOptionsViewController.h"
 #import "LoginViewController.h"
 #import "AppDelegate.h"
+#import "SVProgressHUD.h"
 
 
 @implementation LoginOptionsViewController
@@ -59,6 +60,15 @@
     
     [facebookLoginButton addSubview:fbLabel];
     
+    UILabel *twitterLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, twitterLoginButton.frame.size.width, twitterLoginButton.frame.size.height)];
+    twitterLabel.backgroundColor = [UIColor clearColor];
+    twitterLabel.textColor = [UIColor whiteColor];
+    twitterLabel.textAlignment = UITextAlignmentCenter;
+    twitterLabel.font = [UIFont boldSystemFontOfSize:14];
+    twitterLabel.text = @"Twitter";
+    
+    [twitterLoginButton addSubview:twitterLabel];
+    
     UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_Login_NavBar"]];
     self.navigationItem.titleView = titleImageView;
 }
@@ -85,19 +95,33 @@
 
 
 - (IBAction)facebookLoginButtonClicked:(id)sender {
+    [SVProgressHUD showWithStatus:@"Logging In"];
+    
     NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
-    [PFUser logInWithFacebook:permissions block:^(PFUser *user, NSError *error) {
+
+    [PFFacebookUtils logInWithPermissions:permissions block:^ (PFUser *user, NSError *error) {
         if (!user) {
             NSLog(@"Uh oh. The user cancelled the Facebook login.");
         }
         else {
             NSLog(@"User with facebook id %@ logged in!", user.username);
             //get user's details from facebook
-            AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-            [delegate facebook].accessToken = [user facebookAccessToken];
-            [delegate facebook].expirationDate = [user facebookExpirationDate];
-            [[delegate facebook]requestWithGraphPath:@"me" andDelegate:self];
+            [[PFFacebookUtils facebook]requestWithGraphPath:@"me" andDelegate:self];
         }
+
+    }];
+}
+
+- (IBAction)twitterLoginButtonClicked:(id)sender {
+    [PFTwitterUtils logInWithBlock:^(PFUser *user, NSError *error) {
+        if (!user) {
+            NSLog(@"Uh oh. The user cancelled the Twitter login.");
+            return;
+        } else if (user.isNew) {
+            NSLog(@"User signed up and logged in with Twitter!");
+        } else {
+            NSLog(@"User logged in with Twitter!");
+        }     
     }];
 }
 
@@ -113,11 +137,12 @@
     [user setObject:[result objectForKey:@"id"] forKey:@"fbId"];
     user.email = [result objectForKey:@"email"];
     [user saveInBackground];
+    [SVProgressHUD dismiss];
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
-    
+    NSLog(@"%@", error);
 }
 
 @end

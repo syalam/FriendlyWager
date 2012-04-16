@@ -8,7 +8,6 @@
 
 #import "NewTrashTalkViewController.h"
 #import "JSONKit.h"
-#import "AppDelegate.h"
 
 @interface NewTrashTalkViewController ()
 
@@ -114,14 +113,11 @@
             NSLog(@"%@", error);
         }
     }];
-    
-    
-    
 }
 
 - (IBAction)FBSwitchSelected:(id)sender {
     if (fbSwitch.on) {
-        if ([user hasFacebook]) {
+        if ([PFFacebookUtils isLinkedWithUser:user]) {
             if ([_recipient objectForKey:@"fbId"]){
                 [fbSwitch setOn:YES];
             }
@@ -141,9 +137,6 @@
 #pragma mark - Facebook delegate methods
 
 - (void)sendFacebookRequest {
-    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    [delegate facebook].accessToken = [user facebookAccessToken];
-    [delegate facebook].expirationDate = [user facebookExpirationDate];
     if (currentAPICall == kAPIPostToFeed) {
         NSString *postToWall;
         if (_recipient) {
@@ -153,7 +146,7 @@
             postToWall = @"me";
         }
         NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkTextView.text, @"message", nil];
-        [[delegate facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", postToWall] andParams:params andHttpMethod:@"POST" andDelegate:self];
+        [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", postToWall] andParams:params andHttpMethod:@"POST" andDelegate:self];
     }
 }
 
@@ -187,7 +180,7 @@
     else {
         if (buttonIndex == 1) {
             NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
-            [user linkToFacebook:permissions block:^(BOOL succeeded, NSError *error) {
+            [PFFacebookUtils linkUser:user permissions:permissions block:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
                     [fbSwitch setOn:YES animated:YES];
                 }

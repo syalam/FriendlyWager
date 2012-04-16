@@ -16,7 +16,7 @@ typedef enum apiCall {
 }apiCall;
 
 
-@interface ChatViewController : UIViewController <HPGrowingTextViewDelegate, UITableViewDelegate, UITableViewDataSource, PF_FBRequestDelegate, PF_FBSessionDelegate, PF_FBDialogDelegate> {
+@interface ChatViewController : UIViewController <HPGrowingTextViewDelegate, UITableViewDelegate, UITableViewDataSource, PF_FBRequestDelegate> {
     IBOutlet UITableView *chatTableView;
     HPGrowingTextView *textView;
     UIView *containerView;
