@@ -11,6 +11,7 @@
 #import "JSONKit.h"
 #import "AppDelegate.h"
 #import "MyActionSummaryViewController.h"
+#import "NewWagerViewController.h"
 
 @implementation FacebookFriendsViewController
 @synthesize contentList;
@@ -38,6 +39,8 @@
 {
     [super viewDidLoad];
     
+    selectedItems = [[NSMutableDictionary alloc]initWithCapacity:1];
+    
     UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
     self.navigationItem.titleView = titleImageView;
         
@@ -58,6 +61,9 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
     self.navigationItem.leftBarButtonItem = backButton;
+    
+    UIBarButtonItem *selectButton = [[UIBarButtonItem alloc]initWithTitle:@"Select" style:UIBarButtonItemStyleBordered target:self action:@selector(selectButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = selectButton;
 }
 
 - (void)viewDidUnload
@@ -209,7 +215,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([[[contentList objectAtIndex:indexPath.row]valueForKey:@"isFW"]isEqualToString:@"YES"]) {
-        NSUserDefaults *fwData = [NSUserDefaults alloc];
+        if ([selectedItems objectForKey:[NSString stringWithFormat:@"item %d", indexPath.row]]) {
+            [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
+            [selectedItems removeObjectForKey:[NSString stringWithFormat:@"item %d", indexPath.row]];
+        }
+        else {
+            [selectedItems setObject:[contentList objectAtIndex:indexPath.row] forKey:[NSString stringWithFormat:@"item %d", indexPath.row]];
+            [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+        }
+
+        
+        /*NSUserDefaults *fwData = [NSUserDefaults alloc];
         NSString *fbUid = [NSString stringWithFormat:@"%@", [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"]valueForKey:@"uid"]];
         PFQuery *query = [PFQuery queryForUser];
         [query whereKey:@"fbId" equalTo:fbUid];
@@ -223,7 +239,7 @@
                     [self.navigationController pushViewController:newFBWager animated:YES];
                 }
             }
-        }];
+        }];*/
     }
     
     else {
@@ -238,6 +254,34 @@
 
 -(void)backButtonClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)selectButtonClicked:(id)sender {
+    if (selectedItems.count > 0) {
+        NSString *jsonString = [[selectedItems allValues] JSONString];
+        NSMutableArray *selectedFriendsArray = [[NSMutableArray alloc]initWithCapacity:1];
+        selectedFriendsArray = [[[jsonString objectFromJSONString]valueForKey:@"data"]valueForKey:@"uid"];
+        
+        PFQuery *query = [PFQuery queryForUser];
+        [query whereKey:@"fbUid" containedIn:selectedFriendsArray];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                if (objects.count > 0) {
+                    NSMutableArray *peopleToWagerArray = [[NSMutableArray alloc]initWithCapacity:1];
+                    for (PFObject *user in objects) {
+                        [peopleToWagerArray addObject:user];
+                    }
+                    //NEED TO ADD REFERENCE TO NEW WAGER VIEW AND SEND THIS ARRAY TO IT
+                }
+            }
+        }];
+        
+        
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please select a friend to make a wager with before continuing" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
 }
 
 @end

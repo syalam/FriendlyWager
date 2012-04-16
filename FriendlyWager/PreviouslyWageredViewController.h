@@ -10,7 +10,7 @@
 #import <Parse/Parse.h>
 
 @interface PreviouslyWageredViewController : UITableViewController {
-    
+    NSMutableDictionary *selectedItems;
 }
 
 @property (nonatomic, retain)NSMutableArray *contentList;

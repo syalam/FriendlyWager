@@ -456,7 +456,7 @@
 		F7D70C3114F18B6E001F8525 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D70C3014F18B6D001F8525 /* Accounts.framework */; };
 		F7D70C3F14F1EE9A001F8525 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F7D70C3C14F1EE9A001F8525 /* SVProgressHUD.bundle */; };
 		F7D70C4014F1EE9A001F8525 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D70C3E14F1EE9A001F8525 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		F7DADB30153CC77900990CF1 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7DADB2F153CC77900990CF1 /* Parse.framework */; };
+		F7DADB34153CCB3200990CF1 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7DADB33153CCB3200990CF1 /* Parse.framework */; };
 		F7F050C0153604EC0000A95E /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = F7F05097153604EC0000A95E /* CHANGELOG.md */; };
 		F7F050C1153604EC0000A95E /* Kiip.html in Resources */ = {isa = PBXBuildFile; fileRef = F7F0509A153604EC0000A95E /* Kiip.html */; };
 		F7F050C7153604EC0000A95E /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = F7F050A8153604EC0000A95E /* index.html */; };
@@ -977,7 +977,7 @@
 		F7D70C3C14F1EE9A001F8525 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		F7D70C3D14F1EE9A001F8525 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		F7D70C3E14F1EE9A001F8525 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
-		F7DADB2F153CC77900990CF1 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		F7DADB33153CCB3200990CF1 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../Downloads/Parse.framework; sourceTree = "<group>"; };
 		F7F05097153604EC0000A95E /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
 		F7F0509A153604EC0000A95E /* Kiip.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; path = Kiip.html; sourceTree = "<group>"; };
 		F7F050A0153604EC0000A95E /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; path = index.html; sourceTree = "<group>"; };
@@ -1012,6 +1012,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7DADB34153CCB3200990CF1 /* Parse.framework in Frameworks */,
 				F7F050D8153605AF0000A95E /* libxml2.dylib in Frameworks */,
 				F7F050D6153605A20000A95E /* libz.dylib in Frameworks */,
 				F7D2AF1614C7F7C300472ED3 /* SystemConfiguration.framework in Frameworks */,
@@ -1031,7 +1032,6 @@
 				F7F050D0153604EC0000A95E /* libKiip.a in Frameworks */,
 				F7F050D1153604EC0000A95E /* libKiip.a in Frameworks */,
 				F7F050D3153604EC0000A95E /* libKiip.a in Frameworks */,
-				F7DADB30153CC77900990CF1 /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1103,9 +1103,9 @@
 		F714E16214A1A88400E24956 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F7DADB2F153CC77900990CF1 /* Parse.framework */,
 				F7F050D7153605AF0000A95E /* libxml2.dylib */,
 				F7F050D5153605A20000A95E /* libz.dylib */,
+				F7DADB33153CCB3200990CF1 /* Parse.framework */,
 				F7D70C3014F18B6D001F8525 /* Accounts.framework */,
 				F7D70C2314F0B987001F8525 /* Twitter.framework */,
 				F7D2AEF814C7F59000472ED3 /* AudioToolbox.framework */,
@@ -1135,7 +1135,6 @@
 				F714E1ED14A1BE2600E24956 /* Ledger */,
 				F7A08FBD15100BE100471D3C /* Trash Talk */,
 				F74B3116153C96F600A66EDB /* Wagers */,
-				F74B3115153C96B600A66EDB /* Find People */,
 				F743C96714A2EF39006B533B /* Tab Screen */,
 				F74B3117153C971100A66EDB /* My Action */,
 				F74B3119153C973300A66EDB /* Scores */,
@@ -1374,19 +1373,12 @@
 			name = "Trash Talk Feed";
 			sourceTree = "<group>";
 		};
-		F74B3115153C96B600A66EDB /* Find People */ = {
+		F74B3116153C96F600A66EDB /* Wagers */ = {
 			isa = PBXGroup;
 			children = (
 				F7D70C2A14F0BBEB001F8525 /* Twitter Followers */,
 				F7B971FE14E44B6900C683B9 /* Opponent Search */,
 				F7B971EB14E389CF00C683B9 /* Facebook Friends */,
-			);
-			name = "Find People";
-			sourceTree = "<group>";
-		};
-		F74B3116153C96F600A66EDB /* Wagers */ = {
-			isa = PBXGroup;
-			children = (
 				F74B311A153C9CEA00A66EDB /* Previously Wagered */,
 				F7CDD73714ABD1FD0038FE6B /* Make a Wager */,
 				F7CDD80914B16BEE0038FE6B /* New Wager */,
@@ -3167,6 +3159,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../Downloads\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FriendlyWager/FriendlyWager-Prefix.pch";
@@ -3192,6 +3185,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../Downloads\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FriendlyWager/FriendlyWager-Prefix.pch";

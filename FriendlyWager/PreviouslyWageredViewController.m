@@ -30,6 +30,8 @@
     
     self.title = @"Previously Wagered";
     
+    selectedItems = [[NSMutableDictionary alloc]initWithCapacity:1];
+    
     PFQuery *previouslyWageredQuery = [PFQuery queryWithClassName:@"wagers"];
     [previouslyWageredQuery whereKey:@"wager" equalTo:[PFUser currentUser]];
     [previouslyWageredQuery orderByDescending:@"createdAt"];
@@ -104,6 +106,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     // Configure the cell...
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     cell.textLabel.text = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
     
     return cell;
@@ -152,13 +156,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    if ([selectedItems objectForKey:[NSString stringWithFormat:@"item %d", indexPath.row]]) {
+        [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
+        [selectedItems removeObjectForKey:[NSString stringWithFormat:@"item %d", indexPath.row]];
+    }
+    else {
+        [selectedItems setObject:[_contentList objectAtIndex:indexPath.row] forKey:[NSString stringWithFormat:@"item %d", indexPath.row]];
+        [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+    }
 }
 
 #pragma mark - Button Clicks

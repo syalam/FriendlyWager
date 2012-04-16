@@ -10,7 +10,7 @@
 #import <Parse/Parse.h>
 
 @interface FacebookFriendsViewController : UITableViewController <PF_FBRequestDelegate> {
-
+    NSMutableDictionary *selectedItems;
 }
 
 @property (nonatomic, retain) NSMutableArray *contentList;

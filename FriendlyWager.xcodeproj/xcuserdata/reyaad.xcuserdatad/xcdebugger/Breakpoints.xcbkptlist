@@ -33,13 +33,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "FriendlyWager/MakeAWagerViewController.m"
-         timestampString = "356303418.934679"
+         filePath = "FriendlyWager/FacebookFriendsViewController.m"
+         timestampString = "356308972.83331"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "143"
-         endingLineNumber = "143"
-         landmarkName = "-tableView:didSelectRowAtIndexPath:"
+         startingLineNumber = "262"
+         endingLineNumber = "262"
+         landmarkName = "-selectButtonClicked:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

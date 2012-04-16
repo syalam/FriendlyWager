@@ -84,6 +84,9 @@
         UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
         [self.navigationController presentModalViewController:navc animated:NO];
     }
+    else {
+        NSLog(@"%@", currentUser);
+    }
     [fwData setBool:NO forKey:@"tabView"];
 }
 
