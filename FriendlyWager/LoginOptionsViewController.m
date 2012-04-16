@@ -117,10 +117,18 @@
         if (!user) {
             NSLog(@"Uh oh. The user cancelled the Twitter login.");
             return;
-        } else if (user.isNew) {
-            NSLog(@"User signed up and logged in with Twitter!");
-        } else {
-            NSLog(@"User logged in with Twitter!");
+        }
+        else {
+            [user setObject:[PFTwitterUtils twitter].screenName forKey:@"name"];
+            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                    [self.navigationController dismissModalViewControllerAnimated:YES];
+                } 
+                else {
+                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to log you in with your twitter account at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alert show];
+                }
+            }];
         }     
     }];
 }
