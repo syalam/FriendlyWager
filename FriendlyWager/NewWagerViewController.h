@@ -10,18 +10,19 @@
 #import <Parse/Parse.h>
 #import "SMContactsSelector.h"
 
-@interface NewWagerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SMContactsSelectorDelegate> {
+@interface NewWagerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SMContactsSelectorDelegate, UIPickerViewDelegate, UIPickerViewDataSource> {
     IBOutlet UITableView *newWagerTableView;
-    IBOutlet UIButton *team1Button;
-    IBOutlet UIButton *team2Button;
     IBOutlet UIButton *sendButton;
     IBOutlet UIButton *addOthersButton;
+    IBOutlet UIButton *selectTeamButton;
 
     NSMutableArray *otherOpponents;
+    
+    UIActionSheet *teamActionSheet;
+    UIPickerView *teamPickerView;
 }
 
-- (IBAction)team1ButtonClicked:(id)sender;
-- (IBAction)team2ButtonClicked:(id)sender;
+- (IBAction)selectTeamButtonClicked:(id)sender;
 - (IBAction)sendButtonClicked:(id)sender;
 - (IBAction)addOthersButtonClicked:(id)sender;
 

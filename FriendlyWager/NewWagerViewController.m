@@ -40,6 +40,8 @@
     newWagerTableView.delegate = self;
     otherOpponents = [[NSMutableArray alloc]initWithCapacity:1];
     NSLog(@"%@", _gameDataDictionary);
+    
+   
         
 }
 
@@ -77,13 +79,63 @@
 	[self.navigationController pushViewController:controller animated:YES];
 }
 
-- (IBAction)team1ButtonClicked:(id)sender {
+- (IBAction)selectTeamButtonClicked:(id)sender {
+    teamActionSheet = [[UIActionSheet alloc]init];
+    [teamActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    UISegmentedControl *closeButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Choose"]];
+    closeButton.momentary = YES; 
+    closeButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
+    closeButton.segmentedControlStyle = UISegmentedControlStyleBar;
+    closeButton.tintColor = [UIColor blackColor];
+    closeButton.tag = 1;
+    [closeButton addTarget:self action:@selector(chooseButtonClicked:) forControlEvents:UIControlEventValueChanged];
+    [teamActionSheet addSubview:closeButton];
     
+    UISegmentedControl *cancelButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Cancel"]];
+    cancelButton.momentary = YES; 
+    cancelButton.frame = CGRectMake(10.0f, 7.0f, 50.0f, 30.0f);
+    cancelButton.segmentedControlStyle = UISegmentedControlStyleBar;
+    cancelButton.tintColor = [UIColor blackColor];
+    cancelButton.tag = 1;
+    [cancelButton addTarget:self action:@selector(cancelActionSheet:) forControlEvents:UIControlEventValueChanged];
+    [teamActionSheet addSubview:cancelButton];
+    
+    CGRect pickerFrame = CGRectMake(0, 40, 0, 0);
+    teamPickerView = [[UIPickerView alloc]initWithFrame:pickerFrame];
+    [teamPickerView setShowsSelectionIndicator:YES];
+    teamPickerView.delegate = self;
+    teamPickerView.dataSource = self;
+    
+    [teamActionSheet addSubview:teamPickerView];
+    [teamActionSheet showInView:self.view];        
+    [teamActionSheet setBounds:CGRectMake(0,0,320, 500)];
+    
+    [teamPickerView selectRow:0 inComponent:0 animated:NO];
 }
 
-- (IBAction)team2ButtonClicked:(id)sender {
+- (void)chooseButtonClicked:(id)sender {
+    NSInteger indexOfPicker = [teamPickerView selectedRowInComponent:0];
+    NSString *pickerItem;
+    switch (indexOfPicker) {
+        case 0:
+            pickerItem = [_gameDataDictionary objectForKey:@"team1"];
+            break;
+        case 1:
+            pickerItem = [_gameDataDictionary objectForKey:@"team2"];
+            break;
+            
+        default:
+            break;
+    }
     
+    [selectTeamButton setTitle:pickerItem forState:UIControlStateNormal];
+    [teamActionSheet dismissWithClickedButtonIndex:0 animated:YES];
 }
+
+- (void)cancelActionSheet:(id)sender {
+    [teamActionSheet dismissWithClickedButtonIndex:0 animated:YES];
+}
+
 
 #pragma mark - TableView Delegate Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -126,6 +178,40 @@
     
     return sectionName;
 }
+
+#pragma mark UIPickerView Delegate Methods
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView;
+{
+    return 1;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
+{
+    return 2;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
+{
+    NSString *title;
+    switch (row) {
+        case 0:
+            title = [_gameDataDictionary objectForKey:@"team1"];
+            break;
+        case 1:
+            title = [_gameDataDictionary objectForKey:@"team2"];
+            break;
+            
+        default:
+            break;
+    }
+    return title;
+}
+
 
 #pragma mark - SMContactsSelectorDelegate Methods
 - (void)numberOfRowsSelected:(NSInteger)numberRows withTelephones:(NSArray *)telephones

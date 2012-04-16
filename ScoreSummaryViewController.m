@@ -51,9 +51,9 @@
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG9_BG"]]];
     
-    leftArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"1", @"id", @"NVG", @"team1", @"14", @"team1Score", @"CAR", @"team2", @"7", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"2", @"id", @"SF", @"team1", @"10", @"team1Score", @"AZ", @"team2", @"20", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"3", @"id", @"BUF", @"team1", @"2", @"team1Score", @"WAS", @"team2", @"27", @"team2Score", nil], nil];
+    leftArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"1", @"gameId", @"1", @"team1Id", @"NVG", @"team1", @"14", @"team1Score", @"CAR", @"team2", @"7", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"2", @"gameId", @"3", @"team1Id", @"SF", @"team1", @"10", @"team1Score", @"4", @"team2Id", @"AZ", @"team2", @"20", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"3", @"gameId", @"5", @"team1Id", @"BUF", @"team1", @"2", @"team1Score", @"6", @"team2Id", @"WAS", @"team2", @"27", @"team2Score", nil], nil];
     
-    rightArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"4", @"id", @"SD", @"team1", @"13", @"team1Score", @"KC", @"team2", @"3", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"5", @"id", @"NO", @"team1", @"15", @"team1Score", @"ATL", @"team2", @"22", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"6", @"id", @"OAK", @"team1", @"28", @"team1Score", @"CHI", @"team2", @"29", @"team2Score", nil], nil];
+    rightArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"4", @"gameId", @"7", @"team1Id", @"SD", @"team1", @"13", @"team1Score",@"8", @"team2Id", @"KC", @"team2", @"3", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"5", @"gameId", @"9", @"team1Id", @"NO", @"team1", @"15", @"team1Score", @"10", @"team2Id", @"ATL", @"team2", @"22", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"6", @"11", @"team1Id", @"gameId", @"OAK", @"team1", @"28", @"team1Score", @"12", @"team2Id", @"CHI", @"team2", @"29", @"team2Score", nil], nil];
 }
 
 - (void)viewDidUnload
