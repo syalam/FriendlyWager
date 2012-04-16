@@ -28,6 +28,8 @@
 {
     [super viewDidLoad];
     
+    self.title = @"Previously Wagered";
+    
     PFQuery *previouslyWageredQuery = [PFQuery queryWithClassName:@"wagers"];
     [previouslyWageredQuery whereKey:@"wager" equalTo:[PFUser currentUser]];
     [previouslyWageredQuery orderByDescending:@"createdAt"];
@@ -36,14 +38,32 @@
             if (objects.count > 0) {
                 NSMutableArray *itemsToDisplay = [[NSMutableArray alloc]init];
                 for (PFObject *wagerObject in objects) {
-                    PFUser *wagee = [wagerObject objectForKey:@"wagee"];
-                    [itemsToDisplay addObject:wagee];
+                    PFObject *wagee = [wagerObject objectForKey:@"wagee"];
+                    [wagee fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                        if (!error) {
+                            if (![itemsToDisplay containsObject:object]) {
+                                [itemsToDisplay addObject:object];
+                            }
+                            [self setContentList:itemsToDisplay];
+                            [self.tableView reloadData];
+                        }
+                    }];
                 }
-                [self setContentList:itemsToDisplay];
-                [self.tableView reloadData];
             }
-        } 
+        }
+        else {
+            NSLog(@"%@", error);
+        }
     }];
+    
+    UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+    UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
+    [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
+    
+    self.navigationItem.leftBarButtonItem = backButton;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -139,6 +159,11 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+#pragma mark - Button Clicks
+- (void)backButtonClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

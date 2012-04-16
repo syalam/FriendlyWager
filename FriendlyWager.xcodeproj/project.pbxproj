@@ -456,6 +456,7 @@
 		F7D70C3114F18B6E001F8525 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D70C3014F18B6D001F8525 /* Accounts.framework */; };
 		F7D70C3F14F1EE9A001F8525 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F7D70C3C14F1EE9A001F8525 /* SVProgressHUD.bundle */; };
 		F7D70C4014F1EE9A001F8525 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D70C3E14F1EE9A001F8525 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F7DADB30153CC77900990CF1 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7DADB2F153CC77900990CF1 /* Parse.framework */; };
 		F7F050C0153604EC0000A95E /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = F7F05097153604EC0000A95E /* CHANGELOG.md */; };
 		F7F050C1153604EC0000A95E /* Kiip.html in Resources */ = {isa = PBXBuildFile; fileRef = F7F0509A153604EC0000A95E /* Kiip.html */; };
 		F7F050C7153604EC0000A95E /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = F7F050A8153604EC0000A95E /* index.html */; };
@@ -472,7 +473,6 @@
 		F7F050D3153604EC0000A95E /* libKiip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F050BF153604EC0000A95E /* libKiip.a */; };
 		F7F050D6153605A20000A95E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F050D5153605A20000A95E /* libz.dylib */; };
 		F7F050D8153605AF0000A95E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F050D7153605AF0000A95E /* libxml2.dylib */; };
-		F7F877FE153BE4FB005E3B29 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F877FD153BE4FB005E3B29 /* Parse.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -977,6 +977,7 @@
 		F7D70C3C14F1EE9A001F8525 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		F7D70C3D14F1EE9A001F8525 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		F7D70C3E14F1EE9A001F8525 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		F7DADB2F153CC77900990CF1 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		F7F05097153604EC0000A95E /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
 		F7F0509A153604EC0000A95E /* Kiip.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; path = Kiip.html; sourceTree = "<group>"; };
 		F7F050A0153604EC0000A95E /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html.documentation; path = index.html; sourceTree = "<group>"; };
@@ -1004,7 +1005,6 @@
 		F7F050BF153604EC0000A95E /* libKiip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libKiip.a; sourceTree = "<group>"; };
 		F7F050D5153605A20000A95E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		F7F050D7153605AF0000A95E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
-		F7F877FD153BE4FB005E3B29 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1031,7 +1031,7 @@
 				F7F050D0153604EC0000A95E /* libKiip.a in Frameworks */,
 				F7F050D1153604EC0000A95E /* libKiip.a in Frameworks */,
 				F7F050D3153604EC0000A95E /* libKiip.a in Frameworks */,
-				F7F877FE153BE4FB005E3B29 /* Parse.framework in Frameworks */,
+				F7DADB30153CC77900990CF1 /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1103,7 +1103,7 @@
 		F714E16214A1A88400E24956 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F7F877FD153BE4FB005E3B29 /* Parse.framework */,
+				F7DADB2F153CC77900990CF1 /* Parse.framework */,
 				F7F050D7153605AF0000A95E /* libxml2.dylib */,
 				F7F050D5153605A20000A95E /* libz.dylib */,
 				F7D70C3014F18B6D001F8525 /* Accounts.framework */,
