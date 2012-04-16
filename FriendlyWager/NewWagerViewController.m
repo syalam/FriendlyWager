@@ -7,6 +7,7 @@
 //
 
 #import "NewWagerViewController.h"
+#import "MakeAWagerViewController.h"
 #import "SVProgressHUD.h"
 
 @implementation NewWagerViewController
@@ -96,7 +97,9 @@
 }
 
 - (IBAction)addOthersButtonClicked:(id)sender {
-    
+    MakeAWagerViewController *mwvc = [[MakeAWagerViewController alloc]initWithNibName:@"MakeAWagerViewController" bundle:nil];
+    mwvc.wagerInProgress = YES;
+    [self.navigationController pushViewController:mwvc animated:YES];
 }
 
 - (IBAction)selectTeamButtonClicked:(id)sender {

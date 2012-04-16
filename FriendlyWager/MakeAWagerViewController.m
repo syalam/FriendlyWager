@@ -12,8 +12,10 @@
 #import "FacebookFriendsViewController.h"
 #import "TwitterFollowersViewController.h"
 #import "OpponentSearchViewController.h"
+#import "PreviouslyWageredViewController.h"
 
 @implementation MakeAWagerViewController
+@synthesize wagerInProgress = _wagerInProgress;
 
 @synthesize contentList;
 
@@ -51,7 +53,7 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
     
-    NSArray *tableContentsArray = [[NSArray alloc]initWithObjects:@"A Facebook Friend", @"A Twitter Follower", @"A Contact", @"Search for Opponent", @"A Random Opponent", nil];
+    NSArray *tableContentsArray = [[NSArray alloc]initWithObjects:@"Search for Opponent", @"Previously Wagered", @"Facebook Friend", @"Twitter Follower", @"Random Opponent", nil];
     
     NSMutableArray *wagersArray = [[NSMutableArray alloc]initWithCapacity:1];
     
@@ -130,7 +132,14 @@
     picker.peoplePickerDelegate = self;
     
     
-    if ([contentForThisRow isEqualToString:@"A Facebook Friend"]) {
+    if ([contentForThisRow isEqualToString:@"Search for Opponent"]) {
+        
+    }
+    else if ([contentForThisRow isEqualToString:@"Previously Wagered"]) {
+        PreviouslyWageredViewController *pwvc = [[PreviouslyWageredViewController alloc]initWithNibName:@"PreviouslyWageredViewController" bundle:nil];
+        [self.navigationController pushViewController:pwvc animated:YES];
+    }    
+    else if ([contentForThisRow isEqualToString:@"Facebook Friend"]) {
         PFUser *currentUser = [PFUser currentUser];
         if ([PFFacebookUtils isLinkedWithUser:currentUser]) {
             FacebookFriendsViewController *facebookFriends = [[FacebookFriendsViewController alloc]initWithNibName:@"FacebookFriendsViewController" bundle:nil];
@@ -141,23 +150,11 @@
             [alert show];
         }        
     }
-    else if ([contentForThisRow isEqualToString:@"A Twitter Follower"]) {
+    else if ([contentForThisRow isEqualToString:@"Twitter Follower"]) {
         TwitterFollowersViewController *twitterFollowers = [[TwitterFollowersViewController alloc]initWithNibName:@"TwitterFollowersViewController" bundle:nil];
         [self.navigationController pushViewController:twitterFollowers animated:YES];
     }
-    else if ([contentForThisRow isEqualToString:@"A Contact"]) {
-        [self presentModalViewController:picker animated:YES];
-    }
-    else if ([contentForThisRow isEqualToString:@"A Random Opponent"]) {
-        /*alert = [[UIAlertView alloc]initWithTitle:@"Unavailable" message:@"This feature has not been configured" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];*/
-        /*MyActionViewController *mavc = [[MyActionViewController alloc]initWithNibName:@"MyActionViewController" bundle:nil];
-        [self.navigationController pushViewController:mavc animated:YES];*/
-        
-        TabsViewController *tabsController = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil tabIndex:0];
-        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:tabsController];
-        navc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        [self presentModalViewController:navc animated:YES];
+    else if ([contentForThisRow isEqualToString:@"Random Opponent"]) {
         
     }
     else if (indexPath.section == 3) {

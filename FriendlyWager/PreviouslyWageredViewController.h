@@ -1,5 +1,5 @@
 //
-//  AddToWagerViewController.h
+//  PreviouslyWageredViewController.h
 //  FriendlyWager
 //
 //  Created by Reyaad Sidique on 4/16/12.
@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface AddToWagerViewController : UITableViewController
+@interface PreviouslyWageredViewController : UITableViewController {
+    
+}
+
+@property (nonatomic, retain)NSMutableArray *contentList;
 
 @end

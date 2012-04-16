@@ -1,18 +1,19 @@
 //
-//  AddToWagerViewController.m
+//  PreviouslyWageredViewController.m
 //  FriendlyWager
 //
 //  Created by Reyaad Sidique on 4/16/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "AddToWagerViewController.h"
+#import "PreviouslyWageredViewController.h"
 
-@interface AddToWagerViewController ()
+@interface PreviouslyWageredViewController ()
 
 @end
 
-@implementation AddToWagerViewController
+@implementation PreviouslyWageredViewController
+@synthesize contentList = _contentList;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -27,7 +28,22 @@
 {
     [super viewDidLoad];
     
-    
+    PFQuery *previouslyWageredQuery = [PFQuery queryWithClassName:@"wagers"];
+    [previouslyWageredQuery whereKey:@"wager" equalTo:[PFUser currentUser]];
+    [previouslyWageredQuery orderByDescending:@"createdAt"];
+    [previouslyWageredQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            if (objects.count > 0) {
+                NSMutableArray *itemsToDisplay = [[NSMutableArray alloc]init];
+                for (PFObject *wagerObject in objects) {
+                    PFUser *wagee = [wagerObject objectForKey:@"wagee"];
+                    [itemsToDisplay addObject:wagee];
+                }
+                [self setContentList:itemsToDisplay];
+                [self.tableView reloadData];
+            }
+        } 
+    }];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -52,24 +68,23 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return _contentList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
+    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     // Configure the cell...
+    cell.textLabel.text = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
     
     return cell;
 }
