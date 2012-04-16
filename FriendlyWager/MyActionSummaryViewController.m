@@ -61,6 +61,8 @@
 {
     [super viewDidLoad];
     
+    self.title = @"My Action";
+    
     fwData = [NSUserDefaults alloc];
     
     //Set Scrollview size

@@ -49,6 +49,18 @@
     
     newWagerVisible = NO;
     
+    if (_opponent) {
+        self.title = @"New Wager";
+        UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+        UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
+        [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
+        [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
+        
+        self.navigationItem.leftBarButtonItem = backButton;
+    }
+    
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG9_BG"]]];
     
     leftArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"1", @"gameId", @"1", @"team1Id", @"NVG", @"team1", @"14", @"team1Score", @"CAR", @"team2", @"7", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"2", @"gameId", @"3", @"team1Id", @"SF", @"team1", @"10", @"team1Score", @"4", @"team2Id", @"AZ", @"team2", @"20", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"3", @"gameId", @"5", @"team1Id", @"BUF", @"team1", @"2", @"team1Score", @"6", @"team2Id", @"WAS", @"team2", @"27", @"team2Score", nil], nil];
@@ -183,6 +195,10 @@
 }
 
 #pragma mark - Button Clicks
+- (void)backButtonClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)leftButtonClicked:(id)sender {
     NSUInteger index = [sender tag];
     NSDictionary *dataDictionary = [leftArray objectAtIndex:index];

@@ -35,11 +35,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    /*NSUserDefaults *newWager = [NSUserDefaults alloc];
-    if ([newWager objectForKey:@"opponent"]) {
-        MyActionSummaryViewController *actionSummary = [[MyActionSummaryViewController alloc]initWithNibName:@"MyActionSummaryViewController" bundle:nil newWager:YES opponentName:[newWager objectForKey:@"opponent"]];
-        [self.navigationController pushViewController:actionSummary animated:NO];
-    }*/
+    self.title = @"My Action";
     
     fwData = [NSUserDefaults alloc];
     
@@ -49,6 +45,7 @@
     myActionTableView.delegate = self;
     
     PFQuery *queryForUsers = [PFQuery queryForUser];
+    [queryForUsers whereKey:@"objectId" notEqualTo:[[PFUser currentUser]objectId]];
     [queryForUsers whereKey:@"name" notEqualTo:@""];
     [queryForUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
