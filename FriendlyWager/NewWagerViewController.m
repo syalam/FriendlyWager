@@ -49,6 +49,12 @@
     self.navigationItem.leftBarButtonItem = backButton;
     
     
+    spreadSlider.minimumValue = 0;
+    spreadSlider.maximumValue = 100;
+    spreadSlider.continuous = YES;
+    spreadLabel.text = [NSString stringWithFormat:@"%.0f", spreadSlider.value];
+    
+    
     newWagerTableView.dataSource = self;
     newWagerTableView.delegate = self;
     otherOpponents = [[NSMutableArray alloc]initWithCapacity:1];
@@ -77,7 +83,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - Button Clicks
+#pragma mark - IBAction Methods
 - (IBAction)sendButtonClicked:(id)sender {
     UIAlertView *alert;
     if (![selectTeamButton.titleLabel.text isEqualToString:@"Select Team"]) {
@@ -90,9 +96,7 @@
 }
 
 - (IBAction)addOthersButtonClicked:(id)sender {
-    SMContactsSelector *controller = [[SMContactsSelector alloc] initWithNibName:@"SMContactsSelector" bundle:nil];
-	controller.delegate = self;
-	[self.navigationController pushViewController:controller animated:YES];
+    
 }
 
 - (IBAction)selectTeamButtonClicked:(id)sender {
@@ -154,6 +158,10 @@
 
 - (void)backButtonClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)spreadSliderAction:(id)sender {
+    spreadLabel.text = [NSString stringWithFormat:@"%.0f", spreadSlider.value];
 }
 
 
@@ -261,6 +269,7 @@
         [createNewWager setObject:[PFUser currentUser] forKey:@"wager"];
         [createNewWager setObject:_opponent forKey:@"wagee"];
         [createNewWager setObject:teamWagered forKey:@"teamWageredToWin"];
+        [createNewWager setObject:[NSNumber numberWithInt:[spreadLabel.text intValue]] forKey:@"spread"];
         [createNewWager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
                 [SVProgressHUD dismiss];

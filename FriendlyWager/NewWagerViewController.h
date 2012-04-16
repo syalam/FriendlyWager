@@ -15,6 +15,8 @@
     IBOutlet UIButton *sendButton;
     IBOutlet UIButton *addOthersButton;
     IBOutlet UIButton *selectTeamButton;
+    IBOutlet UISlider *spreadSlider;
+    IBOutlet UILabel *spreadLabel;
 
     NSMutableArray *otherOpponents;
     
@@ -25,6 +27,8 @@
 - (IBAction)selectTeamButtonClicked:(id)sender;
 - (IBAction)sendButtonClicked:(id)sender;
 - (IBAction)addOthersButtonClicked:(id)sender;
+- (IBAction)spreadSliderAction:(id)sender;
+
 
 @property (nonatomic, retain) NSArray* contentList;
 @property (nonatomic, retain) NSDictionary *gameDataDictionary;
