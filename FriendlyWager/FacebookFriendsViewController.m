@@ -259,11 +259,18 @@
 -(void)selectButtonClicked:(id)sender {
     if (selectedItems.count > 0) {
         NSString *jsonString = [[selectedItems allValues] JSONString];
+        NSMutableArray *selectedItemsArray = [[NSMutableArray alloc]initWithCapacity:1];
+        selectedItemsArray = [jsonString objectFromJSONString];
+        
+        NSLog(@"%@", selectedItemsArray);
         NSMutableArray *selectedFriendsArray = [[NSMutableArray alloc]initWithCapacity:1];
-        selectedFriendsArray = [[[jsonString objectFromJSONString]valueForKey:@"data"]valueForKey:@"uid"];
+        for (NSUInteger i = 0; i < selectedItemsArray.count; i++) {
+             NSString *fbUid = [NSString stringWithFormat:@"%@", [[[selectedItemsArray objectAtIndex:i]valueForKey:@"data"]valueForKey:@"uid"]];
+            [selectedFriendsArray addObject:fbUid];
+        }
         
         PFQuery *query = [PFQuery queryForUser];
-        [query whereKey:@"fbUid" containedIn:selectedFriendsArray];
+        [query whereKey:@"fbId" containedIn:selectedFriendsArray];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
                 if (objects.count > 0) {

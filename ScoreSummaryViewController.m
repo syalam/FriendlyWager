@@ -50,7 +50,7 @@
     
     newWagerVisible = NO;
     
-    if (_opponent) {
+    if (_opponentsToWager) {
         self.title = @"New Wager";
         UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
         UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -203,13 +203,14 @@
 - (void)leftButtonClicked:(id)sender {
     NSUInteger index = [sender tag];
     NSDictionary *dataDictionary = [leftArray objectAtIndex:index];
-    if (!_opponent) {
+    if (!_opponentsToWager) {
         ScoreDetailViewController *scoreDetail = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil scoreData:dataDictionary];
         [self.navigationController pushViewController:scoreDetail animated:YES];
     }
     else {
         NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
-        newWager.opponent = _opponent;
+        //newWager.opponent = _opponent;
+        newWager.opponentsToWager = _opponentsToWager;
         newWager.gameDataDictionary = [leftArray objectAtIndex:index];
         [self.navigationController pushViewController:newWager animated:YES];
     }
@@ -218,13 +219,14 @@
 - (void)rightButtonClicked:(id)sender {
     NSUInteger index = [sender tag];
     NSDictionary *dataDictionary = [rightArray objectAtIndex:index];
-    if (!_opponent) {
+    if (!_opponentsToWager) {
         ScoreDetailViewController *scoreDetail = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil scoreData:dataDictionary];
         [self.navigationController pushViewController:scoreDetail animated:YES];
     }
     else {
         NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
-        newWager.opponent = _opponent;
+        //newWager.opponent = _opponent;
+        newWager.opponentsToWager = _opponentsToWager;
         newWager.gameDataDictionary = [rightArray objectAtIndex:index];
         [self.navigationController pushViewController:newWager animated:YES];
     }

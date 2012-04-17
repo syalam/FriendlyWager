@@ -59,15 +59,13 @@
     
     newWagerTableView.dataSource = self;
     newWagerTableView.delegate = self;
-    otherOpponents = [[NSMutableArray alloc]initWithCapacity:1];
     NSLog(@"%@", _gameDataDictionary);
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSArray *firstSection = [[NSArray alloc]initWithObjects:[_opponent objectForKey:@"name"], nil];
-    NSMutableArray *tableContentsArray = [[NSMutableArray alloc]initWithObjects:firstSection, otherOpponents, nil];
+    NSMutableArray *tableContentsArray = [[NSMutableArray alloc]initWithObjects:_opponentsToWager, nil];
     [self setContentList:tableContentsArray];
     [newWagerTableView reloadData];
 }
@@ -188,7 +186,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     
-    cell.textLabel.text = contentForThisRow;
+    cell.textLabel.text = [contentForThisRow objectForKey:@"name"];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -242,13 +240,6 @@
             break;
     }
     return title;
-}
-
-
-#pragma mark - SMContactsSelectorDelegate Methods
-- (void)numberOfRowsSelected:(NSInteger)numberRows withTelephones:(NSArray *)telephones
-{
-    [otherOpponents addObjectsFromArray:telephones];
 }
 
 #pragma mark - UIAlertView Delegate Methods
