@@ -34,7 +34,9 @@
     user = [PFUser currentUser];
     
     if ([PFFacebookUtils isLinkedWithUser:user]) {
-        fbSwitch.on = YES;
+        if (_fbPostId) {
+            fbSwitch.on = YES;
+        }
     }
     else {
         if (_fbPostId) {
