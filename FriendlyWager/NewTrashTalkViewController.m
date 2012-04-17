@@ -15,6 +15,7 @@
 
 @implementation NewTrashTalkViewController
 @synthesize recipient = _recipient;
+@synthesize fbPostId = _fbPostId;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

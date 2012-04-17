@@ -25,7 +25,8 @@ typedef enum apiCall {
     NSUserDefaults *fwData;
 }
 
-@property (nonatomic, retain) PFUser *recipient;
+@property (nonatomic, retain) PFObject *recipient;
+@property (nonatomic, retain) NSString *fbPostId;
 
 - (IBAction)FBSwitchSelected:(id)sender;
 - (void)sendFacebookRequest;

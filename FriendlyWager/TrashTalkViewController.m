@@ -167,7 +167,16 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
     if (![senderName isEqualToString:recipientName]) {
+        UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [replyButton setFrame:CGRectMake(cell.frame.size.width - 70, 10, 60, 25)];
+        [replyButton setTitle:@"Reply" forState:UIControlStateNormal];
+        [replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        replyButton.tag = indexPath.row;
+        
+        [cell.contentView addSubview:replyButton];
+        
         cell.textLabel.text = [NSString stringWithFormat:@"%@ > %@", senderName, recipientName];
+        
     }
     else {
         cell.textLabel.text = senderName;
@@ -267,6 +276,27 @@
     else {
         [self.navigationController popViewControllerAnimated:YES];
     }
+}
+
+-(void)replyButtonClicked:(id)sender {
+    NSUInteger tag = [sender tag];
+    NSLog(@"%d", tag);
+    PFObject *recipient = [[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"sender"];
+    [recipient fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        if (!error) {
+            NewTrashTalkViewController *new = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
+            if ([[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"]) {
+                new.fbPostId = [[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"];
+            }
+            new.recipient = object;
+            [self.navigationController pushViewController:new animated:YES];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to reply at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
+    
 }
 
 
