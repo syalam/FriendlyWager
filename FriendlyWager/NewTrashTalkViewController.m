@@ -33,6 +33,16 @@
     [trashTalkTextView becomeFirstResponder];
     user = [PFUser currentUser];
     
+    if ([PFFacebookUtils isLinkedWithUser:user]) {
+        fbSwitch.on = YES;
+    }
+    else {
+        if (_fbPostId) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"facebook sign in" message:@"You must sign in with a facebook account to share this post on facebook" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign In", nil];
+            [alert show];
+        }
+    }
+    
     UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_PG17_NewTrashTalk"]];
     self.navigationItem.titleView = titleImageView;
     [self.navigationController setNavigationBarHidden:NO];
@@ -140,7 +150,12 @@
             postToWall = @"me";
         }
         NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkTextView.text, @"message", nil];
-        [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", postToWall] andParams:params andHttpMethod:@"POST" andDelegate:self];
+        if (_fbPostId) {
+            [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/comments", _fbPostId] andParams:params andHttpMethod:@"POST" andDelegate:self];
+        }
+        else {
+            [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", postToWall] andParams:params andHttpMethod:@"POST" andDelegate:self];
+        }
     }
 }
 
@@ -150,7 +165,12 @@
 
 - (void)request:(PF_FBRequest *)request didLoad:(id)result {
     NSLog(@"%@", [result objectForKey:@"id"]);
-    [newTrashTalk setObject:[result objectForKey:@"id"] forKey:@"fbID"];
+    if (_fbPostId) {
+        [newTrashTalk setObject:_fbPostId forKey:@"fbID"];
+    }
+    else {
+        [newTrashTalk setObject:[result objectForKey:@"id"] forKey:@"fbID"];
+    }
     [newTrashTalk saveInBackgroundWithBlock:^(BOOL succeded, NSError *error) {
         if (succeded) {
             //[self.navigationController dismissModalViewControllerAnimated:YES];
