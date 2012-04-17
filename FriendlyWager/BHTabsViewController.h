@@ -1,5 +1,7 @@
 #import <UIKit/UIKit.h>
 #import "BHTabView.h"
+#import "TabsViewController.h"
+#import "MyActionViewController.h"
 
 @class BHTabsViewController;
 @class BHTabsFooterView;
@@ -36,6 +38,7 @@
 @property (nonatomic, assign) id <BHTabsViewControllerDelegate> delegate;
 @property (nonatomic, assign, readonly) UIView *contentView;
 @property (nonatomic, retain) BHTabStyle *style;
+@property (nonatomic, retain) TabsViewController *tabParentView;
 
 
 - (id)initWithViewControllers:(NSArray *)viewControllers

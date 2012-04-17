@@ -68,13 +68,14 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
     
-    
     if (userSelected) {
         viewController = [[BHTabsViewController alloc] initWithViewControllers:vcs style:[BHTabStyle defaultStyle] tabIndex:myTabIndex];
     }
     else {
         viewController = [[BHTabsViewController alloc] initWithViewControllers:vcs style:[BHTabStyle defaultStyle]];
     }
+    viewController.tabParentView = self;
+    
     [self.view addSubview:viewController.view];
     
     UIImage *homeButtonImage = [UIImage imageNamed:@"FW_PG2_HomeButton"];

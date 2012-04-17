@@ -18,6 +18,7 @@ enum { kTagTabBase = 100 };
 
 @synthesize delegate, style, viewControllers, contentView,
   tabsContainerView, footerView;
+@synthesize tabParentView = _tabParentView;
 
 - (id)initWithViewControllers:(NSArray *)theViewControllers
                         style:(BHTabStyle *)theStyle {
@@ -80,21 +81,42 @@ enum { kTagTabBase = 100 };
 - (void)_makeTabViewCurrent:(BHTabView *)tabView {
     if (!tabView) return;
     
+    NSLog(@"%@", _tabParentView);
+    
     currentTabIndex = tabView.tag - kTagTabBase;
     
-    UIViewController *viewController = [self.viewControllers objectAtIndex:currentTabIndex];
-    navc = [[UINavigationController alloc]initWithRootViewController:viewController];
-    navc.navigationBarHidden = YES;
-    [self.contentView removeFromSuperview];
-    self.contentView = navc.view;
-    //self.contentView = viewController.view;
+    if (currentTabIndex == 0) {
+        MyActionViewController *viewController = [self.viewControllers objectAtIndex:currentTabIndex];
+        viewController.tabParentView = _tabParentView;
+        navc = [[UINavigationController alloc]initWithRootViewController:viewController];
+        navc.navigationBarHidden = YES;
+        [self.contentView removeFromSuperview];
+        self.contentView = navc.view;
+        //self.contentView = viewController.view;
+        
+        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        self.contentView.frame = CGRectMake(0, self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
+        
+        [self.view addSubview:self.contentView];
+        
+        [self _reconfigureTabs];
+    }
     
-    self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    self.contentView.frame = CGRectMake(0, self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
-    
-    [self.view addSubview:self.contentView];
-    
-    [self _reconfigureTabs];
+    else {
+        UIViewController *viewController = [self.viewControllers objectAtIndex:currentTabIndex];
+        navc = [[UINavigationController alloc]initWithRootViewController:viewController];
+        navc.navigationBarHidden = YES;
+        [self.contentView removeFromSuperview];
+        self.contentView = navc.view;
+        //self.contentView = viewController.view;
+        
+        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        self.contentView.frame = CGRectMake(0, self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
+        
+        [self.view addSubview:self.contentView];
+        
+        [self _reconfigureTabs];
+    }
 }
 
 - (void)didTapTabView:(BHTabView *)tappedView {

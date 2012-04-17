@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "TabsViewController.h"
 
 @interface MyActionViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UITableView *myActionTableView;
@@ -21,5 +22,7 @@
     
     BOOL newWagerBool;
 }
+
+@property (nonatomic, retain) TabsViewController *tabParentView;
 
 @end

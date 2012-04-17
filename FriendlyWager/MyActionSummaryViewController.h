@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "TabsViewController.h"
 
 @interface MyActionSummaryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UIScrollView *scrollView;
@@ -34,6 +35,7 @@
 
 @property (nonatomic, retain) NSArray* contentList;
 @property (nonatomic, retain)PFUser *userToWager;
+@property (nonatomic, retain) TabsViewController *tabParentView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil CurrentWagers:(NSString *)CurrentWagers opponentName:(NSString *)opponentName;
 

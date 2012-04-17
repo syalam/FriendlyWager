@@ -9,11 +9,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "FriendlyWager/MyActionViewController.m"
-         timestampString = "356238598.876871"
+         timestampString = "356377600.319615"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "242"
-         endingLineNumber = "242">
+         startingLineNumber = "246"
+         endingLineNumber = "246">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"

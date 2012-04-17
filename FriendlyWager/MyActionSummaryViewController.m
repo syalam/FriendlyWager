@@ -17,6 +17,7 @@
 @implementation MyActionSummaryViewController
 @synthesize contentList;
 @synthesize userToWager = _userToWager;
+@synthesize tabParentView = _tabParentView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -146,11 +147,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if ([fwData boolForKey:@"tabView"]) {
-        [self.navigationController setNavigationBarHidden:YES];
-    }
-    else {
-        [self.navigationController setNavigationBarHidden:NO];
+    if (_tabParentView) {
+        [_tabParentView.navigationController setNavigationBarHidden:NO];
     }
 }
 
@@ -179,11 +177,18 @@
     sports.opponentsToWager = userToWager;
     [self.navigationController pushViewController:sports animated:YES];
 }
-- (IBAction)chatButtonClicked:(id)sender { 
+- (IBAction)chatButtonClicked:(id)sender {
+   
     TrashTalkViewController *trashTalk = [[TrashTalkViewController alloc]initWithNibName:@"TrashTalkViewController" bundle:nil];
     trashTalk.opponent = _userToWager;
     UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:trashTalk];
-    [self.navigationController presentViewController:navc animated:YES completion:NULL];
+    if (_tabParentView) {
+        [_tabParentView.navigationController setNavigationBarHidden:YES];
+        [_tabParentView.navigationController presentViewController:navc animated:YES completion:NULL];
+    }
+    else {
+        [self.navigationController presentViewController:navc animated:YES completion:NULL];
+    }
     //[self.navigationController pushViewController:trashTalk animated:YES];
     //[self.navigationController presentModalViewController:navc animated:YES];
 }

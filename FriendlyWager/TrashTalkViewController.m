@@ -260,12 +260,13 @@
 
 -(void)backButtonClicked:(id)sender {
     //[self.navigationController setNavigationBarHidden:NO];
-    /*if (_opponent) {
-        [self.navigationController dismissModalViewControllerAnimated:YES];
-    }*/
-    //else {
+    if (_opponent) {
+        //[self.navigationController dismissModalViewControllerAnimated:YES];
+        [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+    }
+    else {
         [self.navigationController popViewControllerAnimated:YES];
-    //}
+    }
 }
 
 

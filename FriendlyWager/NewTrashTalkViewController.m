@@ -37,13 +37,6 @@
     [self.navigationController setNavigationBarHidden:NO];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG17_BG"]]];
     
-    fwData = [NSUserDefaults alloc];
-    if ([fwData boolForKey:@"tabView"]) {
-        [trashTalkTextView setFrame:CGRectMake(0, 0, 320, 120)];
-        [fbSwitch setFrame:CGRectMake(227, 75, 79, 27)];
-        [postToFbLabel setFrame:CGRectMake(15, 75, 149, 21)];
-    }
-    
     UIImage *cancelButtonImage = [UIImage imageNamed:@"FW_PG17_Cancel_Button"];
     UIButton *customCancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     customCancelButton.bounds = CGRectMake( 0, 0, cancelButtonImage.size.width, cancelButtonImage.size.height );
