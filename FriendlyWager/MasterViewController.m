@@ -13,6 +13,7 @@
 #import "LoginViewController.h"
 #import "LoginOptionsViewController.h"
 #import "TrashTalkViewController.h"
+#import "Kiip.h"
 
 @implementation MasterViewController
 
@@ -66,6 +67,10 @@
     
     UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc] initWithCustomView:signOutButtonItem];
     self.navigationItem.rightBarButtonItem = signOutButton;
+    
+    //TODO: REMOVE ME
+    [[KPManager sharedManager] unlockAchievement:@"firstWagerCreated"];
+
 }
 
 - (void)viewDidUnload
