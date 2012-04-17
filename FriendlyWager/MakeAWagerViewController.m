@@ -153,6 +153,7 @@
             if (_wagerInProgress) {
                 facebookFriends.wagerInProgress = YES;
                 facebookFriends.opponentsToWager = _opponentsToWager;
+                facebookFriends.viewController = _viewController;
             }
             [self.navigationController pushViewController:facebookFriends animated:YES];
         }

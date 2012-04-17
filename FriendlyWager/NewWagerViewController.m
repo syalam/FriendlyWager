@@ -95,11 +95,11 @@
 #pragma mark - IBAction Methods
 - (IBAction)sendButtonClicked:(id)sender {
     UIAlertView *alert;
-    if (![selectTeamButton.titleLabel.text isEqualToString:@"Select Team"]) {
+    if (![selectTeamButton.titleLabel.text isEqualToString:@"Select Team"] && ![spreadLabel.text isEqualToString:@"0"]) {
         alert = [[UIAlertView alloc]initWithTitle:@"Send Wager" message:@"A new wager will be sent to all selected opponents" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     }
     else {
-        alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please select the team you'd like to bet on to win" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please select the team you'd like to bet on to win and select a spread" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     }
     [alert show];
 }

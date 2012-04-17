@@ -44,6 +44,9 @@
     
     selectedItems = [[NSMutableDictionary alloc]initWithCapacity:1];
     
+    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController.navigationBar setTintColor:[UIColor clearColor]];
+    
     UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
     self.navigationItem.titleView = titleImageView;
         
@@ -126,7 +129,7 @@
                 allFbUid = [NSString stringWithFormat:@"%@",[[allFbFriends objectAtIndex:i]valueForKey:@"uid"]];
                 fwFbUid = [NSString stringWithFormat:@"%@",[[FWFriends objectAtIndex:c]valueForKey:@"uid"]];
                 if ([allFbUid isEqualToString:fwFbUid]) {
-                    [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"YES", @"isFW", nil]];
+                        [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"YES", @"isFW", nil]];
                 }
                 else {
                     [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"NO", @"isFW", nil]];
@@ -281,9 +284,15 @@
                     for (PFObject *user in objects) {
                         [peopleToWagerArray addObject:user];
                     }
-                    ScoresViewController *scores = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
-                    scores.opponentsToWager = peopleToWagerArray;
-                    [self.navigationController pushViewController:scores animated:YES];
+                    if (_wagerInProgress) {
+                        _viewController.additionalOpponents = peopleToWagerArray;
+                        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -3)] animated:YES];
+                    }
+                    else {
+                        ScoresViewController *scores = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
+                        scores.opponentsToWager = peopleToWagerArray;
+                        [self.navigationController pushViewController:scores animated:YES];
+                    }
                 }
             }
         }];
