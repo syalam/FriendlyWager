@@ -51,11 +51,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     //Initialize Tab View
     NSArray *vcs = [NSArray arrayWithObjects:self.vc1, self.vc2, self.vc3, nil];
     
@@ -90,6 +85,10 @@
     
     self.navigationItem.leftBarButtonItem = homeNavButton;
 
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidUnload
