@@ -24,5 +24,6 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil opponentName:(NSString *)opponentName;
 
 @property (nonatomic, retain) PFObject *opponent;
+@property (nonatomic, retain) NSMutableArray *opponentsToWager;
 
 @end

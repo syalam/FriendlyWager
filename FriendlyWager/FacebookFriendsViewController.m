@@ -11,7 +11,7 @@
 #import "JSONKit.h"
 #import "AppDelegate.h"
 #import "MyActionSummaryViewController.h"
-#import "NewWagerViewController.h"
+#import "ScoresViewController.h"
 
 @implementation FacebookFriendsViewController
 @synthesize contentList;
@@ -271,12 +271,12 @@
                     for (PFObject *user in objects) {
                         [peopleToWagerArray addObject:user];
                     }
-                    //NEED TO ADD REFERENCE TO NEW WAGER VIEW AND SEND THIS ARRAY TO IT
+                    ScoresViewController *scores = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
+                    scores.opponentsToWager = peopleToWagerArray;
+                    [self.navigationController pushViewController:scores animated:YES];
                 }
             }
         }];
-        
-        
     }
     else {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please select a friend to make a wager with before continuing" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];

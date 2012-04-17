@@ -19,7 +19,7 @@
 }
 @property (nonatomic, retain) NSArray* contentList;
 @property (nonatomic, retain) PFObject* opponent;
-
+@property (nonatomic, retain) NSMutableArray *opponentsToWager;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil opponentName:(NSString *)opponentName;
 

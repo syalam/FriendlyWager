@@ -7,6 +7,7 @@
 //
 
 #import "PreviouslyWageredViewController.h"
+#import "ScoresViewController.h"
 
 @interface PreviouslyWageredViewController ()
 
@@ -67,6 +68,9 @@
     
     self.navigationItem.leftBarButtonItem = backButton;
 
+    UIBarButtonItem *selectButton = [[UIBarButtonItem alloc]initWithTitle:@"Select" style:UIBarButtonItemStyleBordered target:self action:@selector(selectButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = selectButton;
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -169,6 +173,13 @@
 #pragma mark - Button Clicks
 - (void)backButtonClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)selectButtonClicked:(id)sender {
+    NSMutableArray *selectedFriendsArray = [[NSMutableArray alloc]initWithArray:[selectedItems allValues]];
+    ScoresViewController *scores = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
+    scores.opponentsToWager = selectedFriendsArray;
+    [self.navigationController pushViewController:scores animated:YES];
 }
 
 @end

@@ -30,8 +30,9 @@
 - (IBAction)spreadSliderAction:(id)sender;
 
 
-@property (nonatomic, retain) NSArray* contentList;
+@property (nonatomic, retain) NSMutableArray* contentList;
 @property (nonatomic, retain) NSDictionary *gameDataDictionary;
 @property (nonatomic, retain) PFObject *opponent;
+@property (nonatomic, retain) NSMutableArray *opponentsToWager;
 
 @end

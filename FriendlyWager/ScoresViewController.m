@@ -13,6 +13,7 @@
 
 @synthesize contentList;
 @synthesize opponent = _opponent;
+@synthesize opponentsToWager = _opponentsToWager;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

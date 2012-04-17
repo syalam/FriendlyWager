@@ -15,6 +15,7 @@
 @synthesize contentList;
 @synthesize opponent = _opponent;
 @synthesize gameDataDictionary = _gameDataDictionary;
+@synthesize opponentsToWager = _opponentsToWager;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -66,7 +67,7 @@
 {
     [super viewWillAppear:animated];
     NSArray *firstSection = [[NSArray alloc]initWithObjects:[_opponent objectForKey:@"name"], nil];
-    NSArray *tableContentsArray = [[NSArray alloc]initWithObjects:firstSection, otherOpponents, nil];
+    NSMutableArray *tableContentsArray = [[NSMutableArray alloc]initWithObjects:firstSection, otherOpponents, nil];
     [self setContentList:tableContentsArray];
     [newWagerTableView reloadData];
 }
