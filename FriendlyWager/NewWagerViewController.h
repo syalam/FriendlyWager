@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "TabsViewController.h"
 
 @interface NewWagerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource> {
     IBOutlet UITableView *newWagerTableView;
@@ -32,5 +33,6 @@
 @property (nonatomic, retain) PFObject *opponent;
 @property (nonatomic, retain) NSMutableArray *opponentsToWager;
 @property (nonatomic, retain) NSMutableArray *additionalOpponents;
+@property (nonatomic, retain) TabsViewController *tabParentView;
 
 @end

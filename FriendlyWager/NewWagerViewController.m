@@ -17,6 +17,7 @@
 @synthesize gameDataDictionary = _gameDataDictionary;
 @synthesize opponentsToWager = _opponentsToWager;
 @synthesize additionalOpponents = _additionalOpponents;
+@synthesize tabParentView = _tabParentView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -280,7 +281,13 @@
             [createNewWager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
                     [SVProgressHUD dismiss];
-                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -5)] animated:YES];
+                    if (_tabParentView) {
+                        [_tabParentView.navigationController dismissViewControllerAnimated:YES completion:NULL];
+                    }
+                    else {
+                        [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+                    }
+                    //[self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -5)] animated:YES];
                 }
                 else {
                     [SVProgressHUD dismiss];

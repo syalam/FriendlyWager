@@ -171,14 +171,19 @@
 }
 
 - (IBAction)wagerButtonClicked:(id)sender {
-    //ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil opponentName:opponent];
     NSMutableArray *userToWager = [[NSMutableArray alloc]initWithObjects:_userToWager, nil];
     ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
     sports.opponentsToWager = userToWager;
-    [self.navigationController pushViewController:sports animated:YES];
+    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:sports];
+    if (_tabParentView) {
+        sports.tabParentView = _tabParentView;
+        [_tabParentView.navigationController presentViewController:navc animated:YES completion:NULL];
+    }
+    else {
+        [self.navigationController presentViewController:navc animated:YES completion:NULL];
+    }
 }
 - (IBAction)chatButtonClicked:(id)sender {
-   
     TrashTalkViewController *trashTalk = [[TrashTalkViewController alloc]initWithNibName:@"TrashTalkViewController" bundle:nil];
     trashTalk.opponent = _userToWager;
     UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:trashTalk];

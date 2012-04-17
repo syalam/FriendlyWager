@@ -14,6 +14,7 @@
 @synthesize contentList;
 @synthesize opponent = _opponent;
 @synthesize opponentsToWager = _opponentsToWager;
+@synthesize tabParentView = _tabParentView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -57,7 +58,7 @@
     scoresTableView.dataSource = self;
     scoresTableView.delegate = self;
     
-    if (_opponent) {
+    if (_opponentsToWager) {
         self.title = @"New Wager";
         UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
         UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -83,6 +84,14 @@
     scoresArray = [[NSArray alloc]initWithObjects:nflFootball, collegeFootball, mlbBaseball, nbaBasketball, collegeBasketball, nil];
     [self setContentList:scoresArray];
     
+    UIImage *cancelButtonImage = [UIImage imageNamed:@"FW_PG17_Cancel_Button"];
+    UIButton *customCancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    customCancelButton.bounds = CGRectMake( 0, 0, cancelButtonImage.size.width, cancelButtonImage.size.height );
+    [customCancelButton setImage:cancelButtonImage forState:UIControlStateNormal];
+    [customCancelButton addTarget:self action:@selector(cancelButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:customCancelButton];
+    self.navigationItem.leftBarButtonItem = cancelButton;
 }
 
 
@@ -135,6 +144,10 @@
     if (_opponentsToWager) {
         scoreSummary.opponentsToWager = _opponentsToWager;
     }
+    if (_tabParentView) {
+        scoreSummary.tabParentView = _tabParentView;
+    }
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController pushViewController:scoreSummary animated:YES];
 }
@@ -142,6 +155,9 @@
 #pragma mark - Button Clicks
 - (void)backButtonClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+- (void)cancelButtonClicked:(id)sender {
+    [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 

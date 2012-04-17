@@ -13,6 +13,7 @@
 @implementation ScoreSummaryViewController
 @synthesize opponent = _opponent;
 @synthesize opponentsToWager = _opponentsToWager;
+@synthesize tabParentView = _tabParentView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -212,6 +213,9 @@
         //newWager.opponent = _opponent;
         newWager.opponentsToWager = _opponentsToWager;
         newWager.gameDataDictionary = [leftArray objectAtIndex:index];
+        if (_tabParentView) {
+            newWager.tabParentView = _tabParentView;
+        }
         [self.navigationController pushViewController:newWager animated:YES];
     }
 }
