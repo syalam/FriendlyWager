@@ -12,7 +12,6 @@
 
 @interface ScoresViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UITableView *scoresTableView;
-    IBOutlet UILabel *opponentLabel;
     NSString *opponent;
     NSArray *scoresArray;
     

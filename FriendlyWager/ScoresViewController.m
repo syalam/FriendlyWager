@@ -68,11 +68,6 @@
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
         
         self.navigationItem.leftBarButtonItem = backButton;
-        
-        opponentLabel.text = [NSString stringWithFormat:@"%@ %@", @"New Wager with", [_opponent objectForKey:@"name"]];
-    }
-    else {
-        opponentLabel.hidden = YES;
     }
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG3_BG"]]];
     
