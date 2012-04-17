@@ -16,6 +16,7 @@
 }
 
 @property (nonatomic, retain) NSArray* contentList;
+@property (nonatomic, retain) NSMutableArray *opponentsToWager;
 @property (nonatomic)BOOL wagerInProgress;
 
 @end

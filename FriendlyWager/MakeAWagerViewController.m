@@ -16,7 +16,7 @@
 
 @implementation MakeAWagerViewController
 @synthesize wagerInProgress = _wagerInProgress;
-
+@synthesize opponentsToWager  = _opponentsToWager;
 @synthesize contentList;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -137,12 +137,21 @@
     }
     else if ([contentForThisRow isEqualToString:@"Previously Wagered"]) {
         PreviouslyWageredViewController *pwvc = [[PreviouslyWageredViewController alloc]initWithNibName:@"PreviouslyWageredViewController" bundle:nil];
+        if (_wagerInProgress) {
+            pwvc.wagerInProgress = YES;
+            pwvc.opponentsToWager = _opponentsToWager;
+        }
+        
         [self.navigationController pushViewController:pwvc animated:YES];
     }    
     else if ([contentForThisRow isEqualToString:@"Facebook Friend"]) {
         PFUser *currentUser = [PFUser currentUser];
         if ([PFFacebookUtils isLinkedWithUser:currentUser]) {
             FacebookFriendsViewController *facebookFriends = [[FacebookFriendsViewController alloc]initWithNibName:@"FacebookFriendsViewController" bundle:nil];
+            if (_wagerInProgress) {
+                facebookFriends.wagerInProgress = YES;
+                facebookFriends.opponentsToWager = _opponentsToWager;
+            }
             [self.navigationController pushViewController:facebookFriends animated:YES];
         }
         else {

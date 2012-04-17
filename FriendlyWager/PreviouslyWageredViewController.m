@@ -7,7 +7,9 @@
 //
 
 #import "PreviouslyWageredViewController.h"
+#import "NewWagerViewController.h"
 #import "ScoresViewController.h"
+#import "JSONKit.h"
 
 @interface PreviouslyWageredViewController ()
 
@@ -15,6 +17,8 @@
 
 @implementation PreviouslyWageredViewController
 @synthesize contentList = _contentList;
+@synthesize wagerInProgress = _wagerInProgress;
+@synthesize opponentsToWager = _opponentsToWager;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -31,7 +35,10 @@
     
     self.title = @"Previously Wagered";
     
+    [self.navigationController setNavigationBarHidden:NO];
+    
     selectedItems = [[NSMutableDictionary alloc]initWithCapacity:1];
+    fwData = [NSUserDefaults alloc];
     
     PFQuery *previouslyWageredQuery = [PFQuery queryWithClassName:@"wagers"];
     [previouslyWageredQuery whereKey:@"wager" equalTo:[PFUser currentUser]];
@@ -177,9 +184,14 @@
 
 -(void)selectButtonClicked:(id)sender {
     NSMutableArray *selectedFriendsArray = [[NSMutableArray alloc]initWithArray:[selectedItems allValues]];
-    ScoresViewController *scores = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
-    scores.opponentsToWager = selectedFriendsArray;
-    [self.navigationController pushViewController:scores animated:YES];
+    if (_wagerInProgress) {
+        
+    }
+    else {
+        ScoresViewController *scores = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
+        scores.opponentsToWager = selectedFriendsArray;
+        [self.navigationController pushViewController:scores animated:YES];
+    }
 }
 
 @end

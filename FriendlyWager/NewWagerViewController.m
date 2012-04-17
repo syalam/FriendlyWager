@@ -98,6 +98,7 @@
 - (IBAction)addOthersButtonClicked:(id)sender {
     MakeAWagerViewController *mwvc = [[MakeAWagerViewController alloc]initWithNibName:@"MakeAWagerViewController" bundle:nil];
     mwvc.wagerInProgress = YES;
+    mwvc.opponentsToWager = _opponentsToWager;
     [self.navigationController pushViewController:mwvc animated:YES];
 }
 

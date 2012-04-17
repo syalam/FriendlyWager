@@ -15,6 +15,8 @@
 
 @implementation FacebookFriendsViewController
 @synthesize contentList;
+@synthesize wagerInProgress = _wagerInProgress;
+@synthesize opponentsToWager = _opponentsToWager;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {

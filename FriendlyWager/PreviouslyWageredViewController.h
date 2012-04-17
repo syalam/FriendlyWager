@@ -11,8 +11,12 @@
 
 @interface PreviouslyWageredViewController : UITableViewController {
     NSMutableDictionary *selectedItems;
+    NSUserDefaults *fwData;
 }
 
 @property (nonatomic, retain)NSMutableArray *contentList;
+@property (nonatomic, retain)NSMutableArray *opponentsToWager;
+@property (nonatomic) BOOL wagerInProgress;
+@property (nonatomic, retain)UIViewController *viewController;
 
 @end
