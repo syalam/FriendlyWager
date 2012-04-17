@@ -39,7 +39,7 @@
     [self.navigationController setNavigationBarHidden:NO];
     //navItem.titleView = titleImageView;
     self.navigationItem.titleView = titleImageView;
-
+    
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG16_BG"]]];
     

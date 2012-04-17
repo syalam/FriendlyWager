@@ -182,8 +182,9 @@
 - (IBAction)chatButtonClicked:(id)sender { 
     TrashTalkViewController *trashTalk = [[TrashTalkViewController alloc]initWithNibName:@"TrashTalkViewController" bundle:nil];
     trashTalk.opponent = _userToWager;
-    [self.navigationController pushViewController:trashTalk animated:YES];
-    //UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:trashTalk];
+    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:trashTalk];
+    [self.navigationController presentViewController:navc animated:YES completion:NULL];
+    //[self.navigationController pushViewController:trashTalk animated:YES];
     //[self.navigationController presentModalViewController:navc animated:YES];
 }
 
