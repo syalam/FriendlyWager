@@ -17,6 +17,7 @@
 @implementation MakeAWagerViewController
 @synthesize wagerInProgress = _wagerInProgress;
 @synthesize opponentsToWager  = _opponentsToWager;
+@synthesize viewController = _viewController;
 @synthesize contentList;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -140,6 +141,7 @@
         if (_wagerInProgress) {
             pwvc.wagerInProgress = YES;
             pwvc.opponentsToWager = _opponentsToWager;
+            pwvc.viewController = _viewController;
         }
         
         [self.navigationController pushViewController:pwvc animated:YES];

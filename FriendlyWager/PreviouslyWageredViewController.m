@@ -7,7 +7,6 @@
 //
 
 #import "PreviouslyWageredViewController.h"
-#import "NewWagerViewController.h"
 #import "ScoresViewController.h"
 #import "JSONKit.h"
 
@@ -19,6 +18,7 @@
 @synthesize contentList = _contentList;
 @synthesize wagerInProgress = _wagerInProgress;
 @synthesize opponentsToWager = _opponentsToWager;
+@synthesize viewController = _viewController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -41,6 +41,9 @@
     fwData = [NSUserDefaults alloc];
     
     PFQuery *previouslyWageredQuery = [PFQuery queryWithClassName:@"wagers"];
+    if (_wagerInProgress) {
+        [previouslyWageredQuery whereKey:@"wagee" notContainedIn:_opponentsToWager];
+    }
     [previouslyWageredQuery whereKey:@"wager" equalTo:[PFUser currentUser]];
     [previouslyWageredQuery orderByDescending:@"createdAt"];
     [previouslyWageredQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -119,6 +122,12 @@
     // Configure the cell...
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    for (NSUInteger i = 0; i < _opponentsToWager.count; i++) {
+        if ([[[_opponentsToWager objectAtIndex:i]objectForKey:@"name"] isEqualToString:[[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"]]) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
+    }
+    
     cell.textLabel.text = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
     
     return cell;
@@ -185,7 +194,8 @@
 -(void)selectButtonClicked:(id)sender {
     NSMutableArray *selectedFriendsArray = [[NSMutableArray alloc]initWithArray:[selectedItems allValues]];
     if (_wagerInProgress) {
-        
+        _viewController.additionalOpponents = selectedFriendsArray;
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -3)] animated:YES];
     }
     else {
         ScoresViewController *scores = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];

@@ -17,6 +17,7 @@
 @synthesize contentList;
 @synthesize wagerInProgress = _wagerInProgress;
 @synthesize opponentsToWager = _opponentsToWager;
+@synthesize viewController = _viewController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {

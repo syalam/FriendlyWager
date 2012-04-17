@@ -31,5 +31,6 @@
 @property (nonatomic, retain) NSDictionary *gameDataDictionary;
 @property (nonatomic, retain) PFObject *opponent;
 @property (nonatomic, retain) NSMutableArray *opponentsToWager;
+@property (nonatomic, retain) NSMutableArray *additionalOpponents;
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "NewWagerViewController.h"
 
 @interface PreviouslyWageredViewController : UITableViewController {
     NSMutableDictionary *selectedItems;
@@ -17,6 +18,6 @@
 @property (nonatomic, retain)NSMutableArray *contentList;
 @property (nonatomic, retain)NSMutableArray *opponentsToWager;
 @property (nonatomic) BOOL wagerInProgress;
-@property (nonatomic, retain)UIViewController *viewController;
+@property (nonatomic, retain)NewWagerViewController *viewController;
 
 @end

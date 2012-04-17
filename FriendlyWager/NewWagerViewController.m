@@ -16,6 +16,7 @@
 @synthesize opponent = _opponent;
 @synthesize gameDataDictionary = _gameDataDictionary;
 @synthesize opponentsToWager = _opponentsToWager;
+@synthesize additionalOpponents = _additionalOpponents;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -65,6 +66,14 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    if (_additionalOpponents) {
+        NSMutableArray *addOpponents = [_opponentsToWager mutableCopy];
+        for (NSUInteger i = 0; i < _additionalOpponents.count; i++) {
+            [addOpponents addObject:[_additionalOpponents objectAtIndex:i]];
+        }
+        [self setOpponentsToWager:addOpponents];
+    }
+    
     NSMutableArray *tableContentsArray = [[NSMutableArray alloc]initWithObjects:_opponentsToWager, nil];
     [self setContentList:tableContentsArray];
     [newWagerTableView reloadData];
@@ -99,6 +108,7 @@
     MakeAWagerViewController *mwvc = [[MakeAWagerViewController alloc]initWithNibName:@"MakeAWagerViewController" bundle:nil];
     mwvc.wagerInProgress = YES;
     mwvc.opponentsToWager = _opponentsToWager;
+    mwvc.viewController = self;
     [self.navigationController pushViewController:mwvc animated:YES];
 }
 
