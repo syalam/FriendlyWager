@@ -266,27 +266,30 @@
             teamWagered = [_gameDataDictionary objectForKey:@"team2Id"];
         }
         
-        PFObject *createNewWager = [PFObject objectWithClassName:@"wagers"];
-        [createNewWager setObject:[_gameDataDictionary objectForKey:@"gameId"] forKey:@"gameId"];
-        [createNewWager setObject:[_gameDataDictionary objectForKey:@"team1"] forKey:@"team1"];
-        [createNewWager setObject:[_gameDataDictionary objectForKey:@"team1Id"] forKey:@"team1Id"];
-        [createNewWager setObject:[_gameDataDictionary objectForKey:@"team2"] forKey:@"team2"];
-        [createNewWager setObject:[_gameDataDictionary objectForKey:@"team2Id"] forKey:@"team2Id"];
-        [createNewWager setObject:[PFUser currentUser] forKey:@"wager"];
-        [createNewWager setObject:_opponent forKey:@"wagee"];
-        [createNewWager setObject:teamWagered forKey:@"teamWageredToWin"];
-        [createNewWager setObject:[NSNumber numberWithInt:[spreadLabel.text intValue]] forKey:@"spread"];
-        [createNewWager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                [SVProgressHUD dismiss];
-                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -5)] animated:YES];
-            }
-            else {
-                [SVProgressHUD dismiss];
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"error" message:@"Unable to create this wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alert show];
-            }
-        }];
+        for (NSUInteger i = 0; i < _opponentsToWager.count; i++) {
+            PFObject *createNewWager = [PFObject objectWithClassName:@"wagers"];
+            [createNewWager setObject:[_gameDataDictionary objectForKey:@"gameId"] forKey:@"gameId"];
+            [createNewWager setObject:[_gameDataDictionary objectForKey:@"team1"] forKey:@"team1"];
+            [createNewWager setObject:[_gameDataDictionary objectForKey:@"team1Id"] forKey:@"team1Id"];
+            [createNewWager setObject:[_gameDataDictionary objectForKey:@"team2"] forKey:@"team2"];
+            [createNewWager setObject:[_gameDataDictionary objectForKey:@"team2Id"] forKey:@"team2Id"];
+            [createNewWager setObject:[PFUser currentUser] forKey:@"wager"];
+            [createNewWager setObject:[_opponentsToWager objectAtIndex:i] forKey:@"wagee"];
+            [createNewWager setObject:teamWagered forKey:@"teamWageredToWin"];
+            [createNewWager setObject:[NSNumber numberWithInt:[spreadLabel.text intValue]] forKey:@"spread"];
+            [createNewWager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    [SVProgressHUD dismiss];
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -5)] animated:YES];
+                }
+                else {
+                    [SVProgressHUD dismiss];
+                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"error" message:@"Unable to create this wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alert show];
+                }
+            }];
+
+        }
     }
 }
 
