@@ -85,8 +85,24 @@
                 for (PFObject *trashTalkItem in objects) {
                     [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
                 }
-                [self setContentList:trashTalkArray];
-                [self.trashTalkTableView reloadData];
+                PFQuery *queryForReceivedTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
+                [queryForReceivedTrashTalk whereKey:@"recipient" equalTo:[PFUser currentUser]];
+                [queryForReceivedTrashTalk whereKey:@"sender" equalTo:_opponent];
+                [queryForReceivedTrashTalk orderByDescending:@"updatedAt"];
+                [queryForReceivedTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                    if (!error) {
+                        for (PFObject *trashTalkItem in objects) {
+                            [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
+                        }
+                        NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
+                        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByDate];
+                        NSArray *sortedArray = [trashTalkArray sortedArrayUsingDescriptors:sortDescriptors];
+                        NSMutableArray *trashTalkToDisplay = [sortedArray mutableCopy];
+                        
+                        [self setContentList:trashTalkToDisplay];
+                        [self.trashTalkTableView reloadData];
+                    } 
+                }];
             }
         }];
 
@@ -194,7 +210,7 @@
     [dateFormatter setDateFormat:@"EEEE, MMMM d 'at' h:mm a"];
     NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
     
-    UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 2, 200, 10)];
+    UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 2, 200, 15)];
     dateLabel.backgroundColor = [UIColor clearColor];
     dateLabel.font = [UIFont systemFontOfSize:11];
     dateLabel.text = dateToDisplay;
