@@ -46,6 +46,7 @@
     myActionTableView.delegate = self;
     
     PFQuery *queryForUsers = [PFQuery queryForUser];
+    queryForUsers.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [queryForUsers whereKey:@"objectId" notEqualTo:[[PFUser currentUser]objectId]];
     [queryForUsers whereKey:@"name" notEqualTo:@""];
     [queryForUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {

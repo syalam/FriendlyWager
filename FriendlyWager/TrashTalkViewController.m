@@ -83,7 +83,7 @@
             if (!error) {
                 NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
                 for (PFObject *trashTalkItem in objects) {
-                    [trashTalkArray addObject:trashTalkItem];
+                    [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
                 }
                 [self setContentList:trashTalkArray];
                 [self.trashTalkTableView reloadData];
@@ -187,6 +187,21 @@
     else {
         cell.textLabel.text = senderName;
     }
+    
+    PFObject *objectToDisplay = [[contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
+    NSDate *dateCreated = objectToDisplay.createdAt;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"EEEE, MMMM d 'at' h:mm a"];
+    NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
+    
+    UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 2, 200, 10)];
+    dateLabel.backgroundColor = [UIColor clearColor];
+    dateLabel.font = [UIFont systemFontOfSize:11];
+    dateLabel.text = dateToDisplay;
+    
+    [cell.contentView addSubview:dateLabel];
+    
+    
     cell.textLabel.textColor = [UIColor blueColor];
     
     cell.detailTextLabel.lineBreakMode = UILineBreakModeWordWrap;

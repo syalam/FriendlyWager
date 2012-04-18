@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "MyActionSummaryViewController.h"
 #import "ScoresViewController.h"
+#import "SVProgressHUD.h"
 
 @implementation FacebookFriendsViewController
 @synthesize contentList;
@@ -41,6 +42,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [SVProgressHUD showWithStatus:@"Loading Facebook Friends"];
     
     selectedItems = [[NSMutableDictionary alloc]initWithCapacity:1];
     
@@ -111,6 +114,7 @@
 }
 
 - (void)request:(PF_FBRequest *)request didLoad:(id)result {
+    [SVProgressHUD dismiss];
     if ([result objectForKey:@"data"]) {
         NSMutableArray *resultSetArray = [[NSMutableArray alloc]initWithCapacity:1];
         NSMutableArray *resultSetArray1 = [[NSMutableArray alloc]initWithCapacity:1];
@@ -142,7 +146,9 @@
 }
 
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
-    
+    [SVProgressHUD dismiss];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to retrieve your facebook friend list at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 #pragma mark - Table view data source
@@ -259,10 +265,12 @@
 #pragma mark - Button Clicks
 
 -(void)backButtonClicked:(id)sender {
+    [SVProgressHUD dismiss];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)selectButtonClicked:(id)sender {
+    [SVProgressHUD dismiss];
     if (selectedItems.count > 0) {
         NSString *jsonString = [[selectedItems allValues] JSONString];
         NSMutableArray *selectedItemsArray = [[NSMutableArray alloc]initWithCapacity:1];
