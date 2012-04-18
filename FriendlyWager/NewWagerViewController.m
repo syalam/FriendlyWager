@@ -259,12 +259,15 @@
     if(buttonIndex == 1) {
         [SVProgressHUD showWithStatus:@"Creating Wager"];
         
-        NSString *teamWagered;
+        NSString *teamWageredId;
+        NSString *teamWageredToWin;
         if ([selectTeamButton.titleLabel.text isEqualToString:[_gameDataDictionary objectForKey:@"team1"]]) {
-            teamWagered = [_gameDataDictionary objectForKey:@"team1Id"];
+            teamWageredId = [_gameDataDictionary objectForKey:@"team1Id"];
+            teamWageredToWin = [_gameDataDictionary objectForKey:@"team1"];
         }
         else {
-            teamWagered = [_gameDataDictionary objectForKey:@"team2Id"];
+            teamWageredId = [_gameDataDictionary objectForKey:@"team2Id"];
+            teamWageredToWin = [_gameDataDictionary objectForKey:@"team2Id"];
         }
         
         for (NSUInteger i = 0; i < _opponentsToWager.count; i++) {
@@ -276,7 +279,8 @@
             [createNewWager setObject:[_gameDataDictionary objectForKey:@"team2Id"] forKey:@"team2Id"];
             [createNewWager setObject:[PFUser currentUser] forKey:@"wager"];
             [createNewWager setObject:[_opponentsToWager objectAtIndex:i] forKey:@"wagee"];
-            [createNewWager setObject:teamWagered forKey:@"teamWageredToWin"];
+            [createNewWager setObject:teamWageredId forKey:@"teamWageredToWinId"];
+            [createNewWager setObject:teamWageredToWin forKey:@"teamWageredToWin"];
             [createNewWager setObject:[NSNumber numberWithInt:[spreadLabel.text intValue]] forKey:@"spread"];
             [createNewWager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {

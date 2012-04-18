@@ -125,12 +125,6 @@
     wagersTableView.dataSource = self;
     wagersTableView.delegate = self;
     
-    NSArray *currentWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Current", @"type", currentWagers, @"wagers", nil], nil];
-    NSArray *pendingWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Pending", @"type", @"0", @"wagers", nil] , nil];
-    NSArray *historyWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"History", @"type", @"3", @"wagers", nil], nil];
-    
-    wagersArray = [[NSArray alloc]initWithObjects:currentWagersArray, pendingWagersArray, historyWagersArray, nil];
-    [self setContentList:wagersArray];
     
     UIImage *homeButtonImage = [UIImage imageNamed:@"FW_PG2_HomeButton"];
     UIButton *homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -150,6 +144,28 @@
     if (_tabParentView) {
         [_tabParentView.navigationController setNavigationBarHidden:NO];
     }
+    
+    PFQuery *queryForWagers = [PFQuery queryWithClassName:@"wagers"];
+    [queryForWagers whereKey:@"wager" equalTo:[PFUser currentUser]];
+    [queryForWagers whereKey:@"wagee" equalTo:_userToWager];
+    [queryForWagers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSMutableArray *wagersQArray = [[NSMutableArray alloc]init];
+            for (PFObject *wager in objects) {
+                [wagersQArray addObject:wager];
+            }
+            
+            NSString *currentWagerCount = [NSString stringWithFormat:@"%d", wagersQArray.count];
+            
+            NSArray *currentWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Current", @"type", currentWagerCount, @"wagers",wagersQArray, @"wagerObjects", nil], nil];
+            NSArray *pendingWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Pending", @"type", @"0", @"wagers", nil] , nil];
+            NSArray *historyWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"History", @"type", @"0", @"wagers", nil], nil];
+            
+            wagersArray = [[NSArray alloc]initWithObjects:currentWagersArray, pendingWagersArray, historyWagersArray, nil];
+            [self setContentList:wagersArray];
+            [wagersTableView reloadData];
+        } 
+    }];
 }
 
 - (void)viewDidUnload

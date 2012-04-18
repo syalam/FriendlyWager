@@ -12,6 +12,7 @@
 
 @implementation MyActionViewController
 @synthesize tabParentView = _tabParentView;
+@synthesize contentList = _contentList;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,7 +46,48 @@
     myActionTableView.dataSource = self;
     myActionTableView.delegate = self;
     
-    PFQuery *queryForUsers = [PFQuery queryForUser];
+    
+    PFQuery *previouslyWageredQuery = [PFQuery queryWithClassName:@"wagers"];
+    [previouslyWageredQuery whereKey:@"wager" equalTo:[PFUser currentUser]];
+    [previouslyWageredQuery orderByDescending:@"createdAt"];
+    [previouslyWageredQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            if (objects.count > 0) {
+                NSMutableArray *itemsToDisplay = [[NSMutableArray alloc]init];
+                for (PFObject *wagerObject in objects) {
+                    PFObject *wagee = [wagerObject objectForKey:@"wagee"];
+                    [wagee fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                        if (!error) {
+                            if (itemsToDisplay.count > 0) {
+                                BOOL checkDuplicate = NO;
+                                for (NSUInteger i = 0; i < itemsToDisplay.count; i++) {
+                                    NSString *itemInArray = [[itemsToDisplay objectAtIndex:i]objectId];
+                                    NSString *objectItem = [object objectId];
+                                    if ([itemInArray isEqualToString:objectItem]) {
+                                        checkDuplicate = YES;
+                                    }
+                                }
+                                if (!checkDuplicate) {
+                                    [itemsToDisplay addObject:object];
+                                }
+                            }
+                            else {
+                                [itemsToDisplay addObject:object];
+                            }
+                            
+                            [self setContentList:itemsToDisplay];
+                            [myActionTableView reloadData];
+                        }
+                    }];
+                }
+            }
+        }
+        else {
+            NSLog(@"%@", error);
+        }
+    }];
+    
+    /*PFQuery *queryForUsers = [PFQuery queryForUser];
     queryForUsers.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [queryForUsers whereKey:@"objectId" notEqualTo:[[PFUser currentUser]objectId]];
     [queryForUsers whereKey:@"name" notEqualTo:@""];
@@ -62,7 +104,7 @@
      else {
          NSLog(@"%@", error);
      }
-    }];
+    }];*/
 
     
     //myActionOpponentArray = [[NSMutableArray alloc]initWithObjects:@"Bill Smith", @"John Taylor", @"Timmy Jones", @"Steve Bird", nil];
@@ -98,35 +140,28 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return myActionOpponentArray.count;    
+    return _contentList.count;    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UILabel *opponentLabel = [[UILabel alloc]initWithFrame:CGRectMake(47, 10, 105, 20)];
-    UILabel *wagersLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 10, 25, 20)];
-    
-    opponentLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    wagersLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    opponentLabel.backgroundColor = [UIColor clearColor];
-    wagersLabel.backgroundColor = [UIColor clearColor];
-    opponentLabel.textColor = [UIColor whiteColor];
-    wagersLabel.textColor = [UIColor whiteColor];
-    
-    opponentLabel.text = [[myActionOpponentArray objectAtIndex:indexPath.row ]objectForKey:@"name"];
-    wagersLabel.text = [myActionWagersArray objectAtIndex:indexPath.row];
-    
-    static NSString *CellIdentifier = @"MyActionTableViewCell";
+
+    static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    //cell.backgroundColor = [UIColor clearColor];
+
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+
     cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG2_TableViewCell"]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    [cell.contentView addSubview:opponentLabel];
-    [cell.contentView addSubview:wagersLabel];
+    
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    
+    cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG3_TableViewCell"]];
+    cell.backgroundColor = [UIColor clearColor];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.textAlignment = UITextAlignmentCenter;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.textLabel.text = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
     
     return cell;    
 }

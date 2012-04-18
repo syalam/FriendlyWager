@@ -41,6 +41,7 @@
     fwData = [NSUserDefaults alloc];
     
     PFQuery *previouslyWageredQuery = [PFQuery queryWithClassName:@"wagers"];
+    //do not display people who are already part of the wager
     if (_wagerInProgress) {
         [previouslyWageredQuery whereKey:@"wagee" notContainedIn:_opponentsToWager];
     }
@@ -54,9 +55,23 @@
                     PFObject *wagee = [wagerObject objectForKey:@"wagee"];
                     [wagee fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
                         if (!error) {
-                            if (![itemsToDisplay containsObject:object]) {
+                            if (itemsToDisplay.count > 0) {
+                                BOOL checkDuplicate = NO;
+                                for (NSUInteger i = 0; i < itemsToDisplay.count; i++) {
+                                    NSString *itemInArray = [[itemsToDisplay objectAtIndex:i]objectId];
+                                    NSString *objectItem = [object objectId];
+                                    if ([itemInArray isEqualToString:objectItem]) {
+                                        checkDuplicate = YES;
+                                    }
+                                }
+                                if (!checkDuplicate) {
+                                    [itemsToDisplay addObject:object];
+                                }
+                            }
+                            else {
                                 [itemsToDisplay addObject:object];
                             }
+                            
                             [self setContentList:itemsToDisplay];
                             [self.tableView reloadData];
                         }
