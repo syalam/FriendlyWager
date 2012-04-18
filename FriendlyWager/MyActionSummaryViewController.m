@@ -145,25 +145,34 @@
         [_tabParentView.navigationController setNavigationBarHidden:NO];
     }*/
     
-    PFQuery *queryForWagers = [PFQuery queryWithClassName:@"wagers"];
-    [queryForWagers whereKey:@"wager" equalTo:[PFUser currentUser]];
-    [queryForWagers whereKey:@"wagee" equalTo:_userToWager];
-    [queryForWagers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    PFQuery *queryForWagered = [PFQuery queryWithClassName:@"wagers"];
+    [queryForWagered whereKey:@"wager" equalTo:[PFUser currentUser]];
+    [queryForWagered whereKey:@"wagee" equalTo:_userToWager];
+    [queryForWagered findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             NSMutableArray *wagersQArray = [[NSMutableArray alloc]init];
             for (PFObject *wager in objects) {
                 [wagersQArray addObject:wager];
             }
-            
-            NSString *currentWagerCount = [NSString stringWithFormat:@"%d", wagersQArray.count];
-            
-            NSArray *currentWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Current", @"type", currentWagerCount, @"wagers",wagersQArray, @"wagerObjects", nil], nil];
-            NSArray *pendingWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Pending", @"type", @"0", @"wagers", nil] , nil];
-            NSArray *historyWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"History", @"type", @"0", @"wagers", nil], nil];
-            
-            wagersArray = [[NSArray alloc]initWithObjects:currentWagersArray, pendingWagersArray, historyWagersArray, nil];
-            [self setContentList:wagersArray];
-            [wagersTableView reloadData];
+            PFQuery *queryForWagee = [PFQuery queryWithClassName:@"wagers"];
+            [queryForWagee whereKey:@"wager" equalTo:_userToWager];
+            [queryForWagee whereKey:@"wagee" equalTo:[PFUser currentUser]];
+            [queryForWagee findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                if (!error) {
+                    for (PFObject *wagee in objects) {
+                        [wagersQArray addObject:wagee];
+                    } 
+                    NSString *currentWagerCount = [NSString stringWithFormat:@"%d", wagersQArray.count];
+                    
+                    NSArray *currentWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Current", @"type", currentWagerCount, @"wagers",wagersQArray, @"wagerObjects", nil], nil];
+                    NSArray *pendingWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Pending", @"type", @"0", @"wagers", nil] , nil];
+                    NSArray *historyWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"History", @"type", @"0", @"wagers", nil], nil];
+                    
+                    wagersArray = [[NSArray alloc]initWithObjects:currentWagersArray, pendingWagersArray, historyWagersArray, nil];
+                    [self setContentList:wagersArray];
+                    [wagersTableView reloadData];
+                }
+            }];
         } 
     }];
 }

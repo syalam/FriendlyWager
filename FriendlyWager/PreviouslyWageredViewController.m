@@ -56,15 +56,15 @@
                     [wagee fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
                         if (!error) {
                             if (itemsToDisplay.count > 0) {
-                                BOOL checkDuplicate = NO;
+                                BOOL duplicate = NO;
                                 for (NSUInteger i = 0; i < itemsToDisplay.count; i++) {
                                     NSString *itemInArray = [[itemsToDisplay objectAtIndex:i]objectId];
                                     NSString *objectItem = [object objectId];
                                     if ([itemInArray isEqualToString:objectItem]) {
-                                        checkDuplicate = YES;
+                                        duplicate = YES;
                                     }
                                 }
-                                if (!checkDuplicate) {
+                                if (!duplicate) {
                                     [itemsToDisplay addObject:object];
                                 }
                             }
