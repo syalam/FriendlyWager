@@ -20,7 +20,7 @@
 }
 
 @property (nonatomic, retain) PFObject *opponent;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil wagerType:(NSString *)wagerType opponentName:(NSString *)opponentName;
+@property (nonatomic, retain) NSString *wagerType;
+@property (nonatomic, retain) NSMutableArray *wagerObjects;
 
 @end

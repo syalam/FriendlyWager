@@ -270,12 +270,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
     id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
-    
-    MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil wagerType:[contentForThisRow objectForKey:@"type"] opponentName:opponent];
-    actionDetail.opponent = _userToWager;
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self.navigationController pushViewController:actionDetail animated:YES];
-    
+    if (indexPath.section == 0) {
+        MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil];
+        actionDetail.wagerType = [contentForThisRow objectForKey:@"type"];
+        actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
+        actionDetail.opponent = _userToWager;
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self.navigationController pushViewController:actionDetail animated:YES];
+    }
 }
 
 #pragma mark - UIAlertView Delegate Methods
