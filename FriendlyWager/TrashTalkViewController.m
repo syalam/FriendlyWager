@@ -110,13 +110,19 @@
                         for (PFObject *sentTrashTalkItem in objects) {
                             [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:sentTrashTalkItem, @"data", sentTrashTalkItem.updatedAt, @"date", nil]];
                         }
-                        
-                        NSSortDescriptor *dateDescriptor = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
-                        NSArray *descriptors = [NSArray arrayWithObjects:dateDescriptor, nil];
-                        NSArray * sortedArray = [trashTalkArray sortedArrayUsingDescriptors:descriptors];
+                        NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
+                        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByDate];
+                        NSArray *sortedArray = [trashTalkArray sortedArrayUsingDescriptors:sortDescriptors];
+                        NSMutableArray *trashTalkToDisplay = [sortedArray mutableCopy];
                         NSLog(@"%@", sortedArray);
                         
-                        [self setContentList:trashTalkArray];
+                        
+                        /*NSSortDescriptor *dateDescriptor = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
+                        NSArray *descriptors = [NSArray arrayWithObjects:dateDescriptor, nil];
+                        NSArray * sortedArray = [trashTalkArray sortedArrayUsingDescriptors:descriptors];
+                        NSLog(@"%@", sortedArray);*/
+                        
+                        [self setContentList:trashTalkToDisplay];
                         [self.trashTalkTableView reloadData];
                     } 
                 }];
