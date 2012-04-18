@@ -141,9 +141,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (_tabParentView) {
+    /*if (_tabParentView) {
         [_tabParentView.navigationController setNavigationBarHidden:NO];
-    }
+    }*/
     
     PFQuery *queryForWagers = [PFQuery queryWithClassName:@"wagers"];
     [queryForWagers whereKey:@"wager" equalTo:[PFUser currentUser]];
@@ -204,7 +204,7 @@
     trashTalk.opponent = _userToWager;
     UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:trashTalk];
     if (_tabParentView) {
-        [_tabParentView.navigationController setNavigationBarHidden:YES];
+        //[_tabParentView.navigationController setNavigationBarHidden:YES];
         [_tabParentView.navigationController presentViewController:navc animated:YES completion:NULL];
     }
     else {

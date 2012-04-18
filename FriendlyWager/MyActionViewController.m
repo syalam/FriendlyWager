@@ -173,7 +173,7 @@
     if (_tabParentView) {
         actionSummary.tabParentView = _tabParentView;
     }
-    actionSummary.userToWager = [myActionOpponentArray objectAtIndex:indexPath.row];
+    actionSummary.userToWager = [_contentList objectAtIndex:indexPath.row];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController pushViewController:actionSummary animated:YES];
 }
