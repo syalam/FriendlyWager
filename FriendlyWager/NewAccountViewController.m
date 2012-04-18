@@ -8,6 +8,7 @@
 
 #import "NewAccountViewController.h"
 #import <Parse/Parse.h>
+#import "Kiip.h"
 
 @implementation NewAccountViewController
 
@@ -114,9 +115,8 @@
                                                           cancelButtonTitle:@"OK" 
                                                           otherButtonTitles:nil];
                 [alertView show];
-                
-                [self.navigationController dismissModalViewControllerAnimated:YES];
-            } else {
+            } 
+            else {
                 NSString *errorString = [[error userInfo] objectForKey:@"error"];
                 
                 UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
@@ -140,5 +140,12 @@
     [alert show];
 }
 
+#pragma mark - UIAlertView Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    //TODO: REMOVE ME
+    [[KPManager sharedManager] unlockAchievement:@"1"];
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+    
+}
 
 @end

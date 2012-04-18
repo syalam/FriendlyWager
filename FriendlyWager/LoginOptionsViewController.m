@@ -10,6 +10,7 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
+#import "Kiip.h"
 
 
 @implementation LoginOptionsViewController
@@ -146,6 +147,8 @@
     user.email = [result objectForKey:@"email"];
     [user saveInBackground];
     [SVProgressHUD dismiss];
+    //TODO: REMOVE ME
+    [[KPManager sharedManager] unlockAchievement:@"1"];
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 

@@ -69,7 +69,7 @@
     self.navigationItem.rightBarButtonItem = signOutButton;
     
     //TODO: REMOVE ME
-    [[KPManager sharedManager] unlockAchievement:@"firstWagerCreated"];
+    //[[KPManager sharedManager] unlockAchievement:@"1"];
 
 }
 
