@@ -13,6 +13,7 @@
 #import "TwitterFollowersViewController.h"
 #import "OpponentSearchViewController.h"
 #import "PreviouslyWageredViewController.h"
+#import "ContactInviteViewController.h"
 
 @implementation MakeAWagerViewController
 @synthesize wagerInProgress = _wagerInProgress;
@@ -54,7 +55,7 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
     
-    NSArray *tableContentsArray = [[NSArray alloc]initWithObjects:@"Search for Opponent", @"Previously Wagered", @"Facebook Friend", @"Twitter Follower", @"Random Opponent", nil];
+    NSArray *tableContentsArray = [[NSArray alloc]initWithObjects:@"Search for Opponent", @"Previously Wagered", @"Facebook Friend", @"Twitter Follower", @"Random Opponent", @"Invite to Friendly Wager", nil];
     
     NSMutableArray *wagersArray = [[NSMutableArray alloc]initWithCapacity:1];
     
@@ -172,6 +173,10 @@
     else if (indexPath.section == 3) {
         OpponentSearchViewController *search = [[OpponentSearchViewController alloc]initWithNibName:@"OpponentSearchViewController" bundle:nil];
         [self.navigationController pushViewController:search animated:YES];
+    }
+    else if (indexPath.section == 5) {
+        ContactInviteViewController *civc = [[ContactInviteViewController alloc]initWithNibName:@"ContactInviteViewController" bundle:nil];
+        [self.navigationController pushViewController:civc animated:YES];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

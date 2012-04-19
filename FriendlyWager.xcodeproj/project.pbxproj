@@ -473,6 +473,8 @@
 		F7F050D3153604EC0000A95E /* libKiip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F050BF153604EC0000A95E /* libKiip.a */; };
 		F7F050D6153605A20000A95E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F050D5153605A20000A95E /* libz.dylib */; };
 		F7F050D8153605AF0000A95E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F050D7153605AF0000A95E /* libxml2.dylib */; };
+		F7F5F5E11540B3C100D1ED7C /* ContactInviteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F5F5DF1540B3C100D1ED7C /* ContactInviteViewController.m */; };
+		F7F5F5E21540B3C100D1ED7C /* ContactInviteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F5F5E01540B3C100D1ED7C /* ContactInviteViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1005,6 +1007,9 @@
 		F7F050BF153604EC0000A95E /* libKiip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libKiip.a; sourceTree = "<group>"; };
 		F7F050D5153605A20000A95E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		F7F050D7153605AF0000A95E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		F7F5F5DE1540B3C100D1ED7C /* ContactInviteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactInviteViewController.h; sourceTree = "<group>"; };
+		F7F5F5DF1540B3C100D1ED7C /* ContactInviteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactInviteViewController.m; sourceTree = "<group>"; };
+		F7F5F5E01540B3C100D1ED7C /* ContactInviteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactInviteViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1128,6 +1133,7 @@
 		F714E16914A1A88400E24956 /* FriendlyWager */ = {
 			isa = PBXGroup;
 			children = (
+				F7F5F5DC1540B39600D1ED7C /* Contact Invite */,
 				F714E17214A1A88400E24956 /* AppDelegate.h */,
 				F714E17314A1A88400E24956 /* AppDelegate.m */,
 				F724468514D0C8A90009E001 /* Authentication */,
@@ -2514,6 +2520,16 @@
 			path = universal;
 			sourceTree = "<group>";
 		};
+		F7F5F5DC1540B39600D1ED7C /* Contact Invite */ = {
+			isa = PBXGroup;
+			children = (
+				F7F5F5DE1540B3C100D1ED7C /* ContactInviteViewController.h */,
+				F7F5F5DF1540B3C100D1ED7C /* ContactInviteViewController.m */,
+				F7F5F5E01540B3C100D1ED7C /* ContactInviteViewController.xib */,
+			);
+			name = "Contact Invite";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2987,6 +3003,7 @@
 				F7F050CF153604EC0000A95E /* spinner-bg@2x.png in Resources */,
 				F7F050D2153604EC0000A95E /* README.md in Resources */,
 				F74B3124153C9DBA00A66EDB /* PreviouslyWageredViewController.xib in Resources */,
+				F7F5F5E21540B3C100D1ED7C /* ContactInviteViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3059,6 +3076,7 @@
 				F7A08FD11510216600471D3C /* NewTrashTalkViewController.m in Sources */,
 				F7A70324152438C7007C7468 /* ChatViewController.m in Sources */,
 				F74B3123153C9DBA00A66EDB /* PreviouslyWageredViewController.m in Sources */,
+				F7F5F5E11540B3C100D1ED7C /* ContactInviteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
