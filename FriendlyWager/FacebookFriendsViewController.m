@@ -46,6 +46,7 @@
     [SVProgressHUD showWithStatus:@"Loading Facebook Friends"];
     
     selectedItems = [[NSMutableDictionary alloc]initWithCapacity:1];
+    indexTableViewTitles = [[NSMutableArray alloc]initWithCapacity:1];
     
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setTintColor:[UIColor clearColor]];
@@ -140,8 +141,9 @@
                 }
             }
         }
-        [self setContentList:resultSetArray];
-        [self.tableView reloadData];
+        
+        [self sortSections:resultSetArray];
+        
     }
 }
 
@@ -156,31 +158,49 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return self.contentList.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return contentList.count;
+    NSArray *sectionContents = [[self contentList] objectAtIndex:section];
+    return sectionContents.count; 
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
+    id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
+    
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    if ([[[contentList objectAtIndex:indexPath.row]valueForKey:@"isFW"]isEqualToString:@"YES"]) {
+    if ([[contentForThisRow valueForKey:@"isFW"]isEqualToString:@"YES"]) {
         UILabel *fwLabel = [[UILabel alloc]initWithFrame:CGRectMake(260, 12, 40, 20)];
         fwLabel.text = @"FW";
         [cell addSubview:fwLabel];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
-    cell.textLabel.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"]valueForKey:@"name"];
+    cell.textLabel.text = [[contentForThisRow valueForKey:@"data"]valueForKey:@"name"];
     
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [indexTableViewTitles objectAtIndex:section];
+}
+
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    /*NSArray *indexTitles = [[NSArray alloc]initWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
+    return indexTitles;*/
+    return indexTableViewTitles;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+    return index;
 }
 
 /*
@@ -309,6 +329,44 @@
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please select a friend to make a wager with before continuing" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
+}
+
+#pragma mark - Helper Methods
+- (void)sortSections:(NSMutableArray *)resultSetArray {
+    NSArray *indexTitles = [[NSArray alloc]initWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
+    
+    NSMutableArray *itemsToDisplay = [[NSMutableArray alloc]initWithCapacity:1];
+    
+    NSMutableArray *namesArray = [[NSMutableArray alloc]initWithCapacity:1];
+    for (NSUInteger i = 0; i < resultSetArray.count; i++) {
+        [namesArray addObject:[[[resultSetArray objectAtIndex:i]valueForKey:@"data"]valueForKey:@"name"]];
+    }
+    
+    
+    
+    for (NSUInteger i = 0; i < indexTitles.count; i++) {
+        NSMutableArray *sectionContent = [[NSMutableArray alloc]initWithCapacity:1];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"SELF BEGINSWITH '%@'", [indexTitles objectAtIndex:i]]];
+        NSArray *elements = [namesArray filteredArrayUsingPredicate:predicate];
+        for (NSUInteger counter = 0; counter < resultSetArray.count; counter ++) {
+            for (NSUInteger i2 = 0; i2 < elements.count; i2++) {
+                NSString *fullArrayName = [NSString stringWithFormat:@"%@", [[[resultSetArray objectAtIndex:counter]valueForKey:@"data"]valueForKey:@"name"]];
+                NSString *elementsName = [NSString stringWithFormat:@"%@", [elements objectAtIndex:i2]];
+                if ([elementsName isEqualToString:fullArrayName]) {
+                    [sectionContent addObject:[resultSetArray objectAtIndex:counter]];
+                }
+            }
+        }
+        if (sectionContent.count > 0) {
+            [indexTableViewTitles addObject:[indexTitles objectAtIndex:i]];
+            [itemsToDisplay addObject:sectionContent];
+        }
+        NSLog(@"%@", itemsToDisplay);
+        NSLog(@"%d", itemsToDisplay.count);
+    }
+    [self setContentList:itemsToDisplay];
+    [self.tableView reloadData];
+
 }
 
 @end

@@ -12,11 +12,14 @@
 
 @interface FacebookFriendsViewController : UITableViewController <PF_FBRequestDelegate> {
     NSMutableDictionary *selectedItems;
+    NSMutableArray *indexTableViewTitles;
 }
 
 @property (nonatomic, retain) NSMutableArray *contentList;
 @property (nonatomic) BOOL wagerInProgress;
 @property (nonatomic, retain) NSMutableArray *opponentsToWager;
 @property (nonatomic, retain) NewWagerViewController *viewController;
+
+- (void)sortSections:(NSMutableArray *)resultSetArray;
 
 @end
