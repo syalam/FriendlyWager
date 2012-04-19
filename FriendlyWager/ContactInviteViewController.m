@@ -90,24 +90,44 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return _contentList.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    NSArray *sectionContents = [_contentList objectAtIndex:section];
+    return sectionContents.count; 
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
+    id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
+    
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [contentForThisRow valueForKey:@"firstName"], [contentForThisRow valueForKey:@"lastName"]];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     // Configure the cell...
     
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [indexTableViewTitles objectAtIndex:section];
+}
+
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return indexTableViewTitles;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+    return index;
 }
 
 /*
@@ -179,7 +199,7 @@
         NSArray *elements = [namesArray filteredArrayUsingPredicate:predicate];
         for (NSUInteger counter = 0; counter < resultSetArray.count; counter ++) {
             for (NSUInteger i2 = 0; i2 < elements.count; i2++) {
-                NSString *fullArrayName = [NSString stringWithFormat:@"%@", [[[resultSetArray objectAtIndex:counter]valueForKey:@"data"]valueForKey:@"name"]];
+                NSString *fullArrayName = [NSString stringWithFormat:@"%@ %@", [[resultSetArray objectAtIndex:counter]valueForKey:@"firstName"], [[resultSetArray objectAtIndex:counter]valueForKey:@"lastName"]];
                 NSString *elementsName = [NSString stringWithFormat:@"%@", [elements objectAtIndex:i2]];
                 if ([elementsName isEqualToString:fullArrayName]) {
                     [sectionContent addObject:[resultSetArray objectAtIndex:counter]];
