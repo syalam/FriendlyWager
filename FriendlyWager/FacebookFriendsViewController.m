@@ -180,7 +180,7 @@
         UILabel *fwLabel = [[UILabel alloc]initWithFrame:CGRectMake(260, 12, 40, 20)];
         fwLabel.text = @"FW";
         [cell addSubview:fwLabel];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     cell.textLabel.text = [[contentForThisRow valueForKey:@"data"]valueForKey:@"name"];
