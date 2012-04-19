@@ -7,6 +7,7 @@
 //
 
 #import "ContactInviteViewController.h"
+#import "JSONKit.h"
 
 @interface ContactInviteViewController ()
 
@@ -29,6 +30,7 @@
     [super viewDidLoad];
     
     indexTableViewTitles = [[NSMutableArray alloc]init];
+    selectedItems = [[NSMutableDictionary alloc]init];
     
     addressBook = ABAddressBookCreate();
     ABRecordRef ref = ABAddressBookCopyDefaultSource(addressBook);
@@ -66,6 +68,10 @@
     }
     
     [self sortSections:allContactsArray];
+    
+    
+    UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc]initWithTitle:@"Select" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = inviteButton;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -109,6 +115,13 @@
     cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [contentForThisRow valueForKey:@"firstName"], [contentForThisRow valueForKey:@"lastName"]];
+    
+    if ([selectedItems objectForKey:[NSString stringWithFormat:@"item %d %d", indexPath.section, indexPath.row]]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+    else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -173,13 +186,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    NSArray *sectionContents = [_contentList objectAtIndex:indexPath.section];
+    id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
+    
+    if ([selectedItems objectForKey:[NSString stringWithFormat:@"item %d %d", indexPath.section, indexPath.row]]) {
+        [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
+        [selectedItems removeObjectForKey:[NSString stringWithFormat:@"item %d %d", indexPath.section, indexPath.row]];
+    }
+    else {
+        [selectedItems setObject:contentForThisRow forKey:[NSString stringWithFormat:@"item %d %d", indexPath.section, indexPath.row]];
+        [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+    }
 }
 
 #pragma mark - Helper Methods
@@ -215,6 +232,45 @@
     }
     [self setContentList:itemsToDisplay];
     [self.tableView reloadData];
+}
+
+#pragma mark - Button Clicks
+- (void)inviteButtonClicked:(id) sender {
+    NSMutableArray *inviteeArray = [[NSMutableArray alloc]init];
+    if (selectedItems.count > 0) {
+        NSString *jsonString = [[selectedItems allValues] JSONString];
+        NSMutableArray *selectedItemsArray = [[NSMutableArray alloc]initWithCapacity:1];
+        selectedItemsArray = [jsonString objectFromJSONString];
+        
+        NSLog(@"%@", selectedItemsArray);
+        
+        for (NSUInteger i = 0; i < selectedItemsArray.count; i++) {
+            NSArray *emailArray = [[selectedItemsArray objectAtIndex:i]valueForKey:@"emails"];
+            for (NSUInteger i2 = 0; i2 < emailArray.count; i++) {
+                if (![[emailArray objectAtIndex:i2] isEqualToString:@""]) {
+                    [inviteeArray addObject:[emailArray objectAtIndex:i2]];
+                }
+            }
+        }
+        
+        if ([MFMailComposeViewController canSendMail]) {
+            MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+            mailer.mailComposeDelegate = self;
+            
+            [mailer setToRecipients:inviteeArray];
+            [mailer setMessageBody:@"Join Friendly Wager. It's Awesome!" isHTML:NO];
+            
+            [self presentModalViewController:mailer animated:YES];
+        }
+        else {
+            NSLog(@"%@", @"Unable to send an email from this device");
+        }
+    }
+    
+    else {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please select the contacts whom you'd like to invite to Friendly Wager" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
 
 }
 

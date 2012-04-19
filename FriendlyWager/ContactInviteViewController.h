@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import <MessageUI/MessageUI.h>
 
-@interface ContactInviteViewController : UITableViewController {
+@interface ContactInviteViewController : UITableViewController <MFMailComposeViewControllerDelegate> {
     ABAddressBookRef addressBook;
     CFArrayRef allPeople;
     CFIndex nPeople;
     
     NSMutableArray *indexTableViewTitles;
+    NSMutableDictionary *selectedItems;
 }
 
 @property (nonatomic, retain) NSMutableArray *contentList;
