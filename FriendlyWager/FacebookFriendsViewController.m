@@ -177,10 +177,15 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     if ([[contentForThisRow valueForKey:@"isFW"]isEqualToString:@"YES"]) {
-        UILabel *fwLabel = [[UILabel alloc]initWithFrame:CGRectMake(260, 12, 40, 20)];
+        UILabel *fwLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 12, 40, 20)];
         fwLabel.text = @"FW";
         [cell addSubview:fwLabel];
-        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        if ([[contentForThisRow valueForKey:@"isFW"]isEqualToString:@"YES"]) {
+            if ([selectedItems objectForKey:[NSString stringWithFormat:@"item %d %d", indexPath.section, indexPath.row]]) {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            }
+        }
     }
     
     cell.textLabel.text = [[contentForThisRow valueForKey:@"data"]valueForKey:@"name"];
@@ -194,8 +199,6 @@
 
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    /*NSArray *indexTitles = [[NSArray alloc]initWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
-    return indexTitles;*/
     return indexTableViewTitles;
 }
 
@@ -246,36 +249,21 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([[[contentList objectAtIndex:indexPath.row]valueForKey:@"isFW"]isEqualToString:@"YES"]) {
-        if ([selectedItems objectForKey:[NSString stringWithFormat:@"item %d", indexPath.row]]) {
+    NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
+    id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
+    
+    if ([[contentForThisRow valueForKey:@"isFW"]isEqualToString:@"YES"]) {
+        if ([selectedItems objectForKey:[NSString stringWithFormat:@"item %d %d", indexPath.section, indexPath.row]]) {
             [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
-            [selectedItems removeObjectForKey:[NSString stringWithFormat:@"item %d", indexPath.row]];
+            [selectedItems removeObjectForKey:[NSString stringWithFormat:@"item %d %d", indexPath.section, indexPath.row]];
         }
         else {
-            [selectedItems setObject:[contentList objectAtIndex:indexPath.row] forKey:[NSString stringWithFormat:@"item %d", indexPath.row]];
+            [selectedItems setObject:contentForThisRow forKey:[NSString stringWithFormat:@"item %d %d", indexPath.section, indexPath.row]];
             [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
         }
-
-        
-        /*NSUserDefaults *fwData = [NSUserDefaults alloc];
-        NSString *fbUid = [NSString stringWithFormat:@"%@", [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"]valueForKey:@"uid"]];
-        PFQuery *query = [PFQuery queryForUser];
-        [query whereKey:@"fbId" equalTo:fbUid];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            NSLog(@"%@", objects);
-            if (!error) {
-                for (PFUser *opponentUser in objects) {
-                    MyActionSummaryViewController *newFBWager = [[MyActionSummaryViewController alloc]initWithNibName:@"MyActionSummaryViewController" bundle:nil];
-                    newFBWager.userToWager = opponentUser;
-                    [fwData setObject:[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"]valueForKey:@"name"] forKey:@"opponent"];
-                    [self.navigationController pushViewController:newFBWager animated:YES];
-                }
-            }
-        }];*/
     }
-    
     else {
-        NSString *userName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"]valueForKey:@"name"];
+        NSString *userName = [[contentForThisRow valueForKey:@"data"]valueForKey:@"name"];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:[NSString stringWithFormat:@"%@ %@ %@ %@", userName, @"is not a Friendly Wager user. Would you like to invite", userName, @"to Friendly Wager?"] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
         [alert show];
     }
