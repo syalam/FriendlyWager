@@ -29,6 +29,8 @@
 {
     [super viewDidLoad];
     
+    self.title = @"Invite Contacts";
+    
     indexTableViewTitles = [[NSMutableArray alloc]init];
     selectedItems = [[NSMutableDictionary alloc]init];
     
@@ -242,11 +244,12 @@
         NSMutableArray *selectedItemsArray = [[NSMutableArray alloc]initWithCapacity:1];
         selectedItemsArray = [jsonString objectFromJSONString];
         
-        NSLog(@"%@", selectedItemsArray);
+        NSLog(@"%@, %d objects", selectedItemsArray, selectedItemsArray.count);
         
         for (NSUInteger i = 0; i < selectedItemsArray.count; i++) {
             NSArray *emailArray = [[selectedItemsArray objectAtIndex:i]valueForKey:@"emails"];
-            for (NSUInteger i2 = 0; i2 < emailArray.count; i++) {
+            for (NSUInteger i2 = 0; i2 < emailArray.count; i2++) {
+                NSLog(@"%@", [emailArray objectAtIndex:i2]);
                 if (![[emailArray objectAtIndex:i2] isEqualToString:@""]) {
                     [inviteeArray addObject:[emailArray objectAtIndex:i2]];
                 }
@@ -257,6 +260,7 @@
             MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
             mailer.mailComposeDelegate = self;
             
+            [mailer setSubject:@"Friendly Wager Invitation"];
             [mailer setToRecipients:inviteeArray];
             [mailer setMessageBody:@"Join Friendly Wager. It's Awesome!" isHTML:NO];
             
@@ -272,6 +276,12 @@
         [alert show];
     }
 
+}
+
+#pragma mark - Mail composer delegate methods
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end
