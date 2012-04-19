@@ -73,7 +73,12 @@
     
     
     UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc]initWithTitle:@"Select" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteButtonClicked:)];
+    inviteButton.tintColor = [UIColor blackColor];
     self.navigationItem.rightBarButtonItem = inviteButton;
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
+    backButton.tintColor = [UIColor blackColor];
+    self.navigationItem.leftBarButtonItem = backButton;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -276,6 +281,10 @@
         [alert show];
     }
 
+}
+
+- (void)backButtonClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Mail composer delegate methods
