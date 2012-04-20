@@ -134,7 +134,19 @@
                 allFbUid = [NSString stringWithFormat:@"%@",[[allFbFriends objectAtIndex:i]valueForKey:@"uid"]];
                 fwFbUid = [NSString stringWithFormat:@"%@",[[FWFriends objectAtIndex:c]valueForKey:@"uid"]];
                 if ([allFbUid isEqualToString:fwFbUid]) {
+                    if (_wagerInProgress) {
+                        for (NSUInteger i2 = 0; i2 < _opponentsToWager.count; i2++) {
+                            NSString *existingOpponentName = [[NSString stringWithFormat:@"%@", [[_opponentsToWager objectAtIndex:i2]objectForKey:@"name"]]lowercaseString];
+                            NSString *fbFriendName = [[NSString stringWithFormat:@"%@", [[allFbFriends objectAtIndex:i]valueForKey:@"name"]]lowercaseString];
+                            
+                            if (![existingOpponentName isEqualToString:fbFriendName]) {
+                                [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"YES", @"isFW", nil]];
+                            }
+                        }
+                    }
+                    else {
                         [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"YES", @"isFW", nil]];
+                    }
                 }
                 else {
                     [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"NO", @"isFW", nil]];
