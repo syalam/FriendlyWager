@@ -72,6 +72,8 @@
         for (NSUInteger i = 0; i < _additionalOpponents.count; i++) {
             [addOpponents addObject:[_additionalOpponents objectAtIndex:i]];
         }
+        _additionalOpponents = nil;
+        
         [self setOpponentsToWager:addOpponents];
     }
     

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "NewWagerViewController.h"
 
 @interface OpponentSearchViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UISearchBar *searchBar;
@@ -16,5 +17,8 @@
 
 @property (nonatomic, retain)NSMutableArray* contentList;
 @property (nonatomic, retain)IBOutlet UITableView *searchTableView;
+@property (nonatomic, retain) NSMutableArray *opponentsToWager;
+@property (nonatomic)BOOL wagerInProgress;
+@property (nonatomic, retain) NewWagerViewController *viewController;
 
 @end

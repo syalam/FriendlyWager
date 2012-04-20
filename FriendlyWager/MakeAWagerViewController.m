@@ -65,17 +65,29 @@
     }
     [self setContentList:wagersArray];
     
-    UIImage *homeButtonImage = [UIImage imageNamed:@"FW_PG2_HomeButton"];
-    UIButton *homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    homeButton.bounds = CGRectMake( 0, 0, homeButtonImage.size.width, homeButtonImage.size.height );
-    [homeButton setImage:homeButtonImage forState:UIControlStateNormal];
-    [homeButton addTarget:self action:@selector(homeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *homeNavButton = [[UIBarButtonItem alloc] initWithCustomView:homeButton];
-    [homeNavButton setTarget:self];
-    [homeNavButton setAction:@selector(homeButtonClicked:)];
-    
-    self.navigationItem.leftBarButtonItem = homeNavButton;
+    if (_wagerInProgress) {
+        UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+        UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
+        [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
+        [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
+        
+        self.navigationItem.leftBarButtonItem = backButton;
+    }
+    else {
+        UIImage *homeButtonImage = [UIImage imageNamed:@"FW_PG2_HomeButton"];
+        UIButton *homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        homeButton.bounds = CGRectMake( 0, 0, homeButtonImage.size.width, homeButtonImage.size.height );
+        [homeButton setImage:homeButtonImage forState:UIControlStateNormal];
+        [homeButton addTarget:self action:@selector(homeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *homeNavButton = [[UIBarButtonItem alloc] initWithCustomView:homeButton];
+        [homeNavButton setTarget:self];
+        [homeNavButton setAction:@selector(homeButtonClicked:)];
+        
+        self.navigationItem.leftBarButtonItem = homeNavButton;
+    }
 
 }
 
@@ -136,6 +148,11 @@
     
     if (indexPath.section == 0) {
         OpponentSearchViewController *search = [[OpponentSearchViewController alloc]initWithNibName:@"OpponentSearchViewController" bundle:nil];
+        if (_wagerInProgress) {
+            search.wagerInProgress = YES;
+            search.opponentsToWager = _opponentsToWager;
+            search.viewController = _viewController;
+        }
         [self.navigationController pushViewController:search animated:YES];
     }
     else if (indexPath.section == 1) {
@@ -186,6 +203,10 @@
 #pragma mark - Button Clicks
 - (void)homeButtonClicked:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)backButtonClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

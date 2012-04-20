@@ -19,13 +19,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "FriendlyWager/OpponentSearchViewController.m"
-         timestampString = "356572221.590827"
+         filePath = "FriendlyWager/PreviouslyWageredViewController.m"
+         timestampString = "356591288.139349"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "108"
-         endingLineNumber = "108"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
+         startingLineNumber = "46"
+         endingLineNumber = "46"
+         landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

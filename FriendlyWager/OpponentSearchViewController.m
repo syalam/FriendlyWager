@@ -7,10 +7,14 @@
 //
 
 #import "OpponentSearchViewController.h"
+#import "ScoresViewController.h"
 
 @implementation OpponentSearchViewController
 @synthesize contentList;
 @synthesize searchTableView;
+@synthesize wagerInProgress = _wagerInProgress;
+@synthesize opponentsToWager = _opponentsToWager;
+@synthesize viewController = _viewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -56,12 +60,19 @@
     NSString *stringToSearch = [searchBar.text lowercaseString];
     PFQuery *getUsers = [PFQuery queryForUser];
     [getUsers whereKey:@"name" containsString:stringToSearch];
+    if (_wagerInProgress) {
+        NSMutableArray *objectIds = [[NSMutableArray alloc]init];
+        for (NSUInteger i = 0; i < _opponentsToWager.count; i++) {
+            [objectIds addObject:[[_opponentsToWager objectAtIndex:i]objectId]];
+        }
+        [getUsers whereKey:@"objectId" notContainedIn:objectIds];
+    }
     [getUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             NSLog(@"%@", objects);
             NSMutableArray *searchDataArray = [[NSMutableArray alloc]initWithCapacity:1];
             for (PFObject *object in objects) {
-                [searchDataArray addObject:objects];
+                [searchDataArray addObject:object];
             }
             [self setContentList:searchDataArray];
             [self.searchDisplayController.searchResultsTableView reloadData];
@@ -92,7 +103,12 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    [self.parentViewController dismissModalViewControllerAnimated:YES];
+    [self.searchDisplayController.searchBar resignFirstResponder];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    [self fetchSearchResults];
 }
 
 #pragma mark - Table view data source
@@ -105,18 +121,30 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    id contentForThisRow = [contentList objectAtIndex:indexPath.row];
-    
     static NSString *CellIdentifier = @"MakeAWagerTableViewCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    PFObject *userToDisplay = [contentList objectAtIndex:indexPath.row];
-    NSLog(@"%@", userToDisplay);
-    cell.textLabel.text = [contentForThisRow objectForKey:@"username"];
-    //cell.textLabel.text = [[contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
+    
+    cell.textLabel.text = [[contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
+    
     return cell;
+}
+
+#pragma mark - UITableview delegate methods
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSMutableArray *selectedFriendsArray = [[NSMutableArray alloc]initWithObjects:[contentList objectAtIndex:indexPath.row], nil];
+    if (_wagerInProgress) {
+        _viewController.additionalOpponents = selectedFriendsArray;
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -3)] animated:YES];
+    }
+    else {
+        ScoresViewController *scores = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
+        scores.opponentsToWager = selectedFriendsArray;
+        [self.navigationController pushViewController:scores animated:YES];
+    }
+
 }
 
 @end
