@@ -53,10 +53,12 @@
 #pragma mark Search Methods
 -(void)fetchSearchResults
 {
-    PFQuery *getUsers = [PFQuery queryWithClassName:@"User"];
-    [getUsers whereKey:@"username" containsString:searchBar.text];
+    NSString *stringToSearch = [searchBar.text lowercaseString];
+    PFQuery *getUsers = [PFQuery queryForUser];
+    [getUsers whereKey:@"name" containsString:stringToSearch];
     [getUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
+            NSLog(@"%@", objects);
             NSMutableArray *searchDataArray = [[NSMutableArray alloc]initWithCapacity:1];
             for (PFObject *object in objects) {
                 [searchDataArray addObject:objects];
@@ -99,16 +101,21 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return contentList.count;
+    return self.contentList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    id contentForThisRow = [contentList objectAtIndex:indexPath.row];
+    
     static NSString *CellIdentifier = @"MakeAWagerTableViewCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.text = [[contentList objectAtIndex:indexPath.row]objectForKey:@"userName"];
+    PFObject *userToDisplay = [contentList objectAtIndex:indexPath.row];
+    NSLog(@"%@", userToDisplay);
+    cell.textLabel.text = [contentForThisRow objectForKey:@"username"];
+    //cell.textLabel.text = [[contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
     return cell;
 }
 

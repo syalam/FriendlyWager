@@ -100,10 +100,10 @@
     }
     else {
         PFUser *user = [PFUser user];
-        user.username = userNameTextField.text;
+        user.username = [userNameTextField.text lowercaseString];
         user.password = passwordTextField.text;
         user.email = emailAddressTextField.text;
-        [user setObject:[NSString stringWithFormat:@"%@ %@", firstNameTextField.text, lastNameTextField.text] forKey:@"name"];
+        [user setObject:[[NSString stringWithFormat:@"%@ %@", firstNameTextField.text, lastNameTextField.text] lowercaseString] forKey:@"name"];
         [user setObject:favoriteSportTextField.text forKey:@"favorite_sport"];
         [user setObject:favoriteTeamTextField.text forKey:@"favorite_team"];
         [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {

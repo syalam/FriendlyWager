@@ -141,8 +141,8 @@
 - (void)request:(PF_FBRequest *)request didLoad:(id)result {
     //save the users username and email address to parse
     PFUser *user = [PFUser currentUser];
-    user.username = [result objectForKey:@"username"];
-    [user setObject:[result objectForKey:@"name"] forKey:@"name"];
+    user.username = [[result objectForKey:@"username"]lowercaseString];
+    [user setObject:[[result objectForKey:@"name"] lowercaseString] forKey:@"name"];
     [user setObject:[result objectForKey:@"id"] forKey:@"fbId"];
     user.email = [result objectForKey:@"email"];
     [user saveInBackground];

@@ -134,10 +134,11 @@
     picker.peoplePickerDelegate = self;
     
     
-    if ([contentForThisRow isEqualToString:@"Search for Opponent"]) {
-        
+    if (indexPath.section == 0) {
+        OpponentSearchViewController *search = [[OpponentSearchViewController alloc]initWithNibName:@"OpponentSearchViewController" bundle:nil];
+        [self.navigationController pushViewController:search animated:YES];
     }
-    else if ([contentForThisRow isEqualToString:@"Previously Wagered"]) {
+    else if (indexPath.section == 1) {
         PreviouslyWageredViewController *pwvc = [[PreviouslyWageredViewController alloc]initWithNibName:@"PreviouslyWageredViewController" bundle:nil];
         if (_wagerInProgress) {
             pwvc.wagerInProgress = YES;
@@ -147,7 +148,7 @@
         
         [self.navigationController pushViewController:pwvc animated:YES];
     }    
-    else if ([contentForThisRow isEqualToString:@"Facebook Friend"]) {
+    else if (indexPath.section == 2) {
         PFUser *currentUser = [PFUser currentUser];
         if ([PFFacebookUtils isLinkedWithUser:currentUser]) {
             FacebookFriendsViewController *facebookFriends = [[FacebookFriendsViewController alloc]initWithNibName:@"FacebookFriendsViewController" bundle:nil];
@@ -163,17 +164,18 @@
             [alert show];
         }        
     }
-    else if ([contentForThisRow isEqualToString:@"Twitter Follower"]) {
+    else if (indexPath.section == 3) {
         TwitterFollowersViewController *twitterFollowers = [[TwitterFollowersViewController alloc]initWithNibName:@"TwitterFollowersViewController" bundle:nil];
         [self.navigationController pushViewController:twitterFollowers animated:YES];
     }
     else if ([contentForThisRow isEqualToString:@"Random Opponent"]) {
         
     }
-    else if (indexPath.section == 3) {
-        OpponentSearchViewController *search = [[OpponentSearchViewController alloc]initWithNibName:@"OpponentSearchViewController" bundle:nil];
-        [self.navigationController pushViewController:search animated:YES];
+
+    else if (indexPath.section == 4) {
+        NSLog(@"%@", @"Random Selected");
     }
+    
     else if (indexPath.section == 5) {
         ContactInviteViewController *civc = [[ContactInviteViewController alloc]initWithNibName:@"ContactInviteViewController" bundle:nil];
         [self.navigationController pushViewController:civc animated:YES];

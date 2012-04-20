@@ -19,14 +19,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         isPathRelative = "1"
          filePath = "FriendlyWager/OpponentSearchViewController.m"
-         timestampString = "350508425.346239"
+         timestampString = "356572221.590827"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "59"
-         endingLineNumber = "59"
-         landmarkName = "-fetchSearchResults"
+         startingLineNumber = "108"
+         endingLineNumber = "108"
+         landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

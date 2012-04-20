@@ -1137,9 +1137,9 @@
 		F714E16914A1A88400E24956 /* FriendlyWager */ = {
 			isa = PBXGroup;
 			children = (
-				F7F5F5DC1540B39600D1ED7C /* Contact Invite */,
 				F714E17214A1A88400E24956 /* AppDelegate.h */,
 				F714E17314A1A88400E24956 /* AppDelegate.m */,
+				F7F5F5DC1540B39600D1ED7C /* Contact Invite */,
 				F724468514D0C8A90009E001 /* Authentication */,
 				F714E1A214A1B00000E24956 /* Home */,
 				F714E1ED14A1BE2600E24956 /* Ledger */,
