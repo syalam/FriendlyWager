@@ -42,7 +42,9 @@
 {
     [super viewDidLoad];
     
-    self.title = @"New Wager";
+    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
+    self.navigationItem.titleView = titleImageView;
+    
     UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );

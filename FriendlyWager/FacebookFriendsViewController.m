@@ -290,8 +290,8 @@
 }
 
 -(void)selectButtonClicked:(id)sender {
-    [SVProgressHUD dismiss];
     if (selectedItems.count > 0) {
+        [SVProgressHUD showWithStatus:@"Initiating Wager"];
         NSString *jsonString = [[selectedItems allValues] JSONString];
         NSMutableArray *selectedItemsArray = [[NSMutableArray alloc]initWithCapacity:1];
         selectedItemsArray = [jsonString objectFromJSONString];
@@ -321,7 +321,13 @@
                         scores.opponentsToWager = peopleToWagerArray;
                         [self.navigationController pushViewController:scores animated:YES];
                     }
+                    [SVProgressHUD dismiss];
                 }
+            }
+            else {
+                [SVProgressHUD dismiss];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to create a wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
             }
         }];
     }

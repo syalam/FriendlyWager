@@ -33,7 +33,8 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Previously Wagered";
+    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
+    self.navigationItem.titleView = titleImageView;
     
     [self.navigationController setNavigationBarHidden:NO];
     
