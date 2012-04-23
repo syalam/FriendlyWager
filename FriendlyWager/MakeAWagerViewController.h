@@ -10,6 +10,7 @@
 #import <Twitter/Twitter.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import <Parse/Parse.h>
 #import "NewWagerViewController.h"
 
 @interface MakeAWagerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ABPeoplePickerNavigationControllerDelegate> {
@@ -20,5 +21,7 @@
 @property (nonatomic, retain) NSMutableArray *opponentsToWager;
 @property (nonatomic)BOOL wagerInProgress;
 @property (nonatomic, retain) NewWagerViewController *viewController;
+
+- (void)selectRandomOpponent;
 
 @end

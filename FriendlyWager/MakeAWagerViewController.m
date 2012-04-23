@@ -14,6 +14,7 @@
 #import "OpponentSearchViewController.h"
 #import "PreviouslyWageredViewController.h"
 #import "ContactInviteViewController.h"
+#import "ScoresViewController.h"
 
 @implementation MakeAWagerViewController
 @synthesize wagerInProgress = _wagerInProgress;
@@ -139,9 +140,6 @@
 
 #pragma mark - TableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
-    id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
-    
     ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
     picker.peoplePickerDelegate = self;
     
@@ -185,12 +183,10 @@
         TwitterFollowersViewController *twitterFollowers = [[TwitterFollowersViewController alloc]initWithNibName:@"TwitterFollowersViewController" bundle:nil];
         [self.navigationController pushViewController:twitterFollowers animated:YES];
     }
-    else if ([contentForThisRow isEqualToString:@"Random Opponent"]) {
-        
-    }
 
     else if (indexPath.section == 4) {
         NSLog(@"%@", @"Random Selected");
+        [self selectRandomOpponent];
     }
     
     else if (indexPath.section == 5) {
@@ -267,6 +263,21 @@
             }
         }];
     }
+}
+
+#pragma mark - Helper Methods
+- (void)selectRandomOpponent {
+    PFQuery *getOpponents = [PFQuery queryForUser];
+    [getOpponents whereKey:@"objectId" notEqualTo:[[PFUser currentUser]objectId]];
+    [getOpponents findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            int randomNum = arc4random() % objects.count;
+            NSMutableArray *userToWager = [[NSMutableArray alloc]initWithObjects:[objects objectAtIndex:randomNum], nil];
+            ScoresViewController *scores = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
+            scores.opponentsToWager = userToWager;
+            [self.navigationController pushViewController:scores animated:YES];
+        } 
+    }];
 }
 
 
