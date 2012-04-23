@@ -48,6 +48,7 @@
     }
     [previouslyWageredQuery whereKey:@"wager" equalTo:[PFUser currentUser]];
     [previouslyWageredQuery orderByDescending:@"createdAt"];
+    previouslyWageredQuery.limit = 20;
     [previouslyWageredQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (objects.count > 0) {
