@@ -10,9 +10,19 @@
 #import <Parse/Parse.h>
 #import "NewWagerViewController.h"
 
+typedef enum apiCall {
+    kAPIRetrieveFriendList,
+    kAPIInviteFriendToFW,
+} apiCall;
+
+
+
 @interface FacebookFriendsViewController : UITableViewController <PF_FBRequestDelegate> {
     NSMutableDictionary *selectedItems;
     NSMutableArray *indexTableViewTitles;
+    
+    int currentApiCall;
+    NSString *uid; 
 }
 
 @property (nonatomic, retain) NSMutableArray *contentList;
@@ -21,5 +31,6 @@
 @property (nonatomic, retain) NewWagerViewController *viewController;
 
 - (void)sortSections:(NSMutableArray *)resultSetArray;
+- (void)sendFacebookRequest;
 
 @end

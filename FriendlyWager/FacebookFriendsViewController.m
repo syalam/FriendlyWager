@@ -53,7 +53,8 @@
     
     UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
     self.navigationItem.titleView = titleImageView;
-        
+    
+    currentApiCall = kAPIRetrieveFriendList;    
     NSString *getAllFriends = @"{'getAllFriends':'SELECT uid, name, username FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) order by name asc'";
     NSString *getFWFriends = @"'getFWFriends':'SELECT uid, name FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1'}";
     NSString *fql = [NSString stringWithFormat:@"%@%,%@", getAllFriends, getFWFriends];
@@ -110,60 +111,81 @@
 }
 
 #pragma mark - Facebook Callback Methods
+- (void)sendFacebookRequest {
+    //TODO: Add picture and link keys to this dictionary
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"You should download Friendly Wager. It's Awesome!", @"message", nil];
+    [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", uid] andParams:params andHttpMethod:@"POST" andDelegate:self];
+}
+
 - (void)request:(PF_FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
     NSLog(@"received response");
 }
 
 - (void)request:(PF_FBRequest *)request didLoad:(id)result {
     [SVProgressHUD dismiss];
-    if ([result objectForKey:@"data"]) {
-        NSMutableArray *resultSetArray = [[NSMutableArray alloc]initWithCapacity:1];
-        NSMutableArray *resultSetArray1 = [[NSMutableArray alloc]initWithCapacity:1];
-        NSMutableArray *allFbFriends = [[NSMutableArray alloc]initWithCapacity:1];
-        NSMutableArray *FWFriends = [[NSMutableArray alloc]initWithCapacity:1];
-        NSMutableDictionary *resultSetDictionary = [[NSMutableDictionary alloc]initWithDictionary:result];
-        for (id key in resultSetDictionary) {
-            resultSetArray1 = [resultSetDictionary valueForKey:key];
-            allFbFriends = [[resultSetArray1 objectAtIndex:0]valueForKey:@"fql_result_set"];
-            FWFriends = [[resultSetArray1 objectAtIndex:1]valueForKey:@"fql_result_set"];
-        }
-        NSString *allFbUid;
-        NSString *fwFbUid;
-        for (NSUInteger i = 0; i < allFbFriends.count; i++) {
-            for (NSUInteger c = 0; c < FWFriends.count; c++) {
-                allFbUid = [NSString stringWithFormat:@"%@",[[allFbFriends objectAtIndex:i]valueForKey:@"uid"]];
-                fwFbUid = [NSString stringWithFormat:@"%@",[[FWFriends objectAtIndex:c]valueForKey:@"uid"]];
-                if ([allFbUid isEqualToString:fwFbUid]) {
-                    if (_wagerInProgress) {
-                        for (NSUInteger i2 = 0; i2 < _opponentsToWager.count; i2++) {
-                            NSString *existingOpponentName = [[NSString stringWithFormat:@"%@", [[_opponentsToWager objectAtIndex:i2]objectForKey:@"name"]]lowercaseString];
-                            NSString *fbFriendName = [[NSString stringWithFormat:@"%@", [[allFbFriends objectAtIndex:i]valueForKey:@"name"]]lowercaseString];
-                            
-                            if (![existingOpponentName isEqualToString:fbFriendName]) {
-                                [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"YES", @"isFW", nil]];
+    if (currentApiCall == kAPIRetrieveFriendList) {
+        if ([result objectForKey:@"data"]) {
+            NSMutableArray *resultSetArray = [[NSMutableArray alloc]initWithCapacity:1];
+            NSMutableArray *resultSetArray1 = [[NSMutableArray alloc]initWithCapacity:1];
+            NSMutableArray *allFbFriends = [[NSMutableArray alloc]initWithCapacity:1];
+            NSMutableArray *FWFriends = [[NSMutableArray alloc]initWithCapacity:1];
+            NSMutableDictionary *resultSetDictionary = [[NSMutableDictionary alloc]initWithDictionary:result];
+            for (id key in resultSetDictionary) {
+                resultSetArray1 = [resultSetDictionary valueForKey:key];
+                allFbFriends = [[resultSetArray1 objectAtIndex:0]valueForKey:@"fql_result_set"];
+                FWFriends = [[resultSetArray1 objectAtIndex:1]valueForKey:@"fql_result_set"];
+            }
+            NSString *allFbUid;
+            NSString *fwFbUid;
+            for (NSUInteger i = 0; i < allFbFriends.count; i++) {
+                for (NSUInteger c = 0; c < FWFriends.count; c++) {
+                    allFbUid = [NSString stringWithFormat:@"%@",[[allFbFriends objectAtIndex:i]valueForKey:@"uid"]];
+                    fwFbUid = [NSString stringWithFormat:@"%@",[[FWFriends objectAtIndex:c]valueForKey:@"uid"]];
+                    if ([allFbUid isEqualToString:fwFbUid]) {
+                        if (_wagerInProgress) {
+                            for (NSUInteger i2 = 0; i2 < _opponentsToWager.count; i2++) {
+                                NSString *existingOpponentName = [[NSString stringWithFormat:@"%@", [[_opponentsToWager objectAtIndex:i2]objectForKey:@"name"]]lowercaseString];
+                                NSString *fbFriendName = [[NSString stringWithFormat:@"%@", [[allFbFriends objectAtIndex:i]valueForKey:@"name"]]lowercaseString];
+                                
+                                if (![existingOpponentName isEqualToString:fbFriendName]) {
+                                    [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"YES", @"isFW", nil]];
+                                }
                             }
+                        }
+                        else {
+                            [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"YES", @"isFW", nil]];
                         }
                     }
                     else {
-                        [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"YES", @"isFW", nil]];
+                        [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"NO", @"isFW", nil]];
                     }
                 }
-                else {
-                    [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"NO", @"isFW", nil]];
-                }
             }
+            
+            [self sortSections:resultSetArray];
+            
         }
-        
-        [self sortSections:resultSetArray];
-        
+
+    }
+    else if (currentApiCall == kAPIInviteFriendToFW) {
+        NSLog(@"%@", @"Successfully Invited!");
     }
 }
 
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
     [SVProgressHUD dismiss];
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to retrieve your facebook friend list at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    NSString *message;
+    if (currentApiCall == kAPIRetrieveFriendList) {
+        message = @"Unable to retrieve your facebook friend list at this time. Please try again later";
+    }
+    else {
+        message = @"Unable to invite this friend at this time. Please try again later";
+    }
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
 }
+
+
 
 #pragma mark - Table view data source
 
@@ -275,9 +297,11 @@
         }
     }
     else {
+        uid = [[contentForThisRow valueForKey:@"data"]valueForKey:@"uid"];
         NSString *userName = [[contentForThisRow valueForKey:@"data"]valueForKey:@"name"];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:[NSString stringWithFormat:@"%@ %@ %@ %@", userName, @"is not a Friendly Wager user. Would you like to invite", userName, @"to Friendly Wager?"] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
         [alert show];
+        
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -373,6 +397,19 @@
     [self setContentList:itemsToDisplay];
     [self.tableView reloadData];
 
+}
+
+#pragma mark - UIAlertView Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 1:
+            currentApiCall = kAPIInviteFriendToFW;
+            [self sendFacebookRequest];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end
