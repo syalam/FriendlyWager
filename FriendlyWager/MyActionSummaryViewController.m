@@ -151,11 +151,14 @@
     [queryForWagered findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             NSMutableArray *currentArray = [[NSMutableArray alloc]init];
-            //NSMutableArray *pendingArray = [[NSMutableArray alloc]init];
+            NSMutableArray *pendingArray = [[NSMutableArray alloc]init];
             NSMutableArray *historyArray = [[NSMutableArray alloc]init];
             for (PFObject *wager in objects) {
                 if ([wager objectForKey:@"finalScore"]) {
                     [historyArray addObject:wager];
+                }
+                else if ([wager objectForKey:@"wagerAccepted"] == [NSNumber numberWithBool:NO]) {
+                    [pendingArray addObject:wager];
                 }
                 else {
                     [currentArray addObject:wager];
@@ -170,15 +173,22 @@
                         if ([wagee objectForKey:@"finalScore"]) {
                             [historyArray addObject:wagee];
                         }
+                        else if ([wagee objectForKey:@"wagerAccepted"] == [NSNumber numberWithBool:NO]) {
+                            [pendingArray addObject:wagee];
+                        }
                         else {
                             [currentArray addObject:wagee];
                         }
                     } 
                     NSString *currentWagerCount = [NSString stringWithFormat:@"%d", currentArray.count];
+                    NSString *pendingWagerCount = [NSString stringWithFormat:@"%d", pendingArray.count];
                     NSString *historyWagerCount = [NSString stringWithFormat:@"%d", historyArray.count];
+                    NSLog(@"%@", currentWagerCount);
+                    NSLog(@"%@", pendingWagerCount);
+                    NSLog(@"%@", historyWagerCount);
                     
                     NSArray *currentWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Current", @"type", currentWagerCount, @"wagers",currentArray, @"wagerObjects", nil], nil];
-                    NSArray *pendingWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Pending", @"type", @"0", @"wagers", nil] , nil];
+                    NSArray *pendingWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Pending", @"type", pendingWagerCount, @"wagers", pendingArray, @"wagerObjects", nil] , nil];
                     NSArray *historyWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"History", @"type", historyWagerCount, @"wagers", historyArray, @"wagerObjects", nil], nil];
                     
                     wagersArray = [[NSArray alloc]initWithObjects:currentWagersArray, pendingWagersArray, historyWagersArray, nil];
@@ -253,6 +263,7 @@
     
     static NSString *CellIdentifier = @"MyActionDetailTableViewCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    cell = nil;
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         UILabel *wagerType = [[UILabel alloc]initWithFrame:CGRectMake(47, 10, 105, 20)];
@@ -283,14 +294,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
     id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
-    if (indexPath.section == 0) {
-        MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil];
-        actionDetail.wagerType = [contentForThisRow objectForKey:@"type"];
-        actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
-        actionDetail.opponent = _userToWager;
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        [self.navigationController pushViewController:actionDetail animated:YES];
-    }
+    MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil];
+    actionDetail.wagerType = [contentForThisRow objectForKey:@"type"];
+    actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
+    actionDetail.opponent = _userToWager;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.navigationController pushViewController:actionDetail animated:YES];
 }
 
 #pragma mark - UIAlertView Delegate Methods

@@ -38,11 +38,10 @@
     actionHistoryTableView.delegate = self;
     actionHistoryTableView.dataSource = self;
     
+    
     detailWithPersonLabel.text = [NSString stringWithFormat:@"%@ %@ %@", _wagerType, @"with", [_opponent objectForKey:@"name"]];
     if ([_wagerType isEqualToString:@"Current"]) {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG6_BG"]]];
-        detailTableContents = [[NSMutableArray alloc]initWithArray:_wagerObjects];
-        NSLog(@"%@", _wagerObjects);
     }
     else if ([_wagerType isEqualToString:@"Pending"]) {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG7_BG"]]];
@@ -50,6 +49,9 @@
     else {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG8_BG"]]];
     }
+    indexPathArray = [[NSMutableArray alloc]init];
+    detailTableContents = [[NSMutableArray alloc]initWithArray:_wagerObjects];
+    NSLog(@"%@", _wagerObjects);
     
     UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -98,6 +100,7 @@
     
     PFObject *wagerObject = [detailTableContents objectAtIndex:indexPath.row];
     
+    
     NSDate *dateCreated = wagerObject.createdAt;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"M/d/yy"];
@@ -107,6 +110,20 @@
     teamLabel.text = [NSString stringWithFormat:@"%@ vs %@", [wagerObject objectForKey:@"team1"], [wagerObject objectForKey:@"team2"]];
     oddsLabel.text = [NSString stringWithFormat:@"+%@", [[wagerObject objectForKey:@"spread"]stringValue]];
     teamToWinLabel.text = [wagerObject objectForKey:@"teamWageredToWin"];
+    
+    
+    UIButton *acceptWagerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [acceptWagerButton addTarget:self action:@selector(acceptWagerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    acceptWagerButton.tag = indexPath.row;
+    [acceptWagerButton setFrame:CGRectMake(250, 12, 25, 25)];
+    acceptWagerButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [acceptWagerButton setTitle:@"✔" forState:UIControlStateNormal];
+    
+    UIButton *rejectWagerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [rejectWagerButton addTarget:self action:@selector(rejectWagerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    rejectWagerButton.tag = indexPath.row;
+    [rejectWagerButton setFrame:CGRectMake(280, 12, 25, 25)];
+    [rejectWagerButton setTitle:@"✘" forState:UIControlStateNormal];
     
     if ([wagerObject objectForKey:@"team1Score"] && [wagerObject objectForKey:@"team2Score"] && [wagerObject objectForKey:@"winningTeamId"]) {
         NSLog(@"%@", @"cool");
@@ -129,7 +146,26 @@
         [cell addSubview:oddsLabel];
         [cell addSubview:pointsLabel];
         [cell addSubview:teamToWinLabel];
+        
+        if ([_wagerType isEqualToString:@"Pending"]) {
+            UIButton *acceptWagerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            [acceptWagerButton addTarget:self action:@selector(acceptWagerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            acceptWagerButton.tag = indexPath.row;
+            [acceptWagerButton setFrame:CGRectMake(250, 12, 25, 25)];
+            acceptWagerButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+            [acceptWagerButton setTitle:@"✔" forState:UIControlStateNormal];
+            
+            UIButton *rejectWagerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            [rejectWagerButton addTarget:self action:@selector(rejectWagerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            rejectWagerButton.tag = indexPath.row;
+            [rejectWagerButton setFrame:CGRectMake(280, 12, 25, 25)];
+            [rejectWagerButton setTitle:@"✘" forState:UIControlStateNormal];
+            
+            [cell addSubview:acceptWagerButton];
+            [cell addSubview:rejectWagerButton];
+        }
     }
+    [indexPathArray addObject:indexPath];
     
     return cell;
 }
@@ -142,6 +178,41 @@
 #pragma mark - Button Clicks
 -(void)backButtonClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)acceptWagerButtonClicked:(id)sender {
+    NSUInteger tag = [sender tag];
+    NSIndexPath *indexPath = [indexPathArray objectAtIndex:tag];
+    PFObject *wagerObject = [detailTableContents objectAtIndex:tag];
+    [wagerObject setObject:[NSNumber numberWithBool:YES] forKey:@"wagerAccepted"];
+    [wagerObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            [detailTableContents removeObjectAtIndex:tag];
+            [indexPathArray removeObjectAtIndex:tag];
+            [actionHistoryTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to accept this wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
+}
+
+-(void)rejectWagerButtonClicked:(id)sender {
+    NSUInteger tag = [sender tag];
+    NSIndexPath *indexPath = [indexPathArray objectAtIndex:tag];
+    PFObject *wagerObject = [detailTableContents objectAtIndex:tag];
+    [wagerObject deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            [detailTableContents removeObjectAtIndex:tag];
+            [indexPathArray removeObjectAtIndex:tag];
+            [actionHistoryTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        } 
+        else {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to reject this wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
 }
 
 @end

@@ -286,6 +286,7 @@
             [createNewWager setObject:teamWageredId forKey:@"teamWageredToWinId"];
             [createNewWager setObject:teamWageredToWin forKey:@"teamWageredToWin"];
             [createNewWager setObject:[NSNumber numberWithInt:[spreadLabel.text intValue]] forKey:@"spread"];
+            [createNewWager setObject:[NSNumber numberWithBool:NO] forKey:@"wagerAccepted"];
             [createNewWager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
                     [SVProgressHUD dismiss];

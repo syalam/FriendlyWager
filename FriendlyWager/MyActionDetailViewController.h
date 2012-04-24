@@ -14,9 +14,9 @@
     IBOutlet UITableView *actionHistoryTableView;
     
     NSString *wagerOfType;
-    //NSString *opponent;
+    NSMutableArray *indexPathArray;
     
-    NSArray *detailTableContents;
+    NSMutableArray *detailTableContents;
 }
 
 @property (nonatomic, retain) PFObject *opponent;
