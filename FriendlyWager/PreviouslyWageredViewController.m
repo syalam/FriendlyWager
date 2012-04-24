@@ -73,7 +73,6 @@
                             else {
                                 [itemsToDisplay addObject:object];
                             }
-                            
                             [self setContentList:itemsToDisplay];
                             [self.tableView reloadData];
                         }

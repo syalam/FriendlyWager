@@ -51,8 +51,6 @@
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG8_BG"]]];
     }
     
-    //detailTableContents = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"8/2/11", @"date", @"Cubs", @"team", @"+4", @"odds", @"L", @"winLose", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"8/15/11", @"date", @"Suns", @"team", @"-4", @"odds", @"W", @"winLose", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"8/20/11", @"date", @"Cardinals", @"team", @"-3", @"odds", @"W", @"winLose", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"9/3/11", @"date", @"Bears", @"team", @"-40", @"odds", @"L", @"winLose", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"10/2/11", @"date", @"Cubs", @"team", @"+9", @"odds", @"W", @"winLose", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"11/7/11", @"date", @"Dodgers", @"team", @"+4", @"odds", @"W", @"winLose", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"11/22/11", @"date", @"Heat", @"team", @"+13", @"odds", @"W", @"winLose", nil], nil];
-    
     UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
@@ -87,10 +85,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, 70, 20)];
-    UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(85, 15, 105, 20)];
-    UILabel *oddsLabel = [[UILabel alloc]initWithFrame:CGRectMake(200, 15, 90, 20)];
-    UILabel *teamToWinLabel = [[UILabel alloc]initWithFrame:CGRectMake(260, 15, 100, 20)];
-    UILabel *winLoseLabel = [[UILabel alloc]initWithFrame:CGRectMake(290, 15, 15, 20)];
+    UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(65, 15, 105, 20)];
+    UILabel *oddsLabel = [[UILabel alloc]initWithFrame:CGRectMake(155, 15, 90, 20)];
+    UILabel *teamToWinLabel = [[UILabel alloc]initWithFrame:CGRectMake(200, 15, 100, 20)];
+    UILabel *pointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(290, 15, 15, 20)];
+    
+    dateLabel.font = [UIFont boldSystemFontOfSize:12];
+    teamLabel.font = [UIFont boldSystemFontOfSize:12];
+    oddsLabel.font = [UIFont boldSystemFontOfSize:12];
+    teamToWinLabel.font = [UIFont boldSystemFontOfSize:12];
+    pointsLabel.font = [UIFont boldSystemFontOfSize:12];
     
     PFObject *wagerObject = [detailTableContents objectAtIndex:indexPath.row];
     
@@ -103,30 +107,30 @@
     teamLabel.text = [NSString stringWithFormat:@"%@ vs %@", [wagerObject objectForKey:@"team1"], [wagerObject objectForKey:@"team2"]];
     oddsLabel.text = [NSString stringWithFormat:@"+%@", [[wagerObject objectForKey:@"spread"]stringValue]];
     teamToWinLabel.text = [wagerObject objectForKey:@"teamWageredToWin"];
-    winLoseLabel.text = @"";
     
-    /*dateLabel.text = [[detailTableContents objectAtIndex:indexPath.row]objectForKey:@"date"];
-    teamLabel.text = [[detailTableContents objectAtIndex:indexPath.row]objectForKey:@"team"];
-    oddsLabel.text = [[detailTableContents objectAtIndex:indexPath.row]objectForKey:@"odds"];
-    winLoseLabel.text = [[detailTableContents objectAtIndex:indexPath.row]objectForKey:@"winLose"];*/
+    if ([wagerObject objectForKey:@"team1Score"] && [wagerObject objectForKey:@"team2Score"] && [wagerObject objectForKey:@"winningTeamId"]) {
+        NSLog(@"%@", @"cool");
+    }
     
     dateLabel.backgroundColor = [UIColor clearColor];
     teamLabel.backgroundColor = [UIColor clearColor];
     oddsLabel.backgroundColor = [UIColor clearColor];
-    winLoseLabel.backgroundColor = [UIColor clearColor];
+    pointsLabel.backgroundColor = [UIColor clearColor];
     teamToWinLabel.backgroundColor = [UIColor clearColor];
     
     static NSString *CellIdentifier = @"MyActionDetailTableViewCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell addSubview:dateLabel];
+        [cell addSubview:teamLabel];
+        [cell addSubview:oddsLabel];
+        [cell addSubview:pointsLabel];
+        [cell addSubview:teamToWinLabel];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell addSubview:dateLabel];
-    [cell addSubview:teamLabel];
-    [cell addSubview:oddsLabel];
-    [cell addSubview:winLoseLabel];
-    [cell addSubview:teamToWinLabel];
+    
     return cell;
 }
 
