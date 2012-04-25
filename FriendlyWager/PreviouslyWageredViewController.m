@@ -77,8 +77,10 @@
                             [self.tableView reloadData];
                         }
                     }];
+                    NSLog(@"%@", @"iteration");
                 }
             }
+            
         }
         else {
             NSLog(@"%@", error);
