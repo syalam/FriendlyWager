@@ -11,6 +11,7 @@
 
 @interface MyActionDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UILabel *detailWithPersonLabel;
+    IBOutlet UILabel *pointLabel;
     IBOutlet UITableView *actionHistoryTableView;
     
     NSString *wagerOfType;

@@ -45,6 +45,7 @@
     }
     else if ([_wagerType isEqualToString:@"Pending"]) {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG7_BG"]]];
+        pointLabel.text = @"Accept";
     }
     else {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG8_BG"]]];

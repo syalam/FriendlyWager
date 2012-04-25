@@ -170,7 +170,7 @@
             [queryForWagee findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                 if (!error) {
                     for (PFObject *wagee in objects) {
-                        if ([wagee objectForKey:@"finalScore"]) {
+                        if ([wagee objectForKey:@"winningTeamId"]) {
                             [historyArray addObject:wagee];
                         }
                         else if ([wagee objectForKey:@"wagerAccepted"] == [NSNumber numberWithBool:NO]) {
