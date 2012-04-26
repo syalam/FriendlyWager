@@ -91,7 +91,7 @@
     UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(65, 15, 105, 20)];
     UILabel *oddsLabel = [[UILabel alloc]initWithFrame:CGRectMake(155, 15, 90, 20)];
     UILabel *teamToWinLabel = [[UILabel alloc]initWithFrame:CGRectMake(200, 15, 100, 20)];
-    UILabel *pointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(290, 15, 15, 20)];
+    UILabel *pointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(255, 15, 40, 20)];
     
     dateLabel.font = [UIFont boldSystemFontOfSize:12];
     teamLabel.font = [UIFont boldSystemFontOfSize:12];
@@ -109,8 +109,10 @@
     
     dateLabel.text = dateToDisplay;
     teamLabel.text = [NSString stringWithFormat:@"%@ vs %@", [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]];
+
     oddsLabel.text = [NSString stringWithFormat:@"+%@", [[wagerObject objectForKey:@"spread"]stringValue]];
-    if ([wagerObject objectForKey:@"wagee"]==[PFUser currentUser]) {
+    
+    if ([[[wagerObject objectForKey:@"wagee"]objectId] isEqualToString:[[PFUser currentUser]objectId]]) {
         teamToWinLabel.text = [wagerObject objectForKey:@"teamWageredToLose"];
     }
     else {
@@ -170,6 +172,9 @@
                 [cell addSubview:acceptWagerButton];
                 [cell addSubview:rejectWagerButton];
             }
+        }
+        else {
+            pointsLabel.text = [NSString stringWithFormat:@"%@ - %@", [[wagerObject objectForKey:@"teamWageredToWinScore"]stringValue], [[wagerObject objectForKey:@"teamWageredToLoseScore"]stringValue]];
         }
     }
     
