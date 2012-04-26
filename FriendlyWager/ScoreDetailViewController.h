@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface ScoreDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UITableView *scoreDetailTableView;
@@ -14,6 +15,8 @@
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil scoreData:(NSDictionary *)scoreData;
+
 @property (nonatomic, retain) NSArray* contentList;
+@property (nonatomic, retain) NSMutableDictionary* gameDataDictionary;
 
 @end

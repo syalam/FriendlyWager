@@ -208,6 +208,7 @@
     NSDictionary *dataDictionary = [leftArray objectAtIndex:index];
     if (!_opponentsToWager) {
         ScoreDetailViewController *scoreDetail = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil scoreData:dataDictionary];
+        scoreDetail.gameDataDictionary = [leftArray objectAtIndex:index];
         [self.navigationController pushViewController:scoreDetail animated:YES];
     }
     else {
@@ -227,6 +228,7 @@
     NSDictionary *dataDictionary = [rightArray objectAtIndex:index];
     if (!_opponentsToWager) {
         ScoreDetailViewController *scoreDetail = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil scoreData:dataDictionary];
+        scoreDetail.gameDataDictionary = [rightArray objectAtIndex:index];
         [self.navigationController pushViewController:scoreDetail animated:YES];
     }
     else {

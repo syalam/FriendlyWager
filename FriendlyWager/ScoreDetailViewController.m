@@ -11,6 +11,7 @@
 @implementation ScoreDetailViewController
 
 @synthesize contentList;
+@synthesize gameDataDictionary = _gameDataDictionary;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -49,19 +50,53 @@
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG10_BG"]]];
     
-    NSString *team = [scoreDataDictionary objectForKey:@"team1"];
-    NSString *score = [scoreDataDictionary objectForKey:@"team1Score"];
-    NSDictionary *team1Dictionary = [[NSDictionary alloc]initWithObjectsAndKeys: team, @"team", score, @"teamScore", nil];
+    NSMutableArray *firstSection = [[NSMutableArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:[_gameDataDictionary objectForKey:@"team1"], @"team", [_gameDataDictionary objectForKey:@"team1Score"], @"teamScore", nil], [NSDictionary dictionaryWithObjectsAndKeys:[_gameDataDictionary objectForKey:@"team2"], @"team", [_gameDataDictionary objectForKey:@"team2Score"], @"teamScore", nil], nil];
     
-    team = [scoreDataDictionary objectForKey:@"team2"];
-    score = [scoreDataDictionary objectForKey:@"team2Score"];
-    NSDictionary *team2Dictionary = [[NSDictionary alloc]initWithObjectsAndKeys: team, @"team", score, @"teamScore", nil];
-    
-    NSArray *firstSection = [[NSArray alloc]initWithObjects:team1Dictionary, team2Dictionary, nil];
-    NSArray *secondSection = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Bill Smith", @"opponent", @"No", @"wagered", @"-3", @"odds", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Jon Stewart", @"opponent", @"No", @"wagered", @"-4", @"odds", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"Vito Corleone", @"opponent", @"No", @"wagered", @"-8", @"odds", nil], nil];
+    NSMutableArray *secondSection = [[NSMutableArray alloc]init];
     NSArray *scoreDetailsArray = [[NSArray alloc]initWithObjects:firstSection, secondSection, nil];
     [self setContentList:scoreDetailsArray];
+
     
+    PFQuery *queryGameWagered = [PFQuery queryWithClassName:@"wagers"];
+    [queryGameWagered whereKey:@"wager" equalTo:[PFUser currentUser]];
+    [queryGameWagered whereKey:@"gameId" equalTo:[_gameDataDictionary objectForKey:@"gameId"]];
+    [queryGameWagered findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (NSUInteger i = 0; i < objects.count; i++) {
+                PFObject *wagerObject = [objects objectAtIndex:i];
+                PFUser *personWagered = [wagerObject objectForKey:@"wagee"];
+                [personWagered fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                    if (!error) {
+                        [secondSection addObject:[NSDictionary dictionaryWithObjectsAndKeys:[object objectForKey:@"name"], @"opponent", [wagerObject objectForKey:@"spread"], @"odds", nil]];
+                        
+                        NSArray *scoreDetailsArray = [[NSArray alloc]initWithObjects:firstSection, secondSection, nil];
+                        [self setContentList:scoreDetailsArray];
+                        [scoreDetailTableView reloadData];
+                        
+                    }
+                }];
+            }
+        } 
+    }];
+    PFQuery *queryWageredMe = [PFQuery queryWithClassName:@"wagers"];
+    [queryWageredMe whereKey:@"wagee" equalTo:[PFUser currentUser]];
+    [queryWageredMe whereKey:@"gameId" equalTo:[_gameDataDictionary objectForKey:@"gameId"]];
+    [queryWageredMe findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (PFObject *wageredMe in objects) {
+            PFUser *personWageredMe = [wageredMe objectForKey:@"wager"];
+            [personWageredMe fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                if (!error) {
+                    [secondSection addObject:[NSDictionary dictionaryWithObjectsAndKeys:[object objectForKey:@"name"], @"opponent", [wageredMe objectForKey:@"spread"], @"odds", nil]];
+                    NSArray *scoreDetailsArray = [[NSArray alloc]initWithObjects:firstSection, secondSection, nil];
+                    [self setContentList:scoreDetailsArray];
+                    [scoreDetailTableView reloadData];
+                }
+            }];
+        }
+    }];
+
+    
+        
 }
 
 - (void)viewDidUnload
@@ -131,7 +166,7 @@
             oddsLabel.backgroundColor = [UIColor clearColor];
             opponentLabel.text = [contentForThisRow objectForKey:@"opponent"];
             wageredLabel.text = [contentForThisRow objectForKey:@"wagered"];
-            oddsLabel.text = [contentForThisRow objectForKey:@"odds"];
+            oddsLabel.text = [[contentForThisRow objectForKey:@"odds"]stringValue];
             
             opponentLabel.textColor = [UIColor whiteColor];
             opponentLabel.font = [UIFont boldSystemFontOfSize:18];
