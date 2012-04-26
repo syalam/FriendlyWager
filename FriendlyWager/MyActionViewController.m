@@ -75,10 +75,39 @@
                                 [itemsToDisplay addObject:object];
                             }
                             
-                            [self setContentList:itemsToDisplay];
-                            [myActionTableView reloadData];
+                            PFQuery *wageredMe = [PFQuery queryWithClassName:@"wagers"];
+                            [wageredMe whereKey:@"wagee" equalTo:[PFUser currentUser]];
+                            [wageredMe orderByAscending:@"createdAt"];
+                            [wageredMe findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                                for (PFObject *wagerObject in objects) {
+                                    PFObject *wagee = [wagerObject objectForKey:@"wager"];
+                                    [wagee fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                                        if (!error) {
+                                            if (itemsToDisplay.count > 0) {
+                                                BOOL duplicate = NO;
+                                                for (NSUInteger i = 0; i < itemsToDisplay.count; i++) {
+                                                    NSString *itemInArray = [[itemsToDisplay objectAtIndex:i]objectId];
+                                                    NSString *objectItem = [object objectId];
+                                                    if ([itemInArray isEqualToString:objectItem]) {
+                                                        duplicate = YES;
+                                                    }
+                                                }
+                                                if (!duplicate) {
+                                                    [itemsToDisplay addObject:object];
+                                                }
+                                            }
+                                            else {
+                                                [itemsToDisplay addObject:object];
+                                            }
+                                            
+                                            [self setContentList:itemsToDisplay];
+                                            [myActionTableView reloadData];
+                                        }
+                                    }];
+                                }
+                            }];
                         }
-                    }];
+                     }];
                 }
             }
         }

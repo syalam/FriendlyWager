@@ -265,26 +265,39 @@
         
         NSString *teamWageredId;
         NSString *teamWageredToWin;
+        NSString *teamWageredToLose;
+        NSString *teamWageredToLoseId;
         if ([selectTeamButton.titleLabel.text isEqualToString:[_gameDataDictionary objectForKey:@"team1"]]) {
             teamWageredId = [_gameDataDictionary objectForKey:@"team1Id"];
             teamWageredToWin = [_gameDataDictionary objectForKey:@"team1"];
+            
+            teamWageredToLoseId = [_gameDataDictionary objectForKey:@"team2Id"];
+            teamWageredToLose = [_gameDataDictionary objectForKey:@"team2"];
+            
         }
         else {
             teamWageredId = [_gameDataDictionary objectForKey:@"team2Id"];
-            teamWageredToWin = [_gameDataDictionary objectForKey:@"team2Id"];
+            teamWageredToWin = [_gameDataDictionary objectForKey:@"team2"];
+            
+            teamWageredToLoseId = [_gameDataDictionary objectForKey:@"team1Id"];
+            teamWageredToLose = [_gameDataDictionary objectForKey:@"team2"];
         }
         
         for (NSUInteger i = 0; i < _opponentsToWager.count; i++) {
             PFObject *createNewWager = [PFObject objectWithClassName:@"wagers"];
             [createNewWager setObject:[_gameDataDictionary objectForKey:@"gameId"] forKey:@"gameId"];
-            [createNewWager setObject:[_gameDataDictionary objectForKey:@"team1"] forKey:@"team1"];
-            [createNewWager setObject:[_gameDataDictionary objectForKey:@"team1Id"] forKey:@"team1Id"];
-            [createNewWager setObject:[_gameDataDictionary objectForKey:@"team2"] forKey:@"team2"];
-            [createNewWager setObject:[_gameDataDictionary objectForKey:@"team2Id"] forKey:@"team2Id"];
-            [createNewWager setObject:[PFUser currentUser] forKey:@"wager"];
-            [createNewWager setObject:[_opponentsToWager objectAtIndex:i] forKey:@"wagee"];
             [createNewWager setObject:teamWageredId forKey:@"teamWageredToWinId"];
             [createNewWager setObject:teamWageredToWin forKey:@"teamWageredToWin"];
+            [createNewWager setObject:teamWageredToLoseId forKey:@"teamWageredToLoseId"];
+            [createNewWager setObject:teamWageredToLose forKey:@"teamWageredToLose"];
+            [createNewWager setObject:[PFUser currentUser] forKey:@"wager"];
+            [createNewWager setObject:[_opponentsToWager objectAtIndex:i] forKey:@"wagee"];
+            //[createNewWager setObject:[_gameDataDictionary objectForKey:@"team1"] forKey:@"team1"];
+            //[createNewWager setObject:[_gameDataDictionary objectForKey:@"team1Id"] forKey:@"team1Id"];
+            //[createNewWager setObject:[_gameDataDictionary objectForKey:@"team2"] forKey:@"team2"];
+            //[createNewWager setObject:[_gameDataDictionary objectForKey:@"team2Id"] forKey:@"team2Id"];
+            //[createNewWager setObject:teamWageredId forKey:@"teamWageredToWinId"];
+            //[createNewWager setObject:teamWageredToWin forKey:@"teamWageredToWin"];
             [createNewWager setObject:[NSNumber numberWithInt:[spreadLabel.text intValue]] forKey:@"spread"];
             [createNewWager setObject:[NSNumber numberWithBool:NO] forKey:@"wagerAccepted"];
             [createNewWager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {

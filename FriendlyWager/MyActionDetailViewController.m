@@ -108,10 +108,14 @@
     NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
     
     dateLabel.text = dateToDisplay;
-    teamLabel.text = [NSString stringWithFormat:@"%@ vs %@", [wagerObject objectForKey:@"team1"], [wagerObject objectForKey:@"team2"]];
+    teamLabel.text = [NSString stringWithFormat:@"%@ vs %@", [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]];
     oddsLabel.text = [NSString stringWithFormat:@"+%@", [[wagerObject objectForKey:@"spread"]stringValue]];
-    teamToWinLabel.text = [wagerObject objectForKey:@"teamWageredToWin"];
-    
+    if ([wagerObject objectForKey:@"wagee"]==[PFUser currentUser]) {
+        teamToWinLabel.text = [wagerObject objectForKey:@"teamWageredToLose"];
+    }
+    else {
+        teamToWinLabel.text = [wagerObject objectForKey:@"teamWageredToWin"];
+    }
     
     UIButton *acceptWagerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [acceptWagerButton addTarget:self action:@selector(acceptWagerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -149,23 +153,26 @@
         [cell addSubview:teamToWinLabel];
         
         if ([_wagerType isEqualToString:@"Pending"]) {
-            UIButton *acceptWagerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            [acceptWagerButton addTarget:self action:@selector(acceptWagerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-            acceptWagerButton.tag = indexPath.row;
-            [acceptWagerButton setFrame:CGRectMake(250, 12, 25, 25)];
-            acceptWagerButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-            [acceptWagerButton setTitle:@"✔" forState:UIControlStateNormal];
-            
-            UIButton *rejectWagerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            [rejectWagerButton addTarget:self action:@selector(rejectWagerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-            rejectWagerButton.tag = indexPath.row;
-            [rejectWagerButton setFrame:CGRectMake(280, 12, 25, 25)];
-            [rejectWagerButton setTitle:@"✘" forState:UIControlStateNormal];
-            
-            [cell addSubview:acceptWagerButton];
-            [cell addSubview:rejectWagerButton];
+            if ([[[wagerObject objectForKey:@"wagee"]objectId] isEqualToString:[[PFUser currentUser]objectId]]) {
+                UIButton *acceptWagerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                [acceptWagerButton addTarget:self action:@selector(acceptWagerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                acceptWagerButton.tag = indexPath.row;
+                [acceptWagerButton setFrame:CGRectMake(250, 12, 25, 25)];
+                acceptWagerButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+                [acceptWagerButton setTitle:@"✔" forState:UIControlStateNormal];
+                
+                UIButton *rejectWagerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                [rejectWagerButton addTarget:self action:@selector(rejectWagerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                rejectWagerButton.tag = indexPath.row;
+                [rejectWagerButton setFrame:CGRectMake(280, 12, 25, 25)];
+                [rejectWagerButton setTitle:@"✘" forState:UIControlStateNormal];
+                
+                [cell addSubview:acceptWagerButton];
+                [cell addSubview:rejectWagerButton];
+            }
         }
     }
+    
     [indexPathArray addObject:indexPath];
     
     return cell;
