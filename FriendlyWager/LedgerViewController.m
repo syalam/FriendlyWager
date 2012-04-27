@@ -9,6 +9,7 @@
 #import "LedgerViewController.h"
 
 @implementation LedgerViewController
+@synthesize contentList = _contentList;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,11 +36,73 @@
     //Set data source for the TableView as self
     ledgerTableView.dataSource = self;
     //Populate TableView data
-    ledgerDataDate = [[NSMutableArray alloc]initWithObjects:@"8/11/2011", @"8/20/2011", @"8/30/2011", @"9/15/2011", @"9/23/2011", nil];
-    ledgerDataOpponent = [[NSMutableArray alloc]initWithObjects:@"Bubba Smith", @"Luke Skywalker", @"Burton Gustor", @"Harry Potter", @"Frodo Baggins", nil];
-    ledgerDataTeam = [[NSMutableArray alloc]initWithObjects:@"Cardinals", @"Cubs", @"Diamondbacks", @"Suns", @"Cayotes", nil];
-    ledgerDataWinLoss = [[NSMutableArray alloc]initWithObjects:@"W", @"W", @"L", @"W", @"L", nil];
     
+    NSMutableArray *dataToDisplay = [[NSMutableArray alloc]init];
+    
+    PFQuery *queryGameWagered = [PFQuery queryWithClassName:@"wagers"];
+    [queryGameWagered whereKey:@"wager" equalTo:[PFUser currentUser]];
+    [queryGameWagered findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (NSUInteger i = 0; i < objects.count; i++) {
+                PFObject *wagerObject = [objects objectAtIndex:i];
+                PFUser *personWagered = [wagerObject objectForKey:@"wagee"];
+                if ([wagerObject objectForKey:@"teamWageredToWinScore"] && [wagerObject objectForKey:@"teamWageredToLoseScore"]) {
+                    [personWagered fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                        if (!error) {
+                            NSString *winLossString;
+                            int teamWageredToWinScore = [[wagerObject objectForKey:@"teamWageredToWinScore"]intValue];
+                            int teamWageredToLoseScore = [[wagerObject objectForKey:@"teamWageredToLoseScore"]intValue];
+                            
+                            
+                            if (teamWageredToWinScore > teamWageredToLoseScore) {
+                                winLossString = @"W";
+                            }
+                            else {
+                                winLossString = @"L";
+                            }
+                            
+                            
+                            
+                            [dataToDisplay addObject:[NSDictionary dictionaryWithObjectsAndKeys:wagerObject.createdAt, @"date", [personWagered objectForKey:@"name"], @"opponentName", [wagerObject objectForKey:@"teamWageredToWin"], @"team", winLossString, @"winLoss", nil]];
+                            
+                            [self setContentList:dataToDisplay];
+                            [ledgerTableView reloadData];
+                            
+                        }
+                    }];
+                }
+            }
+        } 
+    }];
+    PFQuery *queryWageredMe = [PFQuery queryWithClassName:@"wagers"];
+    [queryWageredMe whereKey:@"wagee" equalTo:[PFUser currentUser]];
+    [queryWageredMe findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (PFObject *wageredMe in objects) {
+            PFUser *personWageredMe = [wageredMe objectForKey:@"wager"];
+            if ([wageredMe objectForKey:@"teamWageredToWinScore"] && [wageredMe objectForKey:@"teamWageredToLoseScore"]) {
+                [personWageredMe fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                    if (!error) {
+                        NSString *winLossString;
+                        int teamWageredToWinScore = [[wageredMe objectForKey:@"teamWageredToWinScore"]intValue];
+                        int teamWageredToLoseScore = [[wageredMe objectForKey:@"teamWageredToLoseScore"]intValue];
+                        
+                        
+                        if (teamWageredToWinScore < teamWageredToLoseScore) {
+                            winLossString = @"W";
+                        }
+                        else {
+                            winLossString = @"L";
+                        }
+                        
+                        [dataToDisplay addObject:[NSDictionary dictionaryWithObjectsAndKeys:wageredMe.createdAt, @"date", [object objectForKey:@"name"], @"opponentName", [wageredMe objectForKey:@"teamWageredToWin"], @"team", winLossString, @"winLoss", nil]];
+                        [self setContentList:dataToDisplay];
+                        [ledgerTableView reloadData];
+                    }
+                }];
+            }
+        }
+    }];
+
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG15_BG"]]];
     
     
@@ -94,40 +157,47 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return ledgerDataDate.count;
+    return _contentList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, 70, 20)];
-    UILabel *opponentLabel = [[UILabel alloc]initWithFrame:CGRectMake(85, 15, 105, 20)];
-    UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(200, 15, 90, 20)];
-    UILabel *winLossLabel = [[UILabel alloc]initWithFrame:CGRectMake(290, 15, 15, 20)];
-    
-    dateLabel.backgroundColor = [UIColor clearColor];
-    opponentLabel.backgroundColor = [UIColor clearColor];
-    teamLabel.backgroundColor = [UIColor clearColor];
-    winLossLabel.backgroundColor = [UIColor clearColor];
-    
-    dateLabel.font = [UIFont systemFontOfSize:14.0];
-    opponentLabel.font = [UIFont systemFontOfSize:14.0];
-    teamLabel.font = [UIFont systemFontOfSize:14.0];
-    winLossLabel.font = [UIFont systemFontOfSize:14.0];
-    
-    dateLabel.text = [ledgerDataDate objectAtIndex:indexPath.row];
-    opponentLabel.text = [ledgerDataOpponent objectAtIndex:indexPath.row];
-    teamLabel.text = [ledgerDataTeam objectAtIndex:indexPath.row];
-    winLossLabel.text = [ledgerDataWinLoss objectAtIndex:indexPath.row];
-    
     static NSString *CellIdentifier = @"AnswersTableView";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    cell = nil;
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, 70, 20)];
+        UILabel *opponentLabel = [[UILabel alloc]initWithFrame:CGRectMake(85, 15, 105, 20)];
+        UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(200, 15, 90, 20)];
+        UILabel *winLossLabel = [[UILabel alloc]initWithFrame:CGRectMake(290, 15, 15, 20)];
+        
+        dateLabel.backgroundColor = [UIColor clearColor];
+        opponentLabel.backgroundColor = [UIColor clearColor];
+        teamLabel.backgroundColor = [UIColor clearColor];
+        winLossLabel.backgroundColor = [UIColor clearColor];
+        
+        dateLabel.font = [UIFont systemFontOfSize:14.0];
+        opponentLabel.font = [UIFont systemFontOfSize:14.0];
+        teamLabel.font = [UIFont systemFontOfSize:14.0];
+        winLossLabel.font = [UIFont systemFontOfSize:14.0];
+        
+        NSDate *dateCreated = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"date"];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"M/d/yy"];
+        NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
+        
+        dateLabel.text = dateToDisplay;
+        opponentLabel.text = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"opponentName"];
+        teamLabel.text = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"team"];
+        winLossLabel.text = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"winLoss"];
+        
+        [cell.contentView addSubview:dateLabel];
+        [cell.contentView addSubview:opponentLabel];
+        [cell.contentView addSubview:teamLabel];
+        [cell.contentView addSubview:winLossLabel];
     }
-    [cell.contentView addSubview:dateLabel];
-    [cell.contentView addSubview:opponentLabel];
-    [cell.contentView addSubview:teamLabel];
-    [cell.contentView addSubview:winLossLabel];  
+      
     
     return cell;
 }

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface LedgerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UITableView *ledgerTableView;
@@ -15,5 +16,7 @@
     NSMutableArray *ledgerDataTeam;
     NSMutableArray *ledgerDataWinLoss;
 }
+
+@property (nonatomic, retain)NSMutableArray *contentList;
 
 @end
