@@ -11,6 +11,7 @@
 
 @interface LedgerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UITableView *ledgerTableView;
+    IBOutlet UILabel *totalTokensLabel;
     NSMutableArray *ledgerDataDate;
     NSMutableArray *ledgerDataOpponent;
     NSMutableArray *ledgerDataTeam;

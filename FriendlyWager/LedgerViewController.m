@@ -102,6 +102,31 @@
             }
         }
     }];
+    
+    PFQuery *queryForTokens = [PFQuery queryWithClassName:@"tokens"];
+    [queryForTokens whereKey:@"user" equalTo:[PFUser currentUser]];
+    [queryForTokens findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            if (objects.count > 0) {
+                for (PFObject *tokenObject in objects) {
+                    int tokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
+                    totalTokensLabel.text = [NSString stringWithFormat:@"Your total token count is: %d", tokenCount];
+                }
+            }
+            else {
+                PFObject *tokens = [PFObject objectWithClassName:@"tokens"];
+                [tokens setValue:[PFUser currentUser] forKey:@"user"];
+                [tokens setValue:[NSNumber numberWithInt:5] forKey:@"tokenCount"];
+                [tokens setValue:[NSDate date] forKey:@"autoAwardDate"];
+                [tokens saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (!error) {
+                        int tokenCount = [[tokens objectForKey:@"tokenCount"]intValue];
+                        totalTokensLabel.text = [NSString stringWithFormat:@"Your total token count is: %d", tokenCount];
+                    } 
+                }];
+            }
+        }
+    }];
 
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG15_BG"]]];
     
