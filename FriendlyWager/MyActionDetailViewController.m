@@ -110,7 +110,7 @@
     dateLabel.text = dateToDisplay;
     teamLabel.text = [NSString stringWithFormat:@"%@ vs %@", [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]];
 
-    oddsLabel.text = [NSString stringWithFormat:@"+%@", [[wagerObject objectForKey:@"spread"]stringValue]];
+    oddsLabel.text = [NSString stringWithFormat:@"%@", [[wagerObject objectForKey:@"tokensWagered"]stringValue]];
     
     if ([[[wagerObject objectForKey:@"wagee"]objectId] isEqualToString:[[PFUser currentUser]objectId]]) {
         teamToWinLabel.text = [wagerObject objectForKey:@"teamWageredToLose"];

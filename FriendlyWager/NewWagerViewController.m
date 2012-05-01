@@ -55,12 +55,6 @@
     self.navigationItem.leftBarButtonItem = backButton;
     
     
-    spreadSlider.minimumValue = 0;
-    spreadSlider.maximumValue = 100;
-    spreadSlider.continuous = YES;
-    spreadLabel.text = [NSString stringWithFormat:@"%.0f", spreadSlider.value];
-    
-    
     newWagerTableView.dataSource = self;
     newWagerTableView.delegate = self;
     NSLog(@"%@", _gameDataDictionary);
@@ -78,6 +72,45 @@
         
         [self setOpponentsToWager:addOpponents];
     }
+    
+    PFQuery *tokenCountForUser = [PFQuery queryWithClassName:@"tokens"];
+    [tokenCountForUser whereKey:@"user" equalTo:[PFUser currentUser]];
+    [tokenCountForUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            if (objects.count > 0) {
+                for (PFObject *tokenObject in objects) {
+                    int tokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
+                    int tokensForThisWager = tokenCount / _opponentsToWager.count;
+                    spreadSlider.minimumValue = 0;
+                    spreadSlider.maximumValue = tokensForThisWager;
+                    spreadSlider.continuous = YES;
+                    spreadLabel.text = [NSString stringWithFormat:@"%.0f", spreadSlider.value];
+                }
+            }
+            else {
+                PFObject *tokens = [PFObject objectWithClassName:@"tokens"];
+                [tokens setValue:[PFUser currentUser] forKey:@"user"];
+                [tokens setValue:[NSNumber numberWithInt:5] forKey:@"tokenCount"];
+                [tokens setValue:[NSDate date] forKey:@"autoAwardDate"];
+                [tokens saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (!error) {
+                        int tokenCount = [[tokens objectForKey:@"tokenCount"]intValue];
+                        int tokensForThisWager = tokenCount / _opponentsToWager.count;
+                        spreadSlider.minimumValue = 0;
+                        spreadSlider.maximumValue = tokensForThisWager;
+                        spreadSlider.continuous = YES;
+                        spreadLabel.text = [NSString stringWithFormat:@"%.0f", spreadSlider.value];
+                    } 
+                }];
+            }
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to connect to Friendly Wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
+    
+    
     
     NSMutableArray *tableContentsArray = [[NSMutableArray alloc]initWithObjects:_opponentsToWager, nil];
     [self setContentList:tableContentsArray];
@@ -292,24 +325,37 @@
             [createNewWager setObject:teamWageredToLose forKey:@"teamWageredToLose"];
             [createNewWager setObject:[PFUser currentUser] forKey:@"wager"];
             [createNewWager setObject:[_opponentsToWager objectAtIndex:i] forKey:@"wagee"];
-            //[createNewWager setObject:[_gameDataDictionary objectForKey:@"team1"] forKey:@"team1"];
-            //[createNewWager setObject:[_gameDataDictionary objectForKey:@"team1Id"] forKey:@"team1Id"];
-            //[createNewWager setObject:[_gameDataDictionary objectForKey:@"team2"] forKey:@"team2"];
-            //[createNewWager setObject:[_gameDataDictionary objectForKey:@"team2Id"] forKey:@"team2Id"];
-            //[createNewWager setObject:teamWageredId forKey:@"teamWageredToWinId"];
-            //[createNewWager setObject:teamWageredToWin forKey:@"teamWageredToWin"];
-            [createNewWager setObject:[NSNumber numberWithInt:[spreadLabel.text intValue]] forKey:@"spread"];
+            [createNewWager setObject:[NSNumber numberWithInt:[spreadLabel.text intValue]] forKey:@"tokensWagered"];
             [createNewWager setObject:[NSNumber numberWithBool:NO] forKey:@"wagerAccepted"];
             [createNewWager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
-                    [SVProgressHUD dismiss];
-                    if (_tabParentView) {
-                        [_tabParentView.navigationController dismissViewControllerAnimated:YES completion:NULL];
-                    }
-                    else {
-                        [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
-                    }
-                    //[self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -5)] animated:YES];
+                    PFQuery *updateTokenCount = [PFQuery queryWithClassName:@"tokens"];
+                    [updateTokenCount whereKey:@"user" equalTo:[PFUser currentUser]];
+                    [updateTokenCount findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                        if (!error) {
+                            for (PFObject *tokenObject in objects) {
+                                int currentTokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
+                                int updatedTokenCount = currentTokenCount - [spreadLabel.text intValue];
+                                [tokenObject setValue:[NSNumber numberWithInt:updatedTokenCount] forKey:@"tokenCount"];
+                                [tokenObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                    if (!error) {
+                                        [SVProgressHUD dismiss];
+                                        if (_tabParentView) {
+                                            [_tabParentView.navigationController dismissViewControllerAnimated:YES completion:NULL];
+                                        }
+                                        else {
+                                            [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+                                        }
+                                    }
+                                    else {
+                                        [SVProgressHUD dismiss];
+                                    }
+
+                                }];
+                            }
+                        } 
+                    }];
+                    
                 }
                 else {
                     [SVProgressHUD dismiss];
@@ -317,7 +363,6 @@
                     [alert show];
                 }
             }];
-
         }
     }
 }

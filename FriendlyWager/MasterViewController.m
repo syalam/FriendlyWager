@@ -90,7 +90,37 @@
         [self.navigationController presentModalViewController:navc animated:NO];
     }
     else {
-        NSLog(@"%@", currentUser);
+        //award user 5 tokens everyday
+        PFQuery *dailyTokens = [PFQuery queryWithClassName:@"tokens"];
+        [dailyTokens whereKey:@"user" equalTo:currentUser];
+        [dailyTokens findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                //check if user exists in this table
+                if (objects.count > 0) {
+                    for (PFObject *tokenObject in objects) {
+                        //check if user has been auto awarded points in the last 24 hours (86400 seconds)
+                        if ([tokenObject objectForKey:@"autoAwardDate"] > [NSDate dateWithTimeIntervalSinceNow:-86400]) {
+                            int currentTokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
+                            //add 5 tokens
+                            int updatedTokenCount = currentTokenCount + 5; 
+                            [tokenObject setValue:[NSNumber numberWithInt:updatedTokenCount] forKey:@"tokenCount"];
+                        }
+                    }
+                }
+                //if the user doesn't exist in the tokens table, add the user along with 5 points to start off with
+                else {
+                    PFObject *tokens = [PFObject objectWithClassName:@"tokens"];
+                    [tokens setValue:currentUser forKey:@"user"];
+                    [tokens setValue:[NSNumber numberWithInt:5] forKey:@"tokenCount"];
+                    [tokens setValue:[NSDate date] forKey:@"autoAwardDate"];
+                    [tokens saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if (!error) {
+                            NSLog(@"%@", @"tokens added");
+                        } 
+                    }];
+                }
+            } 
+        }];
     }
     [fwData setBool:NO forKey:@"tabView"];
 }
