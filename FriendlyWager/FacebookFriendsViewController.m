@@ -372,8 +372,6 @@
         [namesArray addObject:[[[resultSetArray objectAtIndex:i]valueForKey:@"data"]valueForKey:@"name"]];
     }
     
-    
-    
     for (NSUInteger i = 0; i < indexTitles.count; i++) {
         NSMutableArray *sectionContent = [[NSMutableArray alloc]initWithCapacity:1];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"SELF BEGINSWITH '%@'", [indexTitles objectAtIndex:i]]];

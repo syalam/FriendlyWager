@@ -104,6 +104,11 @@
                             //add 5 tokens
                             int updatedTokenCount = currentTokenCount + 5; 
                             [tokenObject setValue:[NSNumber numberWithInt:updatedTokenCount] forKey:@"tokenCount"];
+                            [tokenObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                if (!error) {
+                                    NSLog(@"%@", @"tokens added");
+                                } 
+                            }];
                         }
                     }
                 }
