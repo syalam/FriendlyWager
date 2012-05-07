@@ -198,13 +198,6 @@
                                 }
                             }
                         }];
-                        
-                        /*[currentUser setObject:[NSNumber numberWithInt:totalWins] forKey:@"totalWins"];
-                        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                            if (succeeded) {
-                                NSLog(@"%@", @"Wins Saved");
-                            } 
-                        }];*/
                     }
                     
                 }];

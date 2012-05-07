@@ -12,6 +12,7 @@
 
 @synthesize contentList = _contentList;
 @synthesize rankCategory = _rankCategory;
+@synthesize sport = _sport;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,7 +49,8 @@
     else if ([_rankCategory isEqualToString:@"Rankings By Wins"]) {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG12_BG"]]];
     }
-    else if ([_rankCategory isEqualToString:@"Ranking By Sport"]) {
+    else if (_sport) {
+        rankingsByLabel.text = _sport;
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG13_BG"]]];
     }
     else if ([_rankCategory isEqualToString:@"Rankings By City"]) {
@@ -61,10 +63,14 @@
     else if ([_rankCategory isEqualToString:@"Rankings By Wins"]) {
         [self getRankingsByWins];
     }
+    else if (_sport) {
+        [self getRankingsBySport];
+    }
     
-    pointsArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Rick Lewis", @"name", @"Chicago", @"city", @"190", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Sam Smith", @"name", @"Los Angeles", @"city", @"170", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Jon Floyo", @"name", @"San Francisco", @"city", @"160", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Chris Cook", @"name", @"New York", @"city", @"120", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Frodo Baggins", @"name", @"Bag End", @"city", @"108", @"points", nil], nil];
     
-    cityArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Chicago", @"city", @"76, 110", @"rank", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"San Diego", @"city", @"60, 105", @"rank", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Portland", @"city", @"50, 62", @"rank", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Miami", @"city", @"2, 110", @"rank", nil] , nil];
+    /*pointsArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Rick Lewis", @"name", @"Chicago", @"city", @"190", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Sam Smith", @"name", @"Los Angeles", @"city", @"170", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Jon Floyo", @"name", @"San Francisco", @"city", @"160", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Chris Cook", @"name", @"New York", @"city", @"120", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Frodo Baggins", @"name", @"Bag End", @"city", @"108", @"points", nil], nil];
+    
+    cityArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Chicago", @"city", @"76, 110", @"rank", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"San Diego", @"city", @"60, 105", @"rank", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Portland", @"city", @"50, 62", @"rank", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Miami", @"city", @"2, 110", @"rank", nil] , nil];*/
     
 }
 
@@ -114,13 +120,14 @@
         [cell addSubview:nameLabel];
         [cell addSubview:pointsLabel];
     }
-    else if ([_rankCategory isEqualToString:@"Rankings By Wins"]) {
+    else if ([_rankCategory isEqualToString:@"Rankings By Wins"] || _sport) {
         nameLabel.text = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
         pointsLabel.text = [NSString stringWithFormat:@"%@", [[_contentList objectAtIndex:indexPath.row]objectForKey:@"totalWins"]];
         
         [cell addSubview:nameLabel];
         [cell addSubview:pointsLabel];
     }
+    
     else {
         
         cityLabel.text = [[cityArray objectAtIndex:indexPath.row]objectForKey:@"city"];
@@ -133,7 +140,7 @@
     return cell;
 }
 
-
+#pragma mark - Get Rank Methods
 - (void)getRankingsByPoints {
     NSMutableArray *itemsToDisplay = [[NSMutableArray alloc]init];
     PFQuery *getRanking = [PFQuery queryWithClassName:@"tokens"];
@@ -161,7 +168,6 @@
 - (void)getRankingsByWins {
     NSMutableArray *objectsToDisplay = [[NSMutableArray alloc]init];
     PFQuery *getWinCounts = [PFQuery queryWithClassName:@"results"];
-    [getWinCounts whereKeyExists:@"totalWins"];
     [getWinCounts orderByDescending:@"totalWins"];
     [getWinCounts setLimit:30];
     [getWinCounts findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -169,6 +175,47 @@
             for (PFObject *resultObject in objects) {
                 NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc]init];
                 [resultDictionary setObject:[resultObject objectForKey:@"totalWins"] forKey:@"totalWins"];
+                PFUser *user = [resultObject objectForKey:@"user"];
+                [user fetchIfNeededInBackgroundWithBlock:^(PFObject *user, NSError *error) {
+                    if (!error) {
+                        [resultDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
+                    } 
+                    [objectsToDisplay addObject:resultDictionary];
+                    [self setContentList:objectsToDisplay];
+                    [rankingsTableView reloadData];
+                }];
+            }
+        } 
+    }];
+}
+
+- (void)getRankingsBySport {
+    NSString *sportSort;
+    if ([_sport isEqualToString:@"NFL Football"]) {
+        sportSort = @"nflWins";
+    }
+    else if ([_sport isEqualToString:@"College Football"]) {
+        sportSort = @"collegeFootballWins";
+    }
+    else if ([_sport isEqualToString:@"MLB Baseball"]) {
+        sportSort = @"mlbWins";
+    }
+    else if ([_sport isEqualToString:@"NBA Basketball"]) {
+        sportSort = @"nbaWins";
+    }
+    else if ([_sport isEqualToString:@"College Basketball"]) {
+        sportSort = @"collegeBasketballWins";
+    }
+    
+    NSMutableArray *objectsToDisplay = [[NSMutableArray alloc]init];
+    PFQuery *getWinBySportCounts = [PFQuery queryWithClassName:@"results"];
+    [getWinBySportCounts orderByDescending:sportSort];
+    [getWinBySportCounts setLimit:30];
+    [getWinBySportCounts findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (PFObject *resultObject in objects) {
+                NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc]init];
+                [resultDictionary setObject:[resultObject objectForKey:sportSort] forKey:@"totalWins"];
                 PFUser *user = [resultObject objectForKey:@"user"];
                 [user fetchIfNeededInBackgroundWithBlock:^(PFObject *user, NSError *error) {
                     if (!error) {

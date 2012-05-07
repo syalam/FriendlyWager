@@ -8,6 +8,7 @@
 
 #import "ScoresViewController.h"
 #import "ScoreSummaryViewController.h"
+#import "RankingsDetailViewController.h"
 
 @implementation ScoresViewController
 
@@ -15,6 +16,7 @@
 @synthesize opponent = _opponent;
 @synthesize opponentsToWager = _opponentsToWager;
 @synthesize tabParentView = _tabParentView;
+@synthesize ranking = _ranking;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -139,17 +141,24 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
     id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
-    ScoreSummaryViewController *scoreSummary = [[ScoreSummaryViewController alloc]initWithNibName:@"ScoreSummaryViewController" bundle:nil];
-    if (_opponentsToWager) {
-        scoreSummary.opponentsToWager = _opponentsToWager;
+    if (_ranking) {
+        RankingsDetailViewController *rankings = [[RankingsDetailViewController alloc]initWithNibName:@"RankingsDetailViewController" bundle:nil];
+        rankings.sport = contentForThisRow;
+        [self.navigationController pushViewController:rankings animated:YES];
     }
-    if (_tabParentView) {
-        scoreSummary.tabParentView = _tabParentView;
+    else {
+        ScoreSummaryViewController *scoreSummary = [[ScoreSummaryViewController alloc]initWithNibName:@"ScoreSummaryViewController" bundle:nil];
+        if (_opponentsToWager) {
+            scoreSummary.opponentsToWager = _opponentsToWager;
+        }
+        if (_tabParentView) {
+            scoreSummary.tabParentView = _tabParentView;
+        }
+        scoreSummary.sport = contentForThisRow;
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self.navigationController pushViewController:scoreSummary animated:YES];
     }
-    scoreSummary.sport = contentForThisRow;
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self.navigationController pushViewController:scoreSummary animated:YES];
 }
 
 #pragma mark - Button Clicks

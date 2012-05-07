@@ -23,8 +23,10 @@
 
 @property (nonatomic, retain) NSMutableArray* contentList;
 @property (nonatomic, retain) NSString* rankCategory;
+@property (nonatomic, retain) NSString* sport;
 
 - (void)getRankingsByPoints;
 - (void)getRankingsByWins;
+- (void)getRankingsBySport;
 
 @end

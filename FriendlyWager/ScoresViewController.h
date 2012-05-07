@@ -21,6 +21,7 @@
 @property (nonatomic, retain) PFObject* opponent;
 @property (nonatomic, retain) NSMutableArray *opponentsToWager;
 @property (nonatomic, retain) TabsViewController *tabParentView;
+@property (nonatomic)BOOL ranking;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil opponentName:(NSString *)opponentName;
 

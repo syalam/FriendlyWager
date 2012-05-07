@@ -8,6 +8,7 @@
 
 #import "RanksViewController.h"
 #import "RankingsDetailViewController.h"
+#import "ScoresViewController.h"
 
 @implementation RanksViewController
 
@@ -95,11 +96,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
     id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
-    RankingsDetailViewController *rankingDetails = [[RankingsDetailViewController alloc]initWithNibName:@"RankingsDetailViewController" bundle:nil];
-    rankingDetails.rankCategory = contentForThisRow;
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self.navigationController pushViewController:rankingDetails animated:YES];
-    
+    if ([contentForThisRow isEqualToString:@"Ranking By Sport"]) {
+        ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
+        sports.ranking = YES;
+        [self.navigationController pushViewController:sports animated:YES];
+    }
+    else {
+        RankingsDetailViewController *rankingDetails = [[RankingsDetailViewController alloc]initWithNibName:@"RankingsDetailViewController" bundle:nil];
+        rankingDetails.rankCategory = contentForThisRow;
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self.navigationController pushViewController:rankingDetails animated:YES];
+    }
 }
 
 @end
