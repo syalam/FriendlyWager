@@ -113,14 +113,42 @@
                             if ([[myWageeWins objectForKey:@"teamWageredToWinScore"]intValue] < [[myWageeWins objectForKey:@"teamWageredToLoseScore"]intValue]) {
                                 wageeWinCount ++;
                             }
-                        } 
+                        }
                         int totalWins = wagerWinCount + wageeWinCount;
-                        [currentUser setObject:[NSNumber numberWithInt:totalWins] forKey:@"totalWins"];
+                        PFQuery *queryWinTable = [PFQuery queryWithClassName:@"results"];
+                        [queryWinTable whereKey:@"user" equalTo:currentUser];
+                        [queryWinTable findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                            if (!error) {
+                                if (objects.count > 0) {
+                                    for (PFObject *tokenObject in objects) {
+                                        [tokenObject setObject:[NSNumber numberWithInt:totalWins] forKey:@"totalWins"];
+                                        [tokenObject saveInBackgroundWithBlock:^(BOOL suceeded, NSError *error) {
+                                            if (suceeded) {
+                                                NSLog(@"%@", @"Wins Saved");
+                                            } 
+                                        }];
+                                    }
+                                }
+                                else {
+                                    PFObject *tokenObject = [PFObject objectWithClassName:@"results"];
+                                    [tokenObject setObject:[NSNumber numberWithInt:totalWins] forKey:@"totalWins"];
+                                    [tokenObject setObject:currentUser forKey:@"user"];
+                                    [tokenObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                        if (succeeded) {
+                                            NSLog(@"%@", @"Wins Saved");
+                                        }
+                                    }];
+                                    
+                                }
+                            }
+                        }];
+                        
+                        /*[currentUser setObject:[NSNumber numberWithInt:totalWins] forKey:@"totalWins"];
                         [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                             if (succeeded) {
                                 NSLog(@"%@", @"Wins Saved");
                             } 
-                        }];
+                        }];*/
                     }
                     
                 }];

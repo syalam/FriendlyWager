@@ -25,6 +25,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil opponentName:(NSString *)opponentName;
 
 @property (nonatomic, retain) PFObject *opponent;
+@property (nonatomic, retain) NSString *sport;
 @property (nonatomic, retain) NSMutableArray *opponentsToWager;
 @property (nonatomic, retain) TabsViewController *tabParentView;
 

@@ -34,5 +34,6 @@
 @property (nonatomic, retain) NSMutableArray *opponentsToWager;
 @property (nonatomic, retain) NSMutableArray *additionalOpponents;
 @property (nonatomic, retain) TabsViewController *tabParentView;
+@property (nonatomic, retain) NSString *sport;
 
 @end

@@ -160,17 +160,25 @@
 
 - (void)getRankingsByWins {
     NSMutableArray *objectsToDisplay = [[NSMutableArray alloc]init];
-    PFQuery *getWinCounts = [PFQuery queryForUser];
+    PFQuery *getWinCounts = [PFQuery queryWithClassName:@"results"];
     [getWinCounts whereKeyExists:@"totalWins"];
-    [getWinCounts orderByAscending:@"totalWins"];
+    [getWinCounts orderByDescending:@"totalWins"];
     [getWinCounts setLimit:30];
     [getWinCounts findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
-            for (PFObject *user in objects) {
-                [objectsToDisplay addObject:user];
+            for (PFObject *resultObject in objects) {
+                NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc]init];
+                [resultDictionary setObject:[resultObject objectForKey:@"totalWins"] forKey:@"totalWins"];
+                PFUser *user = [resultObject objectForKey:@"user"];
+                [user fetchIfNeededInBackgroundWithBlock:^(PFObject *user, NSError *error) {
+                    if (!error) {
+                        [resultDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
+                    } 
+                    [objectsToDisplay addObject:resultDictionary];
+                    [self setContentList:objectsToDisplay];
+                    [rankingsTableView reloadData];
+                }];
             }
-            [self setContentList:objectsToDisplay];
-            [rankingsTableView reloadData];
         } 
     }];
 }

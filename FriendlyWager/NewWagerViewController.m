@@ -18,6 +18,7 @@
 @synthesize opponentsToWager = _opponentsToWager;
 @synthesize additionalOpponents = _additionalOpponents;
 @synthesize tabParentView = _tabParentView;
+@synthesize sport = _sport;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -324,6 +325,7 @@
             [createNewWager setObject:teamWageredToLoseId forKey:@"teamWageredToLoseId"];
             [createNewWager setObject:teamWageredToLose forKey:@"teamWageredToLose"];
             [createNewWager setObject:[PFUser currentUser] forKey:@"wager"];
+            [createNewWager setObject:_sport forKey:@"sport"];
             [createNewWager setObject:[_opponentsToWager objectAtIndex:i] forKey:@"wagee"];
             [createNewWager setObject:[NSNumber numberWithInt:[spreadLabel.text intValue]] forKey:@"tokensWagered"];
             [createNewWager setObject:[NSNumber numberWithBool:NO] forKey:@"wagerAccepted"];

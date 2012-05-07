@@ -14,6 +14,7 @@
 @synthesize opponent = _opponent;
 @synthesize opponentsToWager = _opponentsToWager;
 @synthesize tabParentView = _tabParentView;
+@synthesize sport = _sport;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -216,6 +217,7 @@
         //newWager.opponent = _opponent;
         newWager.opponentsToWager = _opponentsToWager;
         newWager.gameDataDictionary = [leftArray objectAtIndex:index];
+        newWager.sport = _sport;
         if (_tabParentView) {
             newWager.tabParentView = _tabParentView;
         }
@@ -235,7 +237,11 @@
         NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
         //newWager.opponent = _opponent;
         newWager.opponentsToWager = _opponentsToWager;
+        newWager.sport = _sport;
         newWager.gameDataDictionary = [rightArray objectAtIndex:index];
+        if (_tabParentView) {
+            newWager.tabParentView = _tabParentView;
+        }
         [self.navigationController pushViewController:newWager animated:YES];
     }
 }
