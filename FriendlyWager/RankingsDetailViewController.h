@@ -25,6 +25,6 @@
 @property (nonatomic, retain) NSString* rankCategory;
 
 - (void)getRankingsByPoints;
-
+- (void)getRankingsByWins;
 
 @end

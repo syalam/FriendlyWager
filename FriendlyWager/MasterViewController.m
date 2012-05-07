@@ -90,6 +90,44 @@
         [self.navigationController presentModalViewController:navc animated:NO];
     }
     else {
+        
+        PFQuery *getMyWagerWins = [PFQuery queryWithClassName:@"wagers"];
+        [getMyWagerWins whereKey:@"wager" equalTo:currentUser];
+        [getMyWagerWins whereKeyExists:@"teamWageredToWinScore"];
+        [getMyWagerWins findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                int wagerWinCount = 0;
+                NSLog(@"%@", objects);
+                for (PFObject *myWagerWins in objects) {
+                    if ([[myWagerWins objectForKey:@"teamWageredToWinScore"]intValue] > [[myWagerWins objectForKey:@"teamWageredToLoseScore"]intValue]) {
+                        wagerWinCount ++;
+                    }
+                }
+                PFQuery *getMyWageeWins = [PFQuery queryWithClassName:@"wagers"];
+                [getMyWageeWins whereKey:@"wagee" equalTo:currentUser];
+                [getMyWageeWins whereKeyExists:@"teamWageredToWinScore"];
+                [getMyWageeWins findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                    if (!error) {
+                        int wageeWinCount = 0;
+                        for (PFObject *myWageeWins in objects) {
+                            if ([[myWageeWins objectForKey:@"teamWageredToWinScore"]intValue] < [[myWageeWins objectForKey:@"teamWageredToLoseScore"]intValue]) {
+                                wageeWinCount ++;
+                            }
+                        } 
+                        int totalWins = wagerWinCount + wageeWinCount;
+                        [currentUser setObject:[NSNumber numberWithInt:totalWins] forKey:@"totalWins"];
+                        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                            if (succeeded) {
+                                NSLog(@"%@", @"Wins Saved");
+                            } 
+                        }];
+                    }
+                    
+                }];
+            } 
+        }];
+        
+        
         //award user 5 tokens everyday
         /*PFQuery *dailyTokens = [PFQuery queryWithClassName:@"tokens"];
         [dailyTokens whereKey:@"user" equalTo:currentUser];

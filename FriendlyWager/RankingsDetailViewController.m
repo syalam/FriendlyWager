@@ -58,6 +58,9 @@
     if ([_rankCategory isEqualToString:@"Rankings By Points"]) {
         [self getRankingsByPoints];
     }
+    else if ([_rankCategory isEqualToString:@"Rankings By Wins"]) {
+        [self getRankingsByWins];
+    }
     
     pointsArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Rick Lewis", @"name", @"Chicago", @"city", @"190", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Sam Smith", @"name", @"Los Angeles", @"city", @"170", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Jon Floyo", @"name", @"San Francisco", @"city", @"160", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Chris Cook", @"name", @"New York", @"city", @"120", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Frodo Baggins", @"name", @"Bag End", @"city", @"108", @"points", nil], nil];
     
@@ -112,12 +115,10 @@
         [cell addSubview:pointsLabel];
     }
     else if ([_rankCategory isEqualToString:@"Rankings By Wins"]) {
-        nameLabel.text = [[pointsArray objectAtIndex:indexPath.row]objectForKey:@"name"];
-        cityLabel.text = [[pointsArray objectAtIndex:indexPath.row]objectForKey:@"city"];
-        pointsLabel.text = [[pointsArray objectAtIndex:indexPath.row]objectForKey:@"points"];
+        nameLabel.text = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
+        pointsLabel.text = [NSString stringWithFormat:@"%@", [[_contentList objectAtIndex:indexPath.row]objectForKey:@"totalWins"]];
         
         [cell addSubview:nameLabel];
-        [cell addSubview:cityLabel];
         [cell addSubview:pointsLabel];
     }
     else {
@@ -153,6 +154,23 @@
                     }
                 }];
             }
+        } 
+    }];
+}
+
+- (void)getRankingsByWins {
+    NSMutableArray *objectsToDisplay = [[NSMutableArray alloc]init];
+    PFQuery *getWinCounts = [PFQuery queryForUser];
+    [getWinCounts whereKeyExists:@"totalWins"];
+    [getWinCounts orderByAscending:@"totalWins"];
+    [getWinCounts setLimit:30];
+    [getWinCounts findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (PFObject *user in objects) {
+                [objectsToDisplay addObject:user];
+            }
+            [self setContentList:objectsToDisplay];
+            [rankingsTableView reloadData];
         } 
     }];
 }
