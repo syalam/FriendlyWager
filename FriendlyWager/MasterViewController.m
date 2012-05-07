@@ -91,7 +91,7 @@
     }
     else {
         //award user 5 tokens everyday
-        PFQuery *dailyTokens = [PFQuery queryWithClassName:@"tokens"];
+        /*PFQuery *dailyTokens = [PFQuery queryWithClassName:@"tokens"];
         [dailyTokens whereKey:@"user" equalTo:currentUser];
         [dailyTokens findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
@@ -124,8 +124,8 @@
                         } 
                     }];
                 }
-            } 
-        }];
+            }
+        }];*/
     }
     [fwData setBool:NO forKey:@"tabView"];
 }

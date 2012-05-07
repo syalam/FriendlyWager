@@ -95,7 +95,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
     id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
-    RankingsDetailViewController *rankingDetails = [[RankingsDetailViewController alloc]initWithNibName:@"RankingsDetailViewController" bundle:nil rankingBy:contentForThisRow];
+    RankingsDetailViewController *rankingDetails = [[RankingsDetailViewController alloc]initWithNibName:@"RankingsDetailViewController" bundle:nil];
+    rankingDetails.rankCategory = contentForThisRow;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController pushViewController:rankingDetails animated:YES];
     

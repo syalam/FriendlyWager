@@ -10,7 +10,8 @@
 
 @implementation RankingsDetailViewController
 
-@synthesize contentList;
+@synthesize contentList = _contentList;
+@synthesize rankCategory = _rankCategory;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -21,13 +22,6 @@
     return self;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil rankingBy:(NSString *)rankingBy {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        rankBy = rankingBy;
-    }
-    return self;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -46,19 +40,23 @@
     rankingsTableView.dataSource = self;
     rankingsTableView.delegate = self;
     
-    rankingsByLabel.text = rankBy;
+    rankingsByLabel.text = _rankCategory;
     
-    if ([rankBy isEqualToString:@"Rankings By Points"]) {
+    if ([_rankCategory isEqualToString:@"Rankings By Points"]) {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG11_BG"]]];
     }
-    else if ([rankBy isEqualToString:@"Rankings By Wins"]) {
+    else if ([_rankCategory isEqualToString:@"Rankings By Wins"]) {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG12_BG"]]];
     }
-    else if ([rankBy isEqualToString:@"Ranking By Sport"]) {
+    else if ([_rankCategory isEqualToString:@"Ranking By Sport"]) {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG13_BG"]]];
     }
-    else if ([rankBy isEqualToString:@"Rankings By City"]) {
+    else if ([_rankCategory isEqualToString:@"Rankings By City"]) {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG14_BG"]]];
+    }
+    
+    if ([_rankCategory isEqualToString:@"Rankings By Points"]) {
+        [self getRankingsByPoints];
     }
     
     pointsArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Rick Lewis", @"name", @"Chicago", @"city", @"190", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Sam Smith", @"name", @"Los Angeles", @"city", @"170", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Jon Floyo", @"name", @"San Francisco", @"city", @"160", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Chris Cook", @"name", @"New York", @"city", @"120", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Frodo Baggins", @"name", @"Bag End", @"city", @"108", @"points", nil], nil];
@@ -86,15 +84,19 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([rankBy isEqualToString:@"Rankings By Points"] || [rankBy isEqualToString:@"Rankings By Wins"]) {
-        return pointsArray.count;
-    }
-    else {
-        return cityArray.count;
-    }
+    return _contentList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, 130, 20)];
+    UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 15, 115, 20)];
+    UILabel *pointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(270, 15, 30, 20)];
+    UILabel *rankLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 15, 60, 20)];
+    
+    cityLabel.backgroundColor = [UIColor clearColor];
+    rankLabel.backgroundColor = [UIColor clearColor];
+    nameLabel.backgroundColor = [UIColor clearColor];
+    pointsLabel.backgroundColor = [UIColor clearColor];
     
     static NSString *CellIdentifier = @"RankingsDetailTableViewCell";
     
@@ -102,15 +104,14 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    if ([rankBy isEqualToString:@"Rankings By Points"] || [rankBy isEqualToString:@"Rankings By Wins"]) {
-        UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, 130, 20)];
-        UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 15, 115, 20)];
-        UILabel *pointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(270, 15, 30, 20)];
+    if ([_rankCategory isEqualToString:@"Rankings By Points"]) {
+        nameLabel.text = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"name"];
+        pointsLabel.text = [NSString stringWithFormat:@"%@", [[_contentList objectAtIndex:indexPath.row]valueForKey:@"tokenCount"]];
         
-        nameLabel.backgroundColor = [UIColor clearColor];
-        cityLabel.backgroundColor = [UIColor clearColor];
-        pointsLabel.backgroundColor = [UIColor clearColor];
-        
+        [cell addSubview:nameLabel];
+        [cell addSubview:pointsLabel];
+    }
+    else if ([_rankCategory isEqualToString:@"Rankings By Wins"]) {
         nameLabel.text = [[pointsArray objectAtIndex:indexPath.row]objectForKey:@"name"];
         cityLabel.text = [[pointsArray objectAtIndex:indexPath.row]objectForKey:@"city"];
         pointsLabel.text = [[pointsArray objectAtIndex:indexPath.row]objectForKey:@"points"];
@@ -120,11 +121,6 @@
         [cell addSubview:pointsLabel];
     }
     else {
-        UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(60, 15, 115, 20)];
-        UILabel *rankLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 15, 60, 20)];
-        
-        cityLabel.backgroundColor = [UIColor clearColor];
-        rankLabel.backgroundColor = [UIColor clearColor];
         
         cityLabel.text = [[cityArray objectAtIndex:indexPath.row]objectForKey:@"city"];
         rankLabel.text = [[cityArray objectAtIndex:indexPath.row]objectForKey:@"rank"];
@@ -134,6 +130,31 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
+}
+
+
+- (void)getRankingsByPoints {
+    NSMutableArray *itemsToDisplay = [[NSMutableArray alloc]init];
+    PFQuery *getRanking = [PFQuery queryWithClassName:@"tokens"];
+    [getRanking orderByDescending:@"tokenCount"];
+    [getRanking setLimit:25];
+    [getRanking findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (PFObject *tokenObject in objects) {
+                NSMutableDictionary *itemDictionary = [[NSMutableDictionary alloc]init];
+                [itemDictionary setObject:[tokenObject objectForKey:@"tokenCount"] forKey:@"tokenCount"];
+                PFObject *personName = [tokenObject objectForKey:@"user"];
+                [personName fetchIfNeededInBackgroundWithBlock:^(PFObject *user, NSError *error) {
+                    if (!error) {
+                        [itemDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
+                        [itemsToDisplay addObject:itemDictionary];
+                        [self setContentList:itemsToDisplay];
+                        [rankingsTableView reloadData];
+                    }
+                }];
+            }
+        } 
+    }];
 }
 
 @end

@@ -113,18 +113,6 @@
                     totalTokensLabel.text = [NSString stringWithFormat:@"Your total token count is: %d", tokenCount];
                 }
             }
-            else {
-                PFObject *tokens = [PFObject objectWithClassName:@"tokens"];
-                [tokens setValue:[PFUser currentUser] forKey:@"user"];
-                [tokens setValue:[NSNumber numberWithInt:5] forKey:@"tokenCount"];
-                [tokens setValue:[NSDate date] forKey:@"autoAwardDate"];
-                [tokens saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    if (!error) {
-                        int tokenCount = [[tokens objectForKey:@"tokenCount"]intValue];
-                        totalTokensLabel.text = [NSString stringWithFormat:@"Your total token count is: %d", tokenCount];
-                    } 
-                }];
-            }
         }
     }];
 

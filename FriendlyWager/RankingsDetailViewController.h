@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface RankingsDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UITableView *rankingsTableView;
@@ -20,8 +21,10 @@
     NSArray *sportArray;
 }
 
-@property (nonatomic, retain) NSArray* contentList;
+@property (nonatomic, retain) NSMutableArray* contentList;
+@property (nonatomic, retain) NSString* rankCategory;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil rankingBy:(NSString *)rankingBy;
+- (void)getRankingsByPoints;
+
 
 @end
