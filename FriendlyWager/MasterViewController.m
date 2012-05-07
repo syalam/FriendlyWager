@@ -97,10 +97,31 @@
         [getMyWagerWins findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
                 int wagerWinCount = 0;
+                int nflFootballWagerWins = 0;
+                int collegeFootballWagerWins = 0;
+                int mlbBaseballWagerWins = 0;
+                int nbaBasketballWagerWins = 0;
+                int collegeBasketballWagerWins = 0;
+                
                 NSLog(@"%@", objects);
                 for (PFObject *myWagerWins in objects) {
                     if ([[myWagerWins objectForKey:@"teamWageredToWinScore"]intValue] > [[myWagerWins objectForKey:@"teamWageredToLoseScore"]intValue]) {
                         wagerWinCount ++;
+                        if ([[myWagerWins objectForKey:@"sport"]isEqualToString:@"NFL Football"]) {
+                            nflFootballWagerWins ++;
+                        }
+                        else if ([[myWagerWins objectForKey:@"sport"]isEqualToString:@"College Football"]) {
+                            collegeFootballWagerWins ++;
+                        }
+                        else if ([[myWagerWins objectForKey:@"sport"]isEqualToString:@"MLB Baseball"]) {
+                            mlbBaseballWagerWins ++;
+                        }
+                        else if ([[myWagerWins objectForKey:@"sport"]isEqualToString:@"NBA Basketball"]) {
+                            nbaBasketballWagerWins ++;
+                        }
+                        else if ([[myWagerWins objectForKey:@"sport"]isEqualToString:@"NFL Football"]) {
+                            collegeBasketballWagerWins ++;
+                        }
                     }
                 }
                 PFQuery *getMyWageeWins = [PFQuery queryWithClassName:@"wagers"];
@@ -109,12 +130,37 @@
                 [getMyWageeWins findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                     if (!error) {
                         int wageeWinCount = 0;
+                        int nflFootballWageeWins = 0;
+                        int collegeFootballWageeWins = 0;
+                        int mlbBaseballWageeWins = 0;
+                        int nbaBasketballWageeWins = 0;
+                        int collegeBasketballWageeWins = 0;
                         for (PFObject *myWageeWins in objects) {
                             if ([[myWageeWins objectForKey:@"teamWageredToWinScore"]intValue] < [[myWageeWins objectForKey:@"teamWageredToLoseScore"]intValue]) {
                                 wageeWinCount ++;
+                                if ([[myWageeWins objectForKey:@"sport"]isEqualToString:@"NFL Football"]) {
+                                    nflFootballWageeWins ++;
+                                }
+                                else if ([[myWageeWins objectForKey:@"sport"]isEqualToString:@"College Football"]) {
+                                    collegeFootballWageeWins ++;
+                                }
+                                else if ([[myWageeWins objectForKey:@"sport"]isEqualToString:@"MLB Baseball"]) {
+                                    mlbBaseballWageeWins ++;
+                                }
+                                else if ([[myWageeWins objectForKey:@"sport"]isEqualToString:@"NBA Basketball"]) {
+                                    nbaBasketballWageeWins ++;
+                                }
+                                else if ([[myWageeWins objectForKey:@"sport"]isEqualToString:@"NFL Football"]) {
+                                    collegeBasketballWageeWins ++;
+                                }
                             }
                         }
                         int totalWins = wagerWinCount + wageeWinCount;
+                        int totalNflFootballWins = nflFootballWagerWins + nflFootballWageeWins;
+                        int totalCollegeFootballWins = collegeFootballWagerWins + collegeFootballWageeWins;
+                        int totalMlbBasesballWins = mlbBaseballWagerWins + mlbBaseballWageeWins;
+                        int totalNbaBasketballWins = nbaBasketballWagerWins + nbaBasketballWageeWins;
+                        int totalCollegeBasketballWins = collegeFootballWagerWins + collegeBasketballWageeWins;
                         PFQuery *queryWinTable = [PFQuery queryWithClassName:@"results"];
                         [queryWinTable whereKey:@"user" equalTo:currentUser];
                         [queryWinTable findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -122,6 +168,11 @@
                                 if (objects.count > 0) {
                                     for (PFObject *tokenObject in objects) {
                                         [tokenObject setObject:[NSNumber numberWithInt:totalWins] forKey:@"totalWins"];
+                                        [tokenObject setObject:[NSNumber numberWithInt:totalNflFootballWins] forKey:@"nflWins"];
+                                        [tokenObject setObject:[NSNumber numberWithInt:totalCollegeFootballWins] forKey:@"collegeFootballWins"];
+                                        [tokenObject setObject:[NSNumber numberWithInt:totalMlbBasesballWins] forKey:@"mlbWins"];
+                                        [tokenObject setObject:[NSNumber numberWithInt:totalNbaBasketballWins] forKey:@"nbaWins"];
+                                        [tokenObject setObject:[NSNumber numberWithInt:totalCollegeBasketballWins] forKey:@"collegeBasketballWins"];
                                         [tokenObject saveInBackgroundWithBlock:^(BOOL suceeded, NSError *error) {
                                             if (suceeded) {
                                                 NSLog(@"%@", @"Wins Saved");
@@ -132,6 +183,11 @@
                                 else {
                                     PFObject *tokenObject = [PFObject objectWithClassName:@"results"];
                                     [tokenObject setObject:[NSNumber numberWithInt:totalWins] forKey:@"totalWins"];
+                                    [tokenObject setObject:[NSNumber numberWithInt:totalNflFootballWins] forKey:@"nflWins"];
+                                    [tokenObject setObject:[NSNumber numberWithInt:totalCollegeFootballWins] forKey:@"collegeFootballWins"];
+                                    [tokenObject setObject:[NSNumber numberWithInt:totalMlbBasesballWins] forKey:@"mlbWins"];
+                                    [tokenObject setObject:[NSNumber numberWithInt:totalNbaBasketballWins] forKey:@"nbaWins"];
+                                    [tokenObject setObject:[NSNumber numberWithInt:totalCollegeBasketballWins] forKey:@"collegeBasketballWins"];
                                     [tokenObject setObject:currentUser forKey:@"user"];
                                     [tokenObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                         if (succeeded) {
