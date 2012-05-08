@@ -206,7 +206,7 @@
         
         
         //award user 5 tokens everyday
-        /*PFQuery *dailyTokens = [PFQuery queryWithClassName:@"tokens"];
+        PFQuery *dailyTokens = [PFQuery queryWithClassName:@"tokens"];
         [dailyTokens whereKey:@"user" equalTo:currentUser];
         [dailyTokens findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
@@ -214,11 +214,17 @@
                 if (objects.count > 0) {
                     for (PFObject *tokenObject in objects) {
                         //check if user has been auto awarded points in the last 24 hours (86400 seconds)
-                        if ([tokenObject objectForKey:@"autoAwardDate"] > [NSDate dateWithTimeIntervalSinceNow:-86400]) {
+                        NSLog(@"%@", [tokenObject objectForKey:@"autoAwardDate"]);
+                        time_t unixBroadcastTime = (time_t)[[tokenObject objectForKey:@"autoAwardDate"] timeIntervalSince1970];
+                        time_t currentTime = (time_t)[[NSDate date]timeIntervalSince1970];
+                        int elapsedTime = (int)currentTime - (int)unixBroadcastTime;
+                        
+                        if (elapsedTime > 86400) {
                             int currentTokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
                             //add 5 tokens
                             int updatedTokenCount = currentTokenCount + 5; 
                             [tokenObject setValue:[NSNumber numberWithInt:updatedTokenCount] forKey:@"tokenCount"];
+                            [tokenObject setValue:[NSDate date] forKey:@"autoAwardDate"];
                             [tokenObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                 if (!error) {
                                     NSLog(@"%@", @"tokens added");
@@ -240,7 +246,7 @@
                     }];
                 }
             }
-        }];*/
+        }];
     }
     [fwData setBool:NO forKey:@"tabView"];
 }

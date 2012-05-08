@@ -290,6 +290,48 @@
 #pragma mark - Mail composer delegate methods
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
+    switch (result)
+    {
+        case MFMailComposeResultSent: {
+            PFQuery *awardTokens = [PFQuery queryWithClassName:@"tokens"];
+            [awardTokens whereKey:@"user" equalTo:[PFUser currentUser]];
+            [awardTokens findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                if (!error) {
+                    //check if user exists in this table
+                    if (objects.count > 0) {
+                        for (PFObject *tokenObject in objects) {
+                            int currentTokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
+                            //add 5 tokens
+                            int updatedTokenCount = currentTokenCount + 5; 
+                            [tokenObject setValue:[NSNumber numberWithInt:updatedTokenCount] forKey:@"tokenCount"];
+                            [tokenObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                if (!error) {
+                                    NSLog(@"%@", @"tokens added");
+                                } 
+                            }];
+                        }
+                    }
+                    //if the user doesn't exist in the tokens table, add the user along with 5 points to start off with
+                    else {
+                        PFObject *tokens = [PFObject objectWithClassName:@"tokens"];
+                        [tokens setValue:[PFUser currentUser] forKey:@"user"];
+                        [tokens setValue:[NSNumber numberWithInt:5] forKey:@"tokenCount"];
+                        [tokens saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                            if (!error) {
+                                NSLog(@"%@", @"tokens added");
+                            } 
+                        }];
+                    }
+                }
+            }];
+
+            break;
+        }
+            
+        default:
+            
+            break;
+    }
     [self dismissModalViewControllerAnimated:YES];
 }
 

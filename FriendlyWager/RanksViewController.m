@@ -45,9 +45,8 @@
     rankingsByPoints = [[NSArray alloc]initWithObjects:@"Rankings By Points", nil];
     rankingsByWins = [[NSArray alloc]initWithObjects:@"Rankings By Wins", nil];
     rankingsBySport = [[NSArray alloc]initWithObjects:@"Ranking By Sport", nil];
-    rankingsByCity = [[NSArray alloc]initWithObjects:@"Rankings By City", nil];
     
-    rankingsArray = [[NSMutableArray alloc]initWithObjects:rankingsByPoints, rankingsByWins, rankingsBySport, rankingsByCity, nil];
+    rankingsArray = [[NSMutableArray alloc]initWithObjects:rankingsByPoints, rankingsByWins, rankingsBySport, nil];
     [self setContentList:rankingsArray];
 }
 

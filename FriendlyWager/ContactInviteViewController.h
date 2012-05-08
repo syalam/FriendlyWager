@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <MessageUI/MessageUI.h>
+#import <Parse/Parse.h>
 
 @interface ContactInviteViewController : UITableViewController <MFMailComposeViewControllerDelegate> {
     ABAddressBookRef addressBook;
