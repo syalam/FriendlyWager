@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "KiipAwards.h"
 
 @interface MasterViewController : UIViewController {
     IBOutlet UIButton *myLedgerButton;
@@ -17,6 +18,8 @@
     IBOutlet UIButton *rankingsButton;
     IBOutlet UIButton *infoButton;
     IBOutlet UIView *bottomView;
+    
+    KiipAwards *awards;
     
     NSUserDefaults *fwData;
 }

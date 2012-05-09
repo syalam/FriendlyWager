@@ -89,6 +89,7 @@
 		F74B3124153C9DBA00A66EDB /* PreviouslyWageredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F74B3122153C9DBA00A66EDB /* PreviouslyWageredViewController.xib */; };
 		F74C0F0414B424C0006F3D99 /* SMContactsSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = F74C0F0314B424C0006F3D99 /* SMContactsSelector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F785721F14A26ED20028AD5E /* BHTabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F785721E14A26ED20028AD5E /* BHTabsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F799D4CB155AE53E00D1157A /* KiipAwards.m in Sources */ = {isa = PBXBuildFile; fileRef = F799D4CA155AE53E00D1157A /* KiipAwards.m */; };
 		F7A08FC615100DC200471D3C /* TrashTalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A08FC415100DC200471D3C /* TrashTalkViewController.m */; };
 		F7A08FC715100DC200471D3C /* TrashTalkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7A08FC515100DC200471D3C /* TrashTalkViewController.xib */; };
 		F7A08FD11510216600471D3C /* NewTrashTalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A08FCF1510216600471D3C /* NewTrashTalkViewController.m */; };
@@ -600,6 +601,8 @@
 		F74C0F0314B424C0006F3D99 /* SMContactsSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMContactsSelector.m; sourceTree = "<group>"; };
 		F785721D14A26ED20028AD5E /* BHTabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHTabsViewController.h; sourceTree = "<group>"; };
 		F785721E14A26ED20028AD5E /* BHTabsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabsViewController.m; sourceTree = "<group>"; };
+		F799D4C9155AE53D00D1157A /* KiipAwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KiipAwards.h; sourceTree = "<group>"; };
+		F799D4CA155AE53E00D1157A /* KiipAwards.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KiipAwards.m; sourceTree = "<group>"; };
 		F7A08FC315100DC200471D3C /* TrashTalkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrashTalkViewController.h; sourceTree = "<group>"; };
 		F7A08FC415100DC200471D3C /* TrashTalkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrashTalkViewController.m; sourceTree = "<group>"; };
 		F7A08FC515100DC200471D3C /* TrashTalkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrashTalkViewController.xib; sourceTree = "<group>"; };
@@ -1137,6 +1140,7 @@
 		F714E16914A1A88400E24956 /* FriendlyWager */ = {
 			isa = PBXGroup;
 			children = (
+				F799D4C7155AE51200D1157A /* Kiip Awards */,
 				F714E17214A1A88400E24956 /* AppDelegate.h */,
 				F714E17314A1A88400E24956 /* AppDelegate.m */,
 				F7F5F5DC1540B39600D1ED7C /* Contact Invite */,
@@ -1433,6 +1437,15 @@
 				F74B3122153C9DBA00A66EDB /* PreviouslyWageredViewController.xib */,
 			);
 			name = "Previously Wagered";
+			sourceTree = "<group>";
+		};
+		F799D4C7155AE51200D1157A /* Kiip Awards */ = {
+			isa = PBXGroup;
+			children = (
+				F799D4C9155AE53D00D1157A /* KiipAwards.h */,
+				F799D4CA155AE53E00D1157A /* KiipAwards.m */,
+			);
+			name = "Kiip Awards";
 			sourceTree = "<group>";
 		};
 		F7A08FBD15100BE100471D3C /* Trash Talk */ = {
@@ -3081,6 +3094,7 @@
 				F7A70324152438C7007C7468 /* ChatViewController.m in Sources */,
 				F74B3123153C9DBA00A66EDB /* PreviouslyWageredViewController.m in Sources */,
 				F7F5F5E11540B3C100D1ED7C /* ContactInviteViewController.m in Sources */,
+				F799D4CB155AE53E00D1157A /* KiipAwards.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

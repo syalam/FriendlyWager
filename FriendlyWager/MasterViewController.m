@@ -45,6 +45,8 @@
     
     fwData = [NSUserDefaults alloc];
     
+    awards = [[KiipAwards alloc]init];
+    
     NSDictionary *navTitleAttributes = [[NSDictionary alloc]initWithObjectsAndKeys:
                        [UIColor blackColor], UITextAttributeTextColor, nil];
     UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_HOME_Logo"]];
@@ -248,6 +250,9 @@
             }
         }];
     }
+    
+    [awards setAwards];
+    
     [fwData setBool:NO forKey:@"tabView"];
 }
 
