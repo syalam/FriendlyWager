@@ -110,6 +110,7 @@
     static NSString *CellIdentifier = @"RankingsDetailTableViewCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    cell = nil;
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
@@ -156,7 +157,18 @@
                     if (!error) {
                         [itemDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
                         [itemsToDisplay addObject:itemDictionary];
-                        [self setContentList:itemsToDisplay];
+                        
+                        NSSortDescriptor *tokenDescriptor = [[NSSortDescriptor alloc]initWithKey:@"tokenCount" ascending:NO];
+                        NSArray *sortDescriptors = [NSArray arrayWithObject:tokenDescriptor];
+                        NSArray *sortedArray = [itemsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
+                        
+                        
+                        /*ageDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"age"
+                                                                     ascending:YES] autorelease];
+                        sortDescriptors = [NSArray arrayWithObject:ageDescriptor];
+                        sortedArray = [employeesArray sortedArrayUsingDescriptors:sortDescriptors];*/
+                        
+                        [self setContentList:[sortedArray mutableCopy]];
                         [rankingsTableView reloadData];
                     }
                 }];
@@ -181,7 +193,12 @@
                         [resultDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
                     } 
                     [objectsToDisplay addObject:resultDictionary];
-                    [self setContentList:objectsToDisplay];
+                    
+                    NSSortDescriptor *winsDescriptor = [[NSSortDescriptor alloc]initWithKey:@"totalWins" ascending:NO];
+                    NSArray *sortDescriptors = [NSArray arrayWithObject:winsDescriptor];
+                    NSArray *sortedArray = [objectsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
+                    
+                    [self setContentList:[sortedArray mutableCopy]];
                     [rankingsTableView reloadData];
                 }];
             }
@@ -214,17 +231,24 @@
     [getWinBySportCounts findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             for (PFObject *resultObject in objects) {
-                NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc]init];
-                [resultDictionary setObject:[resultObject objectForKey:sportSort] forKey:@"totalWins"];
-                PFUser *user = [resultObject objectForKey:@"user"];
-                [user fetchIfNeededInBackgroundWithBlock:^(PFObject *user, NSError *error) {
-                    if (!error) {
-                        [resultDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
-                    } 
-                    [objectsToDisplay addObject:resultDictionary];
-                    [self setContentList:objectsToDisplay];
-                    [rankingsTableView reloadData];
-                }];
+                if ([[resultObject objectForKey:sportSort]intValue] > 0) {
+                    NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc]init];
+                    [resultDictionary setObject:[resultObject objectForKey:sportSort] forKey:@"totalWins"];
+                    PFUser *user = [resultObject objectForKey:@"user"];
+                    [user fetchIfNeededInBackgroundWithBlock:^(PFObject *user, NSError *error) {
+                        if (!error) {
+                            [resultDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
+                        } 
+                        [objectsToDisplay addObject:resultDictionary];
+                        
+                        NSSortDescriptor *winsDescriptor = [[NSSortDescriptor alloc]initWithKey:@"totalWins" ascending:NO];
+                        NSArray *sortDescriptors = [NSArray arrayWithObject:winsDescriptor];
+                        NSArray *sortedArray = [objectsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
+                        
+                        [self setContentList:[sortedArray mutableCopy]];
+                        [rankingsTableView reloadData];
+                    }];
+                }
             }
         } 
     }];

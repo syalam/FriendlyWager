@@ -77,7 +77,7 @@
     
     NSArray *nflFootball = [[NSArray alloc]initWithObjects:@"NFL Football", nil];
     NSArray *collegeFootball = [[NSArray alloc]initWithObjects:@"College Football", nil];
-    NSArray *mlbBaseball = [[NSArray alloc]initWithObjects:@"MBL Baseball", nil];
+    NSArray *mlbBaseball = [[NSArray alloc]initWithObjects:@"MLB Baseball", nil];
     NSArray *nbaBasketball = [[NSArray alloc]initWithObjects:@"NBA Basketball", nil];
     NSArray *collegeBasketball = [[NSArray alloc]initWithObjects:@"College Basketball", nil];
     scoresArray = [[NSArray alloc]initWithObjects:nflFootball, collegeFootball, mlbBaseball, nbaBasketball, collegeBasketball, nil];

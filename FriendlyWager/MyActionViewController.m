@@ -61,18 +61,18 @@
                             if (itemsToDisplay.count > 0) {
                                 BOOL duplicate = NO;
                                 for (NSUInteger i = 0; i < itemsToDisplay.count; i++) {
-                                    NSString *itemInArray = [[itemsToDisplay objectAtIndex:i]objectId];
+                                    NSString *itemInArray = [[[itemsToDisplay objectAtIndex:i]valueForKey:@"object"] objectId];
                                     NSString *objectItem = [object objectId];
                                     if ([itemInArray isEqualToString:objectItem]) {
                                         duplicate = YES;
                                     }
                                 }
                                 if (!duplicate) {
-                                    [itemsToDisplay addObject:object];
+                                    [itemsToDisplay addObject:[NSDictionary dictionaryWithObjectsAndKeys:object, @"object", object.createdAt, @"date", nil]];
                                 }
                             }
                             else {
-                                [itemsToDisplay addObject:object];
+                                [itemsToDisplay addObject:[NSDictionary dictionaryWithObjectsAndKeys:object, @"object", object.createdAt, @"date", nil]];
                             }
                             
                             PFQuery *wageredMe = [PFQuery queryWithClassName:@"wagers"];
@@ -86,21 +86,25 @@
                                             if (itemsToDisplay.count > 0) {
                                                 BOOL duplicate = NO;
                                                 for (NSUInteger i = 0; i < itemsToDisplay.count; i++) {
-                                                    NSString *itemInArray = [[itemsToDisplay objectAtIndex:i]objectId];
+                                                    NSString *itemInArray = [[[itemsToDisplay objectAtIndex:i]valueForKey:@"object"] objectId];
                                                     NSString *objectItem = [object objectId];
                                                     if ([itemInArray isEqualToString:objectItem]) {
                                                         duplicate = YES;
                                                     }
                                                 }
                                                 if (!duplicate) {
-                                                    [itemsToDisplay addObject:object];
+                                                    [itemsToDisplay addObject:[NSDictionary dictionaryWithObjectsAndKeys:object, @"object", object.createdAt, @"date", nil]];
                                                 }
                                             }
                                             else {
-                                                [itemsToDisplay addObject:object];
+                                                [itemsToDisplay addObject:[NSDictionary dictionaryWithObjectsAndKeys:object, @"object", object.createdAt, @"date", nil]];
                                             }
                                             
-                                            [self setContentList:itemsToDisplay];
+                                            NSSortDescriptor *dateDescriptor = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
+                                            NSArray *sortDescriptors = [NSArray arrayWithObject:dateDescriptor];
+                                            NSArray *sortedArray = [itemsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
+                                            
+                                            [self setContentList:[sortedArray mutableCopy]];
                                             [myActionTableView reloadData];
                                         }
                                     }];
@@ -115,29 +119,6 @@
             NSLog(@"%@", error);
         }
     }];
-    
-    /*PFQuery *queryForUsers = [PFQuery queryForUser];
-    queryForUsers.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    [queryForUsers whereKey:@"objectId" notEqualTo:[[PFUser currentUser]objectId]];
-    [queryForUsers whereKey:@"name" notEqualTo:@""];
-    [queryForUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            myActionOpponentArray = [[NSMutableArray alloc]init];
-            myActionWagersArray = [[NSMutableArray alloc]init];
-            for (PFObject *user in objects) {
-                [myActionOpponentArray addObject:user];
-                [myActionWagersArray addObject:@"2"];
-                [myActionTableView reloadData];
-            }
-        }
-     else {
-         NSLog(@"%@", error);
-     }
-    }];*/
-
-    
-    //myActionOpponentArray = [[NSMutableArray alloc]initWithObjects:@"Bill Smith", @"John Taylor", @"Timmy Jones", @"Steve Bird", nil];
-    //myActionWagersArray = [[NSMutableArray alloc]initWithObjects:@"2", @"36", @"7", @"19", nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -190,7 +171,7 @@
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.textAlignment = UITextAlignmentCenter;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.text = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
+    cell.textLabel.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"object"] objectForKey:@"name"];
     
     return cell;    
 }
@@ -202,7 +183,7 @@
     if (_tabParentView) {
         actionSummary.tabParentView = _tabParentView;
     }
-    actionSummary.userToWager = [_contentList objectAtIndex:indexPath.row];
+    actionSummary.userToWager = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"object"];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController pushViewController:actionSummary animated:YES];
 }
