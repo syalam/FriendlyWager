@@ -141,10 +141,18 @@
 - (void)request:(PF_FBRequest *)request didLoad:(id)result {
     //save the users username and email address to parse
     PFUser *user = [PFUser currentUser];
-    user.username = [[result objectForKey:@"username"]lowercaseString];
-    [user setObject:[[result objectForKey:@"name"] lowercaseString] forKey:@"name"];
-    [user setObject:[result objectForKey:@"id"] forKey:@"fbId"];
-    user.email = [result objectForKey:@"email"];
+    if ([result objectForKey:@"username"]) {
+        user.username = [[result objectForKey:@"username"]lowercaseString];
+    }
+    if ([result objectForKey:@"name"]) {
+        [user setObject:[[result objectForKey:@"name"] lowercaseString] forKey:@"name"];
+    }
+    if ([result objectForKey:@"id"]) {
+        [user setObject:[result objectForKey:@"id"] forKey:@"fbId"];
+    }
+    if ([result objectForKey:@"email"]) {
+        user.email = [result objectForKey:@"email"];
+    }
     [user saveInBackground];
     [SVProgressHUD dismiss];
     //TODO: REMOVE ME

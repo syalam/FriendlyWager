@@ -249,10 +249,8 @@
                 }
             }
         }];
+        [awards setAwards];
     }
-    
-    [awards setAwards];
-    
     [fwData setBool:NO forKey:@"tabView"];
 }
 
