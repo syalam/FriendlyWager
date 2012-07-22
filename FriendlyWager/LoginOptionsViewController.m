@@ -7,6 +7,7 @@
 //
 
 #import "LoginOptionsViewController.h"
+#import "NewAccountViewController.h"
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
@@ -38,29 +39,6 @@
 {
     [super viewDidLoad];
     
-    NSDictionary *navTitleAttributes = [[NSDictionary alloc]initWithObjectsAndKeys:
-                                        [UIColor blackColor], UITextAttributeTextColor, nil];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
-    
-    UILabel *fwLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, friendlyWagerButton.frame.size.width, friendlyWagerButton.frame.size.height)];
-    fwLabel.backgroundColor = [UIColor clearColor];
-    fwLabel.textColor = [UIColor whiteColor];
-    fwLabel.textAlignment = UITextAlignmentCenter;
-    fwLabel.font = [UIFont boldSystemFontOfSize:14];
-    fwLabel.text = @"Friendly Wager Account";
-    
-    [friendlyWagerButton addSubview:fwLabel];
-    
-    UILabel *fbLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, facebookLoginButton.frame.size.width, facebookLoginButton.frame.size.height)];
-    fbLabel.backgroundColor = [UIColor clearColor];
-    fbLabel.textColor = [UIColor whiteColor];
-    fbLabel.textAlignment = UITextAlignmentCenter;
-    fbLabel.font = [UIFont boldSystemFontOfSize:14];
-    fbLabel.text = @"Facebook";
-    
-    [facebookLoginButton addSubview:fbLabel];
-    
     UILabel *twitterLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, twitterLoginButton.frame.size.width, twitterLoginButton.frame.size.height)];
     twitterLabel.backgroundColor = [UIColor clearColor];
     twitterLabel.textColor = [UIColor whiteColor];
@@ -72,6 +50,9 @@
     
     UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_Login_NavBar"]];
     self.navigationItem.titleView = titleImageView;
+    
+    UIBarButtonItem *signUpBarButton = [[UIBarButtonItem alloc]initWithTitle:@"Sign Up" style:UIBarButtonItemStyleBordered target:self action:@selector(signUpButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = signUpBarButton;
 }
 
 - (void)viewDidUnload
@@ -113,6 +94,28 @@
     }];
 }
 
+- (IBAction)signInButtonClicked:(id)sender {
+    [PFUser logInWithUsernameInBackground:userNameTextField.text password:passwordTextField.text 
+                                    block:^(PFUser *user, NSError *error) {
+                                        NSString *errorString = [[error userInfo] objectForKey:@"error"];
+                                        if (user) {
+                                            //TODO: REMOVE ME
+                                            [[KPManager sharedManager] unlockAchievement:@"1"];
+                                            [self.navigationController dismissModalViewControllerAnimated:YES];
+                                        } else {
+                                            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
+                                                                                                message:errorString 
+                                                                                               delegate:self 
+                                                                                      cancelButtonTitle:@"OK" 
+                                                                                      otherButtonTitles:nil];
+                                            [alertView show];
+                                            
+                                        }
+                                    }];
+    
+}
+
+
 - (IBAction)twitterLoginButtonClicked:(id)sender {
     [PFTwitterUtils logInWithBlock:^(PFUser *user, NSError *error) {
         if (!user) {
@@ -132,6 +135,11 @@
             }];
         }     
     }];
+}
+
+- (void)signUpButtonClicked:(id)sender {
+    NewAccountViewController *navc = [[NewAccountViewController alloc]initWithNibName:@"NewAccountViewController" bundle:nil];
+    [self.navigationController pushViewController:navc animated:YES];
 }
 
 - (void)request:(PF_FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
