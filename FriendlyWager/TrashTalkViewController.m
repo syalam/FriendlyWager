@@ -8,6 +8,7 @@
 
 #import "TrashTalkViewController.h"
 #import "NewTrashTalkViewController.h"
+#import "LoginOptionsViewController.h"
 
 #define CELL_CONTENT_WIDTH 320.0f
 #define CELL_CONTENT_MARGIN 10.0f
@@ -35,10 +36,7 @@
 {
     [super viewDidLoad];
     
-    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_PG16_Feed"]];
-    [self.navigationController setNavigationBarHidden:NO];
-    //navItem.titleView = titleImageView;
-    self.navigationItem.titleView = titleImageView;
+    self.title = @"Dashboard";
     
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG16_BG"]]];
@@ -54,15 +52,18 @@
     self.navigationItem.rightBarButtonItem = newTrashTalkButton;
     //navItem.rightBarButtonItem = newTrashTalkButton;
     
-    UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+    /*UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
     [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
-    self.navigationItem.leftBarButtonItem = backButton;
+    self.navigationItem.leftBarButtonItem = backButton;*/
     //navItem.leftBarButtonItem = backButton;
+    
+    UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc]initWithTitle:@"Sign Out" style:UIBarButtonItemStyleBordered target:self action:@selector(signOutButtonClicked:)];
+    self.navigationItem.leftBarButtonItem = signOutButton;
 }
 
 - (void)viewDidUnload
@@ -333,7 +334,13 @@
             [alert show];
         }
     }];
-    
+}
+
+- (void)signOutButtonClicked:(id)sender {
+    [PFUser logOut];
+    LoginOptionsViewController *loginVc = [[LoginOptionsViewController alloc]initWithNibName:@"LoginOptionsViewController" bundle:nil];
+    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
+    [self.navigationController presentModalViewController:navc animated:YES];
 }
 
 

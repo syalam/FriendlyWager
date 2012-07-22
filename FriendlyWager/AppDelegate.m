@@ -10,6 +10,7 @@
 
 #import "MasterViewController.h"
 #import "LoginOptionsViewController.h"
+#import "TrashTalkViewController.h"
 #import "Kiip.h"
 
 @implementation AppDelegate
@@ -32,8 +33,8 @@
     [KPManager setSharedManager:manager];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    MasterViewController *masterViewController = [[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil];
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+    TrashTalkViewController *traskTalkViewController = [[TrashTalkViewController alloc] initWithNibName:@"TrashTalkViewController" bundle:nil];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:traskTalkViewController];
     self.window.rootViewController = self.navigationController;
     
     if ([UINavigationBar respondsToSelector:@selector(appearance)]) {
