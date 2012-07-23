@@ -78,77 +78,85 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (_opponent) {
-        PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
-        [queryForTrashTalk whereKey:@"recipient" equalTo:_opponent];
-        [queryForTrashTalk whereKey:@"sender" equalTo:[PFUser currentUser]];
-        [queryForTrashTalk orderByDescending:@"updatedAt"];
-        [queryForTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if (!error) {
-                NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
-                for (PFObject *trashTalkItem in objects) {
-                    [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
+    if ([PFUser currentUser]) {
+        if (_opponent) {
+            PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
+            [queryForTrashTalk whereKey:@"recipient" equalTo:_opponent];
+            [queryForTrashTalk whereKey:@"sender" equalTo:[PFUser currentUser]];
+            [queryForTrashTalk orderByDescending:@"updatedAt"];
+            [queryForTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                if (!error) {
+                    NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
+                    for (PFObject *trashTalkItem in objects) {
+                        [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
+                    }
+                    PFQuery *queryForReceivedTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
+                    [queryForReceivedTrashTalk whereKey:@"recipient" equalTo:[PFUser currentUser]];
+                    [queryForReceivedTrashTalk whereKey:@"sender" equalTo:_opponent];
+                    [queryForReceivedTrashTalk orderByDescending:@"updatedAt"];
+                    [queryForReceivedTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                        if (!error) {
+                            for (PFObject *trashTalkItem in objects) {
+                                [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
+                            }
+                            NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
+                            NSArray *sortDescriptors = [NSArray arrayWithObject:sortByDate];
+                            NSArray *sortedArray = [trashTalkArray sortedArrayUsingDescriptors:sortDescriptors];
+                            NSMutableArray *trashTalkToDisplay = [sortedArray mutableCopy];
+                            
+                            [self setContentList:trashTalkToDisplay];
+                            [self.trashTalkTableView reloadData];
+                        } 
+                    }];
                 }
-                PFQuery *queryForReceivedTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
-                [queryForReceivedTrashTalk whereKey:@"recipient" equalTo:[PFUser currentUser]];
-                [queryForReceivedTrashTalk whereKey:@"sender" equalTo:_opponent];
-                [queryForReceivedTrashTalk orderByDescending:@"updatedAt"];
-                [queryForReceivedTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-                    if (!error) {
-                        for (PFObject *trashTalkItem in objects) {
-                            [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
-                        }
-                        NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
-                        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByDate];
-                        NSArray *sortedArray = [trashTalkArray sortedArrayUsingDescriptors:sortDescriptors];
-                        NSMutableArray *trashTalkToDisplay = [sortedArray mutableCopy];
-                        
-                        [self setContentList:trashTalkToDisplay];
-                        [self.trashTalkTableView reloadData];
-                    } 
-                }];
-            }
-        }];
-
+            }];
+            
+        }
+        else {
+            PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
+            [queryForTrashTalk whereKey:@"recipient" equalTo:[PFUser currentUser]];
+            [queryForTrashTalk orderByDescending:@"updatedAt"];
+            [queryForTrashTalk findObjectsInBackgroundWithBlock:^ (NSArray *objects, NSError *error) {
+                if (!error) {
+                    NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
+                    for (PFObject *trashTalkItem in objects) {
+                        [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
+                    }
+                    PFQuery *queryForSentTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
+                    [queryForSentTrashTalk whereKey:@"sender" equalTo:[PFUser currentUser]];
+                    [queryForSentTrashTalk whereKey:@"recipient" notEqualTo:[PFUser currentUser]];
+                    [queryForTrashTalk orderByDescending:@"updatedAt"];
+                    [queryForSentTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                        if (!error) {
+                            for (PFObject *sentTrashTalkItem in objects) {
+                                [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:sentTrashTalkItem, @"data", sentTrashTalkItem.updatedAt, @"date", nil]];
+                            }
+                            NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
+                            NSArray *sortDescriptors = [NSArray arrayWithObject:sortByDate];
+                            NSArray *sortedArray = [trashTalkArray sortedArrayUsingDescriptors:sortDescriptors];
+                            NSMutableArray *trashTalkToDisplay = [sortedArray mutableCopy];
+                            NSLog(@"%@", sortedArray);
+                            
+                            
+                            /*NSSortDescriptor *dateDescriptor = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
+                             NSArray *descriptors = [NSArray arrayWithObjects:dateDescriptor, nil];
+                             NSArray * sortedArray = [trashTalkArray sortedArrayUsingDescriptors:descriptors];
+                             NSLog(@"%@", sortedArray);*/
+                            
+                            [self setContentList:trashTalkToDisplay];
+                            [self.trashTalkTableView reloadData];
+                        } 
+                    }];
+                }
+            }];
+        }
     }
     else {
-        PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
-        [queryForTrashTalk whereKey:@"recipient" equalTo:[PFUser currentUser]];
-        [queryForTrashTalk orderByDescending:@"updatedAt"];
-        [queryForTrashTalk findObjectsInBackgroundWithBlock:^ (NSArray *objects, NSError *error) {
-            if (!error) {
-                NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
-                for (PFObject *trashTalkItem in objects) {
-                    [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
-                }
-                PFQuery *queryForSentTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
-                [queryForSentTrashTalk whereKey:@"sender" equalTo:[PFUser currentUser]];
-                [queryForSentTrashTalk whereKey:@"recipient" notEqualTo:[PFUser currentUser]];
-                [queryForTrashTalk orderByDescending:@"updatedAt"];
-                [queryForSentTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-                    if (!error) {
-                        for (PFObject *sentTrashTalkItem in objects) {
-                            [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:sentTrashTalkItem, @"data", sentTrashTalkItem.updatedAt, @"date", nil]];
-                        }
-                        NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
-                        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByDate];
-                        NSArray *sortedArray = [trashTalkArray sortedArrayUsingDescriptors:sortDescriptors];
-                        NSMutableArray *trashTalkToDisplay = [sortedArray mutableCopy];
-                        NSLog(@"%@", sortedArray);
-                        
-                        
-                        /*NSSortDescriptor *dateDescriptor = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
-                        NSArray *descriptors = [NSArray arrayWithObjects:dateDescriptor, nil];
-                        NSArray * sortedArray = [trashTalkArray sortedArrayUsingDescriptors:descriptors];
-                        NSLog(@"%@", sortedArray);*/
-                        
-                        [self setContentList:trashTalkToDisplay];
-                        [self.trashTalkTableView reloadData];
-                    } 
-                }];
-            }
-        }];
+        LoginOptionsViewController *loginVc = [[LoginOptionsViewController alloc]initWithNibName:@"LoginOptionsViewController" bundle:nil];
+        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
+        [self.navigationController presentModalViewController:navc animated:NO];
     }
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
