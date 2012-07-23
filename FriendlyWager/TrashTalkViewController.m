@@ -10,6 +10,7 @@
 #import "NewTrashTalkViewController.h"
 #import "LoginOptionsViewController.h"
 
+
 #define CELL_CONTENT_WIDTH 320.0f
 #define CELL_CONTENT_MARGIN 10.0f
 #define FONT_SIZE 12.0f
@@ -64,6 +65,8 @@
     
     UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc]initWithTitle:@"Sign Out" style:UIBarButtonItemStyleBordered target:self action:@selector(signOutButtonClicked:)];
     self.navigationItem.leftBarButtonItem = signOutButton;
+    
+    tabBarVc = [[TabBarDelegateViewController alloc]initWithNibName:@"TabBarDelegateViewController" bundle:nil];
 }
 
 - (void)viewDidUnload
@@ -341,6 +344,17 @@
     LoginOptionsViewController *loginVc = [[LoginOptionsViewController alloc]initWithNibName:@"LoginOptionsViewController" bundle:nil];
     UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
     [self.navigationController presentModalViewController:navc animated:YES];
+}
+
+- (IBAction)myActionButtonClicked:(id)sender {
+    tabBarVc.tabBarController.selectedIndex = 0;
+    [self.navigationController pushViewController:tabBarVc animated:YES];
+}
+- (IBAction)scoresButtonClicked:(id)sender {
+    
+}
+- (IBAction)rankingButtonClicked:(id)sender {
+    
 }
 
 

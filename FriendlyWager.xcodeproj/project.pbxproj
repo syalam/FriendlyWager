@@ -70,6 +70,8 @@
 		F73E1B5815BCDD7500249001 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F73E1B5415BCDD7500249001 /* libTestFlight.a */; };
 		F73E1B5915BCDD7500249001 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = F73E1B5515BCDD7500249001 /* README.txt */; };
 		F73E1B5A15BCDD7500249001 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = F73E1B5615BCDD7500249001 /* release_notes.txt */; };
+		F73E1B6015BD392300249001 /* TabBarDelegateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F73E1B5E15BD392300249001 /* TabBarDelegateViewController.m */; };
+		F73E1B6115BD392300249001 /* TabBarDelegateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F73E1B5F15BD392300249001 /* TabBarDelegateViewController.xib */; };
 		F743C97214A2F637006B533B /* TabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F743C97014A2F637006B533B /* TabsViewController.m */; };
 		F743C97314A2F637006B533B /* TabsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F743C97114A2F637006B533B /* TabsViewController.xib */; };
 		F743C98214A3B04F006B533B /* RanksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F743C98014A3B04F006B533B /* RanksViewController.m */; };
@@ -574,6 +576,9 @@
 		F73E1B5515BCDD7500249001 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		F73E1B5615BCDD7500249001 /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.txt; sourceTree = "<group>"; };
 		F73E1B5715BCDD7500249001 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		F73E1B5D15BD392300249001 /* TabBarDelegateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarDelegateViewController.h; sourceTree = "<group>"; };
+		F73E1B5E15BD392300249001 /* TabBarDelegateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarDelegateViewController.m; sourceTree = "<group>"; };
+		F73E1B5F15BD392300249001 /* TabBarDelegateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabBarDelegateViewController.xib; sourceTree = "<group>"; };
 		F743C96F14A2F637006B533B /* TabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabsViewController.h; sourceTree = "<group>"; };
 		F743C97014A2F637006B533B /* TabsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabsViewController.m; sourceTree = "<group>"; };
 		F743C97114A2F637006B533B /* TabsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabsViewController.xib; sourceTree = "<group>"; };
@@ -1152,6 +1157,7 @@
 				F799D4C7155AE51200D1157A /* Kiip Awards */,
 				F714E17214A1A88400E24956 /* AppDelegate.h */,
 				F714E17314A1A88400E24956 /* AppDelegate.m */,
+				F73E1B5C15BD390200249001 /* Tab Bar Delegate */,
 				F7F5F5DC1540B39600D1ED7C /* Contact Invite */,
 				F724468514D0C8A90009E001 /* Authentication */,
 				F714E1A214A1B00000E24956 /* Home */,
@@ -1305,6 +1311,16 @@
 			);
 			name = TestFlightSDK1;
 			path = ../TestFlightSDK1;
+			sourceTree = "<group>";
+		};
+		F73E1B5C15BD390200249001 /* Tab Bar Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				F73E1B5D15BD392300249001 /* TabBarDelegateViewController.h */,
+				F73E1B5E15BD392300249001 /* TabBarDelegateViewController.m */,
+				F73E1B5F15BD392300249001 /* TabBarDelegateViewController.xib */,
+			);
+			name = "Tab Bar Delegate";
 			sourceTree = "<group>";
 		};
 		F743C96714A2EF39006B533B /* Tab Screen */ = {
@@ -3044,6 +3060,7 @@
 				F7F5F5E21540B3C100D1ED7C /* ContactInviteViewController.xib in Resources */,
 				F73E1B5915BCDD7500249001 /* README.txt in Resources */,
 				F73E1B5A15BCDD7500249001 /* release_notes.txt in Resources */,
+				F73E1B6115BD392300249001 /* TabBarDelegateViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3118,6 +3135,7 @@
 				F74B3123153C9DBA00A66EDB /* PreviouslyWageredViewController.m in Sources */,
 				F7F5F5E11540B3C100D1ED7C /* ContactInviteViewController.m in Sources */,
 				F799D4CB155AE53E00D1157A /* KiipAwards.m in Sources */,
+				F73E1B6015BD392300249001 /* TabBarDelegateViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

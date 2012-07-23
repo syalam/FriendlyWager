@@ -8,12 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "TabBarDelegateViewController.h"
 
 @interface TrashTalkViewController : UIViewController {
     IBOutlet UIView *headerView;
+    IBOutlet UIButton *myActionButton;
+    IBOutlet UIButton *scoresButton;
+    IBOutlet UIButton *rankingButton;
+    
+    TabBarDelegateViewController *tabBarVc;
 }
 
--(IBAction)newTrashTalkButtonClicked:(id)sender;
+- (IBAction)newTrashTalkButtonClicked:(id)sender;
+- (IBAction)myActionButtonClicked:(id)sender;
+- (IBAction)scoresButtonClicked:(id)sender;
+- (IBAction)rankingButtonClicked:(id)sender;
+
 
 @property (nonatomic, retain) PFUser *opponent;
 @property (nonatomic, retain) IBOutlet UITableView *trashTalkTableView;

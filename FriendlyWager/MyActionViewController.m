@@ -39,6 +39,8 @@
     // Do any additional setup after loading the view from its nib.
     self.title = @"My Action";
     
+    [self.navigationController setNavigationBarHidden:YES];
+    
     fwData = [NSUserDefaults alloc];
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG2_BG"]]];
@@ -123,12 +125,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if ([fwData boolForKey:@"tabView"]) {
+    /*if ([fwData boolForKey:@"tabView"]) {
         [self.navigationController setNavigationBarHidden:YES];
     }
     else {
-        [self.navigationController setNavigationBarHidden:NO];
-    }
+        [self.navigationController setNavigationBarHidden:YES];
+    }*/
 }
 
 - (void)viewDidUnload
