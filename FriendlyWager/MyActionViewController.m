@@ -39,7 +39,7 @@
     // Do any additional setup after loading the view from its nib.
     self.title = @"My Action";
     
-    [self.navigationController setNavigationBarHidden:YES];
+    [self.navigationController setNavigationBarHidden:NO];
     
     fwData = [NSUserDefaults alloc];
     

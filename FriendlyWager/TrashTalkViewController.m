@@ -356,7 +356,7 @@
 
 - (IBAction)myActionButtonClicked:(id)sender {
     tabBarVc.tabBarController.selectedIndex = 0;
-    [self.navigationController pushViewController:tabBarVc animated:YES];
+    [self.navigationController presentViewController:tabBarVc animated:YES completion:NULL];
 }
 - (IBAction)scoresButtonClicked:(id)sender {
     

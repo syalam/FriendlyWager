@@ -47,6 +47,14 @@
     UITabBarItem *myActionBarItem = [[UITabBarItem alloc] initWithTitle:@"My Action" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:0];
     [actionNavC setTabBarItem:myActionBarItem];
     
+    UITabBarItem *scoresBarItem = [[UITabBarItem alloc] initWithTitle:@"Scores" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
+    [scoresNavC setTabBarItem:scoresBarItem];
+    
+    UITabBarItem *ranksBarItem = [[UITabBarItem alloc] initWithTitle:@"Ranks" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
+    [ranksNavC setTabBarItem:ranksBarItem];
+    
+    UITabBarItem *trashTalkBarItem = [[UITabBarItem alloc] initWithTitle:@"Trash Talk" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
+    [trashTalkNavC setTabBarItem:trashTalkBarItem];
     
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.viewControllers = [NSArray arrayWithObjects:actionNavC, scoresNavC, ranksNavC, trashTalkNavC, nil];
