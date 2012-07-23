@@ -295,7 +295,7 @@
 }
 
 #pragma mark - Button click action methods
--(void)newTrashTalkButtonClicked:(id)sender {
+-(IBAction)newTrashTalkButtonClicked:(id)sender {
     NewTrashTalkViewController *new = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
     if (_opponent) {
         new.recipient = _opponent;

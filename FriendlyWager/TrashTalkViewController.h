@@ -13,6 +13,8 @@
     IBOutlet UIView *headerView;
 }
 
+-(IBAction)newTrashTalkButtonClicked:(id)sender;
+
 @property (nonatomic, retain) PFUser *opponent;
 @property (nonatomic, retain) IBOutlet UITableView *trashTalkTableView;
 @property (nonatomic, retain) NSMutableArray *contentList;
