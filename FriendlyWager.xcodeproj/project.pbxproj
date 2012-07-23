@@ -67,6 +67,9 @@
 		F7342CF214C4F21600AC0819 /* MessageEntrySendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7342CEA14C4F21600AC0819 /* MessageEntrySendButton@2x.png */; };
 		F7342CF314C4F21600AC0819 /* MessageEntrySendButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = F7342CEB14C4F21600AC0819 /* MessageEntrySendButtonPressed.png */; };
 		F7342CF414C4F21600AC0819 /* MessageEntrySendButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7342CEC14C4F21600AC0819 /* MessageEntrySendButtonPressed@2x.png */; };
+		F73E1B5815BCDD7500249001 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F73E1B5415BCDD7500249001 /* libTestFlight.a */; };
+		F73E1B5915BCDD7500249001 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = F73E1B5515BCDD7500249001 /* README.txt */; };
+		F73E1B5A15BCDD7500249001 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = F73E1B5615BCDD7500249001 /* release_notes.txt */; };
 		F743C97214A2F637006B533B /* TabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F743C97014A2F637006B533B /* TabsViewController.m */; };
 		F743C97314A2F637006B533B /* TabsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F743C97114A2F637006B533B /* TabsViewController.xib */; };
 		F743C98214A3B04F006B533B /* RanksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F743C98014A3B04F006B533B /* RanksViewController.m */; };
@@ -567,6 +570,10 @@
 		F7342CEA14C4F21600AC0819 /* MessageEntrySendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntrySendButton@2x.png"; sourceTree = "<group>"; };
 		F7342CEB14C4F21600AC0819 /* MessageEntrySendButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntrySendButtonPressed.png; sourceTree = "<group>"; };
 		F7342CEC14C4F21600AC0819 /* MessageEntrySendButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntrySendButtonPressed@2x.png"; sourceTree = "<group>"; };
+		F73E1B5415BCDD7500249001 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		F73E1B5515BCDD7500249001 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		F73E1B5615BCDD7500249001 /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.txt; sourceTree = "<group>"; };
+		F73E1B5715BCDD7500249001 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		F743C96F14A2F637006B533B /* TabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabsViewController.h; sourceTree = "<group>"; };
 		F743C97014A2F637006B533B /* TabsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabsViewController.m; sourceTree = "<group>"; };
 		F743C97114A2F637006B533B /* TabsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabsViewController.xib; sourceTree = "<group>"; };
@@ -1043,6 +1050,7 @@
 				F7F050D1153604EC0000A95E /* libKiip.a in Frameworks */,
 				F7F050D3153604EC0000A95E /* libKiip.a in Frameworks */,
 				8CA5748B153D720900B407A2 /* Parse.framework in Frameworks */,
+				F73E1B5815BCDD7500249001 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1140,6 +1148,7 @@
 		F714E16914A1A88400E24956 /* FriendlyWager */ = {
 			isa = PBXGroup;
 			children = (
+				F73E1B5315BCDD7500249001 /* TestFlightSDK1 */,
 				F799D4C7155AE51200D1157A /* Kiip Awards */,
 				F714E17214A1A88400E24956 /* AppDelegate.h */,
 				F714E17314A1A88400E24956 /* AppDelegate.m */,
@@ -1284,6 +1293,18 @@
 				F7342CE214C4F20600AC0819 /* HPTextViewInternal.m */,
 			);
 			name = "Expanding TextView";
+			sourceTree = "<group>";
+		};
+		F73E1B5315BCDD7500249001 /* TestFlightSDK1 */ = {
+			isa = PBXGroup;
+			children = (
+				F73E1B5415BCDD7500249001 /* libTestFlight.a */,
+				F73E1B5515BCDD7500249001 /* README.txt */,
+				F73E1B5615BCDD7500249001 /* release_notes.txt */,
+				F73E1B5715BCDD7500249001 /* TestFlight.h */,
+			);
+			name = TestFlightSDK1;
+			path = ../TestFlightSDK1;
 			sourceTree = "<group>";
 		};
 		F743C96714A2EF39006B533B /* Tab Screen */ = {
@@ -3021,6 +3042,8 @@
 				F7F050D2153604EC0000A95E /* README.md in Resources */,
 				F74B3124153C9DBA00A66EDB /* PreviouslyWageredViewController.xib in Resources */,
 				F7F5F5E21540B3C100D1ED7C /* ContactInviteViewController.xib in Resources */,
+				F73E1B5915BCDD7500249001 /* README.txt in Resources */,
+				F73E1B5A15BCDD7500249001 /* release_notes.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3161,6 +3184,7 @@
 				PROVISIONING_PROFILE = "F6B2E4AB-1505-4832-964C-9DE784C88ABF";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F6B2E4AB-1505-4832-964C-9DE784C88ABF";
 				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
 		};
@@ -3172,7 +3196,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
@@ -3183,6 +3207,7 @@
 				PROVISIONING_PROFILE = "F6B2E4AB-1505-4832-964C-9DE784C88ABF";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F6B2E4AB-1505-4832-964C-9DE784C88ABF";
 				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -3201,7 +3226,10 @@
 				GCC_PREFIX_HEADER = "FriendlyWager/FriendlyWager-Prefix.pch";
 				"HEADER_SEARCH_PATHS[arch=*]" = "FriendlyWager/Kiip-v1.0.17/Headers";
 				INFOPLIST_FILE = "FriendlyWager/FriendlyWager-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/FriendlyWager/Kiip-v1.0.17/$(PLATFORM_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/FriendlyWager/Kiip-v1.0.17/$(PLATFORM_NAME)",
+					"\"$(SRCROOT)/TestFlightSDK1\"",
+				);
 				"OTHER_LDFLAGS[arch=*]" = (
 					"-ObjC",
 					"-lKiip",
@@ -3227,7 +3255,10 @@
 				GCC_PREFIX_HEADER = "FriendlyWager/FriendlyWager-Prefix.pch";
 				"HEADER_SEARCH_PATHS[arch=*]" = "FriendlyWager/Kiip-v1.0.17/Headers";
 				INFOPLIST_FILE = "FriendlyWager/FriendlyWager-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/FriendlyWager/Kiip-v1.0.17/$(PLATFORM_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/FriendlyWager/Kiip-v1.0.17/$(PLATFORM_NAME)",
+					"\"$(SRCROOT)/TestFlightSDK1\"",
+				);
 				"OTHER_LDFLAGS[arch=*]" = (
 					"-ObjC",
 					"-lKiip",

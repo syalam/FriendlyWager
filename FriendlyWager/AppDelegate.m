@@ -11,6 +11,7 @@
 #import "MasterViewController.h"
 #import "LoginOptionsViewController.h"
 #import "TrashTalkViewController.h"
+#import "TestFlight.h" 
 #import "Kiip.h"
 
 @implementation AppDelegate
@@ -27,6 +28,8 @@
     
     // Start and initialize when application starts
     KPManager *manager = [[KPManager alloc] initWithKey:@"00c7493ed13c6d7ee3e5127f7cd0385e" secret:@"f70c0fb59c0b5f95db8d135057aff5c2"];
+    
+    [TestFlight takeOff:@"110647a709a4c503ce1103795c3421df_ODQ0OTYyMDEyLTA0LTI1IDE4OjUxOjI1LjEzMzU4Mg"];
     
     // Set the shared instance after initialization
     // to allow easier access of the object throughout the project.
