@@ -23,6 +23,7 @@
 @synthesize contentList;
 @synthesize  trashTalkTableView = _trashTalkTableView;
 @synthesize opponent = _opponent;
+@synthesize tabBarView = _tabBarView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,6 +40,13 @@
     
     self.title = @"Dashboard";
     
+    
+    if (_tabBarView) {
+        [myActionButton setHidden:YES];
+        [scoresButton setHidden:YES];
+        [rankingButton setHidden:YES];
+        
+    }
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG16_BG"]]];
     
@@ -355,14 +363,21 @@
 }
 
 - (IBAction)myActionButtonClicked:(id)sender {
-    tabBarVc.tabBarController.selectedIndex = 0;
+    tabBarVc.tabBarController.selectedIndex = 1;
     [self.navigationController presentViewController:tabBarVc animated:YES completion:NULL];
 }
 - (IBAction)scoresButtonClicked:(id)sender {
-    
+    tabBarVc.tabBarController.selectedIndex = 2;
+    [self.navigationController presentViewController:tabBarVc animated:YES completion:NULL];
 }
 - (IBAction)rankingButtonClicked:(id)sender {
-    
+    tabBarVc.tabBarController.selectedIndex = 3;
+    [self.navigationController presentViewController:tabBarVc animated:YES completion:NULL];
+}
+
+- (IBAction)makeWagerButtonClicked:(id)sender {
+    tabBarVc.tabBarController.selectedIndex = 0;
+    [self.navigationController presentViewController:tabBarVc animated:YES completion:NULL];
 }
 
 

@@ -17,6 +17,7 @@
 @synthesize opponentsToWager = _opponentsToWager;
 @synthesize tabParentView = _tabParentView;
 @synthesize ranking = _ranking;
+@synthesize wager = _wager;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -148,8 +149,9 @@
     }
     else {
         ScoreSummaryViewController *scoreSummary = [[ScoreSummaryViewController alloc]initWithNibName:@"ScoreSummaryViewController" bundle:nil];
-        if (_opponentsToWager) {
-            scoreSummary.opponentsToWager = _opponentsToWager;
+        if (_wager) {
+            scoreSummary.wager = YES;
+            //scoreSummary.opponentsToWager = _opponentsToWager;
         }
         if (_tabParentView) {
             scoreSummary.tabParentView = _tabParentView;

@@ -15,6 +15,7 @@
 @synthesize opponentsToWager = _opponentsToWager;
 @synthesize tabParentView = _tabParentView;
 @synthesize sport = _sport;
+@synthesize wager = _wager;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,7 +53,7 @@
     
     newWagerVisible = NO;
     
-    if (_opponentsToWager) {
+    if (_wager) {
         UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
         self.navigationItem.titleView = titleImageView;
         
@@ -207,7 +208,7 @@
 - (void)leftButtonClicked:(id)sender {
     NSUInteger index = [sender tag];
     NSDictionary *dataDictionary = [leftArray objectAtIndex:index];
-    if (!_opponentsToWager) {
+    if (!_wager) {
         ScoreDetailViewController *scoreDetail = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil scoreData:dataDictionary];
         scoreDetail.gameDataDictionary = [leftArray objectAtIndex:index];
         [self.navigationController pushViewController:scoreDetail animated:YES];
@@ -215,7 +216,7 @@
     else {
         NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
         //newWager.opponent = _opponent;
-        newWager.opponentsToWager = _opponentsToWager;
+        //newWager.opponentsToWager = _opponentsToWager;
         newWager.gameDataDictionary = [leftArray objectAtIndex:index];
         newWager.sport = _sport;
         if (_tabParentView) {

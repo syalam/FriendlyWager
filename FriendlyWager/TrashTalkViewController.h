@@ -15,6 +15,7 @@
     IBOutlet UIButton *myActionButton;
     IBOutlet UIButton *scoresButton;
     IBOutlet UIButton *rankingButton;
+    IBOutlet UIButton *makeWagerButton;
     
     TabBarDelegateViewController *tabBarVc;
 }
@@ -23,10 +24,12 @@
 - (IBAction)myActionButtonClicked:(id)sender;
 - (IBAction)scoresButtonClicked:(id)sender;
 - (IBAction)rankingButtonClicked:(id)sender;
+- (IBAction)makeWagerButtonClicked:(id)sender;
 
 
 @property (nonatomic, retain) PFUser *opponent;
 @property (nonatomic, retain) IBOutlet UITableView *trashTalkTableView;
 @property (nonatomic, retain) NSMutableArray *contentList;
+@property (nonatomic)BOOL tabBarView;
 
 @end

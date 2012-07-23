@@ -20,6 +20,7 @@
 @property (nonatomic, retain) NSArray* contentList;
 @property (nonatomic, retain) PFObject* opponent;
 @property (nonatomic, retain) NSMutableArray *opponentsToWager;
+@property (nonatomic) BOOL wager;
 @property (nonatomic, retain) TabsViewController *tabParentView;
 @property (nonatomic)BOOL ranking;
 

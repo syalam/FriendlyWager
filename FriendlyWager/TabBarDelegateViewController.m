@@ -61,6 +61,8 @@
     UITabBarItem *trashTalkBarItem = [[UITabBarItem alloc] initWithTitle:@"Trash Talk" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
     [trashTalkNavC setTabBarItem:trashTalkBarItem];
     
+    newWagerVC.wager = YES;
+    
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.delegate = self;
     self.tabBarController.viewControllers = [NSArray arrayWithObjects:newWagerNavC, actionNavC, scoresNavC, ranksNavC, trashTalkNavC, nil];
