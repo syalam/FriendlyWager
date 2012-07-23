@@ -34,15 +34,20 @@
     // Do any additional setup after loading the view from its nib.
     [self.navigationController setNavigationBarHidden:NO];
     
+    ScoresViewController *newWagerVC = [[ScoresViewController  alloc]initWithNibName:@"ScoresViewController" bundle:nil];
     MyActionViewController *myActionVC = [[MyActionViewController alloc]initWithNibName:@"MyActionViewController" bundle:nil];
     ScoresViewController *scoresVC = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
     RanksViewController *ranksVC = [[RanksViewController alloc]initWithNibName:@"RanksViewController" bundle:nil];
     TrashTalkViewController *trashTalkVC = [[TrashTalkViewController alloc]initWithNibName:@"TrashTalkViewController" bundle:nil];
     
+    UINavigationController *newWagerNavC = [[UINavigationController alloc]initWithRootViewController:newWagerVC];
     UINavigationController *actionNavC = [[UINavigationController alloc]initWithRootViewController:myActionVC];
     UINavigationController *scoresNavC = [[UINavigationController alloc]initWithRootViewController:scoresVC];
     UINavigationController *ranksNavC = [[UINavigationController alloc]initWithRootViewController:ranksVC];
     UINavigationController *trashTalkNavC = [[UINavigationController alloc]initWithRootViewController:trashTalkVC];
+    
+    UITabBarItem *newWagerBarItem = [[UITabBarItem alloc] initWithTitle:@"New Wager" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:0];
+    [newWagerNavC setTabBarItem:newWagerBarItem];
     
     UITabBarItem *myActionBarItem = [[UITabBarItem alloc] initWithTitle:@"My Action" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:0];
     [actionNavC setTabBarItem:myActionBarItem];
@@ -57,7 +62,8 @@
     [trashTalkNavC setTabBarItem:trashTalkBarItem];
     
     self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects:actionNavC, scoresNavC, ranksNavC, trashTalkNavC, nil];
+    self.tabBarController.delegate = self;
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects:newWagerNavC, actionNavC, scoresNavC, ranksNavC, trashTalkNavC, nil];
     
     self.view = _tabBarController.view;
 }
@@ -72,6 +78,10 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)dismissVC {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

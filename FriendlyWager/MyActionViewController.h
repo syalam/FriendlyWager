@@ -23,6 +23,8 @@
     BOOL newWagerBool;
 }
 
+- (void)showWagers;
+
 @property (nonatomic, retain) TabsViewController *tabParentView;
 @property (nonatomic, retain) NSMutableArray *contentList;
 
