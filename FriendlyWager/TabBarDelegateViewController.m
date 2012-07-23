@@ -18,9 +18,10 @@
 
 @implementation TabBarDelegateViewController
 @synthesize tabBarController = _tabBarController;
+@synthesize tabDelegate = _tabDelegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+{ 
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -32,7 +33,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self.navigationController setNavigationBarHidden:NO];
     
     ScoresViewController *newWagerVC = [[ScoresViewController  alloc]initWithNibName:@"ScoresViewController" bundle:nil];
     MyActionViewController *myActionVC = [[MyActionViewController alloc]initWithNibName:@"MyActionViewController" bundle:nil];
@@ -62,6 +62,7 @@
     [trashTalkNavC setTabBarItem:trashTalkBarItem];
     
     newWagerVC.wager = YES;
+    newWagerVC.tabBarDelegateScreen = self;
     
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.delegate = self;
@@ -77,13 +78,18 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dismissVC {
-    [self.navigationController popViewControllerAnimated:YES];
+- (void)dismissTabBarVc {
+    [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

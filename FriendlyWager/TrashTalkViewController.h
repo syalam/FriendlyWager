@@ -18,6 +18,7 @@
     IBOutlet UIButton *makeWagerButton;
     
     TabBarDelegateViewController *tabBarVc;
+    UINavigationController *tabBarNavC;
 }
 
 - (IBAction)newTrashTalkButtonClicked:(id)sender;

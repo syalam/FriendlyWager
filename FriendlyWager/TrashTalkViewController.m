@@ -75,6 +75,7 @@
     self.navigationItem.leftBarButtonItem = signOutButton;
     
     tabBarVc = [[TabBarDelegateViewController alloc]initWithNibName:@"TabBarDelegateViewController" bundle:nil];
+    tabBarNavC = [[UINavigationController alloc]initWithRootViewController:tabBarVc];
 }
 
 - (void)viewDidUnload
@@ -377,7 +378,8 @@
 
 - (IBAction)makeWagerButtonClicked:(id)sender {
     tabBarVc.tabBarController.selectedIndex = 0;
-    [self.navigationController presentViewController:tabBarVc animated:YES completion:NULL];
+    [self.navigationController presentViewController:tabBarNavC animated:YES completion:NULL];
+    //[self.navigationController presentViewController:tabBarVc animated:YES completion:NULL];
 }
 
 

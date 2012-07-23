@@ -18,6 +18,7 @@
 @synthesize tabParentView = _tabParentView;
 @synthesize ranking = _ranking;
 @synthesize wager = _wager;
+@synthesize tabBarDelegateScreen = _tabBarDelegateScreen;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -61,7 +62,8 @@
     scoresTableView.dataSource = self;
     scoresTableView.delegate = self;
     
-    if (_opponentsToWager) {
+    if (_wager) {
+        self.title = @"Make a Wager";
         UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
         self.navigationItem.titleView = titleImageView;
         
@@ -74,6 +76,10 @@
         
         self.navigationItem.leftBarButtonItem = backButton;
     }
+    else {
+        self.title = @"Scores";
+    }
+    
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG3_BG"]]];
     
     NSArray *nflFootball = [[NSArray alloc]initWithObjects:@"NFL Football", nil];
@@ -84,14 +90,14 @@
     scoresArray = [[NSArray alloc]initWithObjects:nflFootball, collegeFootball, mlbBaseball, nbaBasketball, collegeBasketball, nil];
     [self setContentList:scoresArray];
     
-    UIImage *cancelButtonImage = [UIImage imageNamed:@"FW_PG17_Cancel_Button"];
+    /*UIImage *cancelButtonImage = [UIImage imageNamed:@"FW_PG17_Cancel_Button"];
     UIButton *customCancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     customCancelButton.bounds = CGRectMake( 0, 0, cancelButtonImage.size.width, cancelButtonImage.size.height );
     [customCancelButton setImage:cancelButtonImage forState:UIControlStateNormal];
     [customCancelButton addTarget:self action:@selector(cancelButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:customCancelButton];
-    self.navigationItem.leftBarButtonItem = cancelButton;
+    self.navigationItem.leftBarButtonItem = cancelButton;*/
 }
 
 
@@ -165,7 +171,8 @@
 
 #pragma mark - Button Clicks
 - (void)backButtonClicked:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    [_tabBarDelegateScreen dismissTabBarVc];
+    //[self.navigationController popViewControllerAnimated:YES];
 }
 - (void)cancelButtonClicked:(id)sender {
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];

@@ -8,12 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol TabBarDelegate <NSObject>
+
+- (void)dismissTabBar;
+
+@end
+
 @interface TabBarDelegateViewController : UITabBarController <UITabBarControllerDelegate> {
     
 }
 
-- (void)dismissVC;
+- (void)dismissTabBarVc;
 
 @property (nonatomic, retain)IBOutlet UITabBarController *tabBarController;
+@property (nonatomic, retain)id<TabBarDelegate> tabDelegate;
 
 @end

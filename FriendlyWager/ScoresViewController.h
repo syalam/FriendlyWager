@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import "TabsViewController.h"
+#import "TabBarDelegateViewController.h"
 
 @interface ScoresViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UITableView *scoresTableView;
@@ -22,6 +23,7 @@
 @property (nonatomic, retain) NSMutableArray *opponentsToWager;
 @property (nonatomic) BOOL wager;
 @property (nonatomic, retain) TabsViewController *tabParentView;
+@property (nonatomic, retain) TabBarDelegateViewController *tabBarDelegateScreen;
 @property (nonatomic)BOOL ranking;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil opponentName:(NSString *)opponentName;
