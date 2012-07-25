@@ -115,6 +115,7 @@
     }
     actionSummary.userToWager = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"object"];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [actionSummary viewWillAppear:NO];
     [self.navigationController pushViewController:actionSummary animated:YES];
 }
 

@@ -78,7 +78,7 @@
     //Set labels with name of currently selected opponent
     wagersWithLabel.text = [NSString stringWithFormat:@"%@ %@", @"Wagers With", [_userToWager objectForKey:@"name"]];
     
-    [wagerButton setTitle:[NSString stringWithFormat:@"%@\n%@", @"Wager", opponent] forState:UIControlStateNormal];
+    [wagerButton setTitle:[NSString stringWithFormat:@"%@ %@", @"Wager", [_userToWager objectForKey:@"name"]] forState:UIControlStateNormal];
     wagerButton.titleLabel.textAlignment = UITextAlignmentCenter;
     wagerButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
     
@@ -100,8 +100,8 @@
     wagerOpponentLabel.textColor = [UIColor whiteColor];
     wagerOpponentLabel.font = [UIFont boldSystemFontOfSize:16];
     
-    [wagerButton addSubview:wagerLabel];
-    [wagerButton addSubview:wagerOpponentLabel];
+    //[wagerButton addSubview:wagerLabel];
+    //[wagerButton addSubview:wagerOpponentLabel];
     
     
     UILabel *trashTalkLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 35, chatButton.frame.size.width, 20)];
@@ -178,6 +178,11 @@
                     NSLog(@"%@", pendingWagerCount);
                     NSLog(@"%@", historyWagerCount);
                     
+                    currentCountLabel.text = currentWagerCount;
+                    pendingCountLabel.text = pendingWagerCount;
+                    historyCountLabel.text = historyWagerCount;
+                    
+                    
                     NSArray *currentWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Current", @"type", currentWagerCount, @"wagers",currentArray, @"wagerObjects", nil], nil];
                     NSArray *pendingWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Pending", @"type", pendingWagerCount, @"wagers", pendingArray, @"wagerObjects", nil] , nil];
                     NSArray *historyWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"History", @"type", historyWagerCount, @"wagers", historyArray, @"wagerObjects", nil], nil];
@@ -213,14 +218,16 @@
     NSMutableArray *userToWager = [[NSMutableArray alloc]initWithObjects:_userToWager, nil];
     ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
     sports.opponentsToWager = userToWager;
-    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:sports];
+    sports.wager = YES;
+    [self.navigationController pushViewController:sports animated:YES];
+    /*UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:sports];
     if (_tabParentView) {
         sports.tabParentView = _tabParentView;
         [_tabParentView.navigationController presentViewController:navc animated:YES completion:NULL];
     }
     else {
         [self.navigationController presentViewController:navc animated:YES completion:NULL];
-    }
+    }*/
 }
 - (IBAction)chatButtonClicked:(id)sender {
     TrashTalkViewController *trashTalk = [[TrashTalkViewController alloc]initWithNibName:@"TrashTalkViewController" bundle:nil];
@@ -235,6 +242,37 @@
     }
     //[self.navigationController pushViewController:trashTalk animated:YES];
     //[self.navigationController presentModalViewController:navc animated:YES];
+}
+
+- (IBAction)currentButtonClicked:(id)sender {
+    NSArray *sectionContents = [[self contentList] objectAtIndex:0];
+    id contentForThisRow = [sectionContents objectAtIndex:0];
+    
+    MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil];
+    actionDetail.wagerType = @"Current";
+    actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
+    actionDetail.opponent = _userToWager;
+    [self.navigationController pushViewController:actionDetail animated:YES];
+}
+- (IBAction)pendingButtonClicked:(id)sender {
+    NSArray *sectionContents = [[self contentList] objectAtIndex:1];
+    id contentForThisRow = [sectionContents objectAtIndex:0];
+    
+    MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil];
+    actionDetail.wagerType = @"Pending";
+    actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
+    actionDetail.opponent = _userToWager;
+    [self.navigationController pushViewController:actionDetail animated:YES];
+}
+- (IBAction)historyButtonClicked:(id)sender {
+    NSArray *sectionContents = [[self contentList] objectAtIndex:2];
+    id contentForThisRow = [sectionContents objectAtIndex:0];
+    
+    MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil];
+    actionDetail.wagerType = @"History";
+    actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
+    actionDetail.opponent = _userToWager;
+    [self.navigationController pushViewController:actionDetail animated:YES];
 }
 
 #pragma mark - Table view data source

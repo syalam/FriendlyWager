@@ -16,6 +16,14 @@
     IBOutlet UITableView *wagersTableView;
     IBOutlet UIButton *wagerButton;
     IBOutlet UIButton *chatButton;
+    
+    IBOutlet UIButton *currentButton;
+    IBOutlet UIButton *pendingButton;
+    IBOutlet UIButton *historyButton;
+    
+    IBOutlet UILabel *pendingCountLabel;
+    IBOutlet UILabel *currentCountLabel;
+    IBOutlet UILabel *historyCountLabel;
 
     
     IBOutlet UIView *wagerView;
@@ -30,6 +38,10 @@
     NSUserDefaults *fwData;
 }
 
+
+- (IBAction)currentButtonClicked:(id)sender;
+- (IBAction)pendingButtonClicked:(id)sender;
+- (IBAction)historyButtonClicked:(id)sender;
 - (IBAction)wagerButtonClicked:(id)sender;
 - (IBAction)chatButtonClicked:(id)sender;
 

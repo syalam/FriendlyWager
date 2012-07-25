@@ -157,7 +157,7 @@
         ScoreSummaryViewController *scoreSummary = [[ScoreSummaryViewController alloc]initWithNibName:@"ScoreSummaryViewController" bundle:nil];
         if (_wager) {
             scoreSummary.wager = YES;
-            //scoreSummary.opponentsToWager = _opponentsToWager;
+            scoreSummary.opponentsToWager = _opponentsToWager;
         }
         if (_tabParentView) {
             scoreSummary.tabParentView = _tabParentView;

@@ -128,6 +128,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
     newWager.sport = _sport;
+    if (_opponentsToWager.count > 0) {
+        newWager.opponentsToWager = _opponentsToWager;
+        [newWager updateOpponents];
+    }
     [self.navigationController pushViewController:newWager animated:YES];
 }
 
