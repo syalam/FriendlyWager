@@ -11,8 +11,6 @@
 #import "TabsViewController.h"
 
 @interface ScoreSummaryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate> {
-    IBOutlet UITableView *scoreSummaryTableView;
-    
     NSString *opponent;
     NSArray *leftArray;
     NSArray *rightArray;
@@ -24,6 +22,7 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil opponentName:(NSString *)opponentName;
 
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) PFObject *opponent;
 @property (nonatomic, retain) NSString *sport;
 @property (nonatomic, retain) NSMutableArray *opponentsToWager;

@@ -24,16 +24,24 @@
     if (self) {
         // Initialization code
         
-        _gameImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 50, 50)];
-        _team1Label = [[UILabel alloc]initWithFrame:CGRectMake(70, 15, 100, 30)];
-        _team2Label = [[UILabel alloc]initWithFrame:CGRectMake(70, 40, 100, 30)];
-        _team1Odds = [[UILabel alloc]initWithFrame:CGRectMake(180, 15, 40, 30)];
-        _team2Odds = [[UILabel alloc]initWithFrame:CGRectMake(180, 40, 40, 30)];
+        _gameImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 20, 50, 50)];
+        _team1Label = [[UILabel alloc]initWithFrame:CGRectMake(70, 15, 120, 30)];
+        _team2Label = [[UILabel alloc]initWithFrame:CGRectMake(70, 40, 120, 30)];
+        _team1Odds = [[UILabel alloc]initWithFrame:CGRectMake(250, 15, 45, 30)];
+        _team2Odds = [[UILabel alloc]initWithFrame:CGRectMake(250, 40, 45, 30)];
         _gameTime = [[UILabel alloc]initWithFrame:CGRectMake(70, 60, 60, 30)];
-        _wagersLabel = [[UILabel alloc]initWithFrame:CGRectMake(150, 60, 40, 30)];
-        _wagerCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(180, 60, 20, 30)];
+        _wagersLabel = [[UILabel alloc]initWithFrame:CGRectMake(150, 60, 60, 30)];
+        _wagerCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 60, 20, 30)];
         
-        UIFont *mainFont = [UIFont boldSystemFontOfSize:14];
+        [_team1Label setBackgroundColor:[UIColor clearColor]];
+        [_team2Label setBackgroundColor:[UIColor clearColor]];
+        [_team1Odds setBackgroundColor:[UIColor clearColor]];
+        [_team2Odds setBackgroundColor:[UIColor clearColor]];
+        [_gameTime setBackgroundColor:[UIColor clearColor]];
+        [_wagersLabel setBackgroundColor:[UIColor clearColor]];
+        [_wagerCountLabel setBackgroundColor:[UIColor clearColor]];
+        
+        UIFont *mainFont = [UIFont boldSystemFontOfSize:17];
         [_team1Label setFont:mainFont];
         [_team2Label setFont:mainFont];
         [_team1Odds setFont:mainFont];

@@ -9,6 +9,7 @@
 #import "ScoreSummaryViewController.h"
 #import "ScoreDetailViewController.h"
 #import "NewWagerViewController.h"
+#import "ScoreSummaryCell.h"
 
 @implementation ScoreSummaryViewController
 @synthesize opponent = _opponent;
@@ -17,6 +18,7 @@
 @synthesize sport = _sport;
 @synthesize wager = _wager;
 @synthesize contentList = _contentList;
+@synthesize tableView = _tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,10 +50,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    scoreSummaryTableView.dataSource = self;
-    scoreSummaryTableView.delegate = self;
-    
+
     newWagerVisible = NO;
     
     if (_wager) {
@@ -68,12 +67,12 @@
         self.navigationItem.leftBarButtonItem = backButton;
     }
     
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG9_BG"]]];
+    //[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG9_BG"]]];
     
-    NSArray *todayArray = [NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team1", @"Celtics", @"team2", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate date], @"date", nil], nil];
+    /*NSArray *todayArray = [NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team1", @"Celtics", @"team2", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate date], @"date", nil], nil];
     NSArray *tomorrowArray = [NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Knicks", @"team1", @"Kings", @"team2", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate dateWithTimeInterval:(24*60*60) sinceDate:[NSDate date]], @"date", nil], nil];
     
-    [self setContentList:[NSMutableArray arrayWithObjects:todayArray, tomorrowArray, nil]];
+    [self setContentList:[NSMutableArray arrayWithObjects:todayArray, tomorrowArray, nil]];*/
 }
 
 - (void)viewDidUnload
@@ -91,20 +90,11 @@
 
 #pragma mark - TableView Delegate Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return _contentList.count;
+    return 3;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *sectionContent = [_contentList objectAtIndex:section];
-    
-    return sectionContent.count;
-    
-    /*if (leftArray.count > rightArray.count) {
-        return leftArray.count;
-    }   
-    else {
-        return rightArray.count;
-    }*/
+    return 2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -115,19 +105,59 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ScoreSummaryCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[ScoreSummaryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    [cell.gameImageView setImage:[UIImage imageNamed:@"sports.jpg"]];
+    [cell.team1Label setText:@"Lakers"];
+    [cell.team2Label setText:@"Celtics"];
+    [cell.team1Odds setText:@"+13.5"];
+    [cell.team2Odds setText:@"-13.5"];
+    [cell.gameTime setText:@"4:00 PM"];
+    [cell.wagersLabel setText:@"Wagers"];
+    [cell.wagerCountLabel setText:@"4"];
     
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
 
 #pragma mark - TableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
+    newWager.sport = _sport;
+    [self.navigationController pushViewController:newWager animated:YES];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 25)];
+    [headerView setBackgroundColor:[UIColor lightGrayColor]];
     
+    UILabel *relativeDayLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 100, 20)];
+    UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(180, 0, 120, 20)];
+    
+    [relativeDayLabel setBackgroundColor:[UIColor clearColor]];
+    [dateLabel setBackgroundColor:[UIColor clearColor]];
+    
+    if (section == 0) {
+        relativeDayLabel.text = @"Today";
+        dateLabel.text = @"July 26, 2012";
+    }
+    else if (section == 1) {
+        relativeDayLabel.text = @"Tomorrow";
+        dateLabel.text = @"July 27, 2012";
+    }
+    else if (section == 2) {
+        relativeDayLabel.text = @"Friday";
+        dateLabel.text = @"July 28, 2012";
+    }
+    
+    [headerView addSubview:relativeDayLabel];
+    [headerView addSubview:dateLabel];
+    
+    return headerView;
 }
 
 #pragma mark - Button Clicks
@@ -145,8 +175,6 @@
     }
     else {
         NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
-        //newWager.opponent = _opponent;
-        //newWager.opponentsToWager = _opponentsToWager;
         newWager.gameDataDictionary = [leftArray objectAtIndex:index];
         newWager.sport = _sport;
         if (_tabParentView) {
