@@ -57,7 +57,7 @@
     currentApiCall = kAPIRetrieveFriendList;    
     NSString *getAllFriends = @"{'getAllFriends':'SELECT uid, name, username FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) order by name asc'";
     NSString *getFWFriends = @"'getFWFriends':'SELECT uid, name FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1'}";
-    NSString *fql = [NSString stringWithFormat:@"%@%,%@", getAllFriends, getFWFriends];
+    NSString *fql = [NSString stringWithFormat:@"%@,%@", getAllFriends, getFWFriends];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:fql, @"q", nil];
     

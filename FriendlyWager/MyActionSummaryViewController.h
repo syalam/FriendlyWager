@@ -11,6 +11,12 @@
 #import "TabsViewController.h"
 
 @interface MyActionSummaryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+    IBOutlet UILabel *opponentNameLabel;
+    IBOutlet UILabel *pointCountLabel;
+    IBOutlet UILabel *rankLabel;
+    IBOutlet UILabel *winLabel;
+    IBOutlet UILabel *lossLabel;
+    
     IBOutlet UIScrollView *scrollView;
     IBOutlet UILabel *wagersWithLabel;
     IBOutlet UITableView *wagersTableView;
@@ -44,6 +50,9 @@
 - (IBAction)historyButtonClicked:(id)sender;
 - (IBAction)wagerButtonClicked:(id)sender;
 - (IBAction)chatButtonClicked:(id)sender;
+
+- (void)getPointCount;
+- (void)getWinLossCounts;
 
 @property (nonatomic, retain) NSArray* contentList;
 @property (nonatomic, retain)PFUser *userToWager;

@@ -74,6 +74,7 @@
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG5_BG"]]];
     
+    opponentNameLabel.text = [_userToWager objectForKey:@"name"];
     
     //Set labels with name of currently selected opponent
     wagersWithLabel.text = [NSString stringWithFormat:@"%@ %@", @"Wagers With", [_userToWager objectForKey:@"name"]];
@@ -128,6 +129,10 @@
     
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
     self.navigationItem.leftBarButtonItem = backButton;
+    
+    //Load Top bar data
+    [self getPointCount];
+    [self getWinLossCounts];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -336,6 +341,80 @@
 
 }
 
+
+#pragma mark - Helper methods
+- (void)getPointCount {
+    PFQuery *queryForTokens = [PFQuery queryWithClassName:@"tokens"];
+    [queryForTokens whereKey:@"user" equalTo:_userToWager];
+    [queryForTokens findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            if (objects.count > 0) {
+                for (PFObject *tokenObject in objects) {
+                    int tokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
+                    pointCountLabel.text = [NSString stringWithFormat:@"%d", tokenCount];
+                }
+            }
+        }
+    }];
+}
+
+- (void)getWinLossCounts {
+    NSMutableArray *winArray = [[NSMutableArray alloc]init];
+    NSMutableArray *lossArray = [[NSMutableArray alloc]init];
+    PFQuery *queryGameWagered = [PFQuery queryWithClassName:@"wagers"];
+    [queryGameWagered whereKey:@"wager" equalTo:_userToWager];
+    [queryGameWagered findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (NSUInteger i = 0; i < objects.count; i++) {
+                PFObject *wagerObject = [objects objectAtIndex:i];
+                PFUser *personWagered = [wagerObject objectForKey:@"wagee"];
+                if ([wagerObject objectForKey:@"teamWageredToWinScore"] && [wagerObject objectForKey:@"teamWageredToLoseScore"]) {
+                    [personWagered fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                        if (!error) {
+                            int teamWageredToWinScore = [[wagerObject objectForKey:@"teamWageredToWinScore"]intValue];
+                            int teamWageredToLoseScore = [[wagerObject objectForKey:@"teamWageredToLoseScore"]intValue];
+                            
+                            
+                            if (teamWageredToWinScore > teamWageredToLoseScore) {
+                                [winArray addObject:@""];
+                            }
+                            else {
+                                [lossArray addObject:@""];
+                            }
+                        }
+                        
+                        winLabel.text = [NSString stringWithFormat:@"%d", winArray.count];
+                        lossLabel.text = [NSString stringWithFormat:@"%d", lossArray.count];
+                    }];
+                }
+            }
+        }
+    }];
+    PFQuery *queryWageredMe = [PFQuery queryWithClassName:@"wagers"];
+    [queryWageredMe whereKey:@"wagee" equalTo:_userToWager];
+    [queryWageredMe findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (PFObject *wageredMe in objects) {
+            PFUser *personWageredMe = [wageredMe objectForKey:@"wager"];
+            if ([wageredMe objectForKey:@"teamWageredToWinScore"] && [wageredMe objectForKey:@"teamWageredToLoseScore"]) {
+                [personWageredMe fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                    if (!error) {
+                        int teamWageredToWinScore = [[wageredMe objectForKey:@"teamWageredToWinScore"]intValue];
+                        int teamWageredToLoseScore = [[wageredMe objectForKey:@"teamWageredToLoseScore"]intValue];
+                        
+                        if (teamWageredToWinScore < teamWageredToLoseScore) {
+                            [winArray addObject:@""];
+                        }
+                        else {
+                            [lossArray addObject:@""];
+                        }
+                        winLabel.text = [NSString stringWithFormat:@"%d", winArray.count];
+                        lossLabel.text = [NSString stringWithFormat:@"%d", lossArray.count];
+                    }
+                }];
+            }
+        }
+    }];
+}
 
 
 @end

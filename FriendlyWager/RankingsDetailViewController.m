@@ -155,7 +155,9 @@
                 PFObject *personName = [tokenObject objectForKey:@"user"];
                 [personName fetchIfNeededInBackgroundWithBlock:^(PFObject *user, NSError *error) {
                     if (!error) {
-                        [itemDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
+                        if ([user objectForKey:@"name"]) {
+                            [itemDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
+                        }
                         [itemsToDisplay addObject:itemDictionary];
                         
                         NSSortDescriptor *tokenDescriptor = [[NSSortDescriptor alloc]initWithKey:@"tokenCount" ascending:NO];

@@ -95,6 +95,7 @@
 		F74B3123153C9DBA00A66EDB /* PreviouslyWageredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F74B3121153C9DBA00A66EDB /* PreviouslyWageredViewController.m */; };
 		F74B3124153C9DBA00A66EDB /* PreviouslyWageredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F74B3122153C9DBA00A66EDB /* PreviouslyWageredViewController.xib */; };
 		F74C0F0414B424C0006F3D99 /* SMContactsSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = F74C0F0314B424C0006F3D99 /* SMContactsSelector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F770924E15C0995D00AB7BA2 /* fizzProfilePic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F770924D15C0995D00AB7BA2 /* fizzProfilePic.jpg */; };
 		F785721F14A26ED20028AD5E /* BHTabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F785721E14A26ED20028AD5E /* BHTabsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F799D4CB155AE53E00D1157A /* KiipAwards.m in Sources */ = {isa = PBXBuildFile; fileRef = F799D4CA155AE53E00D1157A /* KiipAwards.m */; };
 		F7A08FC615100DC200471D3C /* TrashTalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A08FC415100DC200471D3C /* TrashTalkViewController.m */; };
@@ -127,7 +128,6 @@
 		F7B971F114E38A0800C683B9 /* FacebookFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B971EF14E38A0800C683B9 /* FacebookFriendsViewController.xib */; };
 		F7B9720314E44B9B00C683B9 /* OpponentSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B9720114E44B9B00C683B9 /* OpponentSearchViewController.m */; };
 		F7B9720414E44B9B00C683B9 /* OpponentSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B9720214E44B9B00C683B9 /* OpponentSearchViewController.xib */; };
-		F7B9721014E47AF000C683B9 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B9720F14E47AF000C683B9 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F7BA8543151CEC2F0034A0C1 /* FW_HOME_?_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA852E151CEC2F0034A0C1 /* FW_HOME_?_button@2x.png */; };
 		F7BA8544151CEC2F0034A0C1 /* FW_HOME_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA852F151CEC2F0034A0C1 /* FW_HOME_BG@2x.png */; };
 		F7BA8545151CEC2F0034A0C1 /* FW_HOME_BottomBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7BA8530151CEC2F0034A0C1 /* FW_HOME_BottomBar@2x.png */; };
@@ -616,6 +616,7 @@
 		F74B3122153C9DBA00A66EDB /* PreviouslyWageredViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviouslyWageredViewController.xib; sourceTree = "<group>"; };
 		F74C0F0214B424C0006F3D99 /* SMContactsSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMContactsSelector.h; sourceTree = "<group>"; };
 		F74C0F0314B424C0006F3D99 /* SMContactsSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMContactsSelector.m; sourceTree = "<group>"; };
+		F770924D15C0995D00AB7BA2 /* fizzProfilePic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fizzProfilePic.jpg; sourceTree = "<group>"; };
 		F785721D14A26ED20028AD5E /* BHTabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHTabsViewController.h; sourceTree = "<group>"; };
 		F785721E14A26ED20028AD5E /* BHTabsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabsViewController.m; sourceTree = "<group>"; };
 		F799D4C9155AE53D00D1157A /* KiipAwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KiipAwards.h; sourceTree = "<group>"; };
@@ -655,8 +656,6 @@
 		F7B9720014E44B9B00C683B9 /* OpponentSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpponentSearchViewController.h; sourceTree = "<group>"; };
 		F7B9720114E44B9B00C683B9 /* OpponentSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpponentSearchViewController.m; sourceTree = "<group>"; };
 		F7B9720214E44B9B00C683B9 /* OpponentSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpponentSearchViewController.xib; sourceTree = "<group>"; };
-		F7B9720E14E47AF000C683B9 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		F7B9720F14E47AF000C683B9 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		F7BA852E151CEC2F0034A0C1 /* FW_HOME_?_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_HOME_?_button@2x.png"; sourceTree = "<group>"; };
 		F7BA852F151CEC2F0034A0C1 /* FW_HOME_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_HOME_BG@2x.png"; sourceTree = "<group>"; };
 		F7BA8530151CEC2F0034A0C1 /* FW_HOME_BottomBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FW_HOME_BottomBar@2x.png"; sourceTree = "<group>"; };
@@ -1594,18 +1593,10 @@
 			name = "Opponent Search";
 			sourceTree = "<group>";
 		};
-		F7B9720D14E47AD300C683B9 /* JSON Kit */ = {
-			isa = PBXGroup;
-			children = (
-				F7B9720E14E47AF000C683B9 /* JSONKit.h */,
-				F7B9720F14E47AF000C683B9 /* JSONKit.m */,
-			);
-			name = "JSON Kit";
-			sourceTree = "<group>";
-		};
 		F7BA852A151CEC100034A0C1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F770924D15C0995D00AB7BA2 /* fizzProfilePic.jpg */,
 				F715214F15BFDB1200B02DFC /* sports.jpg */,
 				F7A7033415262857007C7468 /* Sign in Screens */,
 				F7075CBB15216F67007A7DE1 /* Misc Images */,
@@ -2375,7 +2366,6 @@
 			children = (
 				F7F05096153604EC0000A95E /* Kiip-v1.0.17 */,
 				F7D70C3614F1EE54001F8525 /* HUD */,
-				F7B9720D14E47AD300C683B9 /* JSON Kit */,
 				F7342CDE14C4F1DD00AC0819 /* Expanding TextView */,
 				F7CDD73F14ABDC970038FE6B /* Multiple Contact Selector */,
 				F714E1F314A1D0A000E24956 /* Tab src */,
@@ -2645,7 +2635,7 @@
 		F714E15614A1A88400E24956 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 			};
 			buildConfigurationList = F714E15914A1A88400E24956 /* Build configuration list for PBXProject "FriendlyWager" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -3078,6 +3068,7 @@
 				F73E1B5A15BCDD7500249001 /* release_notes.txt in Resources */,
 				F73E1B6115BD392300249001 /* TabBarDelegateViewController.xib in Resources */,
 				F715215015BFDB1200B02DFC /* sports.jpg in Resources */,
+				F770924E15C0995D00AB7BA2 /* fizzProfilePic.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3143,7 +3134,6 @@
 				F71E4E6214D5433500B24CB6 /* LoginOptionsViewController.m in Sources */,
 				F7B971F014E38A0800C683B9 /* FacebookFriendsViewController.m in Sources */,
 				F7B9720314E44B9B00C683B9 /* OpponentSearchViewController.m in Sources */,
-				F7B9721014E47AF000C683B9 /* JSONKit.m in Sources */,
 				F7D70C2E14F0BC12001F8525 /* TwitterFollowersViewController.m in Sources */,
 				F7D70C4014F1EE9A001F8525 /* SVProgressHUD.m in Sources */,
 				F7A08FC615100DC200471D3C /* TrashTalkViewController.m in Sources */,
