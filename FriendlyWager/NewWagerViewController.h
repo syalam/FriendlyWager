@@ -27,6 +27,8 @@
 - (IBAction)addOthersButtonClicked:(id)sender;
 - (IBAction)spreadSliderAction:(id)sender;
 
+- (void)updateOpponents;
+
 
 @property (nonatomic, retain) NSMutableArray* contentList;
 @property (nonatomic, retain) NSDictionary *gameDataDictionary;

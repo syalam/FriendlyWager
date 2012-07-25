@@ -61,19 +61,15 @@
     NSLog(@"%@", _gameDataDictionary);
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (_additionalOpponents) {
-        NSMutableArray *addOpponents = [_opponentsToWager mutableCopy];
-        for (NSUInteger i = 0; i < _additionalOpponents.count; i++) {
-            [addOpponents addObject:[_additionalOpponents objectAtIndex:i]];
-        }
-        _additionalOpponents = nil;
         
-        [self setOpponentsToWager:addOpponents];
-    }
-    
     PFQuery *tokenCountForUser = [PFQuery queryWithClassName:@"tokens"];
     [tokenCountForUser whereKey:@"user" equalTo:[PFUser currentUser]];
     [tokenCountForUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -113,9 +109,6 @@
     
     
     
-    NSMutableArray *tableContentsArray = [[NSMutableArray alloc]initWithObjects:_opponentsToWager, nil];
-    [self setContentList:tableContentsArray];
-    [newWagerTableView reloadData];
 }
 
 - (void)viewDidUnload
@@ -123,6 +116,23 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void)updateOpponents {
+    if (_additionalOpponents) {
+        NSMutableArray *addOpponents = [_opponentsToWager mutableCopy];
+        for (NSUInteger i = 0; i < _additionalOpponents.count; i++) {
+            [addOpponents addObject:[_additionalOpponents objectAtIndex:i]];
+        }
+        _additionalOpponents = nil;
+        
+        [self setOpponentsToWager:addOpponents];
+    }
+    
+    NSMutableArray *tableContentsArray = [[NSMutableArray alloc]initWithObjects:_opponentsToWager, nil];
+    [self setContentList:tableContentsArray];
+    [newWagerTableView reloadData];
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -134,7 +144,7 @@
 #pragma mark - IBAction Methods
 - (IBAction)sendButtonClicked:(id)sender {
     UIAlertView *alert;
-    if (![selectTeamButton.titleLabel.text isEqualToString:@"Select Team"] && ![spreadLabel.text isEqualToString:@"0"]) {
+    if (![selectTeamButton.titleLabel.text isEqualToString:@"Select Team"]) {
         alert = [[UIAlertView alloc]initWithTitle:@"Send Wager" message:@"A new wager will be sent to all selected opponents" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     }
     else {
