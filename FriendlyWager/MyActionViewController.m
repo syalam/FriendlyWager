@@ -49,9 +49,6 @@
     myActionTableView.delegate = self;
     
     [self showWagers];
-    
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
-    self.navigationItem.leftBarButtonItem = backButton;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

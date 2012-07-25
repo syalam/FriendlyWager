@@ -126,17 +126,8 @@
     wagersTableView.delegate = self;
     
     
-    UIImage *homeButtonImage = [UIImage imageNamed:@"FW_PG2_HomeButton"];
-    UIButton *homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    homeButton.bounds = CGRectMake( 0, 0, homeButtonImage.size.width, homeButtonImage.size.height );
-    [homeButton setImage:homeButtonImage forState:UIControlStateNormal];
-    [homeButton addTarget:self action:@selector(homeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *homeNavButton = [[UIBarButtonItem alloc] initWithCustomView:homeButton];
-    [homeNavButton setTarget:self];
-    [homeNavButton setAction:@selector(homeButtonClicked:)];
-    
-    self.navigationItem.leftBarButtonItem = homeNavButton;
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
+    self.navigationItem.leftBarButtonItem = backButton;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -214,8 +205,8 @@
 }
 
 #pragma mark - Button Clicks
-- (void)homeButtonClicked:(id)sender {
-    [self.navigationController dismissModalViewControllerAnimated:YES];
+- (void)backButtonClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)wagerButtonClicked:(id)sender {
