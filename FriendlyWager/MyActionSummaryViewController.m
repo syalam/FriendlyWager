@@ -12,7 +12,9 @@
 #import "NewTrashTalkViewController.h"
 #import "TrashTalkViewController.h"
 
-
+#define CELL_CONTENT_WIDTH 320.0f
+#define CELL_CONTENT_MARGIN 10.0f
+#define FONT_SIZE 12.0f
 
 @implementation MyActionSummaryViewController
 @synthesize contentList;
@@ -134,6 +136,7 @@
     //Load Top bar data
     [self getPointCount];
     [self getWinLossCounts];
+    [self loadTrashTalk];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -283,45 +286,77 @@
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.contentList.count;
+    return 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:section];
-    return sectionContents.count;  
+    return self.contentList.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    NSString *text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
+    
+    CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+    
+    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+    
+    CGFloat height = MAX(size.height, 44.0f);
+    
+    return height + (CELL_CONTENT_MARGIN * 2);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
-    id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
-    
-    
-    static NSString *CellIdentifier = @"MyActionDetailTableViewCell";
+    static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    cell = nil;
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        UILabel *wagerType = [[UILabel alloc]initWithFrame:CGRectMake(47, 10, 105, 20)];
-        UILabel *wagerCount = [[UILabel alloc]initWithFrame:CGRectMake(255, 10, 25, 20)];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    
+    NSString *senderName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"senderName"];
+    NSString *recipientName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"recipientName"];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
+    if (![senderName isEqualToString:recipientName]) {
+        UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [replyButton setFrame:CGRectMake(cell.frame.size.width - 70, 10, 60, 25)];
+        [replyButton setTitle:@"Reply" forState:UIControlStateNormal];
+        [replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        replyButton.tag = indexPath.row;
         
-        wagerType.font = [UIFont boldSystemFontOfSize:14];
-        wagerCount.font = [UIFont boldSystemFontOfSize:14];
+        [cell.contentView addSubview:replyButton];
         
-        wagerType.text = [contentForThisRow objectForKey:@"type"];
-        wagerCount.text = [contentForThisRow objectForKey:@"wagers"];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@", senderName];
         
-        wagerType.backgroundColor = [UIColor clearColor];
-        wagerCount.backgroundColor = [UIColor clearColor];
-        
-        wagerType.textColor = [UIColor whiteColor];
-        wagerCount.textColor = [UIColor whiteColor];
-        
-        cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG5_TableviewCell"]];
-        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell addSubview:wagerType];
-        [cell addSubview:wagerCount];
     }
+    else {
+        cell.textLabel.text = senderName;
+    }
+    
+    PFObject *objectToDisplay = [[contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
+    NSDate *dateCreated = objectToDisplay.createdAt;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"EEEE, MMMM d 'at' h:mm a"];
+    NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
+    
+    UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 2, 200, 15)];
+    dateLabel.backgroundColor = [UIColor clearColor];
+    dateLabel.font = [UIFont systemFontOfSize:11];
+    dateLabel.text = dateToDisplay;
+    
+    [cell.contentView addSubview:dateLabel];
+    
+    
+    cell.textLabel.textColor = [UIColor blueColor];
+    
+    cell.detailTextLabel.lineBreakMode = UILineBreakModeWordWrap;
+    cell.detailTextLabel.numberOfLines = 12;
+    cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:12];
+    cell.detailTextLabel.textColor = [UIColor blackColor];
+    cell.detailTextLabel.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    cell.contentView.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 
@@ -417,5 +452,37 @@
     }];
 }
 
+- (void)loadTrashTalk {
+    PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
+    [queryForTrashTalk whereKey:@"recipient" equalTo:_userToWager];
+    [queryForTrashTalk whereKey:@"sender" equalTo:[PFUser currentUser]];
+    [queryForTrashTalk orderByDescending:@"updatedAt"];
+    [queryForTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
+            for (PFObject *trashTalkItem in objects) {
+                [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
+            }
+            PFQuery *queryForReceivedTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
+            [queryForReceivedTrashTalk whereKey:@"recipient" equalTo:[PFUser currentUser]];
+            [queryForReceivedTrashTalk whereKey:@"sender" equalTo:_userToWager];
+            [queryForReceivedTrashTalk orderByDescending:@"updatedAt"];
+            [queryForReceivedTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                if (!error) {
+                    for (PFObject *trashTalkItem in objects) {
+                        [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
+                    }
+                    NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
+                    NSArray *sortDescriptors = [NSArray arrayWithObject:sortByDate];
+                    NSArray *sortedArray = [trashTalkArray sortedArrayUsingDescriptors:sortDescriptors];
+                    NSMutableArray *trashTalkToDisplay = [sortedArray mutableCopy];
+                    
+                    [self setContentList:trashTalkToDisplay];
+                    [self.tableView reloadData];
+                }
+            }];
+        }
+    }];
+}
 
 @end
