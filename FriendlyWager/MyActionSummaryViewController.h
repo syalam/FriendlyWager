@@ -57,6 +57,7 @@
 @property (nonatomic, retain) NSArray* contentList;
 @property (nonatomic, retain)PFUser *userToWager;
 @property (nonatomic, retain) TabsViewController *tabParentView;
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil CurrentWagers:(NSString *)CurrentWagers opponentName:(NSString *)opponentName;
 

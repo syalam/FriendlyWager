@@ -18,6 +18,7 @@
 @synthesize contentList;
 @synthesize userToWager = _userToWager;
 @synthesize tabParentView = _tabParentView;
+@synthesize tableView = _tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
