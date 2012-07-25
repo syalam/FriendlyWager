@@ -29,5 +29,6 @@
 @property (nonatomic, retain) NSMutableArray *opponentsToWager;
 @property (nonatomic, retain) TabsViewController *tabParentView;
 @property (nonatomic) BOOL wager;
+@property (nonatomic, retain)NSMutableArray *contentList;
 
 @end

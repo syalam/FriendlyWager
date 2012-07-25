@@ -51,6 +51,8 @@
 		F714E1FF14A1D0CD00E24956 /* BHTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1F714A1D0CD00E24956 /* BHTabStyle.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F714E20014A1D0CD00E24956 /* BHTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1F914A1D0CD00E24956 /* BHTabsView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F714E20214A1D0CD00E24956 /* BHTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = F714E1FD14A1D0CD00E24956 /* BHTabView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F715215015BFDB1200B02DFC /* sports.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F715214F15BFDB1200B02DFC /* sports.jpg */; };
+		F715215515BFDE9100B02DFC /* ScoreSummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F715215415BFDE9100B02DFC /* ScoreSummaryCell.m */; };
 		F71E4E6214D5433500B24CB6 /* LoginOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F71E4E6014D5433500B24CB6 /* LoginOptionsViewController.m */; };
 		F71E4E6314D5433500B24CB6 /* LoginOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F71E4E6114D5433500B24CB6 /* LoginOptionsViewController.xib */; };
 		F724468A14D0C8D80009E001 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F724468814D0C8D80009E001 /* LoginViewController.m */; };
@@ -551,6 +553,9 @@
 		F714E1F914A1D0CD00E24956 /* BHTabsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabsView.m; sourceTree = "<group>"; };
 		F714E1FC14A1D0CD00E24956 /* BHTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHTabView.h; sourceTree = "<group>"; };
 		F714E1FD14A1D0CD00E24956 /* BHTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabView.m; sourceTree = "<group>"; };
+		F715214F15BFDB1200B02DFC /* sports.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sports.jpg; sourceTree = "<group>"; };
+		F715215315BFDE9100B02DFC /* ScoreSummaryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScoreSummaryCell.h; path = FriendlyWager/ScoreSummaryCell.h; sourceTree = "<group>"; };
+		F715215415BFDE9100B02DFC /* ScoreSummaryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScoreSummaryCell.m; path = FriendlyWager/ScoreSummaryCell.m; sourceTree = "<group>"; };
 		F71E4E5F14D5433500B24CB6 /* LoginOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginOptionsViewController.h; sourceTree = "<group>"; };
 		F71E4E6014D5433500B24CB6 /* LoginOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginOptionsViewController.m; sourceTree = "<group>"; };
 		F71E4E6114D5433500B24CB6 /* LoginOptionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginOptionsViewController.xib; sourceTree = "<group>"; };
@@ -1241,6 +1246,15 @@
 			name = "Tab src";
 			sourceTree = "<group>";
 		};
+		F715215215BFDE6500B02DFC /* Score Summary Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F715215315BFDE9100B02DFC /* ScoreSummaryCell.h */,
+				F715215415BFDE9100B02DFC /* ScoreSummaryCell.m */,
+			);
+			name = "Score Summary Cell";
+			sourceTree = "<group>";
+		};
 		F71E4E5D14D542EF00B24CB6 /* Login Options */ = {
 			isa = PBXGroup;
 			children = (
@@ -1396,6 +1410,7 @@
 		F743C9FD14A6AF6F006B533B /* Score Summary */ = {
 			isa = PBXGroup;
 			children = (
+				F715215215BFDE6500B02DFC /* Score Summary Cell */,
 				F743C9FE14A6AF95006B533B /* ScoreSummaryViewController.h */,
 				F743C9FF14A6AF95006B533B /* ScoreSummaryViewController.m */,
 				F743CA0014A6AF95006B533B /* ScoreSummaryViewController.xib */,
@@ -1591,6 +1606,7 @@
 		F7BA852A151CEC100034A0C1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F715214F15BFDB1200B02DFC /* sports.jpg */,
 				F7A7033415262857007C7468 /* Sign in Screens */,
 				F7075CBB15216F67007A7DE1 /* Misc Images */,
 				F7BA87CC151D54400034A0C1 /* New Trash Talk */,
@@ -3061,6 +3077,7 @@
 				F73E1B5915BCDD7500249001 /* README.txt in Resources */,
 				F73E1B5A15BCDD7500249001 /* release_notes.txt in Resources */,
 				F73E1B6115BD392300249001 /* TabBarDelegateViewController.xib in Resources */,
+				F715215015BFDB1200B02DFC /* sports.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3136,6 +3153,7 @@
 				F7F5F5E11540B3C100D1ED7C /* ContactInviteViewController.m in Sources */,
 				F799D4CB155AE53E00D1157A /* KiipAwards.m in Sources */,
 				F73E1B6015BD392300249001 /* TabBarDelegateViewController.m in Sources */,
+				F715215515BFDE9100B02DFC /* ScoreSummaryCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

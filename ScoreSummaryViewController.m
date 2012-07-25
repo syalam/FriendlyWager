@@ -16,6 +16,7 @@
 @synthesize tabParentView = _tabParentView;
 @synthesize sport = _sport;
 @synthesize wager = _wager;
+@synthesize contentList = _contentList;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -69,9 +70,10 @@
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG9_BG"]]];
     
-    leftArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"1", @"gameId", @"1", @"team1Id", @"NVG", @"team1", @"14", @"team1Score", @"2", @"team2Id", @"CAR", @"team2", @"7", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"2", @"gameId", @"3", @"team1Id", @"SF", @"team1", @"10", @"team1Score", @"4", @"team2Id", @"AZ", @"team2", @"20", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"3", @"gameId", @"5", @"team1Id", @"BUF", @"team1", @"2", @"team1Score", @"6", @"team2Id", @"WAS", @"team2", @"27", @"team2Score", nil], nil];
+    NSArray *todayArray = [NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team1", @"Celtics", @"team2", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate date], @"date", nil], nil];
+    NSArray *tomorrowArray = [NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Knicks", @"team1", @"Kings", @"team2", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate dateWithTimeInterval:(24*60*60) sinceDate:[NSDate date]], @"date", nil], nil];
     
-    rightArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"4", @"gameId", @"7", @"team1Id", @"SD", @"team1", @"13", @"team1Score",@"8", @"team2Id", @"KC", @"team2", @"3", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"5", @"gameId", @"9", @"team1Id", @"NO", @"team1", @"15", @"team1Score", @"10", @"team2Id", @"ATL", @"team2", @"22", @"team2Score", nil], [NSDictionary dictionaryWithObjectsAndKeys:@"6", @"11", @"team1Id", @"gameId", @"OAK", @"team1", @"28", @"team1Score", @"12", @"team2Id", @"CHI", @"team2", @"29", @"team2Score", nil], nil];
+    [self setContentList:[NSMutableArray arrayWithObjects:todayArray, tomorrowArray, nil]];
 }
 
 - (void)viewDidUnload
@@ -89,16 +91,20 @@
 
 #pragma mark - TableView Delegate Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return _contentList.count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (leftArray.count > rightArray.count) {
+    NSArray *sectionContent = [_contentList objectAtIndex:section];
+    
+    return sectionContent.count;
+    
+    /*if (leftArray.count > rightArray.count) {
         return leftArray.count;
     }   
     else {
         return rightArray.count;
-    }
+    }*/
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -107,91 +113,15 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"ScoresSummaryTableViewCell";
+    static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        //Configure buttons
-        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        leftButton.tag = indexPath.row;
-        rightButton.tag = indexPath.row;
-        [leftButton setFrame:CGRectMake(30, 10, 120, 80)];
-        [rightButton setFrame:CGRectMake(170, 10, 120, 80)];
-        [leftButton addTarget:self action:@selector(leftButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [rightButton addTarget:self action:@selector(rightButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [leftButton setBackgroundImage:[UIImage imageNamed:@"FW_PG9_ScoreButton"] forState:UIControlStateNormal];
-        [rightButton setBackgroundImage:[UIImage imageNamed:@"FW_PG9_ScoreButton"] forState:UIControlStateNormal];
-        
-        //Configure labels which will be used in buttons
-        UILabel *team1Label = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 50, 20)];
-        UILabel *team2Label = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 50, 20)];
-        UILabel *team1ScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(80, 10, 20, 20)];
-        UILabel *team2ScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(80, 50, 20, 20)];
-        team1Label.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team1"];
-        team2Label.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team2"];
-        team1Label.textColor = [UIColor whiteColor];
-        team2Label.textColor = [UIColor whiteColor];
-        team1Label.font = [UIFont boldSystemFontOfSize:16];
-        team2Label.font = [UIFont boldSystemFontOfSize:16];
-        team1Label.backgroundColor = [UIColor clearColor];
-        team2Label.backgroundColor = [UIColor clearColor];
-        
-        team1ScoreLabel.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team1Score"];
-        team2ScoreLabel.text = [[leftArray objectAtIndex:indexPath.row]objectForKey:@"team2Score"];
-        team1ScoreLabel.backgroundColor = [UIColor clearColor];
-        team2ScoreLabel.backgroundColor = [UIColor clearColor];
-        team1ScoreLabel.textColor = [UIColor whiteColor];
-        team2ScoreLabel.textColor = [UIColor whiteColor];
-        team1ScoreLabel.font = [UIFont boldSystemFontOfSize:16];
-        team2ScoreLabel.font = [UIFont boldSystemFontOfSize:16];
-        
-        
-        
-        //add the labels to the buttons as sub-views
-        [leftButton addSubview:team1Label];
-        [leftButton addSubview:team1ScoreLabel];
-        [leftButton addSubview:team2Label];
-        [leftButton addSubview:team2ScoreLabel];
-        
-        //Configure buttons
-        UILabel *team1LabelRight = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 50, 20)];
-        UILabel *team2LabelRight = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 50, 20)];
-        UILabel *team1ScoreLabelRight = [[UILabel alloc]initWithFrame:CGRectMake(80, 10, 20, 20)];
-        UILabel *team2ScoreLabelRight = [[UILabel alloc]initWithFrame:CGRectMake(80, 50, 20, 20)];
-        team1LabelRight.text = [[rightArray objectAtIndex:indexPath.row]objectForKey:@"team1"];
-        team2LabelRight.text = [[rightArray objectAtIndex:indexPath.row]objectForKey:@"team2"];
-        team1ScoreLabelRight.text = [[rightArray objectAtIndex:indexPath.row]objectForKey:@"team1Score"];
-        team2ScoreLabelRight.text = [[rightArray objectAtIndex:indexPath.row]objectForKey:@"team2Score"];
-        team1LabelRight.textColor = [UIColor whiteColor];
-        team1LabelRight.font = [UIFont boldSystemFontOfSize:16];
-        team1LabelRight.backgroundColor = [UIColor clearColor];
-        team2LabelRight.backgroundColor = [UIColor clearColor];
-        team2LabelRight.textColor = [UIColor whiteColor];
-        team2LabelRight.font = [UIFont boldSystemFontOfSize:16];
-        
-        team1ScoreLabelRight.backgroundColor = [UIColor clearColor];
-        team1ScoreLabelRight.font = [UIFont boldSystemFontOfSize:16];
-        team1ScoreLabelRight.textColor = [UIColor whiteColor];
-        
-        team2ScoreLabelRight.backgroundColor = [UIColor clearColor];
-        team2ScoreLabelRight.textColor = [UIColor whiteColor];
-        team2ScoreLabelRight.font = [UIFont boldSystemFontOfSize:16];
-        
-        //Configure labels which will be used in buttons
-        [rightButton addSubview:team1LabelRight];
-        [rightButton addSubview:team1ScoreLabelRight];
-        [rightButton addSubview:team2LabelRight];
-        [rightButton addSubview:team2ScoreLabelRight];
-        
-        //add the labels to the buttons as sub-views
-        [cell addSubview:leftButton];
-        [cell addSubview:rightButton];
     }
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.backgroundColor = [UIColor clearColor];
+    
+    
+    
     return cell;
 }
 
