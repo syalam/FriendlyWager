@@ -149,6 +149,7 @@
     NSMutableArray *selectedFriendsArray = [[NSMutableArray alloc]initWithObjects:[contentList objectAtIndex:indexPath.row], nil];
     if (_wagerInProgress) {
         _viewController.additionalOpponents = selectedFriendsArray;
+        [_viewController updateOpponents];
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -3)] animated:YES];
     }
     else {
