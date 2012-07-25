@@ -171,8 +171,12 @@
 
 #pragma mark - Button Clicks
 - (void)backButtonClicked:(id)sender {
-    [_tabBarDelegateScreen dismissTabBarVc];
-    //[self.navigationController popViewControllerAnimated:YES];
+    if (_opponentsToWager) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else {
+        [_tabBarDelegateScreen dismissTabBarVc];
+    }
 }
 - (void)cancelButtonClicked:(id)sender {
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
