@@ -119,8 +119,15 @@
 }
 
 - (void)updateOpponents {
-    if (_additionalOpponents) {
-        NSMutableArray *addOpponents = [_opponentsToWager mutableCopy];
+    NSMutableArray *addOpponents;
+    if (_additionalOpponents.count > 0) {
+        if (_opponentsToWager.count > 0) {
+            addOpponents = [_opponentsToWager mutableCopy];
+        }
+        else {
+            addOpponents = [[NSMutableArray alloc]initWithCapacity:1];
+        }
+        
         for (NSUInteger i = 0; i < _additionalOpponents.count; i++) {
             [addOpponents addObject:[_additionalOpponents objectAtIndex:i]];
         }
