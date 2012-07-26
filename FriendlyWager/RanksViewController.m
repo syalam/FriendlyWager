@@ -12,7 +12,9 @@
 
 @implementation RanksViewController
 
-@synthesize contentList;
+@synthesize contentList = _contentList;
+@synthesize tableView = _tableView;
+@synthesize rankCategory = _rankCategory;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,8 +39,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    ranksTableView.dataSource = self;
-    ranksTableView.delegate = self;
+    
+    self.title = @"Rankings";
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG4_BG"]]];
     
@@ -46,8 +48,7 @@
     rankingsByWins = [[NSArray alloc]initWithObjects:@"Rankings By Wins", nil];
     rankingsBySport = [[NSArray alloc]initWithObjects:@"Ranking By Sport", nil];
     
-    rankingsArray = [[NSMutableArray alloc]initWithObjects:rankingsByPoints, rankingsByWins, rankingsBySport, nil];
-    [self setContentList:rankingsArray];
+    [self rankByPoints];
 }
 
 - (void)viewDidUnload
@@ -74,7 +75,50 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, 130, 20)];
+    UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 15, 115, 20)];
+    UILabel *pointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(270, 15, 30, 20)];
+    UILabel *rankLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 15, 60, 20)];
+    
+    cityLabel.backgroundColor = [UIColor clearColor];
+    rankLabel.backgroundColor = [UIColor clearColor];
+    nameLabel.backgroundColor = [UIColor clearColor];
+    pointsLabel.backgroundColor = [UIColor clearColor];
+    
+    static NSString *CellIdentifier = @"RankingsDetailTableViewCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    cell = nil;
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    if ([_rankCategory isEqualToString:@"Rankings By Points"]) {
+        nameLabel.text = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"name"];
+        pointsLabel.text = [NSString stringWithFormat:@"%@", [[_contentList objectAtIndex:indexPath.row]valueForKey:@"tokenCount"]];
+        
+        [cell addSubview:nameLabel];
+        [cell addSubview:pointsLabel];
+    }
+    else if ([_rankCategory isEqualToString:@"Rankings By Wins"]) {
+        nameLabel.text = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
+        pointsLabel.text = [NSString stringWithFormat:@"%@", [[_contentList objectAtIndex:indexPath.row]objectForKey:@"totalWins"]];
+        
+        [cell addSubview:nameLabel];
+        [cell addSubview:pointsLabel];
+    }
+    
+    /*else {
+        
+        cityLabel.text = [[cityArray objectAtIndex:indexPath.row]objectForKey:@"city"];
+        rankLabel.text = [[cityArray objectAtIndex:indexPath.row]objectForKey:@"rank"];
+        
+        [cell addSubview:cityLabel];
+        [cell addSubview:rankLabel];
+    }*/
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+    
+    /*NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
     id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
     
     static NSString *CellIdentifier = @"RanksTableViewCell";
@@ -89,7 +133,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.textAlignment = UITextAlignmentCenter;
     cell.textLabel.text = contentForThisRow;
-    return cell;
+    return cell;*/
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -107,5 +151,130 @@
         [self.navigationController pushViewController:rankingDetails animated:YES];
     }
 }
+
+#pragma mark IBAction Methods
+- (IBAction)rankingControlToggled:(id)sender {
+    if (rankingControl.selectedSegmentIndex == 0) {
+        
+    }
+}
+
+#pragma mark - Helper Methods
+- (void)rankByPoints {
+    NSMutableArray *itemsToDisplay = [[NSMutableArray alloc]init];
+    PFQuery *getRanking = [PFQuery queryWithClassName:@"tokens"];
+    [getRanking orderByDescending:@"tokenCount"];
+    [getRanking setLimit:25];
+    [getRanking findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (PFObject *tokenObject in objects) {
+                NSMutableDictionary *itemDictionary = [[NSMutableDictionary alloc]init];
+                [itemDictionary setObject:[tokenObject objectForKey:@"tokenCount"] forKey:@"tokenCount"];
+                PFObject *personName = [tokenObject objectForKey:@"user"];
+                [personName fetchIfNeededInBackgroundWithBlock:^(PFObject *user, NSError *error) {
+                    if (!error) {
+                        if ([user objectForKey:@"name"]) {
+                            [itemDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
+                        }
+                        [itemsToDisplay addObject:itemDictionary];
+                        
+                        NSSortDescriptor *tokenDescriptor = [[NSSortDescriptor alloc]initWithKey:@"tokenCount" ascending:NO];
+                        NSArray *sortDescriptors = [NSArray arrayWithObject:tokenDescriptor];
+                        NSArray *sortedArray = [itemsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
+                        
+                        
+                        /*ageDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"age"
+                         ascending:YES] autorelease];
+                         sortDescriptors = [NSArray arrayWithObject:ageDescriptor];
+                         sortedArray = [employeesArray sortedArrayUsingDescriptors:sortDescriptors];*/
+                        
+                        [self setContentList:[sortedArray mutableCopy]];
+                        [_tableView reloadData];
+                    }
+                }];
+            }
+        }
+    }];
+
+}
+- (void)rankByWins {
+    NSMutableArray *objectsToDisplay = [[NSMutableArray alloc]init];
+    PFQuery *getWinCounts = [PFQuery queryWithClassName:@"results"];
+    [getWinCounts orderByDescending:@"totalWins"];
+    [getWinCounts setLimit:30];
+    [getWinCounts findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (PFObject *resultObject in objects) {
+                NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc]init];
+                [resultDictionary setObject:[resultObject objectForKey:@"totalWins"] forKey:@"totalWins"];
+                PFUser *user = [resultObject objectForKey:@"user"];
+                [user fetchIfNeededInBackgroundWithBlock:^(PFObject *user, NSError *error) {
+                    if (!error) {
+                        [resultDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
+                    }
+                    [objectsToDisplay addObject:resultDictionary];
+                    
+                    NSSortDescriptor *winsDescriptor = [[NSSortDescriptor alloc]initWithKey:@"totalWins" ascending:NO];
+                    NSArray *sortDescriptors = [NSArray arrayWithObject:winsDescriptor];
+                    NSArray *sortedArray = [objectsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
+                    
+                    [self setContentList:[sortedArray mutableCopy]];
+                    [_tableView reloadData];
+                }];
+            }
+        }
+    }];
+}
+- (void)rankBySport {
+    /*NSString *sportSort;
+    if ([_sport isEqualToString:@"NFL Football"]) {
+        sportSort = @"nflWins";
+    }
+    else if ([_sport isEqualToString:@"College Football"]) {
+        sportSort = @"collegeFootballWins";
+    }
+    else if ([_sport isEqualToString:@"MLB Baseball"]) {
+        sportSort = @"mlbWins";
+    }
+    else if ([_sport isEqualToString:@"NBA Basketball"]) {
+        sportSort = @"nbaWins";
+    }
+    else if ([_sport isEqualToString:@"College Basketball"]) {
+        sportSort = @"collegeBasketballWins";
+    }
+    
+    NSMutableArray *objectsToDisplay = [[NSMutableArray alloc]init];
+    PFQuery *getWinBySportCounts = [PFQuery queryWithClassName:@"results"];
+    [getWinBySportCounts orderByDescending:sportSort];
+    [getWinBySportCounts setLimit:30];
+    [getWinBySportCounts findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (PFObject *resultObject in objects) {
+                if ([[resultObject objectForKey:sportSort]intValue] > 0) {
+                    NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc]init];
+                    [resultDictionary setObject:[resultObject objectForKey:sportSort] forKey:@"totalWins"];
+                    PFUser *user = [resultObject objectForKey:@"user"];
+                    [user fetchIfNeededInBackgroundWithBlock:^(PFObject *user, NSError *error) {
+                        if (!error) {
+                            [resultDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
+                        }
+                        [objectsToDisplay addObject:resultDictionary];
+                        
+                        NSSortDescriptor *winsDescriptor = [[NSSortDescriptor alloc]initWithKey:@"totalWins" ascending:NO];
+                        NSArray *sortDescriptors = [NSArray arrayWithObject:winsDescriptor];
+                        NSArray *sortedArray = [objectsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
+                        
+                        [self setContentList:[sortedArray mutableCopy]];
+                        [_tableView reloadData];
+                    }];
+                }
+            }
+        }
+    }];*/
+    
+    [self setContentList:nil];
+}
+
+
 
 @end

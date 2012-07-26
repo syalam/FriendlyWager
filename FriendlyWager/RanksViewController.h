@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface RanksViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
-    IBOutlet UITableView *ranksTableView;
+    
+    IBOutlet UISegmentedControl *rankingControl;
     
     NSMutableArray *rankingsArray;
     NSArray *rankingsByPoints;
@@ -18,6 +19,14 @@
     NSArray *rankingsByCity;
 }
 
-@property (nonatomic, retain) NSArray* contentList;
+- (IBAction)rankingControlToggled:(id)sender;
+
+- (void)rankByPoints;
+- (void)rankByWins;
+- (void)rankBySport;
+
+@property (nonatomic, retain) NSMutableArray* contentList;
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (nonatomic, retain) NSString *rankCategory;
 
 @end
