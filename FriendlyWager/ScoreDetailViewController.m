@@ -7,6 +7,7 @@
 //
 
 #import "ScoreDetailViewController.h"
+#import "ScoreSummaryCell.h"
 
 @implementation ScoreDetailViewController
 
@@ -48,16 +49,18 @@
     scoreDetailTableView.delegate = self;
     scoreDetailTableView.dataSource = self;
     
+    self.title = @"Scores";
+    
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG10_BG"]]];
     
-    NSMutableArray *firstSection = [[NSMutableArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:[_gameDataDictionary objectForKey:@"team1"], @"team", [_gameDataDictionary objectForKey:@"team1Score"], @"teamScore", nil], [NSDictionary dictionaryWithObjectsAndKeys:[_gameDataDictionary objectForKey:@"team2"], @"team", [_gameDataDictionary objectForKey:@"team2Score"], @"teamScore", nil], nil];
+    NSMutableArray *firstSection = [[NSMutableArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team", @"+13.5", @"teamScore", @"Celtics", @"team2", @"-13.5", @"team2Score", nil], nil];
     
     NSMutableArray *secondSection = [[NSMutableArray alloc]init];
     NSArray *scoreDetailsArray = [[NSArray alloc]initWithObjects:firstSection, secondSection, nil];
     [self setContentList:scoreDetailsArray];
 
     
-    PFQuery *queryGameWagered = [PFQuery queryWithClassName:@"wagers"];
+    /*PFQuery *queryGameWagered = [PFQuery queryWithClassName:@"wagers"];
     [queryGameWagered whereKey:@"wager" equalTo:[PFUser currentUser]];
     [queryGameWagered whereKey:@"gameId" equalTo:[_gameDataDictionary objectForKey:@"gameId"]];
     [queryGameWagered findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -93,10 +96,7 @@
                 }
             }];
         }
-    }];
-
-    
-        
+    }];*/
 }
 
 - (void)viewDidUnload
@@ -131,63 +131,91 @@
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        return 100;
+    }
+    else {
+        return 46;
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
     id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
     
-    static NSString *CellIdentifier = @"MyActionTableViewCell";
+    static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        if (indexPath.section == 0) {
-            UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 12, 100, 20)];
-            UILabel *scoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(240, 12, 40, 20)];
-            teamLabel.backgroundColor = [UIColor clearColor];
-            scoreLabel.backgroundColor = [UIColor clearColor];
-            teamLabel.text = [contentForThisRow objectForKey:@"team"];
-            scoreLabel.text = [contentForThisRow objectForKey:@"teamScore"];
-            
-            teamLabel.textColor = [UIColor whiteColor];
-            teamLabel.font = [UIFont boldSystemFontOfSize:18];
-            
-            scoreLabel.textColor = [UIColor whiteColor];
-            scoreLabel.font = [UIFont boldSystemFontOfSize:18];
-            
-            [cell addSubview:teamLabel];
-            [cell addSubview:scoreLabel];
-        }
-        else {
-            UILabel *opponentLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, 120, 20)];
-            UILabel *wageredLabel = [[UILabel alloc]initWithFrame:CGRectMake(155, 10, 30, 20)];
-            UILabel *oddsLabel = [[UILabel alloc]initWithFrame:CGRectMake(240, 10, 30, 20)];
-            opponentLabel.backgroundColor = [UIColor clearColor];
-            wageredLabel.backgroundColor = [UIColor clearColor];
-            oddsLabel.backgroundColor = [UIColor clearColor];
-            opponentLabel.text = [contentForThisRow objectForKey:@"opponent"];
-            wageredLabel.text = [contentForThisRow objectForKey:@"wagered"];
-            oddsLabel.text = [[contentForThisRow objectForKey:@"odds"]stringValue];
-            
-            opponentLabel.textColor = [UIColor whiteColor];
-            opponentLabel.font = [UIFont boldSystemFontOfSize:18];
-            
-            wageredLabel.textColor = [UIColor whiteColor];
-            wageredLabel.font = [UIFont boldSystemFontOfSize:18];
-            
-            oddsLabel.textColor = [UIColor whiteColor];
-            oddsLabel.font = [UIFont boldSystemFontOfSize:18];
-            
-            
-            [cell addSubview:opponentLabel];
-            [cell addSubview:wageredLabel];
-            [cell addSubview:oddsLabel];
-        }
+    if (indexPath.section == 0) {
+        
+        ScoreSummaryCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        cell = [[ScoreSummaryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
+        [cell.gameImageView setImage:[UIImage imageNamed:@"sports.jpg"]];
+        [cell.team1Label setText:@"Lakers"];
+        [cell.team2Label setText:@"Celtics"];
+        [cell.team1Odds setText:@"+13.5"];
+        [cell.team2Odds setText:@"-13.5"];
+        [cell.gameTime setText:@"4:00 PM"];
+        [cell.wagersLabel setText:@"Wagers"];
+        [cell.wagerCountLabel setText:@"4"];
+        
+        
+        
+        /*UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 12, 100, 20)];
+        UILabel *scoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(240, 12, 40, 20)];
+        teamLabel.backgroundColor = [UIColor clearColor];
+        scoreLabel.backgroundColor = [UIColor clearColor];
+        teamLabel.text = [contentForThisRow objectForKey:@"team"];
+        scoreLabel.text = [contentForThisRow objectForKey:@"teamScore"];
+        
+        teamLabel.textColor = [UIColor blackColor];
+        teamLabel.font = [UIFont boldSystemFontOfSize:18];
+        
+        scoreLabel.textColor = [UIColor blackColor];
+        scoreLabel.font = [UIFont boldSystemFontOfSize:18];
+        
+        [cell addSubview:teamLabel];
+        [cell addSubview:scoreLabel];*/
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        
+        return cell;
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG10_BillSmith_Button"]];
-    
-    return cell;
+    else {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        UILabel *opponentLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, 120, 20)];
+        UILabel *wageredLabel = [[UILabel alloc]initWithFrame:CGRectMake(155, 10, 30, 20)];
+        UILabel *oddsLabel = [[UILabel alloc]initWithFrame:CGRectMake(240, 10, 30, 20)];
+        opponentLabel.backgroundColor = [UIColor clearColor];
+        wageredLabel.backgroundColor = [UIColor clearColor];
+        oddsLabel.backgroundColor = [UIColor clearColor];
+        opponentLabel.text = [contentForThisRow objectForKey:@"opponent"];
+        wageredLabel.text = [contentForThisRow objectForKey:@"wagered"];
+        oddsLabel.text = [[contentForThisRow objectForKey:@"odds"]stringValue];
+        
+        opponentLabel.textColor = [UIColor whiteColor];
+        opponentLabel.font = [UIFont boldSystemFontOfSize:18];
+        
+        wageredLabel.textColor = [UIColor whiteColor];
+        wageredLabel.font = [UIFont boldSystemFontOfSize:18];
+        
+        oddsLabel.textColor = [UIColor whiteColor];
+        oddsLabel.font = [UIFont boldSystemFontOfSize:18];
+        
+        
+        [cell addSubview:opponentLabel];
+        [cell addSubview:wageredLabel];
+        [cell addSubview:oddsLabel];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        
+        return cell;
+    }
+
 }
 
 @end

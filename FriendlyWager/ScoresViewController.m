@@ -163,6 +163,7 @@
             scoreSummary.tabParentView = _tabParentView;
         }
         scoreSummary.sport = contentForThisRow;
+        scoreSummary.title = contentForThisRow;
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         [self.navigationController pushViewController:scoreSummary animated:YES];

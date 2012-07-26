@@ -126,13 +126,20 @@
 
 #pragma mark - TableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
-    newWager.sport = _sport;
-    if (_opponentsToWager.count > 0) {
-        newWager.opponentsToWager = _opponentsToWager;
-        [newWager updateOpponents];
+    if (_wager) {
+        NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
+        newWager.sport = _sport;
+        if (_opponentsToWager.count > 0) {
+            newWager.opponentsToWager = _opponentsToWager;
+            [newWager updateOpponents];
+        }
+        [self.navigationController pushViewController:newWager animated:YES];
     }
-    [self.navigationController pushViewController:newWager animated:YES];
+    else {
+        ScoreDetailViewController *sdvc = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil];
+        [self.navigationController pushViewController:sdvc animated:YES];
+    }
+    
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
