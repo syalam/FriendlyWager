@@ -96,6 +96,8 @@
 		F74B3124153C9DBA00A66EDB /* PreviouslyWageredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F74B3122153C9DBA00A66EDB /* PreviouslyWageredViewController.xib */; };
 		F74C0F0414B424C0006F3D99 /* SMContactsSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = F74C0F0314B424C0006F3D99 /* SMContactsSelector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F770924E15C0995D00AB7BA2 /* fizzProfilePic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F770924D15C0995D00AB7BA2 /* fizzProfilePic.jpg */; };
+		F770925315C106B300AB7BA2 /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F770925115C106B300AB7BA2 /* FeedViewController.m */; };
+		F770925415C106B300AB7BA2 /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F770925215C106B300AB7BA2 /* FeedViewController.xib */; };
 		F785721F14A26ED20028AD5E /* BHTabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F785721E14A26ED20028AD5E /* BHTabsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F799D4CB155AE53E00D1157A /* KiipAwards.m in Sources */ = {isa = PBXBuildFile; fileRef = F799D4CA155AE53E00D1157A /* KiipAwards.m */; };
 		F7A08FC615100DC200471D3C /* TrashTalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A08FC415100DC200471D3C /* TrashTalkViewController.m */; };
@@ -617,6 +619,9 @@
 		F74C0F0214B424C0006F3D99 /* SMContactsSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMContactsSelector.h; sourceTree = "<group>"; };
 		F74C0F0314B424C0006F3D99 /* SMContactsSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMContactsSelector.m; sourceTree = "<group>"; };
 		F770924D15C0995D00AB7BA2 /* fizzProfilePic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fizzProfilePic.jpg; sourceTree = "<group>"; };
+		F770925015C106B300AB7BA2 /* FeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewController.h; sourceTree = "<group>"; };
+		F770925115C106B300AB7BA2 /* FeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedViewController.m; sourceTree = "<group>"; };
+		F770925215C106B300AB7BA2 /* FeedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedViewController.xib; sourceTree = "<group>"; };
 		F785721D14A26ED20028AD5E /* BHTabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHTabsViewController.h; sourceTree = "<group>"; };
 		F785721E14A26ED20028AD5E /* BHTabsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHTabsViewController.m; sourceTree = "<group>"; };
 		F799D4C9155AE53D00D1157A /* KiipAwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KiipAwards.h; sourceTree = "<group>"; };
@@ -1172,6 +1177,7 @@
 				F74B3117153C971100A66EDB /* My Action */,
 				F74B3119153C973300A66EDB /* Scores */,
 				F74B3118153C972E00A66EDB /* Rankings */,
+				F770924F15C1067E00AB7BA2 /* Feed */,
 				F714E16A14A1A88400E24956 /* Supporting Files */,
 			);
 			path = FriendlyWager;
@@ -1488,6 +1494,16 @@
 				F74B3122153C9DBA00A66EDB /* PreviouslyWageredViewController.xib */,
 			);
 			name = "Previously Wagered";
+			sourceTree = "<group>";
+		};
+		F770924F15C1067E00AB7BA2 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				F770925015C106B300AB7BA2 /* FeedViewController.h */,
+				F770925115C106B300AB7BA2 /* FeedViewController.m */,
+				F770925215C106B300AB7BA2 /* FeedViewController.xib */,
+			);
+			name = Feed;
 			sourceTree = "<group>";
 		};
 		F799D4C7155AE51200D1157A /* Kiip Awards */ = {
@@ -3069,6 +3085,7 @@
 				F73E1B6115BD392300249001 /* TabBarDelegateViewController.xib in Resources */,
 				F715215015BFDB1200B02DFC /* sports.jpg in Resources */,
 				F770924E15C0995D00AB7BA2 /* fizzProfilePic.jpg in Resources */,
+				F770925415C106B300AB7BA2 /* FeedViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3144,6 +3161,7 @@
 				F799D4CB155AE53E00D1157A /* KiipAwards.m in Sources */,
 				F73E1B6015BD392300249001 /* TabBarDelegateViewController.m in Sources */,
 				F715215515BFDE9100B02DFC /* ScoreSummaryCell.m in Sources */,
+				F770925315C106B300AB7BA2 /* FeedViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

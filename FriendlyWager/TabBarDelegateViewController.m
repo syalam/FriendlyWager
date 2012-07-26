@@ -11,6 +11,7 @@
 #import "ScoresViewController.h"
 #import "RanksViewController.h"
 #import "TrashTalkViewController.h"
+#import "FeedViewController.h"
 
 @interface TabBarDelegateViewController ()
 
@@ -38,7 +39,7 @@
     MyActionViewController *myActionVC = [[MyActionViewController alloc]initWithNibName:@"MyActionViewController" bundle:nil];
     ScoresViewController *scoresVC = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
     RanksViewController *ranksVC = [[RanksViewController alloc]initWithNibName:@"RanksViewController" bundle:nil];
-    TrashTalkViewController *trashTalkVC = [[TrashTalkViewController alloc]initWithNibName:@"TrashTalkViewController" bundle:nil];
+    FeedViewController *trashTalkVC = [[FeedViewController alloc]initWithNibName:@"FeedViewController" bundle:nil];
     
     UINavigationController *newWagerNavC = [[UINavigationController alloc]initWithRootViewController:newWagerVC];
     UINavigationController *actionNavC = [[UINavigationController alloc]initWithRootViewController:myActionVC];
@@ -58,7 +59,7 @@
     UITabBarItem *ranksBarItem = [[UITabBarItem alloc] initWithTitle:@"Ranks" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
     [ranksNavC setTabBarItem:ranksBarItem];
     
-    UITabBarItem *trashTalkBarItem = [[UITabBarItem alloc] initWithTitle:@"Trash Talk" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
+    UITabBarItem *trashTalkBarItem = [[UITabBarItem alloc] initWithTitle:@"My Feed" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
     [trashTalkNavC setTabBarItem:trashTalkBarItem];
     
     newWagerVC.wager = YES;

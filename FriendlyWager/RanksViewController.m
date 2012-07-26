@@ -66,12 +66,13 @@
 
 #pragma mark - TableView Delegate Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.contentList.count;
+    return 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:section];
-    return sectionContents.count;  
+    //NSArray *sectionContents = [[self contentList] objectAtIndex:section];
+    //return sectionContents.count;
+    return _contentList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -155,12 +156,16 @@
 #pragma mark IBAction Methods
 - (IBAction)rankingControlToggled:(id)sender {
     if (rankingControl.selectedSegmentIndex == 0) {
-        
+        [self rankByPoints];
+    }
+    else if (rankingControl.selectedSegmentIndex == 1) {
+        [self rankByWins];
     }
 }
 
 #pragma mark - Helper Methods
 - (void)rankByPoints {
+    _rankCategory = @"Rankings By Points";
     NSMutableArray *itemsToDisplay = [[NSMutableArray alloc]init];
     PFQuery *getRanking = [PFQuery queryWithClassName:@"tokens"];
     [getRanking orderByDescending:@"tokenCount"];
@@ -198,6 +203,7 @@
 
 }
 - (void)rankByWins {
+    _rankCategory = @"Rankings By Wins";
     NSMutableArray *objectsToDisplay = [[NSMutableArray alloc]init];
     PFQuery *getWinCounts = [PFQuery queryWithClassName:@"results"];
     [getWinCounts orderByDescending:@"totalWins"];
@@ -211,9 +217,11 @@
                 [user fetchIfNeededInBackgroundWithBlock:^(PFObject *user, NSError *error) {
                     if (!error) {
                         [resultDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
-                    }
-                    [objectsToDisplay addObject:resultDictionary];
                     
+                        if ([user objectForKey:@"name"]) {
+                            [objectsToDisplay addObject:resultDictionary];
+                        }
+                    }
                     NSSortDescriptor *winsDescriptor = [[NSSortDescriptor alloc]initWithKey:@"totalWins" ascending:NO];
                     NSArray *sortDescriptors = [NSArray arrayWithObject:winsDescriptor];
                     NSArray *sortedArray = [objectsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
@@ -273,6 +281,7 @@
     }];*/
     
     [self setContentList:nil];
+    [_tableView reloadData];
 }
 
 
