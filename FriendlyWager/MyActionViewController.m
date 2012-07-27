@@ -48,6 +48,9 @@
     myActionTableView.dataSource = self;
     myActionTableView.delegate = self;
     
+    UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = wagerButton;
+    
     [self showWagers];
 }
 
@@ -59,6 +62,7 @@
     else {
         [self.navigationController setNavigationBarHidden:YES];
     }*/
+    
 }
 
 - (void)viewDidUnload
@@ -122,6 +126,10 @@
 #pragma mark - Button Clicks
 - (void)backButtonClicked:(id)sender {
     [self.tabBarController dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)wagerButtonClicked:(id)sender {
+    [self.tabBarController setSelectedIndex:0];
 }
 
 #pragma mark - Helper Methods

@@ -48,6 +48,9 @@
     rankingsByWins = [[NSArray alloc]initWithObjects:@"Rankings By Wins", nil];
     rankingsBySport = [[NSArray alloc]initWithObjects:@"Ranking By Sport", nil];
     
+    UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = wagerButton;
+    
     [self rankByPoints];
 }
 
@@ -138,7 +141,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
+    /*NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
     id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
     if ([contentForThisRow isEqualToString:@"Ranking By Sport"]) {
         ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
@@ -150,7 +153,7 @@
         rankingDetails.rankCategory = contentForThisRow;
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         [self.navigationController pushViewController:rankingDetails animated:YES];
-    }
+    }*/
 }
 
 #pragma mark IBAction Methods
@@ -161,6 +164,10 @@
     else if (rankingControl.selectedSegmentIndex == 1) {
         [self rankByWins];
     }
+}
+
+- (void)wagerButtonClicked:(id)sender {
+    [self.tabBarController setSelectedIndex:0];
 }
 
 #pragma mark - Helper Methods

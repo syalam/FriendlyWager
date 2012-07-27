@@ -67,6 +67,11 @@
         self.navigationItem.leftBarButtonItem = backButton;
     }
     
+    else {
+        UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
+        self.navigationItem.rightBarButtonItem = wagerButton;
+    }
+    
     //[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG9_BG"]]];
     
     /*NSArray *todayArray = [NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team1", @"Celtics", @"team2", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate date], @"date", nil], nil];
@@ -127,12 +132,17 @@
 #pragma mark - TableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_wager) {
+        NSDictionary *gameDataDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team1", @"1", @"team1Id", @"Celtics", @"team2", @"2", @"team2Id", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate date], @"date", @"1", @"gameId", nil];
+        NSLog(@"%@", gameDataDictionary);
         NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
         newWager.sport = _sport;
         if (_opponentsToWager.count > 0) {
-            newWager.opponentsToWager = _opponentsToWager;
-            [newWager updateOpponents];
+            
         }
+        newWager.opponentsToWager = _opponentsToWager;
+        newWager.gameDataDictionary = gameDataDictionary;
+        [newWager updateOpponents];
+        
         [self.navigationController pushViewController:newWager animated:YES];
     }
     else {
@@ -216,6 +226,8 @@
     }
 }
 
-
+- (void)wagerButtonClicked:(id)sender {
+    [self.tabBarController setSelectedIndex:0];
+}
 
 @end

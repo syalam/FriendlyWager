@@ -17,7 +17,7 @@
 #define FONT_SIZE 12.0f
 
 @implementation MyActionSummaryViewController
-@synthesize contentList;
+@synthesize contentList = _contentList;
 @synthesize userToWager = _userToWager;
 @synthesize tabParentView = _tabParentView;
 @synthesize tableView = _tableView;
@@ -133,6 +133,9 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
     self.navigationItem.leftBarButtonItem = backButton;
     
+    UIBarButtonItem *wagerNavButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = wagerNavButton;
+    
     //Load Top bar data
     [self getPointCount];
     [self getWinLossCounts];
@@ -197,8 +200,7 @@
                     NSArray *historyWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"History", @"type", historyWagerCount, @"wagers", historyArray, @"wagerObjects", nil], nil];
                     
                     wagersArray = [[NSArray alloc]initWithObjects:currentWagersArray, pendingWagersArray, historyWagersArray, nil];
-                    [self setContentList:wagersArray];
-                    [wagersTableView reloadData];
+                    //[wagersTableView reloadData];
                 }
             }];
         } 
@@ -239,49 +241,52 @@
     }*/
 }
 - (IBAction)chatButtonClicked:(id)sender {
-    TrashTalkViewController *trashTalk = [[TrashTalkViewController alloc]initWithNibName:@"TrashTalkViewController" bundle:nil];
-    trashTalk.opponent = _userToWager;
-    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:trashTalk];
-    if (_tabParentView) {
-        //[_tabParentView.navigationController setNavigationBarHidden:YES];
-        [_tabParentView.navigationController presentViewController:navc animated:YES completion:NULL];
-    }
-    else {
-        [self.navigationController presentViewController:navc animated:YES completion:NULL];
-    }
-    //[self.navigationController pushViewController:trashTalk animated:YES];
-    //[self.navigationController presentModalViewController:navc animated:YES];
+    NewTrashTalkViewController *ntvc = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
+    ntvc.recipient = _userToWager;
+    ntvc.myActionScreen = self;
+    [self.navigationController pushViewController:ntvc animated:YES];
 }
 
 - (IBAction)currentButtonClicked:(id)sender {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:0];
-    id contentForThisRow = [sectionContents objectAtIndex:0];
-    
-    MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil];
-    actionDetail.wagerType = @"Current";
-    actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
-    actionDetail.opponent = _userToWager;
-    [self.navigationController pushViewController:actionDetail animated:YES];
+    if ([wagersArray objectAtIndex:0]) {
+        NSArray *sectionContents = [wagersArray objectAtIndex:0];
+        id contentForThisRow = [sectionContents objectAtIndex:0];
+        
+        MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil];
+        actionDetail.wagerType = @"Current";
+        actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
+        actionDetail.opponent = _userToWager;
+        actionDetail.title = @"Current";
+        [self.navigationController pushViewController:actionDetail animated:YES];
+
+    }
 }
 - (IBAction)pendingButtonClicked:(id)sender {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:1];
-    id contentForThisRow = [sectionContents objectAtIndex:0];
-    
-    MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil];
-    actionDetail.wagerType = @"Pending";
-    actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
-    actionDetail.opponent = _userToWager;
-    [self.navigationController pushViewController:actionDetail animated:YES];
+    if ([wagersArray objectAtIndex:1]) {
+        NSArray *sectionContents = [wagersArray objectAtIndex:1];
+        id contentForThisRow = [sectionContents objectAtIndex:0];
+        
+        MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil];
+        actionDetail.wagerType = @"Pending";
+        actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
+        actionDetail.opponent = _userToWager;
+        actionDetail.title = @"Pending";
+        [self.navigationController pushViewController:actionDetail animated:YES];
+
+    }
 }
 - (IBAction)historyButtonClicked:(id)sender {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:2];
-    id contentForThisRow = [sectionContents objectAtIndex:0];
-    
-    MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil];
-    actionDetail.wagerType = @"History";
-    actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
-    actionDetail.opponent = _userToWager;
-    [self.navigationController pushViewController:actionDetail animated:YES];
+    if ([wagersArray objectAtIndex:2]) {
+        NSArray *sectionContents = [wagersArray objectAtIndex:2];
+        id contentForThisRow = [sectionContents objectAtIndex:0];
+        
+        MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil];
+        actionDetail.wagerType = @"History";
+        actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
+        actionDetail.opponent = _userToWager;
+        actionDetail.title = @"History";
+        [self.navigationController pushViewController:actionDetail animated:YES];
+    }
 }
 
 #pragma mark - Table view data source
@@ -295,7 +300,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    NSString *text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
+    NSString *text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
     
     CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
     
@@ -311,8 +316,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     
-    NSString *senderName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"senderName"];
-    NSString *recipientName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"recipientName"];
+    NSString *senderName = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"senderName"];
+    NSString *recipientName = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"recipientName"];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
@@ -332,7 +337,7 @@
         cell.textLabel.text = senderName;
     }
     
-    PFObject *objectToDisplay = [[contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
+    PFObject *objectToDisplay = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
     NSDate *dateCreated = objectToDisplay.createdAt;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"EEEE, MMMM d 'at' h:mm a"];
@@ -352,7 +357,7 @@
     cell.detailTextLabel.numberOfLines = 12;
     cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:12];
     cell.detailTextLabel.textColor = [UIColor blackColor];
-    cell.detailTextLabel.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
+    cell.detailTextLabel.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];

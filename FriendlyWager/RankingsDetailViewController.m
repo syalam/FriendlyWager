@@ -39,7 +39,7 @@
     [super viewDidLoad];
     
     rankingsTableView.dataSource = self;
-    rankingsTableView.delegate = self;
+    //rankingsTableView.delegate = self;
     
     rankingsByLabel.text = _rankCategory;
     
@@ -66,6 +66,9 @@
     else if (_sport) {
         [self getRankingsBySport];
     }
+    
+    UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = wagerButton;
     
     
     /*pointsArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Rick Lewis", @"name", @"Chicago", @"city", @"190", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Sam Smith", @"name", @"Los Angeles", @"city", @"170", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Jon Floyo", @"name", @"San Francisco", @"city", @"160", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Chris Cook", @"name", @"New York", @"city", @"120", @"points", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"Frodo Baggins", @"name", @"Bag End", @"city", @"108", @"points", nil], nil];
@@ -97,7 +100,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, 130, 20)];
+    /*UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, 130, 20)];
     UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 15, 115, 20)];
     UILabel *pointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(270, 15, 30, 20)];
     UILabel *rankLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 15, 60, 20)];
@@ -107,7 +110,7 @@
     nameLabel.backgroundColor = [UIColor clearColor];
     pointsLabel.backgroundColor = [UIColor clearColor];
     
-    static NSString *CellIdentifier = @"RankingsDetailTableViewCell";
+    static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = nil;
@@ -118,15 +121,15 @@
         nameLabel.text = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"name"];
         pointsLabel.text = [NSString stringWithFormat:@"%@", [[_contentList objectAtIndex:indexPath.row]valueForKey:@"tokenCount"]];
         
-        [cell addSubview:nameLabel];
-        [cell addSubview:pointsLabel];
+        [cell.contentView addSubview:nameLabel];
+        [cell.contentView addSubview:pointsLabel];
     }
     else if ([_rankCategory isEqualToString:@"Rankings By Wins"] || _sport) {
         nameLabel.text = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
         pointsLabel.text = [NSString stringWithFormat:@"%@", [[_contentList objectAtIndex:indexPath.row]objectForKey:@"totalWins"]];
         
-        [cell addSubview:nameLabel];
-        [cell addSubview:pointsLabel];
+        [cell.contentView addSubview:nameLabel];
+        [cell.contentView addSubview:pointsLabel];
     }
     
     else {
@@ -134,11 +137,24 @@
         cityLabel.text = [[cityArray objectAtIndex:indexPath.row]objectForKey:@"city"];
         rankLabel.text = [[cityArray objectAtIndex:indexPath.row]objectForKey:@"rank"];
         
-        [cell addSubview:cityLabel];
-        [cell addSubview:rankLabel];
+        [cell.contentView addSubview:cityLabel];
+        [cell.contentView addSubview:rankLabel];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;*/
+    
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    cell = nil;
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
     return cell;
+}
+
+#pragma mark - TableView Delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%@", @"What?");
 }
 
 #pragma mark - Get Rank Methods
@@ -254,6 +270,11 @@
             }
         } 
     }];
+}
+
+#pragma mark - Button Clicks
+- (void)wagerButtonClicked:(id)sender {
+    [self.tabBarController setSelectedIndex:0];
 }
 
 @end

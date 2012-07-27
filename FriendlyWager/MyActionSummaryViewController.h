@@ -53,8 +53,9 @@
 
 - (void)getPointCount;
 - (void)getWinLossCounts;
+- (void)loadTrashTalk;
 
-@property (nonatomic, retain) NSArray* contentList;
+@property (nonatomic, retain) NSMutableArray* contentList;
 @property (nonatomic, retain)PFUser *userToWager;
 @property (nonatomic, retain) TabsViewController *tabParentView;
 @property (nonatomic, retain) IBOutlet UITableView *tableView;

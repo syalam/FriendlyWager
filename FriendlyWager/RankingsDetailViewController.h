@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface RankingsDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface RankingsDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     IBOutlet UITableView *rankingsTableView;
     IBOutlet UILabel *rankingsByLabel;
     

@@ -11,10 +11,12 @@
 
 
 @interface FeedViewController : UITableViewController {
-    
+    IBOutlet UIButton *newButton;
 }
 
 - (void)loadTrashTalk;
+
+- (IBAction)newButtonClicked:(id)sender;
 
 @property (nonatomic, retain) NSMutableArray *contentList;
 

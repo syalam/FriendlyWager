@@ -58,6 +58,9 @@
     NSMutableArray *secondSection = [[NSMutableArray alloc]init];
     NSArray *scoreDetailsArray = [[NSArray alloc]initWithObjects:firstSection, secondSection, nil];
     [self setContentList:scoreDetailsArray];
+    
+    UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = wagerButton;
 
     
     /*PFQuery *queryGameWagered = [PFQuery queryWithClassName:@"wagers"];
@@ -216,6 +219,11 @@
         return cell;
     }
 
+}
+
+#pragma mark - Button Clicks
+- (void)wagerButtonClicked:(id)sender {
+    [self.tabBarController setSelectedIndex:0];
 }
 
 @end

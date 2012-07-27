@@ -7,7 +7,7 @@
 //
 
 #import "FeedViewController.h"
-
+#import "NewTrashTalkViewController.h"
 
 
 #define CELL_CONTENT_WIDTH 320.0f
@@ -41,6 +41,9 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = wagerButton;
     
     [self loadTrashTalk];
 }
@@ -229,6 +232,16 @@
         }
     }];
 
+}
+
+#pragma mark - Button Clicks
+- (void)wagerButtonClicked:(id)sender {
+    [self.tabBarController setSelectedIndex:0];
+}
+
+- (IBAction)newButtonClicked:(id)sender {
+    NewTrashTalkViewController *new = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
+    [self.navigationController pushViewController:new animated:YES];
 }
 
 @end

@@ -78,6 +78,9 @@
     }
     else {
         self.title = @"Scores";
+        
+        UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
+        self.navigationItem.rightBarButtonItem = wagerButton;
     }
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG3_BG"]]];
@@ -90,14 +93,7 @@
     scoresArray = [[NSArray alloc]initWithObjects:nflFootball, collegeFootball, mlbBaseball, nbaBasketball, collegeBasketball, nil];
     [self setContentList:scoresArray];
     
-    /*UIImage *cancelButtonImage = [UIImage imageNamed:@"FW_PG17_Cancel_Button"];
-    UIButton *customCancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    customCancelButton.bounds = CGRectMake( 0, 0, cancelButtonImage.size.width, cancelButtonImage.size.height );
-    [customCancelButton setImage:cancelButtonImage forState:UIControlStateNormal];
-    [customCancelButton addTarget:self action:@selector(cancelButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:customCancelButton];
-    self.navigationItem.leftBarButtonItem = cancelButton;*/
 }
 
 
@@ -183,6 +179,8 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 }
 
-
+- (void)wagerButtonClicked:(id)sender {
+    [self.tabBarController setSelectedIndex:0];
+}
 
 @end

@@ -363,11 +363,12 @@
                                             [_tabParentView.navigationController dismissViewControllerAnimated:YES completion:NULL];
                                         }
                                         else {
-                                            [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+                                            [self.navigationController popToRootViewControllerAnimated:YES];
                                         }
                                     }
                                     else {
                                         [SVProgressHUD dismiss];
+                                        NSLog(@"%@", error);
                                     }
 
                                 }];
@@ -377,6 +378,7 @@
                     
                 }
                 else {
+                    NSLog(@"%@", error);
                     [SVProgressHUD dismiss];
                     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"error" message:@"Unable to create this wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alert show];

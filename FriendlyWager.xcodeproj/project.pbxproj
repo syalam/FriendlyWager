@@ -1172,6 +1172,7 @@
 				F714E1A214A1B00000E24956 /* Home */,
 				F714E1ED14A1BE2600E24956 /* Ledger */,
 				F7A08FBD15100BE100471D3C /* Trash Talk */,
+				F74B3114153C966D00A66EDB /* Dashboard */,
 				F74B3116153C96F600A66EDB /* Wagers */,
 				F743C96714A2EF39006B533B /* Tab Screen */,
 				F74B3117153C971100A66EDB /* My Action */,
@@ -1434,14 +1435,14 @@
 			name = "Score Detail";
 			sourceTree = "<group>";
 		};
-		F74B3114153C966D00A66EDB /* Trash Talk Feed */ = {
+		F74B3114153C966D00A66EDB /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
 				F7A08FC315100DC200471D3C /* TrashTalkViewController.h */,
 				F7A08FC415100DC200471D3C /* TrashTalkViewController.m */,
 				F7A08FC515100DC200471D3C /* TrashTalkViewController.xib */,
 			);
-			name = "Trash Talk Feed";
+			name = Dashboard;
 			sourceTree = "<group>";
 		};
 		F74B3116153C96F600A66EDB /* Wagers */ = {
@@ -1518,7 +1519,6 @@
 		F7A08FBD15100BE100471D3C /* Trash Talk */ = {
 			isa = PBXGroup;
 			children = (
-				F74B3114153C966D00A66EDB /* Trash Talk Feed */,
 				F7A08FC8151020BC00471D3C /* New Trash Talk */,
 				F7A70327152438DE007C7468 /* Chat */,
 			);

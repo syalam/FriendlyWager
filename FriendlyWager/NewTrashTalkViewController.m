@@ -112,6 +112,9 @@
             }
             else {
                 //[self.navigationController dismissModalViewControllerAnimated:YES];
+                if (_myActionScreen) {
+                    [_myActionScreen loadTrashTalk];
+                }
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }
@@ -176,6 +179,9 @@
     [newTrashTalk saveInBackgroundWithBlock:^(BOOL succeded, NSError *error) {
         if (succeded) {
             //[self.navigationController dismissModalViewControllerAnimated:YES];
+            if (_myActionScreen) {
+                [_myActionScreen loadTrashTalk];
+            }
             [self.navigationController popViewControllerAnimated:YES];
         } 
     }];
