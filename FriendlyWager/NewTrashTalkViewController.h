@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import "MyActionSummaryViewController.h"
+#import "FeedViewController.h"
 
 typedef enum apiCall {
     kAPIPostToFeed,
@@ -29,6 +30,7 @@ typedef enum apiCall {
 @property (nonatomic, retain) PFObject *recipient;
 @property (nonatomic, retain) NSString *fbPostId;
 @property (nonatomic, retain) MyActionSummaryViewController *myActionScreen;
+@property (nonatomic, retain) FeedViewController *feedScreen;
 
 - (IBAction)FBSwitchSelected:(id)sender;
 - (void)sendFacebookRequest;

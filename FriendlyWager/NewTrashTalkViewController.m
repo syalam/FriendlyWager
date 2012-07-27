@@ -115,6 +115,9 @@
                 if (_myActionScreen) {
                     [_myActionScreen loadTrashTalk];
                 }
+                else if (_feedScreen) {
+                    [_feedScreen loadTrashTalk];
+                }
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }
@@ -181,6 +184,9 @@
             //[self.navigationController dismissModalViewControllerAnimated:YES];
             if (_myActionScreen) {
                 [_myActionScreen loadTrashTalk];
+            }
+            else if (_feedScreen) {
+                [_feedScreen loadTrashTalk];
             }
             [self.navigationController popViewControllerAnimated:YES];
         } 
