@@ -16,7 +16,8 @@
 @implementation NewTrashTalkViewController
 @synthesize recipient = _recipient;
 @synthesize fbPostId = _fbPostId;
-
+@synthesize myActionScreen = _myActionScreen;
+@synthesize feedScreen = _feedScreen;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
