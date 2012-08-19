@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A33B87915E0300D0029D428 /* tabBarBackground~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B87815E0300D0029D428 /* tabBarBackground~iphone.png */; };
+		1A33B88715E055B10029D428 /* myActionOffBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B88515E055B10029D428 /* myActionOffBtn~iphone.png */; };
+		1A33B88815E055B10029D428 /* myActionOnBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B88615E055B10029D428 /* myActionOnBtn~iphone.png */; };
+		1A33B88B15E05A860029D428 /* scoresOffBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B88915E05A860029D428 /* scoresOffBtn~iphone.png */; };
+		1A33B88C15E05A860029D428 /* scoresOnBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B88A15E05A860029D428 /* scoresOnBtn~iphone.png */; };
+		1A33B88F15E05BB30029D428 /* rankingOffBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B88D15E05BB30029D428 /* rankingOffBtn~iphone.png */; };
+		1A33B89015E05BB30029D428 /* rankingOnBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B88E15E05BB30029D428 /* rankingOnBtn~iphone.png */; };
+		1A33B89315E05D950029D428 /* homeOffBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B89115E05D950029D428 /* homeOffBtn~iphone.png */; };
+		1A33B89415E05D950029D428 /* homeOnBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B89215E05D950029D428 /* homeOnBtn~iphone.png */; };
+		1A33B89715E060200029D428 /* feedOffBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B89515E0601F0029D428 /* feedOffBtn~iphone.png */; };
+		1A33B89815E060200029D428 /* feedOnBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B89615E060200029D428 /* feedOnBtn~iphone.png */; };
 		8C4AA62014D13CCE00A6013F /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4AA61D14D13CCE00A6013F /* ResetPasswordViewController.m */; };
 		8C4AA62114D13CCE00A6013F /* ResetPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4AA61E14D13CCE00A6013F /* ResetPasswordViewController.xib */; };
 		8CA5748B153D720900B407A2 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA5748A153D720900B407A2 /* Parse.framework */; };
@@ -499,6 +510,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A33B87815E0300D0029D428 /* tabBarBackground~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBarBackground~iphone.png"; sourceTree = "<group>"; };
+		1A33B88515E055B10029D428 /* myActionOffBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myActionOffBtn~iphone.png"; sourceTree = "<group>"; };
+		1A33B88615E055B10029D428 /* myActionOnBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myActionOnBtn~iphone.png"; sourceTree = "<group>"; };
+		1A33B88915E05A860029D428 /* scoresOffBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scoresOffBtn~iphone.png"; sourceTree = "<group>"; };
+		1A33B88A15E05A860029D428 /* scoresOnBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scoresOnBtn~iphone.png"; sourceTree = "<group>"; };
+		1A33B88D15E05BB30029D428 /* rankingOffBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rankingOffBtn~iphone.png"; sourceTree = "<group>"; };
+		1A33B88E15E05BB30029D428 /* rankingOnBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rankingOnBtn~iphone.png"; sourceTree = "<group>"; };
+		1A33B89115E05D950029D428 /* homeOffBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homeOffBtn~iphone.png"; sourceTree = "<group>"; };
+		1A33B89215E05D950029D428 /* homeOnBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homeOnBtn~iphone.png"; sourceTree = "<group>"; };
+		1A33B89515E0601F0029D428 /* feedOffBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feedOffBtn~iphone.png"; sourceTree = "<group>"; };
+		1A33B89615E060200029D428 /* feedOnBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feedOnBtn~iphone.png"; sourceTree = "<group>"; };
 		8C4AA61C14D13CCE00A6013F /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = ResetPasswordViewController.h; sourceTree = "<group>"; };
 		8C4AA61D14D13CCE00A6013F /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordViewController.m; sourceTree = "<group>"; };
 		8C4AA61E14D13CCE00A6013F /* ResetPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResetPasswordViewController.xib; sourceTree = "<group>"; };
@@ -1081,6 +1103,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A33B88415E055540029D428 /* Tab Bar */ = {
+			isa = PBXGroup;
+			children = (
+				1A33B89515E0601F0029D428 /* feedOffBtn~iphone.png */,
+				1A33B89615E060200029D428 /* feedOnBtn~iphone.png */,
+				1A33B89115E05D950029D428 /* homeOffBtn~iphone.png */,
+				1A33B89215E05D950029D428 /* homeOnBtn~iphone.png */,
+				1A33B88D15E05BB30029D428 /* rankingOffBtn~iphone.png */,
+				1A33B88E15E05BB30029D428 /* rankingOnBtn~iphone.png */,
+				1A33B88915E05A860029D428 /* scoresOffBtn~iphone.png */,
+				1A33B88A15E05A860029D428 /* scoresOnBtn~iphone.png */,
+				1A33B88515E055B10029D428 /* myActionOffBtn~iphone.png */,
+				1A33B88615E055B10029D428 /* myActionOnBtn~iphone.png */,
+				1A33B87815E0300D0029D428 /* tabBarBackground~iphone.png */,
+			);
+			name = "Tab Bar";
+			sourceTree = "<group>";
+		};
 		8C4AA61B14D13C7200A6013F /* Reset Password */ = {
 			isa = PBXGroup;
 			children = (
@@ -1612,6 +1652,7 @@
 		F7BA852A151CEC100034A0C1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1A33B88415E055540029D428 /* Tab Bar */,
 				F770924D15C0995D00AB7BA2 /* fizzProfilePic.jpg */,
 				F715214F15BFDB1200B02DFC /* sports.jpg */,
 				F7A7033415262857007C7468 /* Sign in Screens */,
@@ -3086,6 +3127,17 @@
 				F715215015BFDB1200B02DFC /* sports.jpg in Resources */,
 				F770924E15C0995D00AB7BA2 /* fizzProfilePic.jpg in Resources */,
 				F770925415C106B300AB7BA2 /* FeedViewController.xib in Resources */,
+				1A33B87915E0300D0029D428 /* tabBarBackground~iphone.png in Resources */,
+				1A33B88715E055B10029D428 /* myActionOffBtn~iphone.png in Resources */,
+				1A33B88815E055B10029D428 /* myActionOnBtn~iphone.png in Resources */,
+				1A33B88B15E05A860029D428 /* scoresOffBtn~iphone.png in Resources */,
+				1A33B88C15E05A860029D428 /* scoresOnBtn~iphone.png in Resources */,
+				1A33B88F15E05BB30029D428 /* rankingOffBtn~iphone.png in Resources */,
+				1A33B89015E05BB30029D428 /* rankingOnBtn~iphone.png in Resources */,
+				1A33B89315E05D950029D428 /* homeOffBtn~iphone.png in Resources */,
+				1A33B89415E05D950029D428 /* homeOnBtn~iphone.png in Resources */,
+				1A33B89715E060200029D428 /* feedOffBtn~iphone.png in Resources */,
+				1A33B89815E060200029D428 /* feedOnBtn~iphone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

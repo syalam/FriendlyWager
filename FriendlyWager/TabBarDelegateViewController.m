@@ -47,27 +47,42 @@
     UINavigationController *ranksNavC = [[UINavigationController alloc]initWithRootViewController:ranksVC];
     UINavigationController *trashTalkNavC = [[UINavigationController alloc]initWithRootViewController:trashTalkVC];
     
-    UITabBarItem *newWagerBarItem = [[UITabBarItem alloc] initWithTitle:@"New Wager" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:0];
-    [newWagerNavC setTabBarItem:newWagerBarItem];
+    //UITabBarItem *newWagerBarItem = [[UITabBarItem alloc] initWithTitle:@"New Wager" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:0];
+    //[newWagerNavC setTabBarItem:newWagerBarItem];
     
     UITabBarItem *myActionBarItem = [[UITabBarItem alloc] initWithTitle:@"My Action" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:0];
+    [myActionBarItem setFinishedSelectedImage:[UIImage imageNamed:@"myActionOnBtn"]
+                  withFinishedUnselectedImage:[UIImage imageNamed:@"myActionOffBtn"]];
+    [myActionBarItem setTitlePositionAdjustment:UIOffsetMake(0, 100)];
     [actionNavC setTabBarItem:myActionBarItem];
     
     UITabBarItem *scoresBarItem = [[UITabBarItem alloc] initWithTitle:@"Scores" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
+    [scoresBarItem setFinishedSelectedImage:[UIImage imageNamed:@"scoresOnBtn"]
+                  withFinishedUnselectedImage:[UIImage imageNamed:@"scoresOffBtn"]];
+    [scoresBarItem setTitlePositionAdjustment:UIOffsetMake(0, 100)];
     [scoresNavC setTabBarItem:scoresBarItem];
     
     UITabBarItem *ranksBarItem = [[UITabBarItem alloc] initWithTitle:@"Ranks" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
+    [ranksBarItem setFinishedSelectedImage:[UIImage imageNamed:@"rankingOnBtn"]
+                withFinishedUnselectedImage:[UIImage imageNamed:@"rankingOffBtn"]];
+    [ranksBarItem setTitlePositionAdjustment:UIOffsetMake(0, 100)];
     [ranksNavC setTabBarItem:ranksBarItem];
     
     UITabBarItem *trashTalkBarItem = [[UITabBarItem alloc] initWithTitle:@"My Feed" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
+    [trashTalkBarItem setFinishedSelectedImage:[UIImage imageNamed:@"feedOnBtn"]
+               withFinishedUnselectedImage:[UIImage imageNamed:@"feedOffBtn"]];
+    [trashTalkBarItem setTitlePositionAdjustment:UIOffsetMake(0, 100)];
     [trashTalkNavC setTabBarItem:trashTalkBarItem];
+    
+    [self customizeInterface];
     
     newWagerVC.wager = YES;
     newWagerVC.tabBarDelegateScreen = self;
     
+    
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.delegate = self;
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects:newWagerNavC, actionNavC, scoresNavC, ranksNavC, trashTalkNavC, nil];
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects: actionNavC, scoresNavC, ranksNavC, trashTalkNavC, nil];
     
     self.view = _tabBarController.view;
 }
@@ -91,6 +106,13 @@
 
 - (void)dismissTabBarVc {
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)customizeInterface
+{
+    UIImage* tabBarBackground = [UIImage imageNamed:@"tabBarBackground.png"];
+    [[UITabBar appearance] setBackgroundImage:tabBarBackground];
+    
 }
 
 @end
