@@ -13,6 +13,7 @@
 @interface OpponentSearchViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UISearchBar *searchBar;
     IBOutlet UISearchDisplayController *searchDisplayController;
+    UIImageView *stripes;
 }
 
 @property (nonatomic, retain)NSMutableArray* contentList;

@@ -13,6 +13,8 @@
 @interface TwitterFollowersViewController : UITableViewController {
     NSUInteger followerDataCount;
     NSMutableArray *followerIds;
+    
+    UIImageView *stripes;
 }
 
 @property (strong, nonatomic) ACAccountStore *accountStore;

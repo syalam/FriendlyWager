@@ -13,6 +13,8 @@
 @interface PreviouslyWageredViewController : UITableViewController {
     NSMutableDictionary *selectedItems;
     NSUserDefaults *fwData;
+    
+    UIImageView *stripes;
 }
 
 @property (nonatomic, retain)NSMutableArray *contentList;

@@ -15,7 +15,6 @@
 @end
 
 @interface TabBarDelegateViewController : UITabBarController <UITabBarControllerDelegate> {
-    
 }
 
 - (void)dismissTabBarVc;

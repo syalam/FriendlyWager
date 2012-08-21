@@ -22,6 +22,8 @@
     KiipAwards *awards;
     
     NSUserDefaults *fwData;
+    
+    UIImageView *stripes;
 }
 
 - (IBAction)myLedgerButtonClicked:(id)sender;

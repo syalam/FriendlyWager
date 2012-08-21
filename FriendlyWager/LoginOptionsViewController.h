@@ -16,6 +16,8 @@
     
     IBOutlet UITextField *userNameTextField;
     IBOutlet UITextField *passwordTextField;
+    
+    UIImageView *stripes;
 }
 
 - (IBAction)signInButtonClicked:(id)sender;

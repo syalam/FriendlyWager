@@ -41,7 +41,13 @@
     self.window.rootViewController = self.navigationController;
     
     if ([UINavigationBar respondsToSelector:@selector(appearance)]) {
-        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"FW_TopBar"] forBarMetrics:UIBarMetricsDefault];
+        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
+        if (self.navigationController.navigationItem.rightBarButtonItem) {
+            UIImageView *stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 82, 42)];
+            [stripes setImage:[UIImage imageNamed:@"stripes"]];
+            [self.navigationController.navigationBar addSubview:stripes];
+        }
+ 
     }
 
     

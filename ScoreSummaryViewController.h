@@ -17,6 +17,7 @@
     
     BOOL newWagerVisible;
     
+    UIImageView *stripes;
 }
 
 

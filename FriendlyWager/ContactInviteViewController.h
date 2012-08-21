@@ -18,6 +18,7 @@
     
     NSMutableArray *indexTableViewTitles;
     NSMutableDictionary *selectedItems;
+    UIImageView *stripes;
 }
 
 @property (nonatomic, retain) NSMutableArray *contentList;

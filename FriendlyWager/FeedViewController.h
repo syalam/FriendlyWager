@@ -12,6 +12,7 @@
 
 @interface FeedViewController : UITableViewController {
     IBOutlet UIButton *newButton;
+    UIImageView *stripes;
 }
 
 - (void)loadTrashTalk;

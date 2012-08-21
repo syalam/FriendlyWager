@@ -21,6 +21,8 @@
     NSUserDefaults *fwData;
     
     BOOL newWagerBool;
+    
+    UIImageView *stripes;
 }
 
 - (void)showWagers;

@@ -19,6 +19,8 @@
     
     TabBarDelegateViewController *tabBarVc;
     UINavigationController *tabBarNavC;
+    
+    UIImageView *stripes;
 }
 
 - (IBAction)newTrashTalkButtonClicked:(id)sender;

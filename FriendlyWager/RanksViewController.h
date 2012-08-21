@@ -17,6 +17,8 @@
     NSArray *rankingsByWins;
     NSArray *rankingsBySport;
     NSArray *rankingsByCity;
+    
+    UIImageView *stripes;
 }
 
 - (IBAction)rankingControlToggled:(id)sender;

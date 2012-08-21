@@ -24,6 +24,8 @@ typedef enum apiCall {
     NSMutableArray *chatFrom;
     NSUInteger chatCount;
     int currentAPICall;
+    
+    UIImageView *stripes;
 }
 
 @property (nonatomic, retain) NSMutableArray* contentList;

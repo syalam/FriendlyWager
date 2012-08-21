@@ -42,6 +42,8 @@
     BOOL newWagerBool;
     
     NSUserDefaults *fwData;
+    
+    UIImageView *stripes;
 }
 
 

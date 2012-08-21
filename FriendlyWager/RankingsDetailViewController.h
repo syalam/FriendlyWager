@@ -19,6 +19,8 @@
     NSArray *cityArray;
     NSArray *winsArray;
     NSArray *sportArray;
+    
+    UIImageView *stripes;
 }
 
 @property (nonatomic, retain) NSMutableArray* contentList;

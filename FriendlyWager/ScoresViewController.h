@@ -15,7 +15,7 @@
     IBOutlet UITableView *scoresTableView;
     NSString *opponent;
     NSArray *scoresArray;
-    
+    UIImageView *stripes;
     
 }
 @property (nonatomic, retain) NSArray* contentList;
