@@ -87,6 +87,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    if (!self.navigationItem.rightBarButtonItem) {
+        stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 82, 42)];
+        [stripes setImage:[UIImage imageNamed:@"stripes"]];
+        [self.navigationController.navigationBar addSubview:stripes];
+    }
+    
     if ([PFUser currentUser]) {
         if (_opponent) {
             PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
@@ -167,6 +173,16 @@
     }
     
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (!self.navigationItem.rightBarButtonItem) {
+        [stripes removeFromSuperview];
+    }
+}
+
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

@@ -48,22 +48,13 @@
     myActionTableView.dataSource = self;
     myActionTableView.delegate = self;
     
+    
     UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
     self.navigationItem.rightBarButtonItem = wagerButton;
     
     [self showWagers];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    /*if ([fwData boolForKey:@"tabView"]) {
-        [self.navigationController setNavigationBarHidden:YES];
-    }
-    else {
-        [self.navigationController setNavigationBarHidden:YES];
-    }*/
-    
-}
 
 - (void)viewDidUnload
 {

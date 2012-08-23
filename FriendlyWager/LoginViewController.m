@@ -105,6 +105,26 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (!self.navigationItem.rightBarButtonItem) {
+        stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 82, 42)];
+        [stripes setImage:[UIImage imageNamed:@"stripes"]];
+        [self.navigationController.navigationBar addSubview:stripes];
+    }
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (!self.navigationItem.rightBarButtonItem) {
+        [stripes removeFromSuperview];
+    }
+}
+
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
