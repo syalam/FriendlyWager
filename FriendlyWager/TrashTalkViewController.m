@@ -38,7 +38,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Dashboard";
+    self.title = @"Home";
     
     
     if (_tabBarView) {
@@ -48,17 +48,18 @@
         
     }
     
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG16_BG"]]];
+    bgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    bgView.contentMode = UIViewContentModeScaleAspectFill;
     
-    UIImage *postButtonImage = [UIImage imageNamed:@"FW_PG16_Post_Button"];
-    UIButton *customPostButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    customPostButton.bounds = CGRectMake( 0, 0, postButtonImage.size.width, postButtonImage.size.height );
-    [customPostButton setImage:postButtonImage forState:UIControlStateNormal];
-    [customPostButton addTarget:self action:@selector(newTrashTalkButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    //UIImage *postButtonImage = [UIImage imageNamed:@"FW_PG16_Post_Button"];
+    //UIButton *customPostButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    //customPostButton.bounds = CGRectMake( 0, 0, postButtonImage.size.width, postButtonImage.size.height );
+    //[customPostButton setImage:postButtonImage forState:UIControlStateNormal];
+    //[customPostButton addTarget:self action:@selector(newTrashTalkButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIBarButtonItem *newTrashTalkButton = [[UIBarButtonItem alloc] initWithCustomView:customPostButton];
+    //UIBarButtonItem *newTrashTalkButton = [[UIBarButtonItem alloc] initWithCustomView:customPostButton];
     
-    self.navigationItem.rightBarButtonItem = newTrashTalkButton;
+    //self.navigationItem.rightBarButtonItem = newTrashTalkButton;
     //navItem.rightBarButtonItem = newTrashTalkButton;
     
     /*UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];

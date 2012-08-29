@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A1BDE8815EB185A0047D929 /* DashboardBG@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A1BDE8615EB185A0047D929 /* DashboardBG@2x~iphone.png */; };
+		1A1BDE8915EB185A0047D929 /* DashboardBG~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A1BDE8715EB185A0047D929 /* DashboardBG~iphone.png */; };
 		1A33B87915E0300D0029D428 /* tabBarBackground~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B87815E0300D0029D428 /* tabBarBackground~iphone.png */; };
 		1A33B88715E055B10029D428 /* myActionOffBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B88515E055B10029D428 /* myActionOffBtn~iphone.png */; };
 		1A33B88815E055B10029D428 /* myActionOnBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B88615E055B10029D428 /* myActionOnBtn~iphone.png */; };
@@ -527,6 +529,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A1BDE8615EB185A0047D929 /* DashboardBG@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DashboardBG@2x~iphone.png"; sourceTree = "<group>"; };
+		1A1BDE8715EB185A0047D929 /* DashboardBG~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DashboardBG~iphone.png"; sourceTree = "<group>"; };
 		1A33B87815E0300D0029D428 /* tabBarBackground~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBarBackground~iphone.png"; sourceTree = "<group>"; };
 		1A33B88515E055B10029D428 /* myActionOffBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myActionOffBtn~iphone.png"; sourceTree = "<group>"; };
 		1A33B88615E055B10029D428 /* myActionOnBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myActionOnBtn~iphone.png"; sourceTree = "<group>"; };
@@ -1699,6 +1703,8 @@
 		F7BA852A151CEC100034A0C1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1A1BDE8615EB185A0047D929 /* DashboardBG@2x~iphone.png */,
+				1A1BDE8715EB185A0047D929 /* DashboardBG~iphone.png */,
 				1A33B8B715E2C5000029D428 /* navBar@2x~iphone.png */,
 				1A33B8B815E2C5000029D428 /* navBar~iphone.png */,
 				1A33B8B915E2C5000029D428 /* stripes@2x~iphone.png */,
@@ -3206,6 +3212,8 @@
 				1A33B8BC15E2C5000029D428 /* navBar~iphone.png in Resources */,
 				1A33B8BD15E2C5000029D428 /* stripes@2x~iphone.png in Resources */,
 				1A33B8BE15E2C5000029D428 /* stripes~iphone.png in Resources */,
+				1A1BDE8815EB185A0047D929 /* DashboardBG@2x~iphone.png in Resources */,
+				1A1BDE8915EB185A0047D929 /* DashboardBG~iphone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

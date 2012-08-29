@@ -21,6 +21,7 @@
     UINavigationController *tabBarNavC;
     
     UIImageView *stripes;
+    IBOutlet UIImageView *bgView;
 }
 
 - (IBAction)newTrashTalkButtonClicked:(id)sender;
