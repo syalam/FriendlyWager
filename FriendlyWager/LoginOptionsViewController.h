@@ -9,13 +9,15 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface LoginOptionsViewController : UIViewController <PF_FBRequestDelegate> {
+@interface LoginOptionsViewController : UIViewController <PF_FBRequestDelegate, UIGestureRecognizerDelegate,UITextFieldDelegate> {
     IBOutlet UIButton *friendlyWagerButton;
     IBOutlet UIButton *facebookLoginButton;
     IBOutlet UIButton *twitterLoginButton;
     
     IBOutlet UITextField *userNameTextField;
     IBOutlet UITextField *passwordTextField;
+    IBOutlet UIImageView *bgView;
+    IBOutlet UIScrollView *scrollView;
     
     UIImageView *stripes;
 }

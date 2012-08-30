@@ -39,20 +39,28 @@
 {
     [super viewDidLoad];
     
-    UILabel *twitterLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, twitterLoginButton.frame.size.width, twitterLoginButton.frame.size.height)];
-    twitterLabel.backgroundColor = [UIColor clearColor];
-    twitterLabel.textColor = [UIColor whiteColor];
-    twitterLabel.textAlignment = UITextAlignmentCenter;
-    twitterLabel.font = [UIFont boldSystemFontOfSize:14];
-    twitterLabel.text = @"Twitter";
+    self.title = @"Sign In";
     
-    [twitterLoginButton addSubview:twitterLabel];
-    
-    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_Login_NavBar"]];
-    self.navigationItem.titleView = titleImageView;
-    
-    UIBarButtonItem *signUpBarButton = [[UIBarButtonItem alloc]initWithTitle:@"Sign Up" style:UIBarButtonItemStyleBordered target:self action:@selector(signUpButtonClicked:)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
+    [button addTarget:self action:@selector(signUpButtonClicked:) forControlEvents:UIControlEventTouchDown];
+    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
+    [button setTitle:@"Sign Up" forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    UIBarButtonItem *signUpBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = signUpBarButton;
+    
+    bgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    bgView.contentMode = UIViewContentModeBottom;
+    UIGestureRecognizer* recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMethod:)];
+    [(UITapGestureRecognizer *)recognizer setNumberOfTouchesRequired:1];
+    [self.view addGestureRecognizer:recognizer];
+    recognizer.delegate = self;
+    
+    userNameTextField.tag = 0;
+    passwordTextField.tag = 1;
+
 }
 
 - (void)viewDidUnload
@@ -191,5 +199,72 @@
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
     NSLog(@"%@", error);
 }
+
+#pragma mark - Gesture Recognizer Methods
+- (void)tapMethod:(id)sender
+{
+    [userNameTextField resignFirstResponder];
+    [passwordTextField resignFirstResponder];
+    [self scrollScreenBack];
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if(touch.view == friendlyWagerButton || touch.view == facebookLoginButton || touch.view == twitterLoginButton) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+#pragma mark - UITextField Delegate Methods
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [self performSelector:@selector(scrollScreen:) withObject:textField afterDelay:0.1];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeTextInRange:(NSRange)range
+ replacementText:(NSString *)text {
+    if (textField.tag == 0) {
+        if([text isEqualToString:@"\n"]){
+            [passwordTextField becomeFirstResponder];
+            return NO;
+        }else{
+            return YES;
+        }
+    }
+    else {
+        if([text isEqualToString:@"\n"]){
+            [passwordTextField resignFirstResponder];
+            [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+            return NO;
+        }else{
+            return YES;
+        }
+    }
+}
+
+
+-(void)scrollScreen:(id)sender {
+    int tag = [sender tag];
+    NSLog(@"%d", tag);
+    CGPoint bottomOffset;
+    if(tag == 0) {
+        bottomOffset = CGPointMake(0, 110);
+    }
+    else {
+        bottomOffset = CGPointMake(0, 110);
+    }
+    [scrollView setContentSize:CGSizeMake(320, 660)];
+    [scrollView setContentOffset:bottomOffset animated:YES];
+}
+
+-(void)scrollScreenBack
+{
+    CGPoint bottomOffest = CGPointMake (0,0);
+    [scrollView setContentSize:CGSizeMake(320, 460)];
+    [scrollView setContentOffset:bottomOffest animated:YES];
+    
+}
+
+
 
 @end

@@ -49,7 +49,7 @@
     }
     
     bgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    bgView.contentMode = UIViewContentModeScaleAspectFill;
+    bgView.contentMode = UIViewContentModeBottom;
     
     //UIImage *postButtonImage = [UIImage imageNamed:@"FW_PG16_Post_Button"];
     //UIButton *customPostButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -72,7 +72,12 @@
     self.navigationItem.leftBarButtonItem = backButton;*/
     //navItem.leftBarButtonItem = backButton;
     
-    UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc]initWithTitle:@"Sign Out" style:UIBarButtonItemStyleBordered target:self action:@selector(signOutButtonClicked:)];
+    //UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc]initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(signOutButtonClicked:)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 75, 28)];
+    [button addTarget:self action:@selector(signOutButtonClicked:) forControlEvents:UIControlEventTouchDown];
+    [button setBackgroundImage:[UIImage imageNamed:@"SignoutBtn"] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@"SignoutBtn"] forState:UIControlStateHighlighted];
+    UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = signOutButton;
     
     tabBarVc = [[TabBarDelegateViewController alloc]initWithNibName:@"TabBarDelegateViewController" bundle:nil];
@@ -199,20 +204,25 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return contentList.count;
+    if (contentList.count !=0) {
+        return contentList.count;
+    }
+    
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    NSString *text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
+    //NSString *text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
     
-    CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+    //CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
     
-    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+    //CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
     
-    CGFloat height = MAX(size.height, 44.0f);
+    //CGFloat height = MAX(size.height, 44.0f);
     
-    return height + (CELL_CONTENT_MARGIN * 2);
+    //return height + (CELL_CONTENT_MARGIN * 2);
+    return 55;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -220,53 +230,55 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    
-    NSString *senderName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"senderName"];
-    NSString *recipientName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"recipientName"];
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
-    if (![senderName isEqualToString:recipientName]) {
-        UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [replyButton setFrame:CGRectMake(cell.frame.size.width - 70, 10, 60, 25)];
-        [replyButton setTitle:@"Reply" forState:UIControlStateNormal];
-        [replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        replyButton.tag = indexPath.row;
+    if (contentList.count != 0) {
+        NSString *senderName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"senderName"];
+        NSString *recipientName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"recipientName"];
         
-        [cell.contentView addSubview:replyButton];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
+        if (![senderName isEqualToString:recipientName]) {
+            UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            [replyButton setFrame:CGRectMake(cell.frame.size.width - 70, 10, 60, 25)];
+            [replyButton setTitle:@"Reply" forState:UIControlStateNormal];
+            [replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            replyButton.tag = indexPath.row;
+            
+            [cell.contentView addSubview:replyButton];
+            
+            cell.textLabel.text = [NSString stringWithFormat:@"%@ > %@", senderName, recipientName];
+            
+        }
+        else {
+            cell.textLabel.text = senderName;
+        }
         
-        cell.textLabel.text = [NSString stringWithFormat:@"%@ > %@", senderName, recipientName];
+        PFObject *objectToDisplay = [[contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
+        NSDate *dateCreated = objectToDisplay.createdAt;
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"EEEE, MMMM d 'at' h:mm a"];
+        NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
         
+        UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 2, 200, 15)];
+        dateLabel.backgroundColor = [UIColor clearColor];
+        dateLabel.font = [UIFont systemFontOfSize:11];
+        dateLabel.text = dateToDisplay;
+        
+        [cell.contentView addSubview:dateLabel];
+        
+        
+        cell.textLabel.textColor = [UIColor blueColor];
+        
+        cell.detailTextLabel.lineBreakMode = UILineBreakModeWordWrap;
+        cell.detailTextLabel.numberOfLines = 12;
+        cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:12];
+        cell.detailTextLabel.textColor = [UIColor blackColor];
+        cell.detailTextLabel.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     }
-    else {
-        cell.textLabel.text = senderName;
-    }
     
-    PFObject *objectToDisplay = [[contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
-    NSDate *dateCreated = objectToDisplay.createdAt;
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"EEEE, MMMM d 'at' h:mm a"];
-    NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
-    
-    UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 2, 200, 15)];
-    dateLabel.backgroundColor = [UIColor clearColor];
-    dateLabel.font = [UIFont systemFontOfSize:11];
-    dateLabel.text = dateToDisplay;
-    
-    [cell.contentView addSubview:dateLabel];
-    
-    
-    cell.textLabel.textColor = [UIColor blueColor];
-    
-    cell.detailTextLabel.lineBreakMode = UILineBreakModeWordWrap;
-    cell.detailTextLabel.numberOfLines = 12;
-    cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:12];
-    cell.detailTextLabel.textColor = [UIColor blackColor];
-    cell.detailTextLabel.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
-    cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-    cell.contentView.backgroundColor = [UIColor clearColor];
-    cell.backgroundColor = [UIColor clearColor];
+    //cell.contentView.backgroundColor = [UIColor clearColor];
+    //cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]];
     return cell;
 }
 
@@ -301,6 +313,13 @@
     }   
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]];
+    cell.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    cell.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
+    
+}
 
 /*
 // Override to support rearranging the table view.
@@ -330,6 +349,8 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
 }
+
+
 
 #pragma mark - Button click action methods
 -(IBAction)newTrashTalkButtonClicked:(id)sender {
