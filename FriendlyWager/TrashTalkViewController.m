@@ -402,20 +402,21 @@
 }
 
 - (IBAction)myActionButtonClicked:(id)sender {
-    tabBarVc.tabBarController.selectedIndex = 1;
+    tabBarVc.tabBarController.selectedIndex = 0;
     [self.navigationController presentViewController:tabBarNavC animated:YES completion:NULL];
 }
 - (IBAction)scoresButtonClicked:(id)sender {
-    tabBarVc.tabBarController.selectedIndex = 2;
+    tabBarVc.tabBarController.selectedIndex = 1;
     [self.navigationController presentViewController:tabBarNavC animated:YES completion:NULL];
 }
 - (IBAction)rankingButtonClicked:(id)sender {
-    tabBarVc.tabBarController.selectedIndex = 3;
+    tabBarVc.tabBarController.selectedIndex = 2;
     [self.navigationController presentViewController:tabBarNavC animated:YES completion:NULL];
 }
 
 - (IBAction)makeWagerButtonClicked:(id)sender {
-    tabBarVc.tabBarController.selectedIndex = 0;
+    tabBarVc.tabBarController.selectedIndex = 1;
+    tabBarVc.newWager = YES;
     [self.navigationController presentViewController:tabBarNavC animated:YES completion:NULL];
     //[self.navigationController presentViewController:tabBarVc animated:YES completion:NULL];
 }

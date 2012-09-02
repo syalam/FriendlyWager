@@ -21,5 +21,6 @@
 
 @property (nonatomic, retain)IBOutlet UITabBarController *tabBarController;
 @property (nonatomic, retain)id<TabBarDelegate> tabDelegate;
+@property (nonatomic) BOOL newWager;
 
 @end

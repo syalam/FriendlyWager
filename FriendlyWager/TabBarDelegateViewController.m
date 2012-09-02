@@ -35,20 +35,23 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    ScoresViewController *newWagerVC = [[ScoresViewController  alloc]initWithNibName:@"ScoresViewController" bundle:nil];
     MyActionViewController *myActionVC = [[MyActionViewController alloc]initWithNibName:@"MyActionViewController" bundle:nil];
     ScoresViewController *scoresVC = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
+    if (_newWager) {
+        scoresVC.wager = YES;
+        scoresVC.tabBarDelegateScreen = self;
+    }
     RanksViewController *ranksVC = [[RanksViewController alloc]initWithNibName:@"RanksViewController" bundle:nil];
-    FeedViewController *trashTalkVC = [[FeedViewController alloc]initWithNibName:@"FeedViewController" bundle:nil];
+    TrashTalkViewController *homeVC = [[TrashTalkViewController  alloc]initWithNibName:@"TrashTalkViewController" bundle:nil];
+    //FeedViewController *trashTalkVC = [[FeedViewController alloc]initWithNibName:@"FeedViewController" bundle:nil];
     
-    UINavigationController *newWagerNavC = [[UINavigationController alloc]initWithRootViewController:newWagerVC];
     UINavigationController *actionNavC = [[UINavigationController alloc]initWithRootViewController:myActionVC];
     UINavigationController *scoresNavC = [[UINavigationController alloc]initWithRootViewController:scoresVC];
     UINavigationController *ranksNavC = [[UINavigationController alloc]initWithRootViewController:ranksVC];
-    UINavigationController *trashTalkNavC = [[UINavigationController alloc]initWithRootViewController:trashTalkVC];
+    UINavigationController *homeNavC = [[UINavigationController alloc]initWithRootViewController:homeVC];
+    //UINavigationController *trashTalkNavC = [[UINavigationController alloc]initWithRootViewController:trashTalkVC];
     
-    //UITabBarItem *newWagerBarItem = [[UITabBarItem alloc] initWithTitle:@"New Wager" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:0];
-    //[newWagerNavC setTabBarItem:newWagerBarItem];
+    
     
     UITabBarItem *myActionBarItem = [[UITabBarItem alloc] initWithTitle:@"My Action" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:0];
     [myActionBarItem setFinishedSelectedImage:[UIImage imageNamed:@"myActionOnBtn"]
@@ -62,27 +65,32 @@
     [scoresBarItem setTitlePositionAdjustment:UIOffsetMake(0, 100)];
     [scoresNavC setTabBarItem:scoresBarItem];
     
-    UITabBarItem *ranksBarItem = [[UITabBarItem alloc] initWithTitle:@"Ranks" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
+    UITabBarItem *ranksBarItem = [[UITabBarItem alloc] initWithTitle:@"Ranks" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:2];
     [ranksBarItem setFinishedSelectedImage:[UIImage imageNamed:@"rankingOnBtn"]
                 withFinishedUnselectedImage:[UIImage imageNamed:@"rankingOffBtn"]];
     [ranksBarItem setTitlePositionAdjustment:UIOffsetMake(0, 100)];
     [ranksNavC setTabBarItem:ranksBarItem];
     
-    UITabBarItem *trashTalkBarItem = [[UITabBarItem alloc] initWithTitle:@"My Feed" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
+    UITabBarItem *homeBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:3];
+    [homeBarItem setFinishedSelectedImage:[UIImage imageNamed:@"homeOnBtn"] withFinishedUnselectedImage:[UIImage imageNamed:@"homeOffBtn"]];
+    [homeBarItem setTitlePositionAdjustment:UIOffsetMake(0, 100)];
+    [homeNavC setTabBarItem:homeBarItem];
+    
+    /*UITabBarItem *trashTalkBarItem = [[UITabBarItem alloc] initWithTitle:@"My Feed" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
     [trashTalkBarItem setFinishedSelectedImage:[UIImage imageNamed:@"feedOnBtn"]
                withFinishedUnselectedImage:[UIImage imageNamed:@"feedOffBtn"]];
     [trashTalkBarItem setTitlePositionAdjustment:UIOffsetMake(0, 100)];
-    [trashTalkNavC setTabBarItem:trashTalkBarItem];
+    [trashTalkNavC setTabBarItem:trashTalkBarItem];*/
     
     [self customizeInterface];
     
-    newWagerVC.wager = YES;
-    newWagerVC.tabBarDelegateScreen = self;
+    //newWagerVC.wager = YES;
+    //newWagerVC.tabBarDelegateScreen = self;
     
     
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.delegate = self;
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects: actionNavC, scoresNavC, ranksNavC, trashTalkNavC, nil];
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects: actionNavC, scoresNavC, ranksNavC, homeNavC, nil];
     
     self.view = _tabBarController.view;
 }
@@ -97,6 +105,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES];
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -114,5 +123,12 @@
     [[UITabBar appearance] setBackgroundImage:tabBarBackground];
     
 }
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    if (tabBarController.selectedIndex == 3) {
+        [self dismissTabBarVc];
+    }
+}
+
 
 @end
