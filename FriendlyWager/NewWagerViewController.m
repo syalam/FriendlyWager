@@ -203,7 +203,7 @@
     teamPickerView.dataSource = self;
     
     [teamActionSheet addSubview:teamPickerView];
-    [teamActionSheet showInView:self.view];        
+    [teamActionSheet showInView:self.tabBarController.tabBar];
     [teamActionSheet setBounds:CGRectMake(0,0,320, 500)];
     
     [teamPickerView selectRow:0 inComponent:0 animated:NO];
@@ -349,7 +349,8 @@
             [createNewWager setObject:teamWageredToLoseId forKey:@"teamWageredToLoseId"];
             [createNewWager setObject:teamWageredToLose forKey:@"teamWageredToLose"];
             [createNewWager setObject:[PFUser currentUser] forKey:@"wager"];
-            [createNewWager setObject:_sport forKey:@"sport"];
+            //WILL NEED TO ADD REAL SPORT HERE ONCE API IS LIVE
+            [createNewWager setObject:@"NBA Basketball" forKey:@"sport"];
             [createNewWager setObject:[_opponentsToWager objectAtIndex:i] forKey:@"wagee"];
             [createNewWager setObject:[NSNumber numberWithInt:[spreadLabel.text intValue]] forKey:@"tokensWagered"];
             [createNewWager setObject:[NSNumber numberWithBool:NO] forKey:@"wagerAccepted"];
