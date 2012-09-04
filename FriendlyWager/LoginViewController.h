@@ -15,7 +15,6 @@
     IBOutlet UITextField *userNameTextField;
     IBOutlet UITextField *passwordTextField;
     IBOutlet UIButton *resetButton;
-    UIImageView *stripes;
 }
 
 - (IBAction)loginButtonClicked:(id)sender;

@@ -59,13 +59,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
+    [stripes setImage:[UIImage imageNamed:@"stripes"]];
+    [self.navigationController.navigationBar addSubview:stripes];
+    background.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    background.contentMode = UIViewContentModeTop;
     scoresTableView.dataSource = self;
     scoresTableView.delegate = self;
-    
     if (_wager) {
         self.title = @"Make a Wager";
-        UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
-        self.navigationItem.titleView = titleImageView;
+        //UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
+        //self.navigationItem.titleView = titleImageView;
         
         UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
         UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -79,12 +83,11 @@
     else {
         self.title = @"Scores";
         
-        UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
-        self.navigationItem.rightBarButtonItem = wagerButton;
+        //UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
+        //self.navigationItem.rightBarButtonItem = wagerButton;
     }
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG3_BG"]]];
-    
     NSArray *nflFootball = [[NSArray alloc]initWithObjects:@"NFL Football", nil];
     NSArray *collegeFootball = [[NSArray alloc]initWithObjects:@"College Football", nil];
     NSArray *mlbBaseball = [[NSArray alloc]initWithObjects:@"MLB Baseball", nil];
@@ -93,6 +96,23 @@
     scoresArray = [[NSArray alloc]initWithObjects:nflFootball, collegeFootball, mlbBaseball, nbaBasketball, collegeBasketball, nil];
     [self setContentList:scoresArray];
     
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
+    [stripes setImage:[UIImage imageNamed:@"stripes"]];
+    [self.navigationController.navigationBar addSubview:stripes];
+
+
+}
+
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [stripes removeFromSuperview];
     
 }
 
@@ -131,17 +151,34 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     //cell.contentView.opaque = NO;
-    cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG3_TableViewCell"]];
+    UIImage *footballIcn = [UIImage imageNamed:@"footballIcn"];
+    UIImage *baseballIcn = [UIImage imageNamed:@"baseballIcn"];
+    UIImage *basketballIcn = [UIImage imageNamed:@"basketballIcn"];
+    UILabel *text = [[UILabel alloc]initWithFrame:CGRectMake(65, 15, 210, 25)];
+    UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, 45, 45)];
+    if (indexPath.section == 0 || indexPath.section == 1) {
+        [image setImage:footballIcn];
+    }
+    else if (indexPath.section == 2) {
+        [image setImage:baseballIcn];
+    }
+    else {
+        [image setImage:basketballIcn];
+    }
+    [text setBackgroundColor:[UIColor clearColor]];
+    text.font = [UIFont boldSystemFontOfSize:17];
+    cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"scoresCellBg"]];
     cell.backgroundColor = [UIColor clearColor];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.textAlignment = UITextAlignmentCenter;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.text = contentForThisRow;
+    text.text = contentForThisRow;
+    [cell addSubview:text];
+    [cell addSubview:image];
     return cell;
 }
 
 #pragma mark - TableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self viewWillDisappear:NO];
     NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
     id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
     if (_ranking) {

@@ -59,7 +59,7 @@
     [myActionBarItem setTitlePositionAdjustment:UIOffsetMake(0, 100)];
     [actionNavC setTabBarItem:myActionBarItem];
     
-    UITabBarItem *scoresBarItem = [[UITabBarItem alloc] initWithTitle:@"Scores" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
+    UITabBarItem *scoresBarItem = [[UITabBarItem alloc] initWithTitle:@"Make a Wager" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
     [scoresBarItem setFinishedSelectedImage:[UIImage imageNamed:@"scoresOnBtn"]
                   withFinishedUnselectedImage:[UIImage imageNamed:@"scoresOffBtn"]];
     [scoresBarItem setTitlePositionAdjustment:UIOffsetMake(0, 100)];
@@ -104,6 +104,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.selectedViewController viewWillAppear:NO];
     [self.navigationController setNavigationBarHidden:YES];
     
 }
@@ -128,7 +129,11 @@
     if (tabBarController.selectedIndex == 3) {
         [self dismissTabBarVc];
     }
+
 }
 
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    [viewController viewWillAppear:animated];
+}
 
 @end

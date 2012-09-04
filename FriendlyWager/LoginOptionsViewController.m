@@ -39,8 +39,6 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Sign In";
-    
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
     [button addTarget:self action:@selector(signUpButtonClicked:) forControlEvents:UIControlEventTouchDown];
     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
@@ -50,6 +48,8 @@
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     UIBarButtonItem *signUpBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = signUpBarButton;
+    
+    self.title = @"Sign In";
     
     bgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     bgView.contentMode = UIViewContentModeBottom;
@@ -73,20 +73,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (!self.navigationItem.rightBarButtonItem) {
-        stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 82, 42)];
-        [stripes setImage:[UIImage imageNamed:@"stripes"]];
-        [self.navigationController.navigationBar addSubview:stripes];
-    }
+    
     
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    if (!self.navigationItem.rightBarButtonItem) {
-        [stripes removeFromSuperview];
-    }
 }
 
 

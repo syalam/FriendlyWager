@@ -19,7 +19,7 @@
     IBOutlet UIImageView *bgView;
     IBOutlet UIScrollView *scrollView;
     
-    UIImageView *stripes;
+    
 }
 
 - (IBAction)signInButtonClicked:(id)sender;

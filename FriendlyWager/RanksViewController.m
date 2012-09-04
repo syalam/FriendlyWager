@@ -41,15 +41,22 @@
     // Do any additional setup after loading the view from its nib.
     
     self.title = @"Rankings";
-    
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG4_BG"]]];
     
     rankingsByPoints = [[NSArray alloc]initWithObjects:@"Rankings By Points", nil];
     rankingsByWins = [[NSArray alloc]initWithObjects:@"Rankings By Wins", nil];
     rankingsBySport = [[NSArray alloc]initWithObjects:@"Ranking By Sport", nil];
     
-    UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
-    self.navigationItem.rightBarButtonItem = wagerButton;
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
+    [button addTarget:self action:@selector(wagerButtonClicked:) forControlEvents:UIControlEventTouchDown];
+    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
+    [button setTitle:@"Wager" forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    UIBarButtonItem *wagerBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = wagerBarButton;
+
     
     [self rankByPoints];
 }
@@ -79,10 +86,16 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, 130, 20)];
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 30, 150, 20)];
+    nameLabel.font = [UIFont boldSystemFontOfSize:16];
     UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 15, 115, 20)];
-    UILabel *pointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(270, 15, 30, 20)];
-    UILabel *rankLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 15, 60, 20)];
+    cityLabel.font = [UIFont boldSystemFontOfSize:16];
+    UILabel *pointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(165, 20, 100, 17)];
+    pointsLabel.textAlignment = UITextAlignmentRight;
+    pointsLabel.font = [UIFont boldSystemFontOfSize:20];
+    UILabel *rankLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 5, 60, 20)];
+    rankLabel.font = [UIFont boldSystemFontOfSize:18];
+    rankLabel.textColor = [UIColor darkGrayColor];
     
     cityLabel.backgroundColor = [UIColor clearColor];
     rankLabel.backgroundColor = [UIColor clearColor];
@@ -96,19 +109,24 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"scoresCellBg"]];
+    cell.backgroundColor = [UIColor clearColor];
     if ([_rankCategory isEqualToString:@"Rankings By Points"]) {
         nameLabel.text = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"name"];
         pointsLabel.text = [NSString stringWithFormat:@"%@", [[_contentList objectAtIndex:indexPath.row]valueForKey:@"tokenCount"]];
+        rankLabel.text = [NSString stringWithFormat:@"%d", indexPath.row+1];
         
         [cell addSubview:nameLabel];
         [cell addSubview:pointsLabel];
+        [cell addSubview:rankLabel];
     }
     else if ([_rankCategory isEqualToString:@"Rankings By Wins"]) {
         nameLabel.text = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
         pointsLabel.text = [NSString stringWithFormat:@"%@", [[_contentList objectAtIndex:indexPath.row]objectForKey:@"totalWins"]];
-        
+        rankLabel.text = [NSString stringWithFormat:@"%d", indexPath.row+1];
         [cell addSubview:nameLabel];
         [cell addSubview:pointsLabel];
+        [cell addSubview:rankLabel];
     }
     
     /*else {
@@ -157,13 +175,40 @@
 }
 
 #pragma mark IBAction Methods
-- (IBAction)rankingControlToggled:(id)sender {
+/*- (IBAction)rankingControlToggled:(id)sender {
     if (rankingControl.selectedSegmentIndex == 0) {
         [self rankByPoints];
     }
     else if (rankingControl.selectedSegmentIndex == 1) {
         [self rankByWins];
     }
+}*/
+
+- (IBAction)byPointsSelected:(id)sender {
+    [self rankByPoints];
+    [byPoints setImage:[UIImage imageNamed:@"byPointsOn"] forState:UIControlStateNormal];
+    [byWins setImage:[UIImage imageNamed:@"byWins"] forState:UIControlStateNormal];
+    [bySport setImage:[UIImage imageNamed:@"bySport"] forState:UIControlStateNormal];
+    [byCity setImage:[UIImage imageNamed:@"byCity"] forState:UIControlStateNormal];
+}
+- (IBAction)byWinsSelected:(id)sender {
+    [self rankByWins];
+    [byPoints setImage:[UIImage imageNamed:@"byPoints"] forState:UIControlStateNormal];
+    [byWins setImage:[UIImage imageNamed:@"byWinsOn"] forState:UIControlStateNormal];
+    [bySport setImage:[UIImage imageNamed:@"bySport"] forState:UIControlStateNormal];
+    [byCity setImage:[UIImage imageNamed:@"byCity"] forState:UIControlStateNormal];
+}
+- (IBAction)bySportSelected:(id)sender {
+    [byPoints setImage:[UIImage imageNamed:@"byPoints"] forState:UIControlStateNormal];
+    [byWins setImage:[UIImage imageNamed:@"byWins"] forState:UIControlStateNormal];
+    [bySport setImage:[UIImage imageNamed:@"bySportOn"] forState:UIControlStateNormal];
+    [byCity setImage:[UIImage imageNamed:@"byCity"] forState:UIControlStateNormal];
+}
+- (IBAction)byCitySelected:(id)sender {
+    [byPoints setImage:[UIImage imageNamed:@"byPoints"] forState:UIControlStateNormal];
+    [byWins setImage:[UIImage imageNamed:@"byWins"] forState:UIControlStateNormal];
+    [bySport setImage:[UIImage imageNamed:@"bySport"] forState:UIControlStateNormal];
+    [byCity setImage:[UIImage imageNamed:@"byCityOn"] forState:UIControlStateNormal];
 }
 
 - (void)wagerButtonClicked:(id)sender {

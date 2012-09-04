@@ -35,8 +35,7 @@
 {
     [super viewDidLoad];
     
-    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_NewAccount_NavBar"]];
-    self.navigationItem.titleView = titleImageView;
+    self.title = @"New Account";
     
     scrollView.contentSize = CGSizeMake(320, 550);
     [firstNameTextField becomeFirstResponder];
@@ -71,20 +70,16 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (!self.navigationItem.rightBarButtonItem) {
-        stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 82, 42)];
-        [stripes setImage:[UIImage imageNamed:@"stripes"]];
-        [self.navigationController.navigationBar addSubview:stripes];
-    }
+    stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
+    [stripes setImage:[UIImage imageNamed:@"stripes"]];
+    [self.navigationController.navigationBar addSubview:stripes];
     
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    if (!self.navigationItem.rightBarButtonItem) {
-        [stripes removeFromSuperview];
-    }
+    [stripes removeFromSuperview];
 }
 
 

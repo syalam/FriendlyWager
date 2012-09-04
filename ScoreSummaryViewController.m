@@ -52,26 +52,34 @@
     [super viewDidLoad];
 
     newWagerVisible = NO;
-    
     if (_wager) {
         UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
         self.navigationItem.titleView = titleImageView;
         
-        UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
-        UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
-        [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
-        [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
-        
-        self.navigationItem.leftBarButtonItem = backButton;
     }
     
     else {
-        UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
-        self.navigationItem.rightBarButtonItem = wagerButton;
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
+        [button addTarget:self action:@selector(wagerButtonClicked:) forControlEvents:UIControlEventTouchDown];
+        [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
+        [button setTitle:@"Wager" forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        UIBarButtonItem *wagerBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
+        self.navigationItem.rightBarButtonItem = wagerBarButton;
     }
     
+    UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
+    UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
+    [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
+    custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
+    
+    self.navigationItem.leftBarButtonItem = backButton;
     //[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG9_BG"]]];
     
     /*NSArray *todayArray = [NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team1", @"Celtics", @"team2", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate date], @"date", nil], nil];
@@ -90,20 +98,14 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (!self.navigationItem.rightBarButtonItem) {
-        stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 82, 42)];
-        [stripes setImage:[UIImage imageNamed:@"stripes"]];
-        [self.navigationController.navigationBar addSubview:stripes];
-    }
+
     
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    if (!self.navigationItem.rightBarButtonItem) {
-        [stripes removeFromSuperview];
-    }
+    
 }
 
 
@@ -124,7 +126,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;   
+    return 78;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -142,7 +144,8 @@
     [cell.gameTime setText:@"4:00 PM"];
     [cell.wagersLabel setText:@"Wagers"];
     [cell.wagerCountLabel setText:@"4"];
-    
+    cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cellBgGame"]];
+    cell.backgroundColor = [UIColor clearColor];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -173,11 +176,16 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 25)];
-    [headerView setBackgroundColor:[UIColor lightGrayColor]];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 292, 25)];
+    [headerView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"header"]]];
     
     UILabel *relativeDayLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 100, 20)];
-    UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(180, 0, 120, 20)];
+    relativeDayLabel.font = [UIFont boldSystemFontOfSize:12];
+    relativeDayLabel.textColor = [UIColor whiteColor];
+    UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(160, 0, 120, 20)];
+    dateLabel.textAlignment = UITextAlignmentRight;
+    dateLabel.font = [UIFont boldSystemFontOfSize:12];
+    dateLabel.textColor = [UIColor whiteColor];
     
     [relativeDayLabel setBackgroundColor:[UIColor clearColor]];
     [dateLabel setBackgroundColor:[UIColor clearColor]];
@@ -203,6 +211,8 @@
 
 #pragma mark - Button Clicks
 - (void)backButtonClicked:(id)sender {
+    NSArray *viewControllers = [self.navigationController viewControllers];
+    [[viewControllers objectAtIndex:0]viewWillAppear:NO];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

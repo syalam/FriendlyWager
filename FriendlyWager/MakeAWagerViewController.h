@@ -16,7 +16,6 @@
 @interface MakeAWagerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ABPeoplePickerNavigationControllerDelegate> {
     IBOutlet UITableView *wagerTableView;
     
-    UIImageView *stripes;
 }
 
 @property (nonatomic, retain) NSArray* contentList;

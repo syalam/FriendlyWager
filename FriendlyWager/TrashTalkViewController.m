@@ -48,8 +48,8 @@
         
     }
     
-    bgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    bgView.contentMode = UIViewContentModeBottom;
+    //bgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    //bgView.contentMode = UIViewContentModeBottom;
     
     //UIImage *postButtonImage = [UIImage imageNamed:@"FW_PG16_Post_Button"];
     //UIButton *customPostButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -93,12 +93,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (!self.navigationItem.rightBarButtonItem) {
-        stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 82, 42)];
-        [stripes setImage:[UIImage imageNamed:@"stripes"]];
-        [self.navigationController.navigationBar addSubview:stripes];
-    }
-    
+    stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
+    [stripes setImage:[UIImage imageNamed:@"stripes"]];
+    [self.navigationController.navigationBar addSubview:stripes];
     if ([PFUser currentUser]) {
         if (_opponent) {
             PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
@@ -183,9 +180,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    if (!self.navigationItem.rightBarButtonItem) {
-        [stripes removeFromSuperview];
-    }
+    [stripes removeFromSuperview];
+
 }
 
 

@@ -23,8 +23,6 @@ typedef enum apiCall {
     
     int currentApiCall;
     NSString *uid;
-    
-    UIImageView *stripes;
 }
 
 @property (nonatomic, retain) NSMutableArray *contentList;

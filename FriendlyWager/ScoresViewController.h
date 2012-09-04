@@ -15,6 +15,7 @@
     IBOutlet UITableView *scoresTableView;
     NSString *opponent;
     NSArray *scoresArray;
+    IBOutlet UIImageView *background;
     UIImageView *stripes;
     
 }

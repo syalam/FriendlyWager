@@ -20,8 +20,7 @@
     
     UIActionSheet *teamActionSheet;
     UIPickerView *teamPickerView;
-    
-    UIImageView *stripes;
+
 }
 
 - (IBAction)selectTeamButtonClicked:(id)sender;

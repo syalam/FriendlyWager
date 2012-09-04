@@ -48,9 +48,11 @@
     [super viewDidLoad];
     scoreDetailTableView.delegate = self;
     scoreDetailTableView.dataSource = self;
-    
+
     self.title = @"Scores";
-    
+    stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
+    [stripes setImage:[UIImage imageNamed:@"stripes"]];
+    [self.navigationController.navigationBar addSubview:stripes];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG10_BG"]]];
     
     NSMutableArray *firstSection = [[NSMutableArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team", @"+13.5", @"teamScore", @"Celtics", @"team2", @"-13.5", @"team2Score", nil], nil];
@@ -59,8 +61,19 @@
     NSArray *scoreDetailsArray = [[NSArray alloc]initWithObjects:firstSection, secondSection, nil];
     [self setContentList:scoreDetailsArray];
     
-    UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
-    self.navigationItem.rightBarButtonItem = wagerButton;
+    //UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
+    //self.navigationItem.rightBarButtonItem = wagerButton;
+    UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
+    UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
+    [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
+    custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
+    
+    self.navigationItem.leftBarButtonItem = backButton;
+
 
     
     /*PFQuery *queryGameWagered = [PFQuery queryWithClassName:@"wagers"];
@@ -109,23 +122,17 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (!self.navigationItem.rightBarButtonItem) {
-        stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 82, 42)];
-        [stripes setImage:[UIImage imageNamed:@"stripes"]];
-        [self.navigationController.navigationBar addSubview:stripes];
-    }
     
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+
+
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    if (!self.navigationItem.rightBarButtonItem) {
-        [stripes removeFromSuperview];
-    }
+    [stripes removeFromSuperview];
+    
 }
 
 
@@ -137,27 +144,29 @@
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.contentList.count;
+    //return self.contentList.count;
+    return 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:section];
-    return sectionContents.count;  
+    //NSArray *sectionContents = [[self contentList] objectAtIndex:section];
+    //return sectionContents.count;
+    return 1;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+/*- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         return @"Stats";
     }
     else {
         return @"My Wagers";
     }
-}
+}*/
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        return 100;
+        return 78;
     }
     else {
         return 46;
@@ -176,6 +185,7 @@
         cell = [[ScoreSummaryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         
         [cell.gameImageView setImage:[UIImage imageNamed:@"sports.jpg"]];
+
         [cell.team1Label setText:@"Lakers"];
         [cell.team2Label setText:@"Celtics"];
         [cell.team1Odds setText:@"+13.5"];
@@ -183,7 +193,8 @@
         [cell.gameTime setText:@"4:00 PM"];
         [cell.wagersLabel setText:@"Wagers"];
         [cell.wagerCountLabel setText:@"4"];
-        
+        cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cellBgGame"]];
+        cell.backgroundColor = [UIColor clearColor];
         
         
         /*UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 12, 100, 20)];
@@ -244,6 +255,11 @@
 #pragma mark - Button Clicks
 - (void)wagerButtonClicked:(id)sender {
     [self.tabBarController setSelectedIndex:0];
+}
+
+- (void)backButtonClicked:(id)sender {
+    [self viewWillDisappear:NO];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

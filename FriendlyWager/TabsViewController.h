@@ -22,7 +22,6 @@
     NSUInteger myTabIndex;
     BOOL userSelected;
     
-    UIImageView *stripes;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

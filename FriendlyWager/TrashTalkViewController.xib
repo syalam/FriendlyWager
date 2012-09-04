@@ -40,7 +40,7 @@
 					<object class="IBUIImageView" id="1046645931">
 						<reference key="NSNextResponder" ref="751167801"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrameSize">{320, 460}</string>
+						<string key="NSFrameSize">{320, 416}</string>
 						<reference key="NSSuperview" ref="751167801"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="86311691"/>
@@ -59,7 +59,7 @@
 						<reference key="NSSuperview" ref="751167801"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="217462393"/>
-						<object class="NSColor" key="IBUIBackgroundColor" id="1065715351">
+						<object class="NSColor" key="IBUIBackgroundColor" id="819081995">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
 						</object>
@@ -69,7 +69,7 @@
 						<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<bool key="IBUIBouncesZoom">NO</bool>
-						<reference key="IBUISeparatorColor" ref="1065715351"/>
+						<reference key="IBUISeparatorColor" ref="819081995"/>
 						<int key="IBUISectionIndexMinimumDisplayRowCount">0</int>
 						<bool key="IBUIShowsSelectionImmediatelyOnTouchBegin">YES</bool>
 						<float key="IBUIRowHeight">44</float>
@@ -597,7 +597,7 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="ActionBtn~iphone.png">{67, 62}</string>
-			<string key="DashboardBG~iphone.png">{320, 418}</string>
+			<string key="DashboardBG~iphone.png">{320, 416}</string>
 			<string key="InfoBtn~iphone.png">{26, 26}</string>
 			<string key="MakeWagerBtn~iphone.png">{288, 111}</string>
 			<string key="NewBtn~iphone.png">{34, 36}</string>

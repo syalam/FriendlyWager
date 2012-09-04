@@ -18,7 +18,6 @@
     IBOutlet UITextField *favoriteTeamTextField;
     IBOutlet UIButton *submitButton;
     IBOutlet UITextField *emailAddressTextField;
-    
     UIImageView *stripes;
 }
 

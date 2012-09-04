@@ -19,7 +19,6 @@
     
     NSMutableArray *detailTableContents;
     
-    UIImageView *stripes;
 }
 
 @property (nonatomic, retain) PFObject *opponent;

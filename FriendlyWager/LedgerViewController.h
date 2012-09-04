@@ -17,7 +17,6 @@
     NSMutableArray *ledgerDataTeam;
     NSMutableArray *ledgerDataWinLoss;
     
-    UIImageView *stripes;
 }
 
 @property (nonatomic, retain)NSMutableArray *contentList;

@@ -22,7 +22,6 @@
     
     BOOL newWagerBool;
     
-    UIImageView *stripes;
 }
 
 - (void)showWagers;

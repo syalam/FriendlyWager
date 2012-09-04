@@ -12,8 +12,8 @@
 @interface ScoreDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UITableView *scoreDetailTableView;
     NSDictionary *scoreDataDictionary;
-    
     UIImageView *stripes;
+   
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil scoreData:(NSDictionary *)scoreData;

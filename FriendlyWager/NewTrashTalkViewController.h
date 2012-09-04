@@ -26,7 +26,6 @@ typedef enum apiCall {
     
     NSUserDefaults *fwData;
     
-    UIImageView *stripes;
 }
 
 @property (nonatomic, retain) PFObject *recipient;
