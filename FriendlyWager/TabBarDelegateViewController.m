@@ -129,11 +129,7 @@
     if (tabBarController.selectedIndex == 3) {
         [self dismissTabBarVc];
     }
-
 }
 
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    [viewController viewWillAppear:animated];
-}
 
 @end
