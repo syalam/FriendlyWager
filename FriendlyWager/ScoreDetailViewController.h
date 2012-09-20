@@ -11,12 +11,15 @@
 
 @interface ScoreDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UITableView *scoreDetailTableView;
+    IBOutlet UIButton *makeWagerButton;
     NSDictionary *scoreDataDictionary;
     UIImageView *stripes;
    
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil scoreData:(NSDictionary *)scoreData;
+
+- (IBAction)makeAWagerButtonTapped:(id)sender;
 
 @property (nonatomic, retain) NSArray* contentList;
 @property (nonatomic, retain) NSMutableDictionary* gameDataDictionary;

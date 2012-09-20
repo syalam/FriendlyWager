@@ -7,6 +7,7 @@
 //
 
 #import "ScoreDetailViewController.h"
+#import "NewWagerViewController.h"
 #import "ScoreSummaryCell.h"
 
 @implementation ScoreDetailViewController
@@ -253,8 +254,19 @@
 }
 
 #pragma mark - Button Clicks
-- (void)wagerButtonClicked:(id)sender {
-    [self.tabBarController setSelectedIndex:0];
+- (IBAction)makeAWagerButtonTapped:(id)sender {
+    NSDictionary *gameDataDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team1", @"1", @"team1Id", @"Celtics", @"team2", @"2", @"team2Id", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate date], @"date", @"1", @"gameId", nil];
+    NSLog(@"%@", gameDataDictionary);
+    NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
+    /*newWager.sport = _sport;
+    if (_opponentsToWager.count > 0) {
+        
+    }*/
+    //newWager.opponentsToWager = _opponentsToWager;
+    newWager.gameDataDictionary = gameDataDictionary;
+    [newWager updateOpponents];
+    [self.navigationController pushViewController:newWager animated:YES];
+    //[self.tabBarController setSelectedIndex:0];
 }
 
 - (void)backButtonClicked:(id)sender {
