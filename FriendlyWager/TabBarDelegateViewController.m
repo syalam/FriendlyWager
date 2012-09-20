@@ -89,6 +89,8 @@
     
     
     self.tabBarController = [[UITabBarController alloc] init];
+    UIImage *clear = [[UIImage alloc]init];
+    [[[self tabBarController] tabBar] setSelectionIndicatorImage:clear];
     self.tabBarController.delegate = self;
     self.tabBarController.viewControllers = [NSArray arrayWithObjects: actionNavC, scoresNavC, ranksNavC, homeNavC, nil];
     
