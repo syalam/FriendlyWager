@@ -218,7 +218,7 @@
     //CGFloat height = MAX(size.height, 44.0f);
     
     //return height + (CELL_CONTENT_MARGIN * 2);
-    return 55;
+    return 58;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
