@@ -36,8 +36,8 @@
     [KPManager setSharedManager:manager];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    TrashTalkViewController *traskTalkViewController = [[TrashTalkViewController alloc] initWithNibName:@"TrashTalkViewController" bundle:nil];
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:traskTalkViewController];
+    _trashTalkViewController = [[TrashTalkViewController alloc] initWithNibName:@"TrashTalkViewController" bundle:nil];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:_trashTalkViewController];
     self.window.rootViewController = self.navigationController;
     
     if ([UINavigationBar respondsToSelector:@selector(appearance)]) {

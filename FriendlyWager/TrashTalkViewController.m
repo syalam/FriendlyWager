@@ -40,6 +40,11 @@
     
     self.title = @"Home";
     
+    if ([_currentUser objectForKey:@"picture"]) {
+        NSData *picData = [_currentUser objectForKey:@"picture"];
+        [profilePic setImage:[UIImage imageWithData:picData]];
+
+    }
     
     if (_tabBarView) {
         [myActionButton setHidden:YES];
@@ -200,11 +205,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (contentList.count !=0) {
         return contentList.count;
-    }
-    
-    return 3;
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
@@ -231,46 +233,107 @@
         NSString *recipientName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"recipientName"];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
+                
+        PFObject *objectToDisplay = [[contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
+        NSDate *dateCreated = objectToDisplay.createdAt;
+        //NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        //[dateFormatter setDateFormat:@"EEEE, MMMM d 'at' h:mm a"];
+        //NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        unsigned int unitFlags =  NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayOrdinalCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit;
+        NSDateComponents *messageDateComponents = [calendar components:unitFlags fromDate:dateCreated];
+        NSDateComponents *todayDateComponents = [calendar components:unitFlags fromDate:[NSDate date]];
+        
+        NSUInteger dayOfYearForMessage = [calendar ordinalityOfUnit:NSDayCalendarUnit inUnit:NSYearCalendarUnit forDate:dateCreated];
+        NSUInteger dayOfYearForToday = [calendar ordinalityOfUnit:NSDayCalendarUnit inUnit:NSYearCalendarUnit forDate:[NSDate date]];
+        
+        
+        NSString *dateString;
+        
+        if ([messageDateComponents year] == [todayDateComponents year] &&
+            [messageDateComponents month] == [todayDateComponents month] &&
+            [messageDateComponents day] == [todayDateComponents day])
+        {
+            int hours = [messageDateComponents hour];
+            int minutes = [messageDateComponents minute];
+            NSString *amPm;
+            if (hours == 12) {
+                amPm = @"PM";
+            }
+            else if (hours == 0) {
+                hours = 12;
+                amPm = @ "AM";
+            }
+            else if (hours > 12) {
+                hours = hours - 12;
+                amPm = @"PM";
+            }
+            else {
+                amPm = @"AM";
+            }
+            dateString = [NSString stringWithFormat:@"%d:%02d %@", hours, minutes, amPm];
+        } else if ([messageDateComponents year] == [todayDateComponents year] &&
+                   dayOfYearForMessage == (dayOfYearForToday-1))
+        {
+            dateString = @"Yesterday";
+        } else if ([messageDateComponents year] == [todayDateComponents year] &&
+                   dayOfYearForMessage > (dayOfYearForToday-6))
+        {
+            
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"EEEE"];
+            dateString = [dateFormatter stringFromDate:dateCreated];
+            
+        } else {
+            
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yy"];
+            dateString = [NSString stringWithFormat:@"%02d/%02d/%@", [messageDateComponents day], [messageDateComponents month], [dateFormatter stringFromDate:dateCreated]];
+        }
+
+        UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width - 250, 5, 215, 15)];
+        dateLabel.backgroundColor = [UIColor clearColor];
+        dateLabel.textAlignment = UITextAlignmentRight;
+        dateLabel.font = [UIFont systemFontOfSize:11];
+        dateLabel.text = dateString;
+        dateLabel.textColor = [UIColor  darkGrayColor];
+        
+        UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 16)];
+        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, cell.frame.size.width - 40, 28)];
+        label1.font = [UIFont boldSystemFontOfSize:12];
         if (![senderName isEqualToString:recipientName]) {
-            UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            [replyButton setFrame:CGRectMake(cell.frame.size.width - 70, 10, 60, 25)];
-            [replyButton setTitle:@"Reply" forState:UIControlStateNormal];
+            UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [replyButton setFrame:CGRectMake(cell.frame.size.width - 50, cell.frame.size.height - 26, 16, 26)];
+            [replyButton setImage:[UIImage imageNamed:@"CellArrowYellow"] forState:UIControlStateNormal];
             [replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             replyButton.tag = indexPath.row;
             
             [cell.contentView addSubview:replyButton];
             
-            cell.textLabel.text = [NSString stringWithFormat:@"%@ > %@", senderName, recipientName];
+            label1.text = [senderName capitalizedString];
             
         }
         else {
-            cell.textLabel.text = senderName;
+            label1.text = [senderName capitalizedString];
         }
-        
-        PFObject *objectToDisplay = [[contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
-        NSDate *dateCreated = objectToDisplay.createdAt;
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"EEEE, MMMM d 'at' h:mm a"];
-        NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
-        
-        UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 2, 200, 15)];
-        dateLabel.backgroundColor = [UIColor clearColor];
-        dateLabel.font = [UIFont systemFontOfSize:11];
-        dateLabel.text = dateToDisplay;
+
         
         [cell.contentView addSubview:dateLabel];
         
         
-        cell.textLabel.textColor = [UIColor blueColor];
+        label1.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
+        label2.font = [UIFont systemFontOfSize:12];
+        label2.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
+        label2.numberOfLines = 2;
+        label2.lineBreakMode = UILineBreakModeTailTruncation;
+        [label2 setFrame:CGRectMake(10, 20, cell.frame.size.width -80, 30)];
+        [label2 sizeToFit];
+        label1.backgroundColor = [UIColor clearColor];
+        label2.backgroundColor = [UIColor clearColor];
+        label2.textColor = [UIColor colorWithRed:0.376 green:0.376 blue:0.376 alpha:1];
         
-        cell.detailTextLabel.lineBreakMode = UILineBreakModeWordWrap;
-        cell.detailTextLabel.numberOfLines = 12;
-        cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:12];
-        cell.detailTextLabel.textColor = [UIColor blackColor];
-        cell.detailTextLabel.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
-        cell.textLabel.backgroundColor = [UIColor clearColor];
-        cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+        [cell.contentView addSubview:label1];
+        [cell.contentView addSubview:label2];
     }
     
     //cell.contentView.backgroundColor = [UIColor clearColor];

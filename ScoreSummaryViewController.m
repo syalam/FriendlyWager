@@ -144,7 +144,7 @@
     [cell.gameTime setText:@"4:00 PM"];
     [cell.wagersLabel setText:@"Wagers"];
     [cell.wagerCountLabel setText:@"4"];
-    cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cellBgGame"]];
+    cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"gameCell"]];
     cell.backgroundColor = [UIColor clearColor];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

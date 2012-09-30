@@ -60,8 +60,8 @@
 {
     [super viewDidLoad];
     stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
-    [stripes setImage:[UIImage imageNamed:@"stripes"]];
-    [self.navigationController.navigationBar addSubview:stripes];
+    //[stripes setImage:[UIImage imageNamed:@"stripes"]];
+    //[self.navigationController.navigationBar addSubview:stripes];
     background.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     background.contentMode = UIViewContentModeTop;
     scoresTableView.dataSource = self;
@@ -101,7 +101,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
+    //stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     [self.navigationController.navigationBar addSubview:stripes];
 
@@ -178,7 +178,8 @@
 
 #pragma mark - TableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self viewWillDisappear:NO];
+    //[self viewWillDisappear:NO];
+    [stripes removeFromSuperview];
     NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
     id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
     if (_ranking) {

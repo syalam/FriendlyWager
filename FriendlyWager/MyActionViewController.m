@@ -40,7 +40,6 @@
     self.title = @"My Action";
     
     [self.navigationController setNavigationBarHidden:NO];
-    
     fwData = [NSUserDefaults alloc];
     
     
@@ -96,12 +95,29 @@
     
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     
-    cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"scoreCellBg"]];
+    cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"scoresCellBg"]];
     cell.backgroundColor = [UIColor clearColor];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.textAlignment = UITextAlignmentCenter;
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(55, 10, 200, 30)];
+    nameLabel.textColor = [UIColor blackColor];
+    nameLabel.textAlignment = UITextAlignmentLeft;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"object"] objectForKey:@"name"];
+    nameLabel.backgroundColor = [UIColor clearColor];
+    nameLabel.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"object"] objectForKey:@"name"];
+    nameLabel.text = [nameLabel.text capitalizedString];
+    nameLabel.font = [UIFont boldSystemFontOfSize:17];
+    [cell.contentView addSubview:nameLabel];
+    NSData *picData = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"object"] objectForKey:@"picture"];
+    UIImage *profilePic;
+    if (picData) {
+        profilePic = [UIImage imageWithData:picData];
+    }
+    else {
+        profilePic = [UIImage imageNamed:@"placeholder"];
+    }
+    UIImageView *profilePicView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 39, 39)];
+    [profilePicView setImage:profilePic];
+    [cell.contentView addSubview:profilePicView];
+    
     
     return cell;    
 }

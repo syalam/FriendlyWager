@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
 #import "Kiip.h"
+#import "AppDelegate.h"
 
 
 @implementation LoginOptionsViewController
@@ -100,18 +101,19 @@
 - (IBAction)facebookLoginButtonClicked:(id)sender {
     [SVProgressHUD showWithStatus:@"Logging In"];
     
-    NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
-
-    [PFFacebookUtils logInWithPermissions:permissions block:^ (PFUser *user, NSError *error) {
+    NSArray* permissions = [NSArray arrayWithObjects:@"publish_stream", @"email", nil];
+    
+    [PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error) {
         if (!user) {
             NSLog(@"Uh oh. The user cancelled the Facebook login.");
         }
         else {
-            NSLog(@"User with facebook id %@ logged in!", user.username);
-            //get user's details from facebook
-            [[PFFacebookUtils facebook]requestWithGraphPath:@"me" andDelegate:self];
+            NSLog(@"User logged in through Facebook!");
+            NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                           @"email,name,picture,username,id",  @"fields",
+                                           nil];
+            [[PFFacebookUtils facebook]requestWithGraphPath:@"me" andParams:params andDelegate:self];
         }
-
     }];
 }
 
@@ -121,6 +123,8 @@
                                         NSString *errorString = [[error userInfo] objectForKey:@"error"];
                                         if (user) {
                                             //TODO: REMOVE ME
+                                            AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+                                            delegate.trashTalkViewController.currentUser = user;
                                             [[KPManager sharedManager] unlockAchievement:@"1"];
                                             [self.navigationController dismissModalViewControllerAnimated:YES];
                                         } else {
@@ -144,7 +148,18 @@
             return;
         }
         else {
+            NSString *imageUrl = [NSString stringWithFormat:@"https://api.twitter.com/1/users/profile_image?%@=twitterapi&size=bigger", [PFTwitterUtils twitter].screenName];
+            NSURL *profilePic = [NSURL URLWithString:imageUrl];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:profilePic];
+            [[PFTwitterUtils twitter] signRequest:request];
+            NSURLResponse *response = nil;
+            NSData *data = [NSURLConnection sendSynchronousRequest:request
+                                                 returningResponse:&response
+                                                             error:&error];
+            [user setObject:data forKey:@"picture"];
             [user setObject:[PFTwitterUtils twitter].screenName forKey:@"name"];
+            AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+            delegate.trashTalkViewController.currentUser = user;
             [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error) {
                     [self.navigationController dismissModalViewControllerAnimated:YES];
@@ -182,6 +197,12 @@
     if ([result objectForKey:@"email"]) {
         user.email = [result objectForKey:@"email"];
     }
+    if ([result objectForKey:@"picture"]) {
+        [user setObject:[NSData dataWithContentsOfURL:[NSURL URLWithString:[result objectForKey:@"picture"]]] forKey:@"picture"];
+    }
+    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+    delegate.trashTalkViewController.currentUser = user;
+
     [user saveInBackground];
     [SVProgressHUD dismiss];
     //TODO: REMOVE ME

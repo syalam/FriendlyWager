@@ -94,7 +94,7 @@
     self.tabBarController.delegate = self;
     self.tabBarController.viewControllers = [NSArray arrayWithObjects: actionNavC, scoresNavC, ranksNavC, homeNavC, nil];
     
-    self.view = _tabBarController.view;
+    [self.view addSubview:self.tabBarController.view];
 }
 
 - (void)viewDidUnload

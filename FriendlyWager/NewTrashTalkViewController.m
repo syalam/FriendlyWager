@@ -46,26 +46,27 @@
         }
     }
     
-    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_PG17_NewTrashTalk"]];
-    self.navigationItem.titleView = titleImageView;
+    self.title = @"New Trash Talk";
     [self.navigationController setNavigationBarHidden:NO];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG17_BG"]]];
     
-    UIImage *cancelButtonImage = [UIImage imageNamed:@"FW_PG17_Cancel_Button"];
+    UIImage *buttonImage = [UIImage imageNamed:@"NavBtn"];
     UIButton *customCancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    customCancelButton.bounds = CGRectMake( 0, 0, cancelButtonImage.size.width, cancelButtonImage.size.height );
-    [customCancelButton setImage:cancelButtonImage forState:UIControlStateNormal];
+    customCancelButton.bounds = CGRectMake( 0, 0, buttonImage.size.width, buttonImage.size.height );
+    [customCancelButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [customCancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
+    customCancelButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
     [customCancelButton addTarget:self action:@selector(cancelButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:customCancelButton];
     
     self.navigationItem.leftBarButtonItem = cancelButton;
     
-    UIImage *sendButtonImage = [UIImage imageNamed:@"FW_PG16_Post_Button"];
     UIButton *customSendButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    customSendButton.bounds = CGRectMake( 0, 0, sendButtonImage.size.width, sendButtonImage.size.height );
-    [customSendButton setImage:sendButtonImage forState:UIControlStateNormal];
+    customSendButton.bounds = CGRectMake( 0, 0, buttonImage.size.width, buttonImage.size.height );
+    [customSendButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [customSendButton addTarget:self action:@selector(submitButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [customSendButton setTitle:@"Post" forState:UIControlStateNormal];
+    customSendButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
     UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithCustomView:customSendButton];
     
     self.navigationItem.rightBarButtonItem = submitButton;

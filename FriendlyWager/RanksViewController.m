@@ -86,14 +86,14 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 30, 150, 20)];
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(55, 30, 150, 20)];
     nameLabel.font = [UIFont boldSystemFontOfSize:16];
     UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 15, 115, 20)];
     cityLabel.font = [UIFont boldSystemFontOfSize:16];
     UILabel *pointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(165, 20, 100, 17)];
     pointsLabel.textAlignment = UITextAlignmentRight;
     pointsLabel.font = [UIFont boldSystemFontOfSize:20];
-    UILabel *rankLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 5, 60, 20)];
+    UILabel *rankLabel = [[UILabel alloc]initWithFrame:CGRectMake(55, 5, 60, 20)];
     rankLabel.font = [UIFont boldSystemFontOfSize:18];
     rankLabel.textColor = [UIColor darkGrayColor];
     
@@ -138,6 +138,17 @@
         [cell addSubview:rankLabel];
     }*/
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSData *picData = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"object"] objectForKey:@"picture"];
+    UIImage *profilePic;
+    if (picData) {
+        profilePic = [UIImage imageWithData:picData];
+    }
+    else {
+        profilePic = [UIImage imageNamed:@"placeholder"];
+    }
+    UIImageView *profilePicView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 39, 39)];
+    [profilePicView setImage:profilePic];
+    [cell.contentView addSubview:profilePicView];
     return cell;
     
     /*NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];

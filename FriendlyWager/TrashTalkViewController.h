@@ -16,6 +16,7 @@
     IBOutlet UIButton *scoresButton;
     IBOutlet UIButton *rankingButton;
     IBOutlet UIButton *makeWagerButton;
+    IBOutlet UIImageView *profilePic;
     
     TabBarDelegateViewController *tabBarVc;
     UINavigationController *tabBarNavC;
@@ -33,6 +34,7 @@
 
 
 @property (nonatomic, retain) PFUser *opponent;
+@property (nonatomic, retain) PFUser *currentUser;
 @property (nonatomic, retain) IBOutlet UITableView *trashTalkTableView;
 @property (nonatomic, retain) NSMutableArray *contentList;
 @property (nonatomic)BOOL tabBarView;
