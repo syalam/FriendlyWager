@@ -3914,8 +3914,8 @@
 		F714E19914A1A88400E24956 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Rashaad Sidique (X2X5LCND8C)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rashaad Sidique (X2X5LCND8C)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3934,8 +3934,8 @@
 					"-lKiip",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "59E9703D-F6D7-42F8-B426-780A6E6090FD";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "59E9703D-F6D7-42F8-B426-780A6E6090FD";
+				PROVISIONING_PROFILE = "D5BF58C1-15A0-42E6-B21C-C01F3B738BE6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D5BF58C1-15A0-42E6-B21C-C01F3B738BE6";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
@@ -3944,8 +3944,8 @@
 		F714E19A14A1A88400E24956 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Rashaad Sidique (X2X5LCND8C)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rashaad Sidique (X2X5LCND8C)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3964,8 +3964,8 @@
 					"-lKiip",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "59E9703D-F6D7-42F8-B426-780A6E6090FD";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "59E9703D-F6D7-42F8-B426-780A6E6090FD";
+				PROVISIONING_PROFILE = "D5BF58C1-15A0-42E6-B21C-C01F3B738BE6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D5BF58C1-15A0-42E6-B21C-C01F3B738BE6";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};

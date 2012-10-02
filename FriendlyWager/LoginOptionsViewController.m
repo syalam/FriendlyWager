@@ -148,27 +148,34 @@
             return;
         }
         else {
-            NSString *imageUrl = [NSString stringWithFormat:@"https://api.twitter.com/1/users/profile_image?%@=twitterapi&size=bigger", [PFTwitterUtils twitter].screenName];
-            NSURL *profilePic = [NSURL URLWithString:imageUrl];
+            NSURL *profilePic = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1/users/show.json?screen_name=%@", [PFTwitterUtils twitter].screenName]];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:profilePic];
             [[PFTwitterUtils twitter] signRequest:request];
-            NSURLResponse *response = nil;
-            NSData *data = [NSURLConnection sendSynchronousRequest:request
-                                                 returningResponse:&response
-                                                             error:&error];
-            [user setObject:data forKey:@"picture"];
-            [user setObject:[PFTwitterUtils twitter].screenName forKey:@"name"];
-            AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
-            delegate.trashTalkViewController.currentUser = user;
-            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (!error) {
-                    [self.navigationController dismissModalViewControllerAnimated:YES];
-                } 
-                else {
-                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to log you in with your twitter account at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    [alert show];
+            
+            [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                int statusCode = [(NSHTTPURLResponse *)response statusCode];
+                NSLog(@"%d", statusCode);
+                if (statusCode == 200 || statusCode == 201) {
+                    id JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                    NSString *urlString =  [JSON objectForKey:@"profile_image_url"];
+                    NSData *profilePicData = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+                    [user setObject:profilePicData forKey:@"picture"];
+                    [user setObject:[PFTwitterUtils twitter].screenName forKey:@"name"];
+                    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+                    delegate.trashTalkViewController.currentUser = user;
+                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if (!error) {
+                            [self.navigationController dismissModalViewControllerAnimated:YES];
+                        }
+                        else {
+                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to log you in with your twitter account at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                            [alert show];
+                        }
+                    }];
                 }
             }];
+            
+            
         }     
     }];
 }
