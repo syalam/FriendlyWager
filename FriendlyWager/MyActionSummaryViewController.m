@@ -77,18 +77,20 @@
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG5_BG"]]];
     
-    opponentNameLabel.text = [_userToWager objectForKey:@"name"];
+    opponentNameLabel.text = [[_userToWager objectForKey:@"name"] capitalizedString];
     
     //Set labels with name of currently selected opponent
     wagersWithLabel.text = [NSString stringWithFormat:@"%@ %@", @"Wagers With", [_userToWager objectForKey:@"name"]];
+    wagersWithLabel.text = [wagersWithLabel.text capitalizedString];
     
-    [wagerButton setTitle:[NSString stringWithFormat:@"%@ %@", @"Wager", [_userToWager objectForKey:@"name"]] forState:UIControlStateNormal];
+    [wagerButton setTitle:[NSString stringWithFormat:@"%@ %@", @"Wager", [[_userToWager objectForKey:@"name"] capitalizedString]] forState:UIControlStateNormal];
     wagerButton.titleLabel.textAlignment = UITextAlignmentCenter;
     wagerButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
     
     [chatButton setTitle:[NSString stringWithFormat:@"%@\n%@", @"Trash Talk", opponent] forState:UIControlStateNormal];
     chatButton.titleLabel.textAlignment = UITextAlignmentCenter;
     chatButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+    [wagerView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"gameCellNoArrow"]]];
     
     UILabel *wagerLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 35, wagerButton.frame.size.width, 20)];
     wagerLabel.text = @"Wager";
@@ -103,6 +105,9 @@
     wagerOpponentLabel.backgroundColor = [UIColor clearColor];
     wagerOpponentLabel.textColor = [UIColor whiteColor];
     wagerOpponentLabel.font = [UIFont boldSystemFontOfSize:16];
+    
+    feedLabel.text = [NSString stringWithFormat:@"%@'s Feed",[_userToWager objectForKey:@"name"]];
+    feedLabel.text = [feedLabel.text capitalizedString];
     
     //[wagerButton addSubview:wagerLabel];
     //[wagerButton addSubview:wagerOpponentLabel];
@@ -122,6 +127,13 @@
     trashTalkOpponentLabel.textColor = [UIColor whiteColor];
     trashTalkOpponentLabel.font = [UIFont boldSystemFontOfSize:16];
     
+    NSData *picData = [_userToWager objectForKey:@"picture"];
+    if (!picData) {
+        [profilePic setImage:[UIImage imageNamed:@"placeholder"]];
+    }
+    else {
+        [profilePic setImage:[UIImage imageWithData:picData]];
+    }
     [chatButton addSubview:trashTalkLabel];
     [chatButton addSubview:trashTalkOpponentLabel];
     
@@ -130,11 +142,67 @@
     wagersTableView.delegate = self;
     
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
-    self.navigationItem.leftBarButtonItem = backButton;
+    UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
+    UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
+    [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
+    custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
-    UIBarButtonItem *wagerNavButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
-    self.navigationItem.rightBarButtonItem = wagerNavButton;
+    self.navigationItem.leftBarButtonItem = backButton;
+
+    
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
+    [button addTarget:self action:@selector(wagerButtonClicked:) forControlEvents:UIControlEventTouchDown];
+    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
+    [button setTitle:@"Wager" forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    UIBarButtonItem *wagerBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = wagerBarButton;
+
+    
+    currentCountLabel = [[KBLabel alloc]initWithFrame:CGRectMake(42, 270, 42, 30)];
+    [currentCountLabel setTextColor:[UIColor colorWithRed:.4196 green:.282 blue:.1216 alpha:1]];
+    [currentCountLabel setTextAlignment:NSTextAlignmentCenter];
+    currentCountLabel.red = 0.4196;
+    currentCountLabel.green = .282;
+    currentCountLabel.blue = .1216;
+    currentCountLabel.font = [UIFont boldSystemFontOfSize:26];
+    [currentCountLabel setBackgroundColor:[UIColor clearColor]];
+    currentCountLabel.text = @"0";
+    currentCountLabel.drawOutline = YES;
+    currentCountLabel.drawGradient = YES;
+    [self.view addSubview:currentCountLabel];
+    
+    pendingCountLabel = [[KBLabel alloc]initWithFrame:CGRectMake(139, 270, 42, 30)];
+    [pendingCountLabel setTextColor:[UIColor colorWithRed:.961 green:.7098 blue:.0471 alpha:1]];
+    [pendingCountLabel setTextAlignment:NSTextAlignmentCenter];
+    pendingCountLabel.red = .961;
+    pendingCountLabel.green = .7098;
+    pendingCountLabel.blue = .0471;
+    pendingCountLabel.font = [UIFont boldSystemFontOfSize:26];
+    [pendingCountLabel setBackgroundColor:[UIColor clearColor]];
+    pendingCountLabel.text = @"0";
+    pendingCountLabel.drawOutline = YES;
+    pendingCountLabel.drawGradient = YES;
+    [self.view addSubview:pendingCountLabel];
+    
+    historyCountLabel = [[KBLabel alloc]initWithFrame:CGRectMake(238, 270, 42, 30)];
+    [historyCountLabel setTextColor:[UIColor colorWithRed:.4196 green:.282 blue:.1216 alpha:1]];
+    [historyCountLabel setTextAlignment:NSTextAlignmentCenter];
+    historyCountLabel.red = .4196;
+    historyCountLabel.green = .282;
+    historyCountLabel.blue = .1216;
+    historyCountLabel.font = [UIFont boldSystemFontOfSize:26];
+    [historyCountLabel setBackgroundColor:[UIColor clearColor]];
+    historyCountLabel.text = @"0";
+    historyCountLabel.drawOutline = YES;
+    historyCountLabel.drawGradient = YES;
+    [self.view addSubview:historyCountLabel];
     
     //Load Top bar data
     [self getPointCount];
@@ -191,8 +259,35 @@
                     NSLog(@"%@", historyWagerCount);
                     
                     currentCountLabel.text = currentWagerCount;
+
                     pendingCountLabel.text = pendingWagerCount;
+                    
                     historyCountLabel.text = historyWagerCount;
+                    
+                    /*UIFont *font =  [UIFont boldSystemFontOfSize:28];
+                    CGPoint point = CGPointMake(0,0);
+                    
+                    CGContextRef context = UIGraphicsGetCurrentContext();
+                    
+                    CGContextSetRGBFillColor(context, 0.4196, 0.282, 0.1216, 1);
+                    CGContextSetRGBStrokeColor(context, 1, 1, 1, 1);
+                    CGContextSetTextDrawingMode(context, kCGTextFillStroke);
+                    CGContextSaveGState(context);
+
+                     [currentCountLabel.text drawAtPoint:point withFont:font];
+                    [historyCountLabel.text drawAtPoint:point withFont:font];
+                    CGContextRestoreGState(context);*/
+                    
+                    /*context = UIGraphicsGetCurrentContext();
+                    
+                    CGContextSetRGBFillColor(context, 0.961, 0.7098, 0.0471, 1);
+                    CGContextSetRGBStrokeColor(context, 1, 1, 1, 1);
+                    CGContextSetTextDrawingMode(context, kCGTextFillStroke);
+                    CGContextSaveGState(context);
+                    
+                    [pendingCountLabel.text drawAtPoint:point withFont:font];
+                  
+                    CGContextRestoreGState(context);*/
                     
                     
                     NSArray *currentWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Current", @"type", currentWagerCount, @"wagers",currentArray, @"wagerObjects", nil], nil];
@@ -201,6 +296,8 @@
                     
                     wagersArray = [[NSArray alloc]initWithObjects:currentWagersArray, pendingWagersArray, historyWagersArray, nil];
                     //[wagersTableView reloadData];
+                    [_tableView reloadData];
+                    
                 }
             }];
         } 
@@ -295,6 +392,27 @@
     }
 }
 
+-(void)replyButtonClicked:(id)sender {
+    NSUInteger tag = [sender tag];
+    NSLog(@"%d", tag);
+    PFObject *recipient = [[[_contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"sender"];
+    [recipient fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        if (!error) {
+            NewTrashTalkViewController *new = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
+            if ([[[_contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"]) {
+                new.fbPostId = [[[_contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"];
+            }
+            new.recipient = object;
+            [self.navigationController pushViewController:new animated:YES];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to reply at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
+}
+
+
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -306,7 +424,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    NSString *text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
+    /*NSString *text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
     
     CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
     
@@ -314,61 +432,141 @@
     
     CGFloat height = MAX(size.height, 44.0f);
     
-    return height + (CELL_CONTENT_MARGIN * 2);
+    return height + (CELL_CONTENT_MARGIN * 2);*/
+    UITextView *label2 = [[UITextView alloc]initWithFrame:CGRectMake(10, 15, 244, 100)];
+    label2.font = [UIFont systemFontOfSize:12];
+    label2.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
+    //label2.numberOfLines = 2;
+    //label2.lineBreakMode = UILineBreakModeTailTruncation;
+    [label2 setFrame:CGRectMake(10, 20, 244, label2.contentSize.height)];
+    [label2 sizeToFit];
+    if ((label2.frame.size.height) > 28) {
+        return (15 + label2.frame.size.height + 5);
+    }
+    else {
+        return 58;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    
-    NSString *senderName = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"senderName"];
-    NSString *recipientName = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"recipientName"];
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
-    if (![senderName isEqualToString:recipientName]) {
-        UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [replyButton setFrame:CGRectMake(cell.frame.size.width - 70, 10, 60, 25)];
-        [replyButton setTitle:@"Reply" forState:UIControlStateNormal];
-        [replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        replyButton.tag = indexPath.row;
+    if (_contentList.count != 0) {
+        NSString *senderName = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"senderName"];
+        NSString *recipientName = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"recipientName"];
         
-        [cell.contentView addSubview:replyButton];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        cell.textLabel.text = [NSString stringWithFormat:@"%@", senderName];
+        PFObject *objectToDisplay = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
+        NSDate *dateCreated = objectToDisplay.createdAt;
+        //NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        //[dateFormatter setDateFormat:@"EEEE, MMMM d 'at' h:mm a"];
+        //NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        unsigned int unitFlags =  NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayOrdinalCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit;
+        NSDateComponents *messageDateComponents = [calendar components:unitFlags fromDate:dateCreated];
+        NSDateComponents *todayDateComponents = [calendar components:unitFlags fromDate:[NSDate date]];
+        
+        NSUInteger dayOfYearForMessage = [calendar ordinalityOfUnit:NSDayCalendarUnit inUnit:NSYearCalendarUnit forDate:dateCreated];
+        NSUInteger dayOfYearForToday = [calendar ordinalityOfUnit:NSDayCalendarUnit inUnit:NSYearCalendarUnit forDate:[NSDate date]];
+        
+        
+        NSString *dateString;
+        
+        if ([messageDateComponents year] == [todayDateComponents year] &&
+            [messageDateComponents month] == [todayDateComponents month] &&
+            [messageDateComponents day] == [todayDateComponents day])
+        {
+            int hours = [messageDateComponents hour];
+            int minutes = [messageDateComponents minute];
+            NSString *amPm;
+            if (hours == 12) {
+                amPm = @"PM";
+            }
+            else if (hours == 0) {
+                hours = 12;
+                amPm = @ "AM";
+            }
+            else if (hours > 12) {
+                hours = hours - 12;
+                amPm = @"PM";
+            }
+            else {
+                amPm = @"AM";
+            }
+            dateString = [NSString stringWithFormat:@"%d:%02d %@", hours, minutes, amPm];
+        } else if ([messageDateComponents year] == [todayDateComponents year] &&
+                   dayOfYearForMessage == (dayOfYearForToday-1))
+        {
+            dateString = @"Yesterday";
+        } else if ([messageDateComponents year] == [todayDateComponents year] &&
+                   dayOfYearForMessage > (dayOfYearForToday-6))
+        {
+            
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"EEEE"];
+            dateString = [dateFormatter stringFromDate:dateCreated];
+            
+        } else {
+            
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yy"];
+            dateString = [NSString stringWithFormat:@"%02d/%02d/%@", [messageDateComponents day], [messageDateComponents month], [dateFormatter stringFromDate:dateCreated]];
+        }
+        
+        UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width - 250, 5, 215, 15)];
+        dateLabel.backgroundColor = [UIColor clearColor];
+        dateLabel.textAlignment = UITextAlignmentRight;
+        dateLabel.font = [UIFont systemFontOfSize:11];
+        dateLabel.text = dateString;
+        dateLabel.textColor = [UIColor  darkGrayColor];
+        
+        UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 16)];
+        UITextView *label2 = [[UITextView alloc]initWithFrame:CGRectMake(10, 15, cell.frame.size.width - 40, 100)];
+        [label2 setEditable:NO];
+        label1.font = [UIFont boldSystemFontOfSize:12];
+        
+        
+        [cell.contentView addSubview:dateLabel];
+        
+        
+        label1.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
+        label2.font = [UIFont systemFontOfSize:12];
+        label2.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
+        //label2.numberOfLines = 2;
+        //label2.lineBreakMode = UILineBreakModeTailTruncation;
+        [label2 setFrame:CGRectMake(2, 15, cell.frame.size.width -50, label2.contentSize.height+15)];
+        [label2 setBounces:NO];
+        //[label2 sizeToFit];
+        label1.backgroundColor = [UIColor clearColor];
+        label2.backgroundColor = [UIColor clearColor];
+        label2.textColor = [UIColor colorWithRed:0.376 green:0.376 blue:0.376 alpha:1];
+        
+        [cell.contentView addSubview:label1];
+        [cell.contentView addSubview:label2];
+        if (![senderName isEqualToString:recipientName]) {
+            UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [replyButton setFrame:CGRectMake(cell.frame.size.width - 50, cell.frame.size.height - 26, 20, 20)];
+            [replyButton setImage:[UIImage imageNamed:@"CellArrowYellow"] forState:UIControlStateNormal];
+            [replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            replyButton.tag = indexPath.row;
+            
+            [cell.contentView addSubview:replyButton];
+            
+            label1.text = [senderName capitalizedString];
+            
+        }
+        else {
+            label1.text = [senderName capitalizedString];
+        }
         
     }
-    else {
-        cell.textLabel.text = senderName;
-    }
     
-    PFObject *objectToDisplay = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
-    NSDate *dateCreated = objectToDisplay.createdAt;
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"EEEE, MMMM d 'at' h:mm a"];
-    NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
-    
-    UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 2, 200, 15)];
-    dateLabel.backgroundColor = [UIColor clearColor];
-    dateLabel.font = [UIFont systemFontOfSize:11];
-    dateLabel.text = dateToDisplay;
-    
-    [cell.contentView addSubview:dateLabel];
-    
-    
-    cell.textLabel.textColor = [UIColor blueColor];
-    
-    cell.detailTextLabel.lineBreakMode = UILineBreakModeWordWrap;
-    cell.detailTextLabel.numberOfLines = 12;
-    cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:12];
-    cell.detailTextLabel.textColor = [UIColor blackColor];
-    cell.detailTextLabel.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
-    cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
     cell.backgroundColor = [UIColor clearColor];
     return cell;
+
 }
 
 #pragma mark - TableView Delegate
@@ -386,6 +584,17 @@
 #pragma mark - UIAlertView Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UIImageView *backgroundImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, cell.frame.size.height - 58, 294, 58)];
+    [backgroundImage setImage:[UIImage imageNamed:@"CellBG1"]];
+    [cell addSubview:backgroundImage];
+    //cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]];
+    //cell.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    //cell.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
+    
 }
 
 

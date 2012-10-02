@@ -112,7 +112,7 @@
     cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"scoresCellBg"]];
     cell.backgroundColor = [UIColor clearColor];
     if ([_rankCategory isEqualToString:@"Rankings By Points"]) {
-        nameLabel.text = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"name"];
+        nameLabel.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"name"] capitalizedString];
         pointsLabel.text = [NSString stringWithFormat:@"%@", [[_contentList objectAtIndex:indexPath.row]valueForKey:@"tokenCount"]];
         rankLabel.text = [NSString stringWithFormat:@"%d", indexPath.row+1];
         
@@ -121,7 +121,7 @@
         [cell addSubview:rankLabel];
     }
     else if ([_rankCategory isEqualToString:@"Rankings By Wins"]) {
-        nameLabel.text = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
+        nameLabel.text = [[[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"] capitalizedString];
         pointsLabel.text = [NSString stringWithFormat:@"%@", [[_contentList objectAtIndex:indexPath.row]objectForKey:@"totalWins"]];
         rankLabel.text = [NSString stringWithFormat:@"%d", indexPath.row+1];
         [cell addSubview:nameLabel];

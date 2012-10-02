@@ -220,7 +220,19 @@
     //CGFloat height = MAX(size.height, 44.0f);
     
     //return height + (CELL_CONTENT_MARGIN * 2);
-    return 58;
+    UITextView *label2 = [[UITextView alloc]initWithFrame:CGRectMake(10, 15, 244, 100)];
+    label2.font = [UIFont systemFontOfSize:12];
+    label2.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
+    //label2.numberOfLines = 2;
+    //label2.lineBreakMode = UILineBreakModeTailTruncation;
+    [label2 setFrame:CGRectMake(10, 20, 244, label2.contentSize.height)];
+    [label2 sizeToFit];
+    if ((label2.frame.size.height) > 28) {
+        return (15 + label2.frame.size.height + 5);
+    }
+    else {
+        return 58;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -299,11 +311,31 @@
         dateLabel.textColor = [UIColor  darkGrayColor];
         
         UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 16)];
-        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, cell.frame.size.width - 40, 28)];
+        UITextView *label2 = [[UITextView alloc]initWithFrame:CGRectMake(10, 15, cell.frame.size.width - 40, 100)];
+        [label2 setEditable:NO];
         label1.font = [UIFont boldSystemFontOfSize:12];
+
+        
+        [cell.contentView addSubview:dateLabel];
+        
+        
+        label1.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
+        label2.font = [UIFont systemFontOfSize:12];
+        label2.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
+        //label2.numberOfLines = 2;
+        //label2.lineBreakMode = UILineBreakModeTailTruncation;
+        [label2 setFrame:CGRectMake(2, 15, cell.frame.size.width -50, label2.contentSize.height+15)];
+        [label2 setBounces:NO];
+        //[label2 sizeToFit];
+        label1.backgroundColor = [UIColor clearColor];
+        label2.backgroundColor = [UIColor clearColor];
+        label2.textColor = [UIColor colorWithRed:0.376 green:0.376 blue:0.376 alpha:1];
+        
+        [cell.contentView addSubview:label1];
+        [cell.contentView addSubview:label2];
         if (![senderName isEqualToString:recipientName]) {
             UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [replyButton setFrame:CGRectMake(cell.frame.size.width - 50, cell.frame.size.height - 26, 16, 26)];
+            [replyButton setFrame:CGRectMake(cell.frame.size.width - 50, cell.frame.size.height - 26, 20, 20)];
             [replyButton setImage:[UIImage imageNamed:@"CellArrowYellow"] forState:UIControlStateNormal];
             [replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             replyButton.tag = indexPath.row;
@@ -317,27 +349,10 @@
             label1.text = [senderName capitalizedString];
         }
 
-        
-        [cell.contentView addSubview:dateLabel];
-        
-        
-        label1.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
-        label2.font = [UIFont systemFontOfSize:12];
-        label2.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
-        label2.numberOfLines = 2;
-        label2.lineBreakMode = UILineBreakModeTailTruncation;
-        [label2 setFrame:CGRectMake(10, 20, cell.frame.size.width -80, 30)];
-        [label2 sizeToFit];
-        label1.backgroundColor = [UIColor clearColor];
-        label2.backgroundColor = [UIColor clearColor];
-        label2.textColor = [UIColor colorWithRed:0.376 green:0.376 blue:0.376 alpha:1];
-        
-        [cell.contentView addSubview:label1];
-        [cell.contentView addSubview:label2];
     }
     
-    //cell.contentView.backgroundColor = [UIColor clearColor];
-    //cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]];
+    cell.contentView.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 
@@ -374,9 +389,12 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]];
-    cell.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    cell.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
+    UIImageView *backgroundImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, cell.frame.size.height - 58, 294, 58)];
+    [backgroundImage setImage:[UIImage imageNamed:@"CellBG1"]];
+    [cell addSubview:backgroundImage];
+    //cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]];
+    //cell.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    //cell.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
     
 }
 

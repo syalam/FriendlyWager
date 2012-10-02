@@ -53,8 +53,7 @@
 
     newWagerVisible = NO;
     if (_wager) {
-        UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
-        self.navigationItem.titleView = titleImageView;
+        self.title = @"Make a Wager";
         
     }
     

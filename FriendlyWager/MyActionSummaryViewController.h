@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import "TabsViewController.h"
+#import "KBLabel.h"
 
 @interface MyActionSummaryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UILabel *opponentNameLabel;
@@ -16,6 +17,9 @@
     IBOutlet UILabel *rankLabel;
     IBOutlet UILabel *winLabel;
     IBOutlet UILabel *lossLabel;
+    IBOutlet UILabel *feedLabel;
+    IBOutlet UIImageView *profilePic;
+    
     
     IBOutlet UIScrollView *scrollView;
     IBOutlet UILabel *wagersWithLabel;
@@ -27,9 +31,9 @@
     IBOutlet UIButton *pendingButton;
     IBOutlet UIButton *historyButton;
     
-    IBOutlet UILabel *pendingCountLabel;
-    IBOutlet UILabel *currentCountLabel;
-    IBOutlet UILabel *historyCountLabel;
+    IBOutlet KBLabel *pendingCountLabel;
+    IBOutlet KBLabel *currentCountLabel;
+    IBOutlet KBLabel *historyCountLabel;
 
     
     IBOutlet UIView *wagerView;

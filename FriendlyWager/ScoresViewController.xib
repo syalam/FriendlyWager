@@ -100,7 +100,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">emptyMiddle.png</string>
+							<string key="NSResourceName">emptyMiddle1~iphone.png</string>
 						</object>
 					</object>
 					<object class="IBUILabel" id="251809200">
@@ -258,7 +258,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="emptyMiddle.png">{320, 367}</string>
+			<string key="emptyMiddle1~iphone.png">{320, 367}</string>
 			<string key="gameListBG~iphone.png">{320, 367}</string>
 			<string key="innerShadow.png">{294, 306}</string>
 		</dictionary>

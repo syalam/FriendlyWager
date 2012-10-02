@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A009B15161A60FE00676781 /* KBLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A009B14161A60FE00676781 /* KBLabel.m */; };
+		1A009B1E161A86DC00676781 /* whiteArrow@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A009B1C161A86DC00676781 /* whiteArrow@2x~iphone.png */; };
+		1A009B1F161A86DC00676781 /* whiteArrow~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A009B1D161A86DC00676781 /* whiteArrow~iphone.png */; };
 		1A0A71E415F492F500603A0F /* navBar2@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A0A71E215F492F500603A0F /* navBar2@2x~iphone.png */; };
 		1A0A71E515F492F500603A0F /* navBar2~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A0A71E315F492F500603A0F /* navBar2~iphone.png */; };
 		1A0A720115F5009C00603A0F /* autoRacingIcn@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A0A71ED15F5009C00603A0F /* autoRacingIcn@2x~iphone.png */; };
@@ -146,6 +149,12 @@
 		1AB39BA21617E12F007277F6 /* gameCell~iphone in Resources */ = {isa = PBXBuildFile; fileRef = 1AB39BA01617E12C007277F6 /* gameCell~iphone */; };
 		1AB39BA51617E614007277F6 /* gameCellNoArrow@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AB39BA31617E611007277F6 /* gameCellNoArrow@2x~iphone.png */; };
 		1AB39BA61617E614007277F6 /* gameCellNoArrow~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AB39BA41617E612007277F6 /* gameCellNoArrow~iphone.png */; };
+		1AB39BAA161A2B62007277F6 /* ActionSummaryBg@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AB39BA8161A2B58007277F6 /* ActionSummaryBg@2x~iphone.png */; };
+		1AB39BAB161A2B62007277F6 /* ActionSummaryBg~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AB39BA9161A2B5E007277F6 /* ActionSummaryBg~iphone.png */; };
+		1AB39BAE161A2EE5007277F6 /* longYellowBtn@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AB39BAC161A2EE3007277F6 /* longYellowBtn@2x~iphone.png */; };
+		1AB39BAF161A2EE5007277F6 /* longYellowBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AB39BAD161A2EE4007277F6 /* longYellowBtn~iphone.png */; };
+		1AB39BB2161A3702007277F6 /* emptyMiddle1@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AB39BB0161A36FD007277F6 /* emptyMiddle1@2x~iphone.png */; };
+		1AB39BB3161A3702007277F6 /* emptyMiddle1~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AB39BB1161A36FF007277F6 /* emptyMiddle1~iphone.png */; };
 		8C4AA62014D13CCE00A6013F /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4AA61D14D13CCE00A6013F /* ResetPasswordViewController.m */; };
 		8C4AA62114D13CCE00A6013F /* ResetPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4AA61E14D13CCE00A6013F /* ResetPasswordViewController.xib */; };
 		F7075CCB15216F89007A7DE1 /* FW_BackButton_Custom.png in Resources */ = {isa = PBXBuildFile; fileRef = F7075CBD15216F89007A7DE1 /* FW_BackButton_Custom.png */; };
@@ -637,6 +646,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A009B13161A60FE00676781 /* KBLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KBLabel.h; sourceTree = "<group>"; };
+		1A009B14161A60FE00676781 /* KBLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KBLabel.m; sourceTree = "<group>"; };
+		1A009B1C161A86DC00676781 /* whiteArrow@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x~iphone.png"; sourceTree = "<group>"; };
+		1A009B1D161A86DC00676781 /* whiteArrow~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow~iphone.png"; sourceTree = "<group>"; };
 		1A0A71E215F492F500603A0F /* navBar2@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar2@2x~iphone.png"; sourceTree = "<group>"; };
 		1A0A71E315F492F500603A0F /* navBar2~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar2~iphone.png"; sourceTree = "<group>"; };
 		1A0A71ED15F5009C00603A0F /* autoRacingIcn@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "autoRacingIcn@2x~iphone.png"; sourceTree = "<group>"; };
@@ -772,6 +785,12 @@
 		1AB39BA01617E12C007277F6 /* gameCell~iphone */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gameCell~iphone"; sourceTree = "<group>"; };
 		1AB39BA31617E611007277F6 /* gameCellNoArrow@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gameCellNoArrow@2x~iphone.png"; sourceTree = "<group>"; };
 		1AB39BA41617E612007277F6 /* gameCellNoArrow~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gameCellNoArrow~iphone.png"; sourceTree = "<group>"; };
+		1AB39BA8161A2B58007277F6 /* ActionSummaryBg@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ActionSummaryBg@2x~iphone.png"; sourceTree = "<group>"; };
+		1AB39BA9161A2B5E007277F6 /* ActionSummaryBg~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ActionSummaryBg~iphone.png"; sourceTree = "<group>"; };
+		1AB39BAC161A2EE3007277F6 /* longYellowBtn@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "longYellowBtn@2x~iphone.png"; sourceTree = "<group>"; };
+		1AB39BAD161A2EE4007277F6 /* longYellowBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "longYellowBtn~iphone.png"; sourceTree = "<group>"; };
+		1AB39BB0161A36FD007277F6 /* emptyMiddle1@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emptyMiddle1@2x~iphone.png"; sourceTree = "<group>"; };
+		1AB39BB1161A36FF007277F6 /* emptyMiddle1~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emptyMiddle1~iphone.png"; sourceTree = "<group>"; };
 		8C4AA61C14D13CCE00A6013F /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = ResetPasswordViewController.h; sourceTree = "<group>"; };
 		8C4AA61D14D13CCE00A6013F /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordViewController.m; sourceTree = "<group>"; };
 		8C4AA61E14D13CCE00A6013F /* ResetPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResetPasswordViewController.xib; sourceTree = "<group>"; };
@@ -1357,6 +1376,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A009B17161A610500676781 /* KBLabel */ = {
+			isa = PBXGroup;
+			children = (
+				1A009B13161A60FE00676781 /* KBLabel.h */,
+				1A009B14161A60FE00676781 /* KBLabel.m */,
+			);
+			name = KBLabel;
+			sourceTree = "<group>";
+		};
 		1A0A71EC15F5007A00603A0F /* Sports Icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1387,6 +1415,10 @@
 		1A0A721515F50E3200603A0F /* Tab Bar Screens */ = {
 			isa = PBXGroup;
 			children = (
+				1A009B1C161A86DC00676781 /* whiteArrow@2x~iphone.png */,
+				1A009B1D161A86DC00676781 /* whiteArrow~iphone.png */,
+				1AB39BA8161A2B58007277F6 /* ActionSummaryBg@2x~iphone.png */,
+				1AB39BA9161A2B5E007277F6 /* ActionSummaryBg~iphone.png */,
 				1AA9385C160D2970003E97FC /* background_blank@2x~iphone */,
 				1AA9385D160D2971003E97FC /* background_blank~iphone */,
 				1AB39B9F1617E12B007277F6 /* gameCell@2x~iphone */,
@@ -1395,6 +1427,8 @@
 				1AB39BA41617E612007277F6 /* gameCellNoArrow~iphone.png */,
 				1AA9383A160B9E26003E97FC /* emptyMiddle.png */,
 				1AA9383B160B9E27003E97FC /* emptyMiddle@2x.png */,
+				1AB39BB0161A36FD007277F6 /* emptyMiddle1@2x~iphone.png */,
+				1AB39BB1161A36FF007277F6 /* emptyMiddle1~iphone.png */,
 				1A0A729815F5865200603A0F /* gameDetalBg@2x~iphone.png */,
 				1A0A729915F5865200603A0F /* gameDetalBg~iphone.png */,
 				1AA9384E160BC890003E97FC /* gameListBG@2x~iphone.png */,
@@ -1414,6 +1448,8 @@
 		1A0A721615F50E5A00603A0F /* General */ = {
 			isa = PBXGroup;
 			children = (
+				1AB39BAC161A2EE3007277F6 /* longYellowBtn@2x~iphone.png */,
+				1AB39BAD161A2EE4007277F6 /* longYellowBtn~iphone.png */,
 				1A33B89915E072520029D428 /* backBtn@2x~iphone.png */,
 				1A0A71E215F492F500603A0F /* navBar2@2x~iphone.png */,
 				1A0A71E315F492F500603A0F /* navBar2~iphone.png */,
@@ -2860,6 +2896,7 @@
 				F7342CDE14C4F1DD00AC0819 /* Expanding TextView */,
 				F7CDD73F14ABDC970038FE6B /* Multiple Contact Selector */,
 				F714E1F314A1D0A000E24956 /* Tab src */,
+				1A009B17161A610500676781 /* KBLabel */,
 			);
 			name = "Helper Classes";
 			path = FriendlyWager;
@@ -3691,6 +3728,14 @@
 				1AB39BA21617E12F007277F6 /* gameCell~iphone in Resources */,
 				1AB39BA51617E614007277F6 /* gameCellNoArrow@2x~iphone.png in Resources */,
 				1AB39BA61617E614007277F6 /* gameCellNoArrow~iphone.png in Resources */,
+				1AB39BAA161A2B62007277F6 /* ActionSummaryBg@2x~iphone.png in Resources */,
+				1AB39BAB161A2B62007277F6 /* ActionSummaryBg~iphone.png in Resources */,
+				1AB39BAE161A2EE5007277F6 /* longYellowBtn@2x~iphone.png in Resources */,
+				1AB39BAF161A2EE5007277F6 /* longYellowBtn~iphone.png in Resources */,
+				1AB39BB2161A3702007277F6 /* emptyMiddle1@2x~iphone.png in Resources */,
+				1AB39BB3161A3702007277F6 /* emptyMiddle1~iphone.png in Resources */,
+				1A009B1E161A86DC00676781 /* whiteArrow@2x~iphone.png in Resources */,
+				1A009B1F161A86DC00676781 /* whiteArrow~iphone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3771,6 +3816,7 @@
 				F73E1B6015BD392300249001 /* TabBarDelegateViewController.m in Sources */,
 				F715215515BFDE9100B02DFC /* ScoreSummaryCell.m in Sources */,
 				F770925315C106B300AB7BA2 /* FeedViewController.m in Sources */,
+				1A009B15161A60FE00676781 /* KBLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

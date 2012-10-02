@@ -71,10 +71,12 @@
         //UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
         //self.navigationItem.titleView = titleImageView;
         
-        UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+        UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
         UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
         custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
-        [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
+        [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
+        [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
+        custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
         [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
         
@@ -87,7 +89,7 @@
         //self.navigationItem.rightBarButtonItem = wagerButton;
     }
     
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG3_BG"]]];
+    //[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG3_BG"]]];
     NSArray *nflFootball = [[NSArray alloc]initWithObjects:@"NFL Football", nil];
     NSArray *collegeFootball = [[NSArray alloc]initWithObjects:@"College Football", nil];
     NSArray *mlbBaseball = [[NSArray alloc]initWithObjects:@"MLB Baseball", nil];
