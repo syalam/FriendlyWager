@@ -40,17 +40,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
-    self.navigationItem.titleView = titleImageView;
+    self.title = @"Make a Wager";
+    [self.searchDisplayController.searchResultsTableView setHidden:YES];
     
-    UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+    UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
-    [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
+    custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
     self.navigationItem.leftBarButtonItem = backButton;
+    
+
 }
 
 - (void)viewDidUnload
@@ -99,7 +103,9 @@
                 [searchDataArray addObject:object];
             }
             [self setContentList:searchDataArray];
-            [self.searchDisplayController.searchResultsTableView reloadData];
+            [self.searchDisplayController.searchResultsTableView setHidden:YES];
+            [self.searchTableView reloadData];
+            //[self.searchDisplayController.searchResultsTableView reloadData];
         }
         else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to find friends at this time. Please try again later" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -151,7 +157,11 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    cell.textLabel.text = [[contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
+    cell.textLabel.text = [[[contentList objectAtIndex:indexPath.row]objectForKey:@"name"] capitalizedString];
+    cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
+    cell.textLabel.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
+    [cell.textLabel setBackgroundColor:[UIColor clearColor]];
+    [cell.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]]];
     
     return cell;
 }

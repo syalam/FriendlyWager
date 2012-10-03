@@ -37,10 +37,10 @@
     [super viewDidLoad];
     actionHistoryTableView.delegate = self;
     actionHistoryTableView.dataSource = self;
-    
+    stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     
     detailWithPersonLabel.text = [NSString stringWithFormat:@"%@ %@ %@", _wagerType, @"with", [_opponent objectForKey:@"name"]];
-    if ([_wagerType isEqualToString:@"Current"]) {
+    /*if ([_wagerType isEqualToString:@"Current"]) {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG6_BG"]]];
     }
     else if ([_wagerType isEqualToString:@"Pending"]) {
@@ -49,15 +49,17 @@
     }
     else {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG8_BG"]]];
-    }
+    }*/
     indexPathArray = [[NSMutableArray alloc]init];
     detailTableContents = [[NSMutableArray alloc]initWithArray:_wagerObjects];
     NSLog(@"%@", _wagerObjects);
     
-    UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+    UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
-    [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
+    custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
@@ -71,16 +73,21 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    //stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
+    [stripes setImage:[UIImage imageNamed:@"stripes"]];
+    [self.navigationController.navigationBar addSubview:stripes];
+    
     
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
 
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [stripes removeFromSuperview];
+    
 }
 
 
@@ -100,11 +107,19 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, 70, 20)];
-    UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(65, 15, 105, 20)];
-    UILabel *oddsLabel = [[UILabel alloc]initWithFrame:CGRectMake(155, 15, 90, 20)];
-    UILabel *teamToWinLabel = [[UILabel alloc]initWithFrame:CGRectMake(200, 15, 100, 20)];
-    UILabel *pointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(255, 15, 40, 20)];
+    UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 10, 70, 20)];
+    UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(48, 10, 70, 30)];
+    teamLabel.numberOfLines = 2;
+    teamLabel.lineBreakMode = UILineBreakModeWordWrap;
+    teamLabel.textAlignment = UITextAlignmentCenter;
+    UILabel *oddsLabel = [[UILabel alloc]initWithFrame:CGRectMake(105, 10, 90, 20)];
+    oddsLabel.textAlignment = UITextAlignmentCenter;
+    UILabel *teamToWinLabel = [[UILabel alloc]initWithFrame:CGRectMake(180, 10, 70, 20)];
+    teamToWinLabel.textAlignment = UITextAlignmentCenter;
+    UILabel *pointsLabel = [[UILabel alloc]initWithFrame:CGRectMake(255, 10, 40, 30)];
+    pointsLabel.numberOfLines = 2;
+    pointsLabel.lineBreakMode = UILineBreakModeWordWrap;
+    pointsLabel.textAlignment = UITextAlignmentCenter;
     
     dateLabel.font = [UIFont boldSystemFontOfSize:12];
     teamLabel.font = [UIFont boldSystemFontOfSize:12];
@@ -121,7 +136,7 @@
     NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
     
     dateLabel.text = dateToDisplay;
-    teamLabel.text = [NSString stringWithFormat:@"%@ vs %@", [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]];
+    teamLabel.text = [NSString stringWithFormat:@"%@\n%@", [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]];
 
     oddsLabel.text = [NSString stringWithFormat:@"%@", [[wagerObject objectForKey:@"tokensWagered"]stringValue]];
     
@@ -148,6 +163,12 @@
     if ([wagerObject objectForKey:@"team1Score"] && [wagerObject objectForKey:@"team2Score"] && [wagerObject objectForKey:@"winningTeamId"]) {
         NSLog(@"%@", @"cool");
     }
+    UIColor *textColor = [UIColor colorWithRed:0.376 green:0.376 blue:0.376 alpha:1];
+    dateLabel.textColor = textColor;
+    teamLabel.textColor = textColor;
+    oddsLabel.textColor = textColor;
+    pointsLabel.textColor = textColor;
+    teamToWinLabel.textColor = textColor;
     
     dateLabel.backgroundColor = [UIColor clearColor];
     teamLabel.backgroundColor = [UIColor clearColor];
@@ -166,20 +187,22 @@
         [cell addSubview:oddsLabel];
         [cell addSubview:pointsLabel];
         [cell addSubview:teamToWinLabel];
+        [cell.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]]];
         
         if ([_wagerType isEqualToString:@"Pending"]) {
             if ([[[wagerObject objectForKey:@"wagee"]objectId] isEqualToString:[[PFUser currentUser]objectId]]) {
                 UIButton *acceptWagerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
                 [acceptWagerButton addTarget:self action:@selector(acceptWagerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
                 acceptWagerButton.tag = indexPath.row;
-                [acceptWagerButton setFrame:CGRectMake(250, 12, 25, 25)];
+                [acceptWagerButton setFrame:CGRectMake(262, 3, 25, 25)];
                 acceptWagerButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
                 [acceptWagerButton setTitle:@"✔" forState:UIControlStateNormal];
                 
                 UIButton *rejectWagerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
                 [rejectWagerButton addTarget:self action:@selector(rejectWagerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
                 rejectWagerButton.tag = indexPath.row;
-                [rejectWagerButton setFrame:CGRectMake(280, 12, 25, 25)];
+                [rejectWagerButton setFrame:CGRectMake(262, 30, 25, 25)];
+                rejectWagerButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
                 [rejectWagerButton setTitle:@"✘" forState:UIControlStateNormal];
                 
                 [cell addSubview:acceptWagerButton];
@@ -187,7 +210,9 @@
             }
         }
         else {
-            pointsLabel.text = [NSString stringWithFormat:@"%@ - %@", [[wagerObject objectForKey:@"teamWageredToWinScore"]stringValue], [[wagerObject objectForKey:@"teamWageredToLoseScore"]stringValue]];
+            if ([wagerObject objectForKey:@"teamWageredToWinScore"]) {
+                pointsLabel.text = [NSString stringWithFormat:@"%@\n%@", [[wagerObject objectForKey:@"teamWageredToWinScore"]stringValue], [[wagerObject objectForKey:@"teamWageredToLoseScore"]stringValue]];
+            }
         }
     }
     

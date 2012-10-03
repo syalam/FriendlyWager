@@ -47,7 +47,7 @@
     myActionTableView.delegate = self;
     
     
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
+    /*UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
     [button addTarget:self action:@selector(wagerButtonClicked:) forControlEvents:UIControlEventTouchDown];
     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
@@ -55,11 +55,23 @@
     button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     UIBarButtonItem *wagerBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
-    self.navigationItem.rightBarButtonItem = wagerBarButton;
+    self.navigationItem.rightBarButtonItem = wagerBarButton;*/
+    stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
+    [stripes setImage:[UIImage imageNamed:@"stripes"]];
+    [self.navigationController.navigationBar addSubview:stripes];
     
     [self showWagers];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    [self.navigationController.navigationBar addSubview:stripes];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:YES];
+    [stripes removeFromSuperview];
+}
 
 - (void)viewDidUnload
 {
@@ -125,7 +137,7 @@
 #pragma mark - TableView Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    [self viewWillDisappear:YES];
     MyActionSummaryViewController *actionSummary = [[MyActionSummaryViewController alloc]initWithNibName:@"MyActionSummaryViewController" bundle:nil CurrentWagers:[myActionWagersArray objectAtIndex:indexPath.row] opponentName:[myActionOpponentArray objectAtIndex:indexPath.row]];
     if (_tabParentView) {
         actionSummary.tabParentView = _tabParentView;

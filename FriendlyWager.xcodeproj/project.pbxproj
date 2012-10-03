@@ -118,6 +118,24 @@
 		1A33B8B215E072520029D428 /* scoresOffBtn@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B8A415E072520029D428 /* scoresOffBtn@2x~iphone.png */; };
 		1A33B8B315E072520029D428 /* scoresOnBtn@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B8A515E072520029D428 /* scoresOnBtn@2x~iphone.png */; };
 		1A33B8B415E072520029D428 /* tabBarBackground@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B8A615E072520029D428 /* tabBarBackground@2x~iphone.png */; };
+		1A8247F5161BAAF1001F47E6 /* newWagerBg@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8247F3161BAAF1001F47E6 /* newWagerBg@2x~iphone.png */; };
+		1A8247F6161BAAF1001F47E6 /* newWagerBg~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8247F4161BAAF1001F47E6 /* newWagerBg~iphone.png */; };
+		1A8247FF161BB4CE001F47E6 /* addStakesBtn@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8247FB161BB4CE001F47E6 /* addStakesBtn@2x~iphone.png */; };
+		1A824800161BB4CE001F47E6 /* addStakesBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8247FC161BB4CE001F47E6 /* addStakesBtn~iphone.png */; };
+		1A824801161BB4CE001F47E6 /* selectOpponentsBtn@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8247FD161BB4CE001F47E6 /* selectOpponentsBtn@2x~iphone.png */; };
+		1A824802161BB4CE001F47E6 /* selectOpponentsBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8247FE161BB4CE001F47E6 /* selectOpponentsBtn~iphone.png */; };
+		1A824805161BB617001F47E6 /* sendWagerBtn@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A824803161BB617001F47E6 /* sendWagerBtn@2x~iphone.png */; };
+		1A824806161BB617001F47E6 /* sendWagerBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A824804161BB617001F47E6 /* sendWagerBtn~iphone.png */; };
+		1A82480B161BB90B001F47E6 /* brownArrow@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A824807161BB90A001F47E6 /* brownArrow@2x~iphone.png */; };
+		1A82480C161BB90B001F47E6 /* brownArrow~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A824808161BB90A001F47E6 /* brownArrow~iphone.png */; };
+		1A82480D161BB90B001F47E6 /* selectTeamBtn@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A824809161BB90A001F47E6 /* selectTeamBtn@2x~iphone.png */; };
+		1A82480E161BB90B001F47E6 /* selectTeamBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A82480A161BB90A001F47E6 /* selectTeamBtn~iphone.png */; };
+		1A824813161BBE38001F47E6 /* plusBtn@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A82480F161BBE38001F47E6 /* plusBtn@2x~iphone.png */; };
+		1A824814161BBE38001F47E6 /* plusBtn~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A824810161BBE38001F47E6 /* plusBtn~iphone.png */; };
+		1A824815161BBE38001F47E6 /* selectOpponentsBg@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A824811161BBE38001F47E6 /* selectOpponentsBg@2x~iphone.png */; };
+		1A824816161BBE38001F47E6 /* selectOpponentsBg~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A824812161BBE38001F47E6 /* selectOpponentsBg~iphone.png */; };
+		1A824819161BD7E2001F47E6 /* makeWagerBg@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A824817161BD7E2001F47E6 /* makeWagerBg@2x~iphone.png */; };
+		1A82481A161BD7E2001F47E6 /* makeWagerBg~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A824818161BD7E2001F47E6 /* makeWagerBg~iphone.png */; };
 		1AA93832160B91FC003E97FC /* CellBG1@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AA9382E160B91FC003E97FC /* CellBG1@2x~iphone.png */; };
 		1AA93833160B91FC003E97FC /* CellBG1~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AA9382F160B91FC003E97FC /* CellBG1~iphone.png */; };
 		1AA93834160B91FC003E97FC /* DashboardBG@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AA93830160B91FC003E97FC /* DashboardBG@2x~iphone.png */; };
@@ -758,6 +776,24 @@
 		1A33B8A415E072520029D428 /* scoresOffBtn@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scoresOffBtn@2x~iphone.png"; sourceTree = "<group>"; };
 		1A33B8A515E072520029D428 /* scoresOnBtn@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scoresOnBtn@2x~iphone.png"; sourceTree = "<group>"; };
 		1A33B8A615E072520029D428 /* tabBarBackground@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBarBackground@2x~iphone.png"; sourceTree = "<group>"; };
+		1A8247F3161BAAF1001F47E6 /* newWagerBg@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newWagerBg@2x~iphone.png"; sourceTree = "<group>"; };
+		1A8247F4161BAAF1001F47E6 /* newWagerBg~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newWagerBg~iphone.png"; sourceTree = "<group>"; };
+		1A8247FB161BB4CE001F47E6 /* addStakesBtn@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addStakesBtn@2x~iphone.png"; sourceTree = "<group>"; };
+		1A8247FC161BB4CE001F47E6 /* addStakesBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addStakesBtn~iphone.png"; sourceTree = "<group>"; };
+		1A8247FD161BB4CE001F47E6 /* selectOpponentsBtn@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectOpponentsBtn@2x~iphone.png"; sourceTree = "<group>"; };
+		1A8247FE161BB4CE001F47E6 /* selectOpponentsBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectOpponentsBtn~iphone.png"; sourceTree = "<group>"; };
+		1A824803161BB617001F47E6 /* sendWagerBtn@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sendWagerBtn@2x~iphone.png"; sourceTree = "<group>"; };
+		1A824804161BB617001F47E6 /* sendWagerBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sendWagerBtn~iphone.png"; sourceTree = "<group>"; };
+		1A824807161BB90A001F47E6 /* brownArrow@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "brownArrow@2x~iphone.png"; sourceTree = "<group>"; };
+		1A824808161BB90A001F47E6 /* brownArrow~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "brownArrow~iphone.png"; sourceTree = "<group>"; };
+		1A824809161BB90A001F47E6 /* selectTeamBtn@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectTeamBtn@2x~iphone.png"; sourceTree = "<group>"; };
+		1A82480A161BB90A001F47E6 /* selectTeamBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectTeamBtn~iphone.png"; sourceTree = "<group>"; };
+		1A82480F161BBE38001F47E6 /* plusBtn@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plusBtn@2x~iphone.png"; sourceTree = "<group>"; };
+		1A824810161BBE38001F47E6 /* plusBtn~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plusBtn~iphone.png"; sourceTree = "<group>"; };
+		1A824811161BBE38001F47E6 /* selectOpponentsBg@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectOpponentsBg@2x~iphone.png"; sourceTree = "<group>"; };
+		1A824812161BBE38001F47E6 /* selectOpponentsBg~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectOpponentsBg~iphone.png"; sourceTree = "<group>"; };
+		1A824817161BD7E2001F47E6 /* makeWagerBg@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "makeWagerBg@2x~iphone.png"; sourceTree = "<group>"; };
+		1A824818161BD7E2001F47E6 /* makeWagerBg~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "makeWagerBg~iphone.png"; sourceTree = "<group>"; };
 		1AA9382E160B91FC003E97FC /* CellBG1@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CellBG1@2x~iphone.png"; sourceTree = "<group>"; };
 		1AA9382F160B91FC003E97FC /* CellBG1~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CellBG1~iphone.png"; sourceTree = "<group>"; };
 		1AA93830160B91FC003E97FC /* DashboardBG@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DashboardBG@2x~iphone.png"; sourceTree = "<group>"; };
@@ -1570,6 +1606,31 @@
 			name = "Tab Bar";
 			sourceTree = "<group>";
 		};
+		1A8247F1161BAAE0001F47E6 /* New Wager */ = {
+			isa = PBXGroup;
+			children = (
+				1A824817161BD7E2001F47E6 /* makeWagerBg@2x~iphone.png */,
+				1A824818161BD7E2001F47E6 /* makeWagerBg~iphone.png */,
+				1A82480F161BBE38001F47E6 /* plusBtn@2x~iphone.png */,
+				1A824810161BBE38001F47E6 /* plusBtn~iphone.png */,
+				1A824811161BBE38001F47E6 /* selectOpponentsBg@2x~iphone.png */,
+				1A824812161BBE38001F47E6 /* selectOpponentsBg~iphone.png */,
+				1A824807161BB90A001F47E6 /* brownArrow@2x~iphone.png */,
+				1A824808161BB90A001F47E6 /* brownArrow~iphone.png */,
+				1A824809161BB90A001F47E6 /* selectTeamBtn@2x~iphone.png */,
+				1A82480A161BB90A001F47E6 /* selectTeamBtn~iphone.png */,
+				1A824803161BB617001F47E6 /* sendWagerBtn@2x~iphone.png */,
+				1A824804161BB617001F47E6 /* sendWagerBtn~iphone.png */,
+				1A8247FB161BB4CE001F47E6 /* addStakesBtn@2x~iphone.png */,
+				1A8247FC161BB4CE001F47E6 /* addStakesBtn~iphone.png */,
+				1A8247FD161BB4CE001F47E6 /* selectOpponentsBtn@2x~iphone.png */,
+				1A8247FE161BB4CE001F47E6 /* selectOpponentsBtn~iphone.png */,
+				1A8247F3161BAAF1001F47E6 /* newWagerBg@2x~iphone.png */,
+				1A8247F4161BAAF1001F47E6 /* newWagerBg~iphone.png */,
+			);
+			name = "New Wager";
+			sourceTree = "<group>";
+		};
 		1AB39B9A1617C29F007277F6 /* NewTrashTalk */ = {
 			isa = PBXGroup;
 			children = (
@@ -2114,6 +2175,7 @@
 		F7BA852A151CEC100034A0C1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1A8247F1161BAAE0001F47E6 /* New Wager */,
 				1AB39B9A1617C29F007277F6 /* NewTrashTalk */,
 				1A0A721715F526A600603A0F /* Rankings */,
 				1A0A721615F50E5A00603A0F /* General */,
@@ -3736,6 +3798,24 @@
 				1AB39BB3161A3702007277F6 /* emptyMiddle1~iphone.png in Resources */,
 				1A009B1E161A86DC00676781 /* whiteArrow@2x~iphone.png in Resources */,
 				1A009B1F161A86DC00676781 /* whiteArrow~iphone.png in Resources */,
+				1A8247F5161BAAF1001F47E6 /* newWagerBg@2x~iphone.png in Resources */,
+				1A8247F6161BAAF1001F47E6 /* newWagerBg~iphone.png in Resources */,
+				1A8247FF161BB4CE001F47E6 /* addStakesBtn@2x~iphone.png in Resources */,
+				1A824800161BB4CE001F47E6 /* addStakesBtn~iphone.png in Resources */,
+				1A824801161BB4CE001F47E6 /* selectOpponentsBtn@2x~iphone.png in Resources */,
+				1A824802161BB4CE001F47E6 /* selectOpponentsBtn~iphone.png in Resources */,
+				1A824805161BB617001F47E6 /* sendWagerBtn@2x~iphone.png in Resources */,
+				1A824806161BB617001F47E6 /* sendWagerBtn~iphone.png in Resources */,
+				1A82480B161BB90B001F47E6 /* brownArrow@2x~iphone.png in Resources */,
+				1A82480C161BB90B001F47E6 /* brownArrow~iphone.png in Resources */,
+				1A82480D161BB90B001F47E6 /* selectTeamBtn@2x~iphone.png in Resources */,
+				1A82480E161BB90B001F47E6 /* selectTeamBtn~iphone.png in Resources */,
+				1A824813161BBE38001F47E6 /* plusBtn@2x~iphone.png in Resources */,
+				1A824814161BBE38001F47E6 /* plusBtn~iphone.png in Resources */,
+				1A824815161BBE38001F47E6 /* selectOpponentsBg@2x~iphone.png in Resources */,
+				1A824816161BBE38001F47E6 /* selectOpponentsBg~iphone.png in Resources */,
+				1A824819161BD7E2001F47E6 /* makeWagerBg@2x~iphone.png in Resources */,
+				1A82481A161BD7E2001F47E6 /* makeWagerBg~iphone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3864,8 +3944,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rashaad Sidique (R6W8FSGGYQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rashaad Sidique (R6W8FSGGYQ)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -3880,8 +3960,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "D5BF58C1-15A0-42E6-B21C-C01F3B738BE6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D5BF58C1-15A0-42E6-B21C-C01F3B738BE6";
+				PROVISIONING_PROFILE = "0EBC7490-0108-4B52-A6CB-E49E3F3CD31C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0EBC7490-0108-4B52-A6CB-E49E3F3CD31C";
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
@@ -3893,8 +3973,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rashaad Sidique (R6W8FSGGYQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rashaad Sidique (R6W8FSGGYQ)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -3903,8 +3983,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "D5BF58C1-15A0-42E6-B21C-C01F3B738BE6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D5BF58C1-15A0-42E6-B21C-C01F3B738BE6";
+				PROVISIONING_PROFILE = "0EBC7490-0108-4B52-A6CB-E49E3F3CD31C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0EBC7490-0108-4B52-A6CB-E49E3F3CD31C";
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;
@@ -3914,8 +3994,8 @@
 		F714E19914A1A88400E24956 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rashaad Sidique (2235U6Y434)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rashaad Sidique (2235U6Y434)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3934,8 +4014,8 @@
 					"-lKiip",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D5BF58C1-15A0-42E6-B21C-C01F3B738BE6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D5BF58C1-15A0-42E6-B21C-C01F3B738BE6";
+				PROVISIONING_PROFILE = "6FB2882B-5E56-4C8D-86CC-E5488D772E23";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6FB2882B-5E56-4C8D-86CC-E5488D772E23";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
@@ -3944,8 +4024,8 @@
 		F714E19A14A1A88400E24956 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reyaad Sidique (48C5PGZ89L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rashaad Sidique (2235U6Y434)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rashaad Sidique (2235U6Y434)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3964,8 +4044,8 @@
 					"-lKiip",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D5BF58C1-15A0-42E6-B21C-C01F3B738BE6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D5BF58C1-15A0-42E6-B21C-C01F3B738BE6";
+				PROVISIONING_PROFILE = "6FB2882B-5E56-4C8D-86CC-E5488D772E23";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3B290056-6CE5-467B-BBD1-0301FD4E59BB";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};

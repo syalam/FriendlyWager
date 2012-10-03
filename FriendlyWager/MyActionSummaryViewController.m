@@ -165,7 +165,7 @@
     self.navigationItem.rightBarButtonItem = wagerBarButton;
 
     
-    currentCountLabel = [[KBLabel alloc]initWithFrame:CGRectMake(42, 270, 42, 30)];
+    currentCountLabel = [[KBLabel alloc]initWithFrame:CGRectMake(42, 267, 42, 30)];
     [currentCountLabel setTextColor:[UIColor colorWithRed:.4196 green:.282 blue:.1216 alpha:1]];
     [currentCountLabel setTextAlignment:NSTextAlignmentCenter];
     currentCountLabel.red = 0.4196;
@@ -178,7 +178,7 @@
     currentCountLabel.drawGradient = YES;
     [self.view addSubview:currentCountLabel];
     
-    pendingCountLabel = [[KBLabel alloc]initWithFrame:CGRectMake(139, 270, 42, 30)];
+    pendingCountLabel = [[KBLabel alloc]initWithFrame:CGRectMake(139, 267, 42, 30)];
     [pendingCountLabel setTextColor:[UIColor colorWithRed:.961 green:.7098 blue:.0471 alpha:1]];
     [pendingCountLabel setTextAlignment:NSTextAlignmentCenter];
     pendingCountLabel.red = .961;
@@ -191,7 +191,7 @@
     pendingCountLabel.drawGradient = YES;
     [self.view addSubview:pendingCountLabel];
     
-    historyCountLabel = [[KBLabel alloc]initWithFrame:CGRectMake(238, 270, 42, 30)];
+    historyCountLabel = [[KBLabel alloc]initWithFrame:CGRectMake(238, 267, 42, 30)];
     [historyCountLabel setTextColor:[UIColor colorWithRed:.4196 green:.282 blue:.1216 alpha:1]];
     [historyCountLabel setTextAlignment:NSTextAlignmentCenter];
     historyCountLabel.red = .4196;
@@ -325,6 +325,8 @@
 
 #pragma mark - Button Clicks
 - (void)backButtonClicked:(id)sender {
+    NSArray *viewControllers = [self.navigationController viewControllers];
+    [[viewControllers objectAtIndex:0]viewWillAppear:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -547,7 +549,7 @@
         [cell.contentView addSubview:label2];
         if (![senderName isEqualToString:recipientName]) {
             UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [replyButton setFrame:CGRectMake(cell.frame.size.width - 50, cell.frame.size.height - 26, 20, 20)];
+            [replyButton setFrame:CGRectMake(cell.frame.size.width - 50, cell.frame.size.height - 22, 20, 20)];
             [replyButton setImage:[UIImage imageNamed:@"CellArrowYellow"] forState:UIControlStateNormal];
             [replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             replyButton.tag = indexPath.row;

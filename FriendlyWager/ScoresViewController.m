@@ -209,6 +209,7 @@
 #pragma mark - Button Clicks
 - (void)backButtonClicked:(id)sender {
     if (_opponentsToWager) {
+        [self viewWillDisappear:YES];
         [self.navigationController popViewControllerAnimated:YES];
     }
     else {

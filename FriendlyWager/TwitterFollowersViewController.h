@@ -10,9 +10,10 @@
 #import <Twitter/Twitter.h>
 #import <Accounts/Accounts.h>
 
-@interface TwitterFollowersViewController : UITableViewController {
+@interface TwitterFollowersViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     NSUInteger followerDataCount;
     NSMutableArray *followerIds;
+    UIImageView *stripes;
 
 }
 
@@ -22,6 +23,7 @@
 @property (nonatomic, retain) NSMutableArray *followers;
 @property (nonatomic, retain) NSMutableArray* contentList;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 - (void)fetchFollowers;
 - (void)fetchMoreFollowers;

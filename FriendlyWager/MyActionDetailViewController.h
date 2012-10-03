@@ -18,6 +18,7 @@
     NSMutableArray *indexPathArray;
     
     NSMutableArray *detailTableContents;
+    UIImageView *stripes;
     
 }
 

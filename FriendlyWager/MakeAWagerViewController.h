@@ -15,6 +15,14 @@
 
 @interface MakeAWagerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ABPeoplePickerNavigationControllerDelegate> {
     IBOutlet UITableView *wagerTableView;
+    IBOutlet UIButton *searchBtn;
+    IBOutlet UIButton *previousBtn;
+    IBOutlet UIButton *fbFriendBtn;
+    IBOutlet UIButton *twitterFollowerBtn;
+    IBOutlet UIButton *randomBtn;
+    IBOutlet UIButton *inviteBtn;
+    
+    UIImageView *stripes;
     
 }
 
@@ -24,5 +32,12 @@
 @property (nonatomic, retain) NewWagerViewController *viewController;
 
 - (void)selectRandomOpponent;
+
+- (IBAction)searchBtnTapped:(id)sender;
+- (IBAction)previousBtnTapped:(id)sender;
+- (IBAction)fbFriendBtnTapped:(id)sender;
+- (IBAction)twitterFollowerBtnTapped:(id)sender;
+- (IBAction)randomBtnTapped:(id)sender;
+- (IBAction)inviteBtnTapped:(id)sender;
 
 @end

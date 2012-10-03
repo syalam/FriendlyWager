@@ -52,9 +52,6 @@
 
     self.title = @"Scores";
     stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
-    [stripes setImage:[UIImage imageNamed:@"stripes"]];
-    [self.navigationController.navigationBar addSubview:stripes];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG10_BG"]]];
     
     NSMutableArray *firstSection = [[NSMutableArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team", @"+13.5", @"teamScore", @"Celtics", @"team2", @"-13.5", @"team2Score", nil], nil];
     
@@ -125,6 +122,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [stripes setImage:[UIImage imageNamed:@"stripes"]];
+    [self.navigationController.navigationBar addSubview:stripes];
     
 }
 
@@ -255,6 +254,7 @@
 
 #pragma mark - Button Clicks
 - (IBAction)makeAWagerButtonTapped:(id)sender {
+    [self viewWillDisappear:YES];
     NSDictionary *gameDataDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team1", @"1", @"team1Id", @"Celtics", @"team2", @"2", @"team2Id", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate date], @"date", @"1", @"gameId", nil];
     NSLog(@"%@", gameDataDictionary);
     NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
@@ -270,7 +270,7 @@
 }
 
 - (void)backButtonClicked:(id)sender {
-    [self viewWillDisappear:NO];
+    [self viewWillDisappear:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

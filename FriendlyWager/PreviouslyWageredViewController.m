@@ -20,9 +20,9 @@
 @synthesize opponentsToWager = _opponentsToWager;
 @synthesize viewController = _viewController;
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
@@ -33,8 +33,7 @@
 {
     [super viewDidLoad];
     
-    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
-    self.navigationItem.titleView = titleImageView;
+    self.title = @"Make a Wager";
     
     [self.navigationController setNavigationBarHidden:NO];
     
@@ -87,17 +86,26 @@
         }
     }];
     
-    UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+    UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
-    [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
+    custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
     self.navigationItem.leftBarButtonItem = backButton;
 
-    UIBarButtonItem *selectButton = [[UIBarButtonItem alloc]initWithTitle:@"Select" style:UIBarButtonItemStyleBordered target:self action:@selector(selectButtonClicked:)];
-    self.navigationItem.rightBarButtonItem = selectButton;
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
+    [button addTarget:self action:@selector(selectButtonClicked:) forControlEvents:UIControlEventTouchDown];
+    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
+    [button setTitle:@"Home" forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    UIBarButtonItem *selectBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = selectBarButton;
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -159,7 +167,11 @@
         }
     }
     
-    cell.textLabel.text = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"];
+    cell.textLabel.text = [[[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"] capitalizedString];
+    cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
+    [cell.textLabel setBackgroundColor:[UIColor clearColor]];
+    cell.textLabel.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
+    [cell.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]]];
     
     return cell;
 }

@@ -17,9 +17,11 @@
     IBOutlet UIButton *selectTeamButton;
     IBOutlet UISlider *spreadSlider;
     IBOutlet UILabel *spreadLabel;
+    IBOutlet UIImageView *brownArrow;
     
     UIActionSheet *teamActionSheet;
     UIPickerView *teamPickerView;
+    UIImageView *stripes;
 
 }
 

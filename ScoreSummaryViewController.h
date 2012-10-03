@@ -16,7 +16,7 @@
     NSArray *rightArray;
     
     BOOL newWagerVisible;
-    //UIImageView *stripes;
+    UIImageView *stripes;
 
 }
 

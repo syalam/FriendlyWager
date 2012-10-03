@@ -223,7 +223,7 @@
 }
 
 - (void)wagerButtonClicked:(id)sender {
-    [self.tabBarController setSelectedIndex:1];
+    [self.tabBarController setSelectedIndex:0];
 }
 
 #pragma mark - Helper Methods

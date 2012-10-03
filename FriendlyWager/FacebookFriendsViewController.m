@@ -20,14 +20,15 @@
 @synthesize opponentsToWager = _opponentsToWager;
 @synthesize viewController = _viewController;
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
     return self;
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -51,8 +52,7 @@
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setTintColor:[UIColor clearColor]];
     
-    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
-    self.navigationItem.titleView = titleImageView;
+    self.title = @"Make a Wager";
     
     currentApiCall = kAPIRetrieveFriendList;    
     NSString *getAllFriends = @"{'getAllFriends':'SELECT uid, name, username FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) order by name asc'";
@@ -64,17 +64,28 @@
     [[PFFacebookUtils facebook]requestWithGraphPath:@"fql" andParams:params andDelegate:self];
 
 
-    UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+    UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
-    [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
+    custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
     self.navigationItem.leftBarButtonItem = backButton;
     
-    UIBarButtonItem *selectButton = [[UIBarButtonItem alloc]initWithTitle:@"Select" style:UIBarButtonItemStyleBordered target:self action:@selector(selectButtonClicked:)];
-    self.navigationItem.rightBarButtonItem = selectButton;
+    
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
+    [button addTarget:self action:@selector(selectButtonClicked:) forControlEvents:UIControlEventTouchDown];
+    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
+    [button setTitle:@"Select" forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    UIBarButtonItem *selectBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = selectBarButton;
+
 }
 
 - (void)viewDidUnload
@@ -138,37 +149,27 @@
                 allFbFriends = [[resultSetArray1 objectAtIndex:0]valueForKey:@"fql_result_set"];
                 FWFriends = [[resultSetArray1 objectAtIndex:1]valueForKey:@"fql_result_set"];
             }
+            
+            
             NSString *allFbUid;
             NSString *fwFbUid;
             for (NSUInteger i = 0; i < allFbFriends.count; i++) {
+                BOOL added = NO;
                 for (NSUInteger c = 0; c < FWFriends.count; c++) {
                     allFbUid = [NSString stringWithFormat:@"%@",[[allFbFriends objectAtIndex:i]valueForKey:@"uid"]];
                     fwFbUid = [NSString stringWithFormat:@"%@",[[FWFriends objectAtIndex:c]valueForKey:@"uid"]];
                     if ([allFbUid isEqualToString:fwFbUid]) {
-                        if (_wagerInProgress) {
-                            for (NSUInteger i2 = 0; i2 < _opponentsToWager.count; i2++) {
-                                NSString *existingOpponentName = [[NSString stringWithFormat:@"%@", [[_opponentsToWager objectAtIndex:i2]objectForKey:@"name"]]lowercaseString];
-                                NSString *fbFriendName = [[NSString stringWithFormat:@"%@", [[allFbFriends objectAtIndex:i]valueForKey:@"name"]]lowercaseString];
-                                
-                                if (![existingOpponentName isEqualToString:fbFriendName]) {
-                                    [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"YES", @"isFW", nil]];
-                                }
-                            }
-                        }
-                        else {
-                            [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"YES", @"isFW", nil]];
-                        }
-                    }
-                    else {
-                        [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"NO", @"isFW", nil]];
+                        added = YES;
+                        [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"YES", @"isFW", nil]];
                     }
                 }
+                if (!added) {
+                    [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"NO", @"isFW", nil]];
+                }
             }
-            
             [self sortSections:resultSetArray];
-            
         }
-
+        
     }
     else if (currentApiCall == kAPIInviteFriendToFW) {
         NSLog(@"%@", @"Successfully Invited!");
@@ -257,7 +258,11 @@
         }
     }
     
-    cell.textLabel.text = [[contentForThisRow valueForKey:@"data"]valueForKey:@"name"];
+    cell.textLabel.text = [[[contentForThisRow valueForKey:@"data"]valueForKey:@"name"] capitalizedString];
+    cell.textLabel.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
+    cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
+    [cell.textLabel setBackgroundColor:[UIColor clearColor]];
+    [cell.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]]];
     
     return cell;
 }

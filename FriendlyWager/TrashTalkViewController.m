@@ -335,7 +335,7 @@
         [cell.contentView addSubview:label2];
         if (![senderName isEqualToString:recipientName]) {
             UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [replyButton setFrame:CGRectMake(cell.frame.size.width - 50, cell.frame.size.height - 26, 20, 20)];
+            [replyButton setFrame:CGRectMake(cell.frame.size.width - 50, cell.frame.size.height - 22, 20, 20)];
             [replyButton setImage:[UIImage imageNamed:@"CellArrowYellow"] forState:UIControlStateNormal];
             [replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             replyButton.tag = indexPath.row;
@@ -492,7 +492,7 @@
 }
 
 - (IBAction)makeWagerButtonClicked:(id)sender {
-    tabBarVc.tabBarController.selectedIndex = 1;
+    tabBarVc.tabBarController.selectedIndex = 0;
     tabBarVc.newWager = YES;
     [self.navigationController presentViewController:tabBarNavC animated:YES completion:NULL];
     //[self.navigationController presentViewController:tabBarVc animated:YES completion:NULL];

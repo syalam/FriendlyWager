@@ -54,7 +54,7 @@
     newWagerVisible = NO;
     if (_wager) {
         self.title = @"Make a Wager";
-        
+        stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     }
     
     else {
@@ -98,12 +98,15 @@
 {
     [super viewWillAppear:animated];
 
+    [stripes setImage:[UIImage imageNamed:@"stripes"]];
+    [self.navigationController.navigationBar addSubview:stripes];
     
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [stripes removeFromSuperview];
     
 }
 
@@ -210,8 +213,9 @@
 
 #pragma mark - Button Clicks
 - (void)backButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     NSArray *viewControllers = [self.navigationController viewControllers];
-    [[viewControllers objectAtIndex:0]viewWillAppear:NO];
+    [[viewControllers objectAtIndex:viewControllers.count-2]viewWillAppear:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -219,11 +223,13 @@
     NSUInteger index = [sender tag];
     NSDictionary *dataDictionary = [leftArray objectAtIndex:index];
     if (!_wager) {
+        [self viewWillDisappear:YES];
         ScoreDetailViewController *scoreDetail = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil scoreData:dataDictionary];
         scoreDetail.gameDataDictionary = [leftArray objectAtIndex:index];
         [self.navigationController pushViewController:scoreDetail animated:YES];
     }
     else {
+        [self viewWillDisappear:YES];
         NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
         newWager.gameDataDictionary = [leftArray objectAtIndex:index];
         newWager.sport = _sport;

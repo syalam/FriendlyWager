@@ -16,9 +16,9 @@
 @implementation ContactInviteViewController
 @synthesize contentList = _contentList;
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
@@ -72,13 +72,28 @@
     [self sortSections:allContactsArray];
     
     
-    UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc]initWithTitle:@"Select" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteButtonClicked:)];
-    inviteButton.tintColor = [UIColor blackColor];
-    self.navigationItem.rightBarButtonItem = inviteButton;
+    UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
+    UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
+    [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
+    custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
-    backButton.tintColor = [UIColor blackColor];
     self.navigationItem.leftBarButtonItem = backButton;
+    
+    
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
+    [button addTarget:self action:@selector(inviteButtonClicked:) forControlEvents:UIControlEventTouchDown];
+    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
+    [button setTitle:@"Wager" forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    UIBarButtonItem *inviteBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = inviteBarButton;
+
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -134,6 +149,11 @@
     cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [contentForThisRow valueForKey:@"firstName"], [contentForThisRow valueForKey:@"lastName"]];
+    cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
+    cell.textLabel.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
+    [cell.textLabel setBackgroundColor:[UIColor clearColor]];
+    [cell.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]]];
+    
     
     if ([selectedItems objectForKey:[NSString stringWithFormat:@"item %d %d", indexPath.section, indexPath.row]]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;

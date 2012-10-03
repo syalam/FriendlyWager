@@ -48,13 +48,9 @@
     wagerTableView.delegate = self;
     
 
-    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
-    self.navigationItem.titleView = titleImageView;
-    
-    NSDictionary *navTitleAttributes = [[NSDictionary alloc]initWithObjectsAndKeys:
-                                        [UIColor blackColor], UITextAttributeTextColor, nil];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.titleTextAttributes = navTitleAttributes;
+    self.title = @"Make a Wager";
+
+    stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     
     NSArray *tableContentsArray = [[NSArray alloc]initWithObjects:@"Search for Opponent", @"Previously Wagered", @"Facebook Friend", @"Twitter Follower", @"Random Opponent", @"Invite to Friendly Wager", nil];
     
@@ -67,33 +63,34 @@
     [self setContentList:wagersArray];
     
     if (_wagerInProgress) {
-        UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+        UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
         UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
         custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
-        [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
+        [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
+        [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
+        custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
         [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
         
         self.navigationItem.leftBarButtonItem = backButton;
     }
     else {
-        UIImage *homeButtonImage = [UIImage imageNamed:@"FW_PG2_HomeButton"];
-        UIButton *homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        homeButton.bounds = CGRectMake( 0, 0, homeButtonImage.size.width, homeButtonImage.size.height );
-        [homeButton setImage:homeButtonImage forState:UIControlStateNormal];
-        [homeButton addTarget:self action:@selector(homeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIBarButtonItem *homeNavButton = [[UIBarButtonItem alloc] initWithCustomView:homeButton];
-        [homeNavButton setTarget:self];
-        [homeNavButton setAction:@selector(homeButtonClicked:)];
-        
-        self.navigationItem.leftBarButtonItem = homeNavButton;
-    }
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
+        [button addTarget:self action:@selector(homeButtonClicked:) forControlEvents:UIControlEventTouchDown];
+        [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
+        [button setTitle:@"Home" forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        UIBarButtonItem *homeBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
+        self.navigationItem.rightBarButtonItem = homeBarButton;    }
 
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    [stripes setImage:[UIImage imageNamed:@"stripes"]];
+    [self.navigationController.navigationBar addSubview:stripes];
     NSUserDefaults *newWager = [NSUserDefaults alloc];
     if ([newWager objectForKey:@"opponent"]) {
         TabsViewController *tabsController = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil];
@@ -104,6 +101,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [stripes removeFromSuperview];
 }
 
 
@@ -138,8 +136,12 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.textLabel.text = contentForThisRow;
+        cell.textLabel.textAlignment = UITextAlignmentCenter;
+        [cell.textLabel setBackgroundColor:[UIColor clearColor]];
+        [cell setBackgroundColor:[UIColor clearColor]];
+        [cell.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"longYellowBtn"]]];
     }
     return cell;
 }
@@ -281,9 +283,60 @@
             NSMutableArray *userToWager = [[NSMutableArray alloc]initWithObjects:[objects objectAtIndex:randomNum], nil];
             ScoresViewController *scores = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
             scores.opponentsToWager = userToWager;
+            scores.wager = YES;
             [self.navigationController pushViewController:scores animated:YES];
         } 
     }];
+}
+
+#pragma mark - Button Taps
+- (IBAction)searchBtnTapped:(id)sender {
+    OpponentSearchViewController *search = [[OpponentSearchViewController alloc]initWithNibName:@"OpponentSearchViewController" bundle:nil];
+    if (_wagerInProgress) {
+        search.wagerInProgress = YES;
+        search.opponentsToWager = _opponentsToWager;
+        search.viewController = _viewController;
+    }
+    [self.navigationController pushViewController:search animated:YES];
+}
+- (IBAction)previousBtnTapped:(id)sender {
+    PreviouslyWageredViewController *pwvc = [[PreviouslyWageredViewController alloc]initWithNibName:@"PreviouslyWageredViewController" bundle:nil];
+    if (_wagerInProgress) {
+        pwvc.wagerInProgress = YES;
+        pwvc.opponentsToWager = _opponentsToWager;
+        pwvc.viewController = _viewController;
+    }
+    
+    [self.navigationController pushViewController:pwvc animated:YES];
+}
+- (IBAction)fbFriendBtnTapped:(id)sender {
+    PFUser *currentUser = [PFUser currentUser];
+    if ([PFFacebookUtils isLinkedWithUser:currentUser]) {
+        FacebookFriendsViewController *facebookFriends = [[FacebookFriendsViewController alloc]initWithNibName:@"FacebookFriendsViewController" bundle:nil];
+        if (_wagerInProgress) {
+            facebookFriends.wagerInProgress = YES;
+            facebookFriends.opponentsToWager = _opponentsToWager;
+            facebookFriends.viewController = _viewController;
+        }
+        [self.navigationController pushViewController:facebookFriends animated:YES];
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Facebook Sign In Required" message:@"You must sign in with a facebook account to use this feature" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign In", nil];
+        [alert show];
+    }
+
+}
+- (IBAction)twitterFollowerBtnTapped:(id)sender {
+    TwitterFollowersViewController *twitterFollowers = [[TwitterFollowersViewController alloc]initWithNibName:@"TwitterFollowersViewController" bundle:nil];
+    [self.navigationController pushViewController:twitterFollowers animated:YES];
+}
+- (IBAction)randomBtnTapped:(id)sender {
+    NSLog(@"%@", @"Random Selected");
+    [self selectRandomOpponent];
+}
+- (IBAction)inviteBtnTapped:(id)sender {
+    ContactInviteViewController *civc = [[ContactInviteViewController alloc]initWithNibName:@"ContactInviteViewController" bundle:nil];
+    [self.navigationController pushViewController:civc animated:YES];
 }
 
 

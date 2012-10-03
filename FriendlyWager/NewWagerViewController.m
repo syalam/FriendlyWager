@@ -43,17 +43,20 @@
 {
     [super viewDidLoad];
     
-    UIImageView *titleImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"FW_MakeWager_NavBar"]];
-    self.navigationItem.titleView = titleImageView;
+    self.title = @"Make a Wager";
+    stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     
-    UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+    UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
-    [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
+    custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
     self.navigationItem.leftBarButtonItem = backButton;
+
     
     
     newWagerTableView.dataSource = self;
@@ -69,6 +72,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [stripes setImage:[UIImage imageNamed:@"stripes"]];
+    [self.navigationController.navigationBar addSubview:stripes];
         
     PFQuery *tokenCountForUser = [PFQuery queryWithClassName:@"tokens"];
     [tokenCountForUser whereKey:@"user" equalTo:[PFUser currentUser]];
@@ -114,6 +119,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [stripes removeFromSuperview];
 
 }
 
@@ -225,6 +231,7 @@
     }
     
     [selectTeamButton setTitle:pickerItem forState:UIControlStateNormal];
+    [brownArrow setHidden:YES];
     [teamActionSheet dismissWithClickedButtonIndex:0 animated:YES];
 }
 
@@ -265,22 +272,6 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    NSString *sectionName;
-    switch (section) {
-        case 0:
-            sectionName = @"Send To";
-            break;
-            
-        default:
-            sectionName = @"And";
-            break;
-    }
-    
-    return sectionName;
 }
 
 #pragma mark UIPickerView Delegate Methods

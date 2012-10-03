@@ -11,7 +11,7 @@
 #import <MessageUI/MessageUI.h>
 #import <Parse/Parse.h>
 
-@interface ContactInviteViewController : UITableViewController <MFMailComposeViewControllerDelegate> {
+@interface ContactInviteViewController : UIViewController <MFMailComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate> {
     ABAddressBookRef addressBook;
     CFArrayRef allPeople;
     CFIndex nPeople;
@@ -21,5 +21,6 @@
 }
 
 @property (nonatomic, retain) NSMutableArray *contentList;
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
 
 @end
