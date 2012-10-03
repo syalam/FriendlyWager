@@ -39,7 +39,7 @@
     actionHistoryTableView.dataSource = self;
     stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     
-    detailWithPersonLabel.text = [NSString stringWithFormat:@"%@ %@ %@", _wagerType, @"with", [_opponent objectForKey:@"name"]];
+    detailWithPersonLabel.text = [NSString stringWithFormat:@"%@ %@ %@", _wagerType, @"with", [[_opponent objectForKey:@"name"] capitalizedString]];
     /*if ([_wagerType isEqualToString:@"Current"]) {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG6_BG"]]];
     }

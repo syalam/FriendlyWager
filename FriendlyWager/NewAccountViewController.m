@@ -36,23 +36,17 @@
     [super viewDidLoad];
     
     self.title = @"New Account";
-    
+    stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     scrollView.contentSize = CGSizeMake(320, 550);
     [firstNameTextField becomeFirstResponder];
     
-    UILabel *signInLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, submitButton.frame.size.width, submitButton.frame.size.height)];
-    signInLabel.backgroundColor = [UIColor clearColor];
-    signInLabel.textColor = [UIColor whiteColor];
-    signInLabel.textAlignment = UITextAlignmentCenter;
-    signInLabel.font = [UIFont boldSystemFontOfSize:14];
-    signInLabel.text = @"Submit";
     
-    [submitButton addSubview:signInLabel];
-    
-    UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
+    UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
-    [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
+    custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
@@ -70,7 +64,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     [self.navigationController.navigationBar addSubview:stripes];
     

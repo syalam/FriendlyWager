@@ -13,6 +13,7 @@
 #import "SVProgressHUD.h"
 #import "Kiip.h"
 #import "AppDelegate.h"
+#import "ResetPasswordViewController.h"
 
 
 @implementation LoginOptionsViewController
@@ -185,6 +186,11 @@
     [self.navigationController pushViewController:navc animated:YES];
 }
 
+- (IBAction)forgotPasswordButtonClicked:(id)sender {
+    ResetPasswordViewController *rpvc = [[ResetPasswordViewController alloc]initWithNibName:@"ResetPasswordViewController" bundle:nil];
+    [self.navigationController pushViewController:rpvc animated:YES];
+}
+
 - (void)request:(PF_FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
     NSLog(@"received response");
 }
@@ -274,7 +280,7 @@
     else {
         bottomOffset = CGPointMake(0, 110);
     }
-    [scrollView setContentSize:CGSizeMake(320, 660)];
+    [scrollView setContentSize:CGSizeMake(320, 680)];
     [scrollView setContentOffset:bottomOffset animated:YES];
 }
 

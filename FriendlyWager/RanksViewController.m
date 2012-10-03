@@ -9,6 +9,7 @@
 #import "RanksViewController.h"
 #import "RankingsDetailViewController.h"
 #import "ScoresViewController.h"
+#import "MyActionSummaryViewController.h"
 
 @implementation RanksViewController
 
@@ -170,19 +171,23 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    /*NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
-    id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
-    if ([contentForThisRow isEqualToString:@"Ranking By Sport"]) {
-        ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
-        sports.ranking = YES;
-        [self.navigationController pushViewController:sports animated:YES];
-    }
-    else {
-        RankingsDetailViewController *rankingDetails = [[RankingsDetailViewController alloc]initWithNibName:@"RankingsDetailViewController" bundle:nil];
-        rankingDetails.rankCategory = contentForThisRow;
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        [self.navigationController pushViewController:rankingDetails animated:YES];
-    }*/
+    PFQuery *query = [PFQuery queryForUser];
+    [query whereKey:@"name" equalTo:[[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            // The find succeeded.
+            NSLog(@"Successfully retrieved %d scores.", objects.count);
+            MyActionSummaryViewController *actionSummary = [[MyActionSummaryViewController alloc]initWithNibName:@"MyActionSummaryViewController" bundle:nil newWager:YES opponentName:[[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"]];
+            actionSummary.userToWager = [objects objectAtIndex:0];
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            [actionSummary viewWillAppear:NO];
+            [self.navigationController pushViewController:actionSummary animated:YES];
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+    
 }
 
 #pragma mark IBAction Methods

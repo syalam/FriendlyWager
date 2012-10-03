@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface RanksViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     
@@ -15,6 +16,8 @@
     IBOutlet UIButton *byWins;
     IBOutlet UIButton *bySport;
     IBOutlet UIButton *byCity;
+    NSMutableArray *myActionOpponentArray;
+    NSMutableArray *myActionWagersArray;
     
     NSMutableArray *rankingsArray;
     NSArray *rankingsByPoints;

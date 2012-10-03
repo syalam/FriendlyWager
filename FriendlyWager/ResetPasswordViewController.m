@@ -36,12 +36,21 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     self.title = @"Reset Password";
     [emailAddressTextField becomeFirstResponder];
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClicked:)];
-    backButton.tintColor = [UIColor blackColor];
+    UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
+    UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
+    [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
+    [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
+    custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
+    
     self.navigationItem.leftBarButtonItem = backButton;
+
 }
 
 - (void)viewDidUnload
@@ -56,12 +65,14 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar addSubview:stripes];
     
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [stripes removeFromSuperview];
 }
 
 

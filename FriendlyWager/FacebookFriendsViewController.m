@@ -247,8 +247,9 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     if ([[contentForThisRow valueForKey:@"isFW"]isEqualToString:@"YES"]) {
-        UILabel *fwLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 12, 40, 20)];
+        UILabel *fwLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 15, 40, 20)];
         fwLabel.text = @"FW";
+        [fwLabel setBackgroundColor:[UIColor clearColor]];
         [cell addSubview:fwLabel];
         
         if ([[contentForThisRow valueForKey:@"isFW"]isEqualToString:@"YES"]) {

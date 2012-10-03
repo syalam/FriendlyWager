@@ -13,6 +13,7 @@
     IBOutlet UIButton *friendlyWagerButton;
     IBOutlet UIButton *facebookLoginButton;
     IBOutlet UIButton *twitterLoginButton;
+    IBOutlet UIButton *forgotPasswordButton;
     
     IBOutlet UITextField *userNameTextField;
     IBOutlet UITextField *passwordTextField;
@@ -26,5 +27,6 @@
 - (IBAction)friendlyWagerButtonClicked:(id)sender;
 - (IBAction)facebookLoginButtonClicked:(id)sender;
 - (IBAction)twitterLoginButtonClicked:(id)sender;
+- (IBAction)forgotPasswordButtonClicked:(id)sender;
 
 @end
