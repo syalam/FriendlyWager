@@ -60,11 +60,12 @@
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     [self.navigationController.navigationBar addSubview:stripes];
     
-    [self showWagers];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    [self showWagers];
     [self.navigationController.navigationBar addSubview:stripes];
 }
 
@@ -100,7 +101,7 @@
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-
+    
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -219,10 +220,16 @@
                                             [self setContentList:[sortedArray mutableCopy]];
                                             [myActionTableView reloadData];
                                         }
+                                        else
+                                            NSLog(@"%@", error);
                                     }];
                                 }
+
                             }];
                         }
+                        else
+                            NSLog(@"%@", error);
+
                     }];
                 }
             }

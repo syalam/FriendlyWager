@@ -197,32 +197,58 @@
 
 - (void)request:(PF_FBRequest *)request didLoad:(id)result {
     //save the users username and email address to parse
-    PFUser *user = [PFUser currentUser];
+    fbUser = [PFUser currentUser];
     if ([result objectForKey:@"username"]) {
-        user.username = [[result objectForKey:@"username"]lowercaseString];
+        fbUser.username = [[result objectForKey:@"username"]lowercaseString];
     }
     if ([result objectForKey:@"name"]) {
-        [user setObject:[[result objectForKey:@"name"] lowercaseString] forKey:@"name"];
+        [fbUser setObject:[[result objectForKey:@"name"] lowercaseString] forKey:@"name"];
     }
     if ([result objectForKey:@"id"]) {
-        [user setObject:[result objectForKey:@"id"] forKey:@"fbId"];
+        [fbUser setObject:[result objectForKey:@"id"] forKey:@"fbId"];
     }
     if ([result objectForKey:@"email"]) {
-        user.email = [result objectForKey:@"email"];
+        fbUser.email = [result objectForKey:@"email"];
     }
     if ([result objectForKey:@"picture"]) {
-        [user setObject:[NSData dataWithContentsOfURL:[NSURL URLWithString:[result objectForKey:@"picture"]]] forKey:@"picture"];
+        imageData = [[NSMutableData alloc] init];
+        NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", [result objectForKey:@"id"]]];
+        NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:pictureURL
+                                                                  cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                              timeoutInterval:2.0f];
+        // Run network request asynchronously
+        NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+        //[user setObject:[NSData dataWithContentsOfURL:[NSURL URLWithString:[result objectForKey:@"picture"]]] forKey:@"picture"];
     }
-    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+    /*AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
     delegate.trashTalkViewController.currentUser = user;
 
     [user saveInBackground];
     [SVProgressHUD dismiss];
     //TODO: REMOVE ME
     [[KPManager sharedManager] unlockAchievement:@"1"];
-    [self.navigationController dismissModalViewControllerAnimated:YES];
+    [self.navigationController dismissModalViewControllerAnimated:YES];*/
 }
 
+// Called every time a chunk of the data is received
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [imageData appendData:data]; // Build the image
+}
+
+// Called when the entire image is finished downloading
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    // Set the image in the header imageView
+    
+    [fbUser setObject:imageData forKey:@"picture"];
+    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+    delegate.trashTalkViewController.currentUser = fbUser;
+    
+    [fbUser saveInBackground];
+    [SVProgressHUD dismiss];
+    //TODO: REMOVE ME
+    [[KPManager sharedManager] unlockAchievement:@"1"];
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+}
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
     NSLog(@"%@", error);
 }

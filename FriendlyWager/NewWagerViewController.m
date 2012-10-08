@@ -82,7 +82,15 @@
             if (objects.count > 0) {
                 for (PFObject *tokenObject in objects) {
                     int tokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
-                    int tokensForThisWager = tokenCount / _opponentsToWager.count;
+                    NSLog(@"%d", _opponentsToWager.count);
+                    int tokensForThisWager ;
+                    if (_opponentsToWager.count) {
+                        tokensForThisWager = tokenCount / _opponentsToWager.count;
+                    }
+                    else {
+                        tokensForThisWager = tokenCount;
+                    }
+                    
                     spreadSlider.minimumValue = 0;
                     spreadSlider.maximumValue = tokensForThisWager;
                     spreadSlider.continuous = YES;
@@ -97,7 +105,13 @@
                 [tokens saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     if (!error) {
                         int tokenCount = [[tokens objectForKey:@"tokenCount"]intValue];
-                        int tokensForThisWager = tokenCount / _opponentsToWager.count;
+                        int tokensForThisWager;
+                        if (_opponentsToWager.count) {
+                            tokensForThisWager = tokenCount / _opponentsToWager.count;
+                        }
+                        else {
+                            tokensForThisWager = tokenCount/2;
+                        }
                         spreadSlider.minimumValue = 0;
                         spreadSlider.maximumValue = tokensForThisWager;
                         spreadSlider.continuous = YES;
