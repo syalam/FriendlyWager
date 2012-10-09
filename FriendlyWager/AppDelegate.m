@@ -37,7 +37,8 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     _trashTalkViewController = [[TrashTalkViewController alloc] initWithNibName:@"TrashTalkViewController" bundle:nil];
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:_trashTalkViewController];
+    _loadScreenViewController = [[LoadScreenViewController alloc]initWithNibName:@"LoadScreenViewController" bundle:nil];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:_loadScreenViewController];
     self.window.rootViewController = self.navigationController;
     
     if ([UINavigationBar respondsToSelector:@selector(appearance)]) {

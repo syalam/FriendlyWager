@@ -58,7 +58,6 @@
     self.navigationItem.rightBarButtonItem = wagerBarButton;*/
     stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
-    [self showWagers];
     
     
 }
@@ -66,6 +65,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     [self.navigationController.navigationBar addSubview:stripes];
+    [self showWagers];
     //[self showWageredMe];
 }
 
@@ -128,6 +128,7 @@
         profilePic = [UIImage imageNamed:@"placeholder"];
     }
     UIImageView *profilePicView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 39, 39)];
+    profilePicView.contentMode = UIViewContentModeScaleAspectFit;
     [profilePicView setImage:profilePic];
     [cell.contentView addSubview:profilePicView];
     
@@ -178,34 +179,37 @@
                     if ([[person objectId ]isEqualToString:[[PFUser currentUser] objectId]]) {
                         person = [wagerObject objectForKey:@"wager"];
                     }
-                    [person fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                        if (!error) {
-                            if (itemsToDisplay.count > 0) {
-                                BOOL duplicate = NO;
-                                for (NSUInteger i = 0; i < itemsToDisplay.count; i++) {
-                                    NSString *itemInArray = [[[itemsToDisplay objectAtIndex:i]valueForKey:@"object"] objectId];
-                                    NSString *objectItem = [object objectId];
-                                    if ([itemInArray isEqualToString:objectItem]) {
-                                        duplicate = YES;
+                    if (![[person objectId ]isEqualToString:[[PFUser currentUser] objectId]]) {
+                        [person fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                            if (!error) {
+                                if (itemsToDisplay.count > 0) {
+                                    BOOL duplicate = NO;
+                                    for (NSUInteger i = 0; i < itemsToDisplay.count; i++) {
+                                        NSString *itemInArray = [[[itemsToDisplay objectAtIndex:i]valueForKey:@"object"] objectId];
+                                        NSString *objectItem = [object objectId];
+                                        if ([itemInArray isEqualToString:objectItem]) {
+                                            duplicate = YES;
+                                        }
+                                    }
+                                    if (!duplicate) {
+                                        [itemsToDisplay addObject:[NSDictionary dictionaryWithObjectsAndKeys:object, @"object", object.createdAt, @"date", nil]];
                                     }
                                 }
-                                if (!duplicate) {
+                                else {
                                     [itemsToDisplay addObject:[NSDictionary dictionaryWithObjectsAndKeys:object, @"object", object.createdAt, @"date", nil]];
                                 }
+                                NSSortDescriptor *dateDescriptor = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
+                                NSArray *sortDescriptors = [NSArray arrayWithObject:dateDescriptor];
+                                NSArray *sortedArray = [itemsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
+                                //firtPart = YES;
+                                [self setContentList:[sortedArray mutableCopy]];
+                                [myActionTableView reloadData];
                             }
-                            else {
-                                [itemsToDisplay addObject:[NSDictionary dictionaryWithObjectsAndKeys:object, @"object", object.createdAt, @"date", nil]];
-                            }
-                            NSSortDescriptor *dateDescriptor = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
-                            NSArray *sortDescriptors = [NSArray arrayWithObject:dateDescriptor];
-                            NSArray *sortedArray = [itemsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
-                            //firtPart = YES;
-                            [self setContentList:[sortedArray mutableCopy]];
-                            [myActionTableView reloadData];
-                        }
-                        else
-                            NSLog(@"%@",error);
-                     }];
+                            else
+                                NSLog(@"%@",error);
+                        }];
+
+                    }
                 }
             }
         }
