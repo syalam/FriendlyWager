@@ -51,6 +51,9 @@
 {
     [super viewDidLoad];
 
+    currentWagers = [[NSMutableArray alloc]init];
+    pendingWagers = [[NSMutableArray alloc]init];
+    
     newWagerVisible = NO;
     if (_wager) {
         self.title = @"Make a Wager";
@@ -90,6 +93,7 @@
     NSArray *tomorrowArray = [NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Knicks", @"team1", @"Kings", @"team2", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate dateWithTimeInterval:(24*60*60) sinceDate:[NSDate date]], @"date", nil], nil];
     
     [self setContentList:[NSMutableArray arrayWithObjects:todayArray, tomorrowArray, nil]];*/
+    [self getWagers];
 }
 
 - (void)viewDidUnload
@@ -150,7 +154,23 @@
     [cell.team2Odds setText:@"-13.5"];
     [cell.gameTime setText:@"4:00 PM"];
     [cell.wagersLabel setText:@"Wagers"];
-    [cell.wagerCountLabel setText:@"4"];
+    [cell.wagerCountLabel setText:@"0"];
+    if (currentWagers) {
+        [cell.wagerCountLabel setText:[NSString stringWithFormat:@"%d",currentWagers.count]];
+    }
+    if (pendingWagers) {
+        [cell.pendingCountLabel setText:[NSString stringWithFormat:@"%d",pendingWagers.count]];
+        if (pendingWagers.count > 9) {
+            [cell.pendingNotofication setImage:[UIImage imageNamed:@"alertIndicatorLong"]];
+        }
+        else {
+            [cell.pendingNotofication setImage:[UIImage imageNamed:@"alertIndicator"]];
+            
+        }
+
+    }
+    
+    
     cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"gameCell"]];
     cell.backgroundColor = [UIColor clearColor];
     
@@ -270,5 +290,54 @@
 - (void)wagerButtonClicked:(id)sender {
     [self.tabBarController setSelectedIndex:0];
 }
+
+#pragma mark - Helper Methods
+- (void)getWagers {
+    PFQuery *wagers = [PFQuery queryWithClassName:@"wagers"];
+    [wagers whereKey:@"gameId" equalTo:@"1"];
+    [wagers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for(PFObject *wager in objects)
+            {
+                BOOL isPending;
+                NSString *teamSelected = [wager objectForKey:@"teamWageredToLose"];
+                NSString *odds;
+                PFUser *person = [wager objectForKey:@"wager"];
+                if ([[wager objectForKey:@"wagerAccepted"] boolValue]) {
+                    isPending = NO;
+                }
+                else {
+                    isPending = YES;
+                }
+                if ([teamSelected isEqualToString:@"Celtics"]) {
+                    odds = @"- 13";
+                }
+                else {
+                    odds = @"+ 13";
+                }
+                [person fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                    if (!error) {
+                        if ([object objectForKey:@"name"]) {
+                            NSMutableDictionary *item = [[NSMutableDictionary alloc]initWithObjectsAndKeys:object, @"object", odds, @"odds", nil];
+                            if (!isPending) {
+                                [currentWagers addObject:item];
+                            }
+                            else {
+                                [pendingWagers addObject:item];
+                            }
+                        }
+                        
+                    }
+                    [self.tableView reloadData];
+                    
+                }];
+            }
+            
+            
+        }
+    }];
+}
+
+
 
 @end

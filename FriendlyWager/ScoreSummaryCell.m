@@ -25,15 +25,24 @@
         // Initialization code
         
         _gameImageView = [[UIImageView alloc]initWithFrame:CGRectMake(7, 7, 65, 65)];
-        _team1Label = [[UILabel alloc]initWithFrame:CGRectMake(80, 5, 120, 30)];
-        _team2Label = [[UILabel alloc]initWithFrame:CGRectMake(80, 30, 120, 30)];
-        _team1Odds = [[UILabel alloc]initWithFrame:CGRectMake(200, 5, 60, 30)];
+        _team1Label = [[UILabel alloc]initWithFrame:CGRectMake(80, 0, 120, 30)];
+        _team2Label = [[UILabel alloc]initWithFrame:CGRectMake(80, 25, 120, 30)];
+        _team1Odds = [[UILabel alloc]initWithFrame:CGRectMake(200, 0, 60, 30)];
         _team1Odds.textAlignment = UITextAlignmentRight;
-        _team2Odds = [[UILabel alloc]initWithFrame:CGRectMake(200, 30, 60, 30)];
+        _team2Odds = [[UILabel alloc]initWithFrame:CGRectMake(200, 25, 60, 30)];
         _team2Odds.textAlignment = UITextAlignmentRight;
         _gameTime = [[UILabel alloc]initWithFrame:CGRectMake(80, 50, 60, 30)];
         _wagersLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 50, 60, 30)];
         _wagerCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(190, 50, 20, 30)];
+        
+        _pendingNotofication = [[UIImageView alloc]initWithFrame:CGRectMake(200, 52, 37, 21)];
+        [_pendingNotofication setContentMode:UIViewContentModeCenter];
+        _pendingCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(200, 52, 37, 21)];
+        [_pendingCountLabel setBackgroundColor:[UIColor clearColor]];
+        [_pendingCountLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:12]];
+        _pendingCountLabel.textAlignment = NSTextAlignmentCenter;
+
+        
         
         [_team1Label setBackgroundColor:[UIColor clearColor]];
         [_team2Label setBackgroundColor:[UIColor clearColor]];
@@ -67,6 +76,8 @@
         [self.contentView addSubview:_gameTime];
         [self.contentView addSubview:_wagersLabel];
         [self.contentView addSubview:_wagerCountLabel];
+        [self.contentView addSubview:_pendingNotofication];
+        [self.contentView addSubview:_pendingCountLabel];
     }
     return self;
 }

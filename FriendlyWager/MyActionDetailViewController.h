@@ -13,6 +13,7 @@
     IBOutlet UILabel *detailWithPersonLabel;
     IBOutlet UILabel *pointLabel;
     IBOutlet UITableView *actionHistoryTableView;
+    IBOutlet UILabel *lastLabel;
     
     NSString *wagerOfType;
     NSMutableArray *indexPathArray;

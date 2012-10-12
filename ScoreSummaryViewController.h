@@ -14,6 +14,8 @@
     NSString *opponent;
     NSArray *leftArray;
     NSArray *rightArray;
+    NSMutableArray *currentWagers;
+    NSMutableArray *pendingWagers;
     
     BOOL newWagerVisible;
     UIImageView *stripes;

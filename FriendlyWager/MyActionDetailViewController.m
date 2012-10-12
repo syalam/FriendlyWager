@@ -67,6 +67,14 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
     self.navigationItem.leftBarButtonItem = backButton;
+    if ([_wagerType isEqualToString:@"Pending"]) {
+        lastLabel.text = @"Accept/ Deny";
+        [lastLabel setFrame:CGRectMake(260, 50, 71, 40)];
+        lastLabel.numberOfLines = 2;
+        lastLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        lastLabel.textAlignment = NSTextAlignmentCenter;
+        [lastLabel sizeToFit];
+    }
 }
 
 - (void)viewDidUnload

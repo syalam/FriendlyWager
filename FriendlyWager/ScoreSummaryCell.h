@@ -18,5 +18,7 @@
 @property (nonatomic, retain) UILabel *gameTime;
 @property (nonatomic, retain) UILabel *wagersLabel;
 @property (nonatomic, retain) UILabel *wagerCountLabel;
+@property (nonatomic, retain) UIImageView *pendingNotofication;
+@property (nonatomic, retain) UILabel *pendingCountLabel;
 
 @end
