@@ -58,6 +58,7 @@
     self.navigationItem.rightBarButtonItem = wagerBarButton;*/
     stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
+    [self showWagers];
     
     
 }
@@ -65,7 +66,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     [self.navigationController.navigationBar addSubview:stripes];
-    [self showWagers];
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"updated"]) {
+        [self showWagers];
+        [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"updated"];
+    }
+    
     //[self showWageredMe];
 }
 
@@ -125,9 +130,13 @@
         profilePic = [UIImage imageWithData:picData];
     }
     else {
-        profilePic = [UIImage imageNamed:@"placeholder"];
+        profilePic = [UIImage imageNamed:@"myFeed2"];
     }
-    UIImageView *profilePicView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 39, 39)];
+    UIImageView *arrow = [[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.size.width - 50, cell.frame.size.height - 26, 20, 20)];
+    [arrow setImage:[UIImage imageNamed:@"CellArrowGray"]];
+    [cell.contentView addSubview:arrow];
+    
+    UIImageView *profilePicView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 8, 39, 39)];
     profilePicView.contentMode = UIViewContentModeScaleAspectFit;
     [profilePicView setImage:profilePic];
     [cell.contentView addSubview:profilePicView];

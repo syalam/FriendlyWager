@@ -64,8 +64,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     
     self.title = @"My Action";
+    if ([[_userToWager objectId]isEqualToString:[[PFUser currentUser]objectId]]) {
+        [wagerButton setEnabled:NO];
+    }
     
     fwData = [NSUserDefaults alloc];
     
@@ -90,7 +94,7 @@
     [chatButton setTitle:[NSString stringWithFormat:@"%@\n%@", @"Trash Talk", opponent] forState:UIControlStateNormal];
     chatButton.titleLabel.textAlignment = UITextAlignmentCenter;
     chatButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
-    [wagerView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"gameCellNoArrow"]]];
+    //[wagerView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"gameCellNoArrow"]]];
     
     UILabel *wagerLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 35, wagerButton.frame.size.width, 20)];
     wagerLabel.text = @"Wager";
@@ -129,7 +133,7 @@
     
     NSData *picData = [_userToWager objectForKey:@"picture"];
     if (!picData) {
-        [profilePic setImage:[UIImage imageNamed:@"placeholder"]];
+        [profilePic setImage:[UIImage imageNamed:@"myFeed2"]];
     }
     else {
         [profilePic setImage:[UIImage imageWithData:picData]];
@@ -148,13 +152,18 @@
     [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
     [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
     custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [custombackButton.titleLabel setShadowColor:[UIColor darkGrayColor]];
+    [custombackButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+    custombackButton.titleLabel.textColor = [UIColor colorWithRed:0.996 green:0.98 blue:0.902 alpha:1];
+    [custombackButton.titleLabel setShadowColor:[UIColor darkGrayColor]];
+    [custombackButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
     self.navigationItem.leftBarButtonItem = backButton;
 
     
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
+    /*UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
     [button addTarget:self action:@selector(wagerButtonClicked:) forControlEvents:UIControlEventTouchDown];
     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
@@ -162,7 +171,7 @@
     button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     UIBarButtonItem *wagerBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
-    self.navigationItem.rightBarButtonItem = wagerBarButton;
+    self.navigationItem.rightBarButtonItem = wagerBarButton;*/
 
     
     currentCountLabel = [[KBLabel alloc]initWithFrame:CGRectMake(42, 267, 42, 30)];
@@ -171,7 +180,7 @@
     currentCountLabel.red = 0.4196;
     currentCountLabel.green = .282;
     currentCountLabel.blue = .1216;
-    currentCountLabel.font = [UIFont boldSystemFontOfSize:26];
+    currentCountLabel.font = [UIFont boldSystemFontOfSize:27];
     [currentCountLabel setBackgroundColor:[UIColor clearColor]];
     currentCountLabel.text = @"0";
     currentCountLabel.drawOutline = YES;
@@ -184,7 +193,7 @@
     pendingCountLabel.red = .961;
     pendingCountLabel.green = .7098;
     pendingCountLabel.blue = .0471;
-    pendingCountLabel.font = [UIFont boldSystemFontOfSize:26];
+    pendingCountLabel.font = [UIFont boldSystemFontOfSize:27];
     [pendingCountLabel setBackgroundColor:[UIColor clearColor]];
     pendingCountLabel.text = @"0";
     pendingCountLabel.drawOutline = YES;
@@ -197,7 +206,7 @@
     historyCountLabel.red = .4196;
     historyCountLabel.green = .282;
     historyCountLabel.blue = .1216;
-    historyCountLabel.font = [UIFont boldSystemFontOfSize:26];
+    historyCountLabel.font = [UIFont boldSystemFontOfSize:27];
     [historyCountLabel setBackgroundColor:[UIColor clearColor]];
     historyCountLabel.text = @"0";
     historyCountLabel.drawOutline = YES;
@@ -212,6 +221,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [stripes setImage:[UIImage imageNamed:@"stripes"]];
+    [self.navigationController.navigationBar addSubview:stripes];
     /*if (_tabParentView) {
         [_tabParentView.navigationController setNavigationBarHidden:NO];
     }*/
@@ -307,6 +318,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [stripes removeFromSuperview];
 }
 
 
@@ -435,19 +447,21 @@
     CGFloat height = MAX(size.height, 44.0f);
     
     return height + (CELL_CONTENT_MARGIN * 2);*/
-    UITextView *label2 = [[UITextView alloc]initWithFrame:CGRectMake(10, 15, 244, 100)];
+    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 230, 100)];
     label2.font = [UIFont systemFontOfSize:12];
     label2.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
-    //label2.numberOfLines = 2;
-    //label2.lineBreakMode = UILineBreakModeTailTruncation;
-    [label2 setFrame:CGRectMake(10, 20, 244, label2.contentSize.height)];
+    label2.numberOfLines = 0;
+    label2.lineBreakMode = UILineBreakModeWordWrap;
+    //[label2 sizeToFit];
+    //[label2 setFrame:CGRectMake(10, 20, 244, label2.frame.size.height)];
     [label2 sizeToFit];
     if ((label2.frame.size.height) > 28) {
-        return (15 + label2.frame.size.height + 5);
+        return (40 + label2.frame.size.height);
     }
     else {
         return 58;
     }
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -520,27 +534,31 @@
         UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width - 250, 5, 215, 15)];
         dateLabel.backgroundColor = [UIColor clearColor];
         dateLabel.textAlignment = UITextAlignmentRight;
-        dateLabel.font = [UIFont systemFontOfSize:11];
+        //dateLabel.font = [UIFont systemFontOfSize:11];
+        dateLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:11];
         dateLabel.text = dateString;
         dateLabel.textColor = [UIColor  darkGrayColor];
         
         UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 16)];
-        UITextView *label2 = [[UITextView alloc]initWithFrame:CGRectMake(10, 15, cell.frame.size.width - 40, 100)];
-        [label2 setEditable:NO];
-        label1.font = [UIFont boldSystemFontOfSize:12];
+        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, cell.frame.size.width - 64, 100)];
+        //[label2 setEditable:NO];
+        //label1.font = [UIFont boldSystemFontOfSize:12];
+        label1.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
         
         
         [cell.contentView addSubview:dateLabel];
         
         
         label1.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
-        label2.font = [UIFont systemFontOfSize:12];
+        //label2.font = [UIFont systemFontOfSize:12];
+        label2.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
         label2.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
-        //label2.numberOfLines = 2;
-        //label2.lineBreakMode = UILineBreakModeTailTruncation;
-        [label2 setFrame:CGRectMake(2, 15, cell.frame.size.width -50, label2.contentSize.height+15)];
-        [label2 setBounces:NO];
-        //[label2 sizeToFit];
+        label2.numberOfLines = 0;
+        label2.lineBreakMode = UILineBreakModeWordWrap;
+        [label2 sizeToFit];
+        //[label2 setFrame:CGRectMake(2, 15, cell.frame.size.width -50, label2.contentSize.height+15)];
+        //[label2 setBounces:NO];
+        [label2 sizeToFit];
         label1.backgroundColor = [UIColor clearColor];
         label2.backgroundColor = [UIColor clearColor];
         label2.textColor = [UIColor colorWithRed:0.376 green:0.376 blue:0.376 alpha:1];

@@ -86,7 +86,7 @@
         
         
 		// notice the +1 for the y-coordinate. this is to account for the face that the outline appears to be thicker on top
-		[super drawTextInRect:CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height)];
+		[super drawTextInRect:CGRectMake(rect.origin.x, rect.origin.y+0.000000015, rect.size.width, rect.size.height)];
         
 		// Draw the saved image over the outline
 		// and invert everything because CoreGraphics works with an inverted coordinate system

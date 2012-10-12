@@ -53,25 +53,25 @@
     
     
     
-    UITabBarItem *myActionBarItem = [[UITabBarItem alloc] initWithTitle:@"My Action" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:0];
+    UITabBarItem *myActionBarItem = [[UITabBarItem alloc] initWithTitle:@"My Action" image:[UIImage imageNamed:@"myActionOffBtn"] tag:1];
     [myActionBarItem setFinishedSelectedImage:[UIImage imageNamed:@"myActionOnBtn"]
                   withFinishedUnselectedImage:[UIImage imageNamed:@"myActionOffBtn"]];
     [myActionBarItem setTitlePositionAdjustment:UIOffsetMake(0, 100)];
     [actionNavC setTabBarItem:myActionBarItem];
     
-    UITabBarItem *scoresBarItem = [[UITabBarItem alloc] initWithTitle:@"Make a Wager" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:1];
+    UITabBarItem *scoresBarItem = [[UITabBarItem alloc] initWithTitle:@"Make a Wager" image:[UIImage imageNamed:@"scoresOffBtn"] tag:2];
     [scoresBarItem setFinishedSelectedImage:[UIImage imageNamed:@"scoresOnBtn"]
                   withFinishedUnselectedImage:[UIImage imageNamed:@"scoresOffBtn"]];
     [scoresBarItem setTitlePositionAdjustment:UIOffsetMake(0, 100)];
     [scoresNavC setTabBarItem:scoresBarItem];
     
-    UITabBarItem *ranksBarItem = [[UITabBarItem alloc] initWithTitle:@"Ranks" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:2];
+    UITabBarItem *ranksBarItem = [[UITabBarItem alloc] initWithTitle:@"Ranks" image:[UIImage imageNamed:@"rankingOffBtn"] tag:3];
     [ranksBarItem setFinishedSelectedImage:[UIImage imageNamed:@"rankingOnBtn"]
                 withFinishedUnselectedImage:[UIImage imageNamed:@"rankingOffBtn"]];
     [ranksBarItem setTitlePositionAdjustment:UIOffsetMake(0, 100)];
     [ranksNavC setTabBarItem:ranksBarItem];
     
-    UITabBarItem *homeBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:[UIImage imageNamed:@"FW_PG17_Cancel_Button"] tag:3];
+    UITabBarItem *homeBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:[UIImage imageNamed:@"homeOffBtn"] tag:0];
     [homeBarItem setFinishedSelectedImage:[UIImage imageNamed:@"homeOnBtn"] withFinishedUnselectedImage:[UIImage imageNamed:@"homeOffBtn"]];
     [homeBarItem setTitlePositionAdjustment:UIOffsetMake(0, 100)];
     [homeNavC setTabBarItem:homeBarItem];
@@ -92,7 +92,7 @@
     UIImage *clear = [[UIImage alloc]init];
     [[[self tabBarController] tabBar] setSelectionIndicatorImage:clear];
     self.tabBarController.delegate = self;
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects: actionNavC, scoresNavC, ranksNavC, homeNavC, nil];
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects: homeNavC, actionNavC, scoresNavC, ranksNavC, nil];
     
     [self.view addSubview:self.tabBarController.view];
 }
@@ -128,7 +128,7 @@
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    if (tabBarController.selectedIndex == 3) {
+    if (tabBarController.selectedIndex == 0) {
         [self dismissTabBarVc];
     }
 }

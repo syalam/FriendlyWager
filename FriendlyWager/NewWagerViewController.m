@@ -52,6 +52,9 @@
     [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
     [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
     custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [custombackButton.titleLabel setShadowColor:[UIColor darkGrayColor]];
+    [custombackButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+    custombackButton.titleLabel.textColor = [UIColor colorWithRed:0.996 green:0.98 blue:0.902 alpha:1];
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
@@ -74,6 +77,32 @@
     [super viewWillAppear:animated];
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     [self.navigationController.navigationBar addSubview:stripes];
+    NSString *names;
+    if (_additionalOpponents) {
+        if (!_opponentsToWager.count) {
+            _opponentsToWager = _additionalOpponents;
+        }
+        else {
+            [_opponentsToWager addObjectsFromArray:_additionalOpponents];
+        }
+    }
+    if (_opponentsToWager.count) {
+        [addOpponentsBg setHidden:YES];
+        for (int i = 0; i < _opponentsToWager.count; i++) {
+            if (i == 0) {
+                names = [[[_opponentsToWager objectAtIndex:0] objectForKey:@"name"] capitalizedString];
+            }
+            else {
+                names = [[NSString stringWithFormat:@"%@, %@", names, [[_opponentsToWager objectAtIndex:i] objectForKey:@"name"]] capitalizedString];
+            }
+            
+        }
+        wageeList.text = names;
+    }
+    else {
+        [addOpponentsBg setHidden:NO];
+    }
+    
         
     PFQuery *tokenCountForUser = [PFQuery queryWithClassName:@"tokens"];
     [tokenCountForUser whereKey:@"user" equalTo:[PFUser currentUser]];
@@ -88,7 +117,7 @@
                         tokensForThisWager = tokenCount / _opponentsToWager.count;
                     }
                     else {
-                        tokensForThisWager = tokenCount;
+                        tokensForThisWager = tokenCount/2;
                     }
                     
                     spreadSlider.minimumValue = 0;
@@ -371,6 +400,7 @@
                                 [tokenObject setValue:[NSNumber numberWithInt:updatedTokenCount] forKey:@"tokenCount"];
                                 [tokenObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                     if (!error) {
+                                        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"updated"];
                                         [SVProgressHUD dismiss];
                                         if (_tabParentView) {
                                             [_tabParentView.navigationController dismissViewControllerAnimated:YES completion:NULL];

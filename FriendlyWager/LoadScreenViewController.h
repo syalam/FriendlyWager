@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 
 @interface LoadScreenViewController : UIViewController {
     IBOutlet UIImageView *splash;

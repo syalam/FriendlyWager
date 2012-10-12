@@ -47,6 +47,8 @@
     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
     [button setTitle:@"Sign Up" forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [button.titleLabel setShadowColor:[UIColor darkGrayColor]];
+    [button.titleLabel setShadowOffset:CGSizeMake(0, 1)];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     UIBarButtonItem *signUpBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = signUpBarButton;
@@ -126,6 +128,7 @@
                                             //TODO: REMOVE ME
                                             AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
                                             delegate.trashTalkViewController.currentUser = user;
+                                            delegate.trashTalkViewController.pic = [UIImage imageWithData:[user objectForKey:@"picture"]];
                                             [[KPManager sharedManager] unlockAchievement:@"1"];
                                             [self.navigationController dismissModalViewControllerAnimated:YES];
                                         } else {
@@ -164,6 +167,7 @@
                     [user setObject:[PFTwitterUtils twitter].screenName forKey:@"name"];
                     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
                     delegate.trashTalkViewController.currentUser = user;
+                    delegate.trashTalkViewController.pic = [UIImage imageWithData:profilePicData];
                     [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                         if (!error) {
                             [self.navigationController dismissModalViewControllerAnimated:YES];
@@ -189,6 +193,11 @@
 - (IBAction)forgotPasswordButtonClicked:(id)sender {
     ResetPasswordViewController *rpvc = [[ResetPasswordViewController alloc]initWithNibName:@"ResetPasswordViewController" bundle:nil];
     [self.navigationController pushViewController:rpvc animated:YES];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self signInButtonClicked:self];
+    return YES;
 }
 
 - (void)request:(PF_FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
@@ -242,7 +251,7 @@
     [fbUser setObject:imageData forKey:@"picture"];
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
     delegate.trashTalkViewController.currentUser = fbUser;
-    
+    delegate.trashTalkViewController.pic = [UIImage imageWithData:imageData];
     [fbUser saveInBackground];
     [SVProgressHUD dismiss];
     //TODO: REMOVE ME
@@ -301,10 +310,10 @@
     NSLog(@"%d", tag);
     CGPoint bottomOffset;
     if(tag == 0) {
-        bottomOffset = CGPointMake(0, 110);
+        bottomOffset = CGPointMake(0, 150);
     }
     else {
-        bottomOffset = CGPointMake(0, 110);
+        bottomOffset = CGPointMake(0, 150);
     }
     [scrollView setContentSize:CGSizeMake(320, 680)];
     [scrollView setContentOffset:bottomOffset animated:YES];

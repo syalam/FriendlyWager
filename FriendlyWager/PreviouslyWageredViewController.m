@@ -90,8 +90,11 @@
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
     [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
-    [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
+    [custombackButton setTitle:@"  Cancel" forState:UIControlStateNormal];
     custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [custombackButton.titleLabel setShadowColor:[UIColor darkGrayColor]];
+    [custombackButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+    custombackButton.titleLabel.textColor = [UIColor colorWithRed:0.996 green:0.98 blue:0.902 alpha:1];
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
@@ -101,8 +104,10 @@
     [button addTarget:self action:@selector(selectButtonClicked:) forControlEvents:UIControlEventTouchDown];
     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
-    [button setTitle:@"Home" forState:UIControlStateNormal];
+    [button setTitle:@"Done" forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [button.titleLabel setShadowColor:[UIColor darkGrayColor]];
+    [button.titleLabel setShadowOffset:CGSizeMake(0, 1)];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     UIBarButtonItem *selectBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = selectBarButton;

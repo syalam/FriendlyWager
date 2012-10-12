@@ -47,6 +47,8 @@
     
     NSUserDefaults *fwData;
     
+    UIImageView *stripes;
+    
 }
 
 

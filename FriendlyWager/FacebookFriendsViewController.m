@@ -70,6 +70,9 @@
     [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
     [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
     custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [custombackButton.titleLabel setShadowColor:[UIColor darkGrayColor]];
+    [custombackButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+    custombackButton.titleLabel.textColor = [UIColor colorWithRed:0.996 green:0.98 blue:0.902 alpha:1];
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
@@ -82,6 +85,8 @@
     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
     [button setTitle:@"Select" forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [button.titleLabel setShadowColor:[UIColor darkGrayColor]];
+    [button.titleLabel setShadowOffset:CGSizeMake(0, 1)];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     UIBarButtonItem *selectBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = selectBarButton;
@@ -247,8 +252,10 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     if ([[contentForThisRow valueForKey:@"isFW"]isEqualToString:@"YES"]) {
-        UILabel *fwLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 15, 40, 20)];
+        UILabel *fwLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 20, 40, 20)];
         fwLabel.text = @"FW";
+        fwLabel.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
+        fwLabel.font = [UIFont boldSystemFontOfSize:16];
         [fwLabel setBackgroundColor:[UIColor clearColor]];
         [cell addSubview:fwLabel];
         
@@ -264,7 +271,7 @@
     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
     [cell.textLabel setBackgroundColor:[UIColor clearColor]];
     [cell.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]]];
-    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }
 
@@ -357,14 +364,16 @@
 -(void)selectButtonClicked:(id)sender {
     if (selectedItems.count > 0) {
         [SVProgressHUD showWithStatus:@"Initiating Wager"];
-        NSString *jsonString = [[selectedItems allValues] JSONString];
+        
+        //NSString *jsonString = [[selectedItems allValues] JSONString];
         NSMutableArray *selectedItemsArray = [[NSMutableArray alloc]initWithCapacity:1];
-        selectedItemsArray = [jsonString objectFromJSONString];
+        //selectedItemsArray = [jsonString objectFromJSONString];
+        selectedItemsArray = [[selectedItems allValues]mutableCopy];
         
         NSLog(@"%@", selectedItemsArray);
         NSMutableArray *selectedFriendsArray = [[NSMutableArray alloc]initWithCapacity:1];
         for (NSUInteger i = 0; i < selectedItemsArray.count; i++) {
-             NSString *fbUid = [NSString stringWithFormat:@"%@", [[[selectedItemsArray objectAtIndex:i]valueForKey:@"data"]valueForKey:@"uid"]];
+            NSString *fbUid = [NSString stringWithFormat:@"%@", [[[selectedItemsArray objectAtIndex:i]valueForKey:@"data"]valueForKey:@"uid"]];
             [selectedFriendsArray addObject:fbUid];
         }
         
@@ -401,7 +410,6 @@
         [alert show];
     }
 }
-
 #pragma mark - Helper Methods
 - (void)sortSections:(NSMutableArray *)resultSetArray {
     NSArray *indexTitles = [[NSArray alloc]initWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];

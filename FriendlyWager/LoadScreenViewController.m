@@ -80,8 +80,9 @@
 
 -(void)fadeOut:(id)sender
 {
-        TrashTalkViewController *ttvc = [[TrashTalkViewController alloc]initWithNibName:@"TrashTalkViewController" bundle:nil];
-        [self.navigationController pushViewController:ttvc animated:YES];
+
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [self.navigationController pushViewController:appDelegate.trashTalkViewController animated:YES];
     
 }
 

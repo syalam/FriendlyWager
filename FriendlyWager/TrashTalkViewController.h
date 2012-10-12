@@ -38,5 +38,6 @@
 @property (nonatomic, retain) IBOutlet UITableView *trashTalkTableView;
 @property (nonatomic, retain) NSMutableArray *contentList;
 @property (nonatomic)BOOL tabBarView;
+@property (nonatomic, retain) UIImage *pic;
 
 @end

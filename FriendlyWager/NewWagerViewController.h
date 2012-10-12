@@ -18,6 +18,11 @@
     IBOutlet UISlider *spreadSlider;
     IBOutlet UILabel *spreadLabel;
     IBOutlet UIImageView *brownArrow;
+    IBOutlet UIButton *addStakesButton;
+    IBOutlet UILabel *wageeList;
+    IBOutlet UILabel *stakesList;
+    IBOutlet UIImageView *addOpponentsBg;
+    IBOutlet UIImageView *addStakesBg;
     
     UIActionSheet *teamActionSheet;
     UIPickerView *teamPickerView;
@@ -29,6 +34,7 @@
 - (IBAction)sendButtonClicked:(id)sender;
 - (IBAction)addOthersButtonClicked:(id)sender;
 - (IBAction)spreadSliderAction:(id)sender;
+- (IBAction)addStakesButtonClicked:(id)sender;
 
 - (void)updateOpponents;
 

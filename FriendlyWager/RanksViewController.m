@@ -54,6 +54,8 @@
     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
     [button setTitle:@"Wager" forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [button.titleLabel setShadowColor:[UIColor darkGrayColor]];
+    [button.titleLabel setShadowOffset:CGSizeMake(0, 1)];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     UIBarButtonItem *wagerBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = wagerBarButton;
@@ -139,17 +141,22 @@
         [cell addSubview:rankLabel];
     }*/
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSData *picData = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"object"] objectForKey:@"picture"];
+    NSData *picData = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"picture"];
     UIImage *profilePic;
     if (picData) {
         profilePic = [UIImage imageWithData:picData];
     }
     else {
-        profilePic = [UIImage imageNamed:@"placeholder"];
+        profilePic = [UIImage imageNamed:@"myFeed2"];
     }
-    UIImageView *profilePicView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 39, 39)];
+    UIImageView *profilePicView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 8, 39, 39)];
     [profilePicView setImage:profilePic];
     [cell.contentView addSubview:profilePicView];
+    
+    UIImageView *arrow = [[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.size.width - 50, cell.frame.size.height - 26, 20, 20)];
+    [arrow setImage:[UIImage imageNamed:@"CellArrowGray"]];
+    [cell.contentView addSubview:arrow];
+    
     return cell;
     
     /*NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
@@ -248,7 +255,9 @@
                     if (!error) {
                         if ([user objectForKey:@"name"]) {
                             [itemDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
-                        }
+                            if ([user objectForKey:@"picture"]) {
+                                [itemDictionary setObject:[user objectForKey:@"picture"] forKey:@"picture"];
+                            }                        }
                         [itemsToDisplay addObject:itemDictionary];
                         
                         NSSortDescriptor *tokenDescriptor = [[NSSortDescriptor alloc]initWithKey:@"tokenCount" ascending:NO];
@@ -285,6 +294,10 @@
                 [user fetchIfNeededInBackgroundWithBlock:^(PFObject *user, NSError *error) {
                     if (!error) {
                         [resultDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
+                        if ([user objectForKey:@"picture"]) {
+                            [resultDictionary setObject:[user objectForKey:@"picture"] forKey:@"picture"];
+                        }
+                        
                     
                         if ([user objectForKey:@"name"]) {
                             [objectsToDisplay addObject:resultDictionary];

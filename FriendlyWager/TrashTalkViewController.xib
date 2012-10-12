@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1536</int>
 		<string key="IBDocument.SystemVersion">12C54</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2840</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1926</string>
+			<string key="NS.object.0">1929</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -163,7 +163,7 @@
 					<object class="IBUIButton" id="86311691">
 						<reference key="NSNextResponder" ref="751167801"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{266, 19}, {34, 36}}</string>
+						<string key="NSFrame">{{266, 18}, {34, 36}}</string>
 						<reference key="NSSuperview" ref="751167801"/>
 						<reference key="NSNextKeyView" ref="873029372"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -262,15 +262,16 @@
 					<object class="IBUIImageView" id="640249434">
 						<reference key="NSNextResponder" ref="751167801"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{25, 20}, {39, 39}}</string>
+						<string key="NSFrame">{{20, 20}, {39, 39}}</string>
 						<reference key="NSSuperview" ref="751167801"/>
 						<reference key="NSNextKeyView" ref="86311691"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<int key="IBUIContentMode">1</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">placeholder.png</string>
+							<string key="NSResourceName">myFeed2.png</string>
 						</object>
 					</object>
 				</array>
@@ -543,8 +544,8 @@
 			<string key="RankingBtn~iphone.png">{56, 65}</string>
 			<string key="ScoresBtn~iphone.png">{50, 61}</string>
 			<string key="SettingsBtn~iphone.png">{26, 26}</string>
-			<string key="placeholder.png">{39, 39}</string>
+			<string key="myFeed2.png">{75, 75}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1926</string>
+		<string key="IBCocoaTouchPluginVersion">1929</string>
 	</data>
 </archive>

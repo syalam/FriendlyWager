@@ -40,12 +40,6 @@
     
     self.title = @"Home";
     
-    if ([_currentUser objectForKey:@"picture"]) {
-        NSData *picData = [_currentUser objectForKey:@"picture"];
-        [profilePic setImage:[UIImage imageWithData:picData]];
-
-    }
-    
     if (_tabBarView) {
         [myActionButton setHidden:YES];
         [scoresButton setHidden:YES];
@@ -165,9 +159,20 @@
                              NSArray *descriptors = [NSArray arrayWithObjects:dateDescriptor, nil];
                              NSArray * sortedArray = [trashTalkArray sortedArrayUsingDescriptors:descriptors];
                              NSLog(@"%@", sortedArray);*/
-                            
                             [self setContentList:trashTalkToDisplay];
                             [self.trashTalkTableView reloadData];
+                            
+                            PFQuery *queryForUser = [PFQuery queryForUser];
+                            [queryForUser whereKey:@"objectId" equalTo:[[PFUser currentUser] objectId]];
+                            [queryForUser findObjectsInBackgroundWithBlock:^(NSArray *userObjects, NSError *error) {
+                                if (!error) {
+                                    _currentUser = [userObjects objectAtIndex:0];
+                                    _pic = [UIImage imageWithData:[_currentUser objectForKey:@"picture"]];
+                                    if (_pic) {
+                                        [profilePic setImage:_pic];
+                                    }
+                                }
+                            }];
                         } 
                     }];
                 }
@@ -179,6 +184,7 @@
         UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
         [self.navigationController presentModalViewController:navc animated:NO];
     }
+    
     
 }
 
@@ -220,15 +226,16 @@
     //CGFloat height = MAX(size.height, 44.0f);
     
     //return height + (CELL_CONTENT_MARGIN * 2);
-    UITextView *label2 = [[UITextView alloc]initWithFrame:CGRectMake(10, 15, 244, 100)];
+    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 230, 100)];
     label2.font = [UIFont systemFontOfSize:12];
     label2.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
-    //label2.numberOfLines = 2;
-    //label2.lineBreakMode = UILineBreakModeTailTruncation;
-    [label2 setFrame:CGRectMake(10, 20, 244, label2.contentSize.height)];
+    label2.numberOfLines = 0;
+    label2.lineBreakMode = UILineBreakModeWordWrap;
+    //[label2 sizeToFit];
+    //[label2 setFrame:CGRectMake(10, 20, 244, label2.frame.size.height)];
     [label2 sizeToFit];
     if ((label2.frame.size.height) > 28) {
-        return (15 + label2.frame.size.height + 5);
+        return (40 + label2.frame.size.height);
     }
     else {
         return 58;
@@ -306,27 +313,31 @@
         UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width - 250, 5, 215, 15)];
         dateLabel.backgroundColor = [UIColor clearColor];
         dateLabel.textAlignment = UITextAlignmentRight;
-        dateLabel.font = [UIFont systemFontOfSize:11];
+        //dateLabel.font = [UIFont systemFontOfSize:11];
+        dateLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:11];
         dateLabel.text = dateString;
         dateLabel.textColor = [UIColor  darkGrayColor];
         
         UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 16)];
-        UITextView *label2 = [[UITextView alloc]initWithFrame:CGRectMake(10, 15, cell.frame.size.width - 40, 100)];
-        [label2 setEditable:NO];
-        label1.font = [UIFont boldSystemFontOfSize:12];
+        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, cell.frame.size.width - 64, 100)];
+        //[label2 setEditable:NO];
+        //label1.font = [UIFont boldSystemFontOfSize:12];
+        label1.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
 
         
         [cell.contentView addSubview:dateLabel];
         
         
         label1.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
-        label2.font = [UIFont systemFontOfSize:12];
+        //label2.font = [UIFont systemFontOfSize:12];
+        label2.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
         label2.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
-        //label2.numberOfLines = 2;
-        //label2.lineBreakMode = UILineBreakModeTailTruncation;
-        [label2 setFrame:CGRectMake(2, 15, cell.frame.size.width -50, label2.contentSize.height+15)];
-        [label2 setBounces:NO];
-        //[label2 sizeToFit];
+        label2.numberOfLines = 0;
+        label2.lineBreakMode = UILineBreakModeWordWrap;
+        [label2 sizeToFit];
+        //[label2 setFrame:CGRectMake(2, 15, cell.frame.size.width -50, label2.contentSize.height+15)];
+        //[label2 setBounces:NO];
+        [label2 sizeToFit];
         label1.backgroundColor = [UIColor clearColor];
         label2.backgroundColor = [UIColor clearColor];
         label2.textColor = [UIColor colorWithRed:0.376 green:0.376 blue:0.376 alpha:1];
@@ -479,20 +490,20 @@
 }
 
 - (IBAction)myActionButtonClicked:(id)sender {
-    tabBarVc.tabBarController.selectedIndex = 0;
-    [self.navigationController presentViewController:tabBarNavC animated:YES completion:NULL];
-}
-- (IBAction)scoresButtonClicked:(id)sender {
     tabBarVc.tabBarController.selectedIndex = 1;
     [self.navigationController presentViewController:tabBarNavC animated:YES completion:NULL];
 }
-- (IBAction)rankingButtonClicked:(id)sender {
+- (IBAction)scoresButtonClicked:(id)sender {
     tabBarVc.tabBarController.selectedIndex = 2;
+    [self.navigationController presentViewController:tabBarNavC animated:YES completion:NULL];
+}
+- (IBAction)rankingButtonClicked:(id)sender {
+    tabBarVc.tabBarController.selectedIndex = 3;
     [self.navigationController presentViewController:tabBarNavC animated:YES completion:NULL];
 }
 
 - (IBAction)makeWagerButtonClicked:(id)sender {
-    tabBarVc.tabBarController.selectedIndex = 0;
+    tabBarVc.tabBarController.selectedIndex = 1;
     tabBarVc.newWager = YES;
     [self.navigationController presentViewController:tabBarNavC animated:YES completion:NULL];
     //[self.navigationController presentViewController:tabBarVc animated:YES completion:NULL];

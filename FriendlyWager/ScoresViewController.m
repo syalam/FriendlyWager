@@ -76,7 +76,10 @@
         custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
         [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
         [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
-        custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+        custombackButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
+        [custombackButton.titleLabel setShadowColor:[UIColor darkGrayColor]];
+        [custombackButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+        custombackButton.titleLabel.textColor = [UIColor colorWithRed:0.996 green:0.98 blue:0.902 alpha:1];
         [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
         
@@ -90,12 +93,17 @@
     }
     
     //[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG3_BG"]]];
-    NSArray *nflFootball = [[NSArray alloc]initWithObjects:@"NFL Football", nil];
-    NSArray *collegeFootball = [[NSArray alloc]initWithObjects:@"College Football", nil];
-    NSArray *mlbBaseball = [[NSArray alloc]initWithObjects:@"MLB Baseball", nil];
-    NSArray *nbaBasketball = [[NSArray alloc]initWithObjects:@"NBA Basketball", nil];
-    NSArray *collegeBasketball = [[NSArray alloc]initWithObjects:@"College Basketball", nil];
-    scoresArray = [[NSArray alloc]initWithObjects:nflFootball, collegeFootball, mlbBaseball, nbaBasketball, collegeBasketball, nil];
+    NSArray *football = [[NSArray alloc]initWithObjects:@"Football", [UIImage imageNamed:@"footballIcn"], nil];
+    NSArray *golf = [[NSArray alloc]initWithObjects:@"Golf", [UIImage imageNamed:@"golfIcn"], nil];
+    NSArray *baseball = [[NSArray alloc]initWithObjects:@"Baseball", [UIImage imageNamed:@"baseballIcn"], nil];
+    NSArray *basketball = [[NSArray alloc]initWithObjects:@"Basketball", [UIImage imageNamed:@"basketballIcn"], nil];
+    NSArray *tennis = [[NSArray alloc]initWithObjects:@"Tennis", [UIImage imageNamed:@"tennisIcn"], nil];
+    NSArray *soccer = [[NSArray alloc]initWithObjects:@"Soccer", [UIImage imageNamed:@"soccerIcn"], nil];
+    NSArray *autoRacing = [[NSArray alloc]initWithObjects:@"Auto Racing", [UIImage imageNamed:@"autoRacingIcn"], nil];
+    NSArray *boxing  = [[NSArray alloc]initWithObjects:@"Boxing", [UIImage imageNamed:@"boxingIcn"], nil];
+    NSArray *hockey = [[NSArray alloc]initWithObjects:@"Hockey", [UIImage imageNamed:@"hockeyIcn"], nil];
+    NSArray *mma = [[NSArray alloc]initWithObjects:@"Mixed Martial Arts", [UIImage imageNamed:@"mmaIcn"], nil];
+    scoresArray = [[NSArray alloc]initWithObjects:football, golf, baseball, basketball, tennis, soccer, autoRacing, boxing, hockey, mma, nil];
     [self setContentList:scoresArray];
     
     
@@ -134,45 +142,32 @@
 
 #pragma mark - TableView Delegate Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.contentList.count;
+    return 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:section];
-    return sectionContents.count;     
+    return contentList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
-    id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
+    NSArray *contentForThisRow = [[self contentList] objectAtIndex:indexPath.row];
     
-    static NSString *CellIdentifier = @"ScoresTableViewCell";
+    NSString *CellIdentifier = [NSString stringWithFormat:@"ScoresTableViewCell%d",indexPath.row];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     //cell.contentView.opaque = NO;
-    UIImage *footballIcn = [UIImage imageNamed:@"footballIcn"];
-    UIImage *baseballIcn = [UIImage imageNamed:@"baseballIcn"];
-    UIImage *basketballIcn = [UIImage imageNamed:@"basketballIcn"];
     UILabel *text = [[UILabel alloc]initWithFrame:CGRectMake(65, 15, 210, 25)];
     UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, 45, 45)];
-    if (indexPath.section == 0 || indexPath.section == 1) {
-        [image setImage:footballIcn];
-    }
-    else if (indexPath.section == 2) {
-        [image setImage:baseballIcn];
-    }
-    else {
-        [image setImage:basketballIcn];
-    }
     [text setBackgroundColor:[UIColor clearColor]];
-    text.font = [UIFont boldSystemFontOfSize:17];
+    text.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
     cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"scoresCellBg"]];
     cell.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    text.text = contentForThisRow;
+    text.text = [contentForThisRow objectAtIndex:0];
+    [image setImage:[contentForThisRow objectAtIndex:1]];
     [cell addSubview:text];
     [cell addSubview:image];
     return cell;
@@ -182,11 +177,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //[self viewWillDisappear:NO];
     [stripes removeFromSuperview];
-    NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
-    id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
+    NSArray *contentForThisRow = [[self contentList] objectAtIndex:indexPath.row];
+
     if (_ranking) {
         RankingsDetailViewController *rankings = [[RankingsDetailViewController alloc]initWithNibName:@"RankingsDetailViewController" bundle:nil];
-        rankings.sport = contentForThisRow;
+        rankings.sport = [contentForThisRow objectAtIndex:0];
         [self.navigationController pushViewController:rankings animated:YES];
     }
     else {
@@ -198,8 +193,11 @@
         if (_tabParentView) {
             scoreSummary.tabParentView = _tabParentView;
         }
-        scoreSummary.sport = contentForThisRow;
-        scoreSummary.title = contentForThisRow;
+        if (_opponentsToWager) {
+            scoreSummary.opponentsToWager = _opponentsToWager;
+        }
+        scoreSummary.sport = [contentForThisRow objectAtIndex:0];
+        scoreSummary.title = [contentForThisRow objectAtIndex:0];
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         [self.navigationController pushViewController:scoreSummary animated:YES];

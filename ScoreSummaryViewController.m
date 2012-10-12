@@ -64,6 +64,8 @@
         [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
         [button setTitle:@"Wager" forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+        [button.titleLabel setShadowColor:[UIColor darkGrayColor]];
+        [button.titleLabel setShadowOffset:CGSizeMake(0, 1)];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         UIBarButtonItem *wagerBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
         self.navigationItem.rightBarButtonItem = wagerBarButton;
@@ -75,6 +77,9 @@
     [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
     [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
     custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [custombackButton.titleLabel setShadowColor:[UIColor darkGrayColor]];
+    [custombackButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+    custombackButton.titleLabel.textColor = [UIColor colorWithRed:0.996 green:0.98 blue:0.902 alpha:1];
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
@@ -138,7 +143,7 @@
     if (cell == nil) {
         cell = [[ScoreSummaryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    [cell.gameImageView setImage:[UIImage imageNamed:@"sports.jpg"]];
+    [cell.gameImageView setImage:[UIImage imageNamed:@"lakersCeltic"]];
     [cell.team1Label setText:@"Lakers"];
     [cell.team2Label setText:@"Celtics"];
     [cell.team1Odds setText:@"+13.5"];
@@ -162,7 +167,7 @@
         NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
         newWager.sport = _sport;
         if (_opponentsToWager.count > 0) {
-            
+            newWager.opponentsToWager = _opponentsToWager;
         }
         newWager.opponentsToWager = _opponentsToWager;
         newWager.gameDataDictionary = gameDataDictionary;
@@ -172,6 +177,7 @@
     }
     else {
         ScoreDetailViewController *sdvc = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil];
+        sdvc.opponentsToWager = _opponentsToWager;
         [self.navigationController pushViewController:sdvc animated:YES];
     }
     

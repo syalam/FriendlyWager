@@ -10,7 +10,7 @@
 
 #import "MasterViewController.h"
 #import "LoginOptionsViewController.h"
-#import "TrashTalkViewController.h"
+#import "LoadScreenViewController.h"
 #import "TestFlight.h" 
 #import "Kiip.h"
 
@@ -37,8 +37,8 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     _trashTalkViewController = [[TrashTalkViewController alloc] initWithNibName:@"TrashTalkViewController" bundle:nil];
-    _loadScreenViewController = [[LoadScreenViewController alloc]initWithNibName:@"LoadScreenViewController" bundle:nil];
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:_loadScreenViewController];
+    LoadScreenViewController *loadScreenViewController = [[LoadScreenViewController alloc]initWithNibName:@"LoadScreenViewController" bundle:nil];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:loadScreenViewController];
     self.window.rootViewController = self.navigationController;
     
     if ([UINavigationBar respondsToSelector:@selector(appearance)]) {

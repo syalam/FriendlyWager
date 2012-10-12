@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import "TrashTalkViewController.h"
-#import "LoadScreenViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
 
@@ -18,6 +17,5 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *navigationController;
 @property (strong, nonatomic) TrashTalkViewController *trashTalkViewController;
-@property (strong, nonatomic) LoadScreenViewController *loadScreenViewController;
 
 @end

@@ -55,6 +55,8 @@
     [customCancelButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [customCancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
     customCancelButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [customCancelButton.titleLabel setShadowColor:[UIColor darkGrayColor]];
+    [customCancelButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
     [customCancelButton addTarget:self action:@selector(cancelButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:customCancelButton];
@@ -67,6 +69,8 @@
     [customSendButton addTarget:self action:@selector(submitButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [customSendButton setTitle:@"Post" forState:UIControlStateNormal];
     customSendButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [customSendButton.titleLabel setShadowColor:[UIColor darkGrayColor]];
+    [customSendButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
     UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithCustomView:customSendButton];
     
     self.navigationItem.rightBarButtonItem = submitButton;

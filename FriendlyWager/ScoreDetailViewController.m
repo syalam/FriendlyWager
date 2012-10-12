@@ -57,7 +57,7 @@
     
     NSMutableArray *secondSection = [[NSMutableArray alloc]init];
     NSArray *scoreDetailsArray = [[NSArray alloc]initWithObjects:firstSection, secondSection, nil];
-    [self setContentList:scoreDetailsArray];
+    //[self setContentList:scoreDetailsArray];
     
     //UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
     //self.navigationItem.rightBarButtonItem = wagerButton;
@@ -67,10 +67,14 @@
     [custombackButton setBackgroundImage:backButtonImage forState:UIControlStateNormal];
     [custombackButton setTitle:@"  Back" forState:UIControlStateNormal];
     custombackButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [custombackButton.titleLabel setShadowColor:[UIColor darkGrayColor]];
+    [custombackButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+    custombackButton.titleLabel.textColor = [UIColor colorWithRed:0.996 green:0.98 blue:0.902 alpha:1];
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
     self.navigationItem.leftBarButtonItem = backButton;
+    [self getWagers];
 
 
     
@@ -144,113 +148,108 @@
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    //return self.contentList.count;
-    return 1;
+    return self.contentList.count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    //NSArray *sectionContents = [[self contentList] objectAtIndex:section];
-    //return sectionContents.count;
-    return 1;
-}
-
-/*- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        return @"Stats";
+    if (![[self.contentList objectAtIndex:section] count]) {
+        return 1;
     }
     else {
-        return @"My Wagers";
-    }
-}*/
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section == 0) {
-        return 78;
-    }
-    else {
-        return 46;
+        return [[self.contentList objectAtIndex:section] count];
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
-    id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
     
-    static NSString *CellIdentifier = @"Cell";
+    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d",indexPath.section, indexPath.row];
     
-    if (indexPath.section == 0) {
-        
-        ScoreSummaryCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        cell = [[ScoreSummaryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        
-        [cell.gameImageView setImage:[UIImage imageNamed:@"sports.jpg"]];
-
-        [cell.team1Label setText:@"Lakers"];
-        [cell.team2Label setText:@"Celtics"];
-        [cell.team1Odds setText:@"+13.5"];
-        [cell.team2Odds setText:@"-13.5"];
-        [cell.gameTime setText:@"4:00 PM"];
-        [cell.wagersLabel setText:@"Wagers"];
-        [cell.wagerCountLabel setText:@"4"];
-        cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"gameCellNoArrow"]];
-        cell.backgroundColor = [UIColor clearColor];
-        
-        
-        /*UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 12, 100, 20)];
-        UILabel *scoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(240, 12, 40, 20)];
-        teamLabel.backgroundColor = [UIColor clearColor];
-        scoreLabel.backgroundColor = [UIColor clearColor];
-        teamLabel.text = [contentForThisRow objectForKey:@"team"];
-        scoreLabel.text = [contentForThisRow objectForKey:@"teamScore"];
-        
-        teamLabel.textColor = [UIColor blackColor];
-        teamLabel.font = [UIFont boldSystemFontOfSize:18];
-        
-        scoreLabel.textColor = [UIColor blackColor];
-        scoreLabel.font = [UIFont boldSystemFontOfSize:18];
-        
-        [cell addSubview:teamLabel];
-        [cell addSubview:scoreLabel];*/
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    cell = nil;
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.accessoryType = UITableViewCellAccessoryNone;
         
-        return cell;
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
+        NSMutableArray *sectionContents = [self.contentList objectAtIndex:indexPath.section];
+        cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"scoresCellBg"]];
+        cell.backgroundColor = [UIColor clearColor];
+        if (sectionContents.count) {
+            UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(55, 10, 200, 30)];
+            nameLabel.textColor = [UIColor blackColor];
+            nameLabel.textAlignment = UITextAlignmentLeft;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            nameLabel.backgroundColor = [UIColor clearColor];
+            nameLabel.text = [[[sectionContents objectAtIndex:indexPath.row]valueForKey:@"object"] objectForKey:@"name"];
+            nameLabel.text = [nameLabel.text capitalizedString];
+            nameLabel.font = [UIFont boldSystemFontOfSize:17];
+            [cell.contentView addSubview:nameLabel];
+            NSData *picData = [[[sectionContents objectAtIndex:indexPath.row]valueForKey:@"object"] objectForKey:@"picture"];
+            UIImage *profilePic;
+            if (picData) {
+                profilePic = [UIImage imageWithData:picData];
+            }
+            else {
+                profilePic = [UIImage imageNamed:@"myFeed2"];
+            }
+            UILabel *odds = [[UILabel alloc]initWithFrame:CGRectMake(200, 10, 60, 30)];
+            odds.text = [[sectionContents objectAtIndex:indexPath.row]valueForKey:@"odds"];
+            odds.font = [UIFont boldSystemFontOfSize:17];
+            odds.textColor = [UIColor blackColor];
+            odds.textAlignment = UITextAlignmentRight;
+            odds.backgroundColor = [UIColor clearColor];
+            [cell.contentView addSubview:odds];
+            
+            UIImageView *profilePicView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 8, 39, 39)];
+            profilePicView.contentMode = UIViewContentModeScaleAspectFit;
+            [profilePicView setImage:profilePic];
+            [cell.contentView addSubview:profilePicView];
+
+        }
+        else {
+            UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 200, 30)];
+            nameLabel.textColor = [UIColor blackColor];
+            nameLabel.textAlignment = UITextAlignmentLeft;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            nameLabel.backgroundColor = [UIColor clearColor];
+            nameLabel.text = @"None";
+            nameLabel.text = [nameLabel.text capitalizedString];
+            nameLabel.font = [UIFont boldSystemFontOfSize:17];
+            [cell.contentView addSubview:nameLabel];
+
+        }
+    }
+    
+    
+    return cell;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 292, 25)];
+    [headerView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"header"]]];
+    
+    UILabel *wagerType = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 100, 20)];
+    wagerType.font = [UIFont boldSystemFontOfSize:12];
+    [wagerType setShadowColor:[UIColor darkGrayColor]];
+    [wagerType setShadowOffset:CGSizeMake(0, -1)];
+    wagerType.textColor = [UIColor whiteColor];
+    
+    [wagerType setBackgroundColor:[UIColor clearColor]];
+    
+    if (section == 0) {
+        wagerType.text = @"Pending";
     }
     else {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        UILabel *opponentLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, 120, 20)];
-        UILabel *wageredLabel = [[UILabel alloc]initWithFrame:CGRectMake(155, 10, 30, 20)];
-        UILabel *oddsLabel = [[UILabel alloc]initWithFrame:CGRectMake(240, 10, 30, 20)];
-        opponentLabel.backgroundColor = [UIColor clearColor];
-        wageredLabel.backgroundColor = [UIColor clearColor];
-        oddsLabel.backgroundColor = [UIColor clearColor];
-        opponentLabel.text = [contentForThisRow objectForKey:@"opponent"];
-        wageredLabel.text = [contentForThisRow objectForKey:@"wagered"];
-        oddsLabel.text = [[contentForThisRow objectForKey:@"odds"]stringValue];
-        
-        opponentLabel.textColor = [UIColor whiteColor];
-        opponentLabel.font = [UIFont boldSystemFontOfSize:18];
-        
-        wageredLabel.textColor = [UIColor whiteColor];
-        wageredLabel.font = [UIFont boldSystemFontOfSize:18];
-        
-        oddsLabel.textColor = [UIColor whiteColor];
-        oddsLabel.font = [UIFont boldSystemFontOfSize:18];
-        
-        
-        [cell addSubview:opponentLabel];
-        [cell addSubview:wageredLabel];
-        [cell addSubview:oddsLabel];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        
-        return cell;
+        wagerType.text = @"Current";
     }
-
+    
+    [headerView addSubview:wagerType];
+    
+    return headerView;
 }
+
 
 #pragma mark - Button Clicks
 - (IBAction)makeAWagerButtonTapped:(id)sender {
@@ -258,11 +257,10 @@
     NSDictionary *gameDataDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team1", @"1", @"team1Id", @"Celtics", @"team2", @"2", @"team2Id", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate date], @"date", @"1", @"gameId", nil];
     NSLog(@"%@", gameDataDictionary);
     NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
-    /*newWager.sport = _sport;
+    newWager.sport = _sport;
     if (_opponentsToWager.count > 0) {
-        
-    }*/
-    //newWager.opponentsToWager = _opponentsToWager;
+        newWager.opponentsToWager = _opponentsToWager;
+    }
     newWager.gameDataDictionary = gameDataDictionary;
     [newWager updateOpponents];
     [self.navigationController pushViewController:newWager animated:YES];
@@ -272,6 +270,60 @@
 - (void)backButtonClicked:(id)sender {
     [self viewWillDisappear:YES];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)getWagers {
+    NSMutableArray *currentWagers = [[NSMutableArray alloc]init];
+    NSMutableArray *pendingWagers = [[NSMutableArray alloc]init];
+    PFQuery *wagers = [PFQuery queryWithClassName:@"wagers"];
+    [wagers whereKey:@"gameId" equalTo:@"1"];
+    [wagers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for(PFObject *wager in objects)
+            {
+                BOOL isPending;
+                NSString *teamSelected = [wager objectForKey:@"teamWageredToLose"];
+                NSString *odds;
+                PFUser *person = [wager objectForKey:@"wager"];
+                if ([[wager objectForKey:@"wagerAccepted"] boolValue]) {
+                    isPending = NO;
+                }
+                else {
+                    isPending = YES;
+                }
+                if ([teamSelected isEqualToString:@"Celtics"]) {
+                    odds = @"- 13";
+                }
+                else {
+                    odds = @"+ 13";
+                }
+                [person fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                    if (!error) {
+                        if ([object objectForKey:@"name"]) {
+                            NSMutableDictionary *item = [[NSMutableDictionary alloc]initWithObjectsAndKeys:object, @"object", odds, @"odds", nil];
+                            if (!isPending) {
+                                [currentWagers addObject:item];
+                            }
+                            else {
+                                [pendingWagers addObject:item];
+                            }
+                        }
+                    
+                    }
+                    [self setContentList:[NSMutableArray arrayWithObjects:pendingWagers, currentWagers, nil]];
+                    numberWagers.text = [NSString stringWithFormat:@"%d", currentWagers.count];
+                    numberPending.text = [NSString stringWithFormat:@"%d", pendingWagers.count];
+                    if (pendingWagers.count > 9) {
+                        [pendingNotification setImage:[UIImage imageNamed:@"alertIndicatorLong"]];
+                    }
+                    [scoreDetailTableView reloadData];
+
+                }];
+            }
+            
+            
+        }
+    }];
 }
 
 @end
