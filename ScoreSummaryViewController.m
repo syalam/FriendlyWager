@@ -50,9 +50,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    currentWagers = [[NSMutableArray alloc]init];
-    pendingWagers = [[NSMutableArray alloc]init];
     
     newWagerVisible = NO;
     if (_wager) {
@@ -154,22 +151,15 @@
     [cell.team2Odds setText:@"-13.5"];
     [cell.gameTime setText:@"4:00 PM"];
     [cell.wagersLabel setText:@"Wagers"];
-    [cell.wagerCountLabel setText:@"0"];
-    if (currentWagers) {
-        [cell.wagerCountLabel setText:[NSString stringWithFormat:@"%d",currentWagers.count]];
-    }
-    if (pendingWagers) {
-        [cell.pendingCountLabel setText:[NSString stringWithFormat:@"%d",pendingWagers.count]];
-        if (pendingWagers.count > 9) {
+    [cell.wagerCountLabel setText:[NSString stringWithFormat:@"%d",currentWagers]];
+    [cell.pendingCountLabel setText:[NSString stringWithFormat:@"%d",pendingWagers]];
+    if (pendingWagers > 9) {
             [cell.pendingNotofication setImage:[UIImage imageNamed:@"alertIndicatorLong"]];
         }
-        else {
-            [cell.pendingNotofication setImage:[UIImage imageNamed:@"alertIndicator"]];
+    else {
+        [cell.pendingNotofication setImage:[UIImage imageNamed:@"alertIndicator"]];
             
-        }
-
     }
-    
     
     cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"gameCell"]];
     cell.backgroundColor = [UIColor clearColor];
@@ -198,6 +188,8 @@
     else {
         ScoreDetailViewController *sdvc = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil];
         sdvc.opponentsToWager = _opponentsToWager;
+        sdvc.currentCount = currentWagers;
+        sdvc.pendingCount = pendingWagers;
         [self.navigationController pushViewController:sdvc animated:YES];
     }
     
@@ -288,52 +280,22 @@
 }
 
 - (void)wagerButtonClicked:(id)sender {
-    [self.tabBarController setSelectedIndex:0];
+    [self.tabBarController setSelectedIndex:1];
 }
 
 #pragma mark - Helper Methods
 - (void)getWagers {
-    PFQuery *wagers = [PFQuery queryWithClassName:@"wagers"];
-    [wagers whereKey:@"gameId" equalTo:@"1"];
-    [wagers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    PFQuery *gameCount = [PFQuery queryWithClassName:@"Games"];
+    [gameCount whereKey:@"sport" equalTo:@"Basketball"];
+    [gameCount findObjectsInBackgroundWithBlock:^(NSArray *games, NSError *error) {
         if (!error) {
-            for(PFObject *wager in objects)
+            for(PFObject *game in games)
             {
-                BOOL isPending;
-                NSString *teamSelected = [wager objectForKey:@"teamWageredToLose"];
-                NSString *odds;
-                PFUser *person = [wager objectForKey:@"wager"];
-                if ([[wager objectForKey:@"wagerAccepted"] boolValue]) {
-                    isPending = NO;
-                }
-                else {
-                    isPending = YES;
-                }
-                if ([teamSelected isEqualToString:@"Celtics"]) {
-                    odds = @"- 13";
-                }
-                else {
-                    odds = @"+ 13";
-                }
-                [person fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                    if (!error) {
-                        if ([object objectForKey:@"name"]) {
-                            NSMutableDictionary *item = [[NSMutableDictionary alloc]initWithObjectsAndKeys:object, @"object", odds, @"odds", nil];
-                            if (!isPending) {
-                                [currentWagers addObject:item];
-                            }
-                            else {
-                                [pendingWagers addObject:item];
-                            }
-                        }
-                        
-                    }
-                    [self.tableView reloadData];
+                currentWagers = [[game objectForKey:@"numberOfWagers"]intValue];
+                pendingWagers = [[game objectForKey:@"numberOfPendingWagers"]intValue];
+                [self.tableView reloadData];
                     
-                }];
             }
-            
-            
         }
     }];
 }

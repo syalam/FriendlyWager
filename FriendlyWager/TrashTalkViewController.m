@@ -37,7 +37,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [chatIndicator setHidden:YES];
+    [chatIndicatorLabel setHidden:YES];
+    [self.navigationController.view addSubview:tipsView];
     self.title = @"Home";
     
     if (_tabBarView) {
@@ -46,6 +48,13 @@
         [rankingButton setHidden:YES];
         
     }
+    PFObject *gameObject = [PFObject objectWithClassName:@"Games"];
+    [gameObject setObject:@"1" forKey:@"gameId"];
+    [gameObject setObject:@"Celtics" forKey:@"team1"];
+    [gameObject setObject:@"Lakers" forKey:@"team2"];
+    [gameObject setObject:[NSNumber numberWithInt:47] forKey:@"numberOfPendingWagers"];
+    [gameObject setObject:[NSNumber numberWithInt:12] forKey:@"numberOfWagers"];
+    [gameObject saveInBackground];
     
     //bgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     //bgView.contentMode = UIViewContentModeBottom;
@@ -92,6 +101,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    newItems = 0;
     stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     [self.navigationController.navigationBar addSubview:stripes];
@@ -115,6 +125,8 @@
                         if (!error) {
                             for (PFObject *trashTalkItem in objects) {
                                 [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
+                                [trashTalkItem setObject:[NSNumber numberWithInt:0] forKey:@"isNew"];
+                                [trashTalkItem saveInBackground];
                             }
                             NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
                             NSArray *sortDescriptors = [NSArray arrayWithObject:sortByDate];
@@ -147,6 +159,8 @@
                         if (!error) {
                             for (PFObject *sentTrashTalkItem in objects) {
                                 [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:sentTrashTalkItem, @"data", sentTrashTalkItem.updatedAt, @"date", nil]];
+                                [sentTrashTalkItem setObject:[NSNumber numberWithInt:0] forKey:@"isNew"];
+                                [sentTrashTalkItem saveInBackground];
                             }
                             NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
                             NSArray *sortDescriptors = [NSArray arrayWithObject:sortByDate];
@@ -162,7 +176,7 @@
                             [self setContentList:trashTalkToDisplay];
                             [self.trashTalkTableView reloadData];
                             
-                            PFQuery *queryForUser = [PFQuery queryForUser];
+                            /*PFQuery *queryForUser = [PFQuery queryForUser];
                             [queryForUser whereKey:@"objectId" equalTo:[[PFUser currentUser] objectId]];
                             [queryForUser findObjectsInBackgroundWithBlock:^(NSArray *userObjects, NSError *error) {
                                 if (!error) {
@@ -172,7 +186,7 @@
                                         [profilePic setImage:_pic];
                                     }
                                 }
-                            }];
+                            }];*/
                         } 
                     }];
                 }
@@ -361,7 +375,21 @@
         }
 
     }
-    
+    NSNumber *count = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"isNew"];
+    if ([count intValue]) {
+        newItems = newItems + 1;
+    }
+    if (indexPath.row == contentList.count - 1) {
+        if (newItems) {
+            [chatIndicatorLabel setHidden:NO];
+            [chatIndicator setHidden:NO];
+            chatIndicatorLabel.text = [NSString stringWithFormat:@"%d",newItems];
+        }
+        else {
+            [chatIndicatorLabel setHidden:YES];
+            [chatIndicator setHidden:YES];
+        }
+    }
     cell.contentView.backgroundColor = [UIColor clearColor];
     cell.backgroundColor = [UIColor clearColor];
     return cell;
@@ -509,5 +537,16 @@
     //[self.navigationController presentViewController:tabBarVc animated:YES completion:NULL];
 }
 
+- (IBAction)okButtonClicked:(id)sender{
+    [UIView animateWithDuration:1.0
+                          delay:0.0
+                        options:UIViewAnimationCurveEaseInOut
+                     animations:^ {
+                         tipsView.alpha = 0;
+                     }
+                     completion:^(BOOL finished) {
+                         [tipsView removeFromSuperview];
+                     }];
+}
 
 @end

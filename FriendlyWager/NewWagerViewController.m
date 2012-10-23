@@ -400,20 +400,34 @@
                                 [tokenObject setValue:[NSNumber numberWithInt:updatedTokenCount] forKey:@"tokenCount"];
                                 [tokenObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                     if (!error) {
-                                        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"updated"];
-                                        [SVProgressHUD dismiss];
-                                        if (_tabParentView) {
-                                            [_tabParentView.navigationController dismissViewControllerAnimated:YES completion:NULL];
-                                        }
-                                        else {
-                                            [self.navigationController popToRootViewControllerAnimated:YES];
-                                        }
-                                    }
-                                    else {
-                                        [SVProgressHUD dismiss];
-                                        NSLog(@"%@", error);
-                                    }
+                                        PFQuery *updateGameCount = [PFQuery queryWithClassName:@"Games"];
+                                        [updateGameCount whereKey:@"gameId" equalTo:@"1"];
+                                        
+                                        [updateGameCount findObjectsInBackgroundWithBlock:^(NSArray *games, NSError *error) {
+                                            if (!error) {
+                                                for (PFObject *game in games) {
+                                                    int pendingCount = [[game valueForKey:@"numberOfPendingWagers"]intValue]+1;
+                                                    [game setObject:[NSNumber numberWithInt:pendingCount] forKey:@"numberOfPendingWagers"];
+                                                    [game saveInBackground];
+                                                    
+                                                }
+                                                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"updated"];
+                                                [SVProgressHUD dismiss];
+                                                if (_tabParentView) {
+                                                    [_tabParentView.navigationController dismissViewControllerAnimated:YES completion:NULL];
+                                                }
+                                                else {
+                                                    [self.navigationController popToRootViewControllerAnimated:YES];
+                                                }
+                                            }
+                                            else {
+                                                [SVProgressHUD dismiss];
+                                                NSLog(@"%@", error);
+                                            }
 
+                                        }];
+                                    }
+                                    
                                 }];
                             }
                         } 

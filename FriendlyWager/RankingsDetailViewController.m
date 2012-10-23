@@ -286,7 +286,7 @@
 
 #pragma mark - Button Clicks
 - (void)wagerButtonClicked:(id)sender {
-    [self.tabBarController setSelectedIndex:0];
+    [self.tabBarController setSelectedIndex:1];
 }
 
 @end

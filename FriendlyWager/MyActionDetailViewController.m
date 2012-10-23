@@ -252,6 +252,17 @@
             [detailTableContents removeObjectAtIndex:tag];
             [indexPathArray removeObjectAtIndex:tag];
             [actionHistoryTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            PFQuery *updateGameCount = [PFQuery queryWithClassName:@"Games"];
+            [updateGameCount whereKey:@"gameId" equalTo:@"1"];
+            [updateGameCount findObjectsInBackgroundWithBlock:^(NSArray *games, NSError *error) {
+                for (PFObject *game in games) {
+                    int currentCount = [[game objectForKey:@"numberOfWagers"] intValue]+1;
+                    int pendingCount = [[game objectForKey:@"numberOfPendingWagers"]intValue]-1;
+                    [game setObject:[NSNumber numberWithInt:currentCount] forKey:@"numberOfWagers"];
+                    [game setObject:[NSNumber numberWithInt:pendingCount] forKey:@"numberOfPendingWagers"];
+                    [game saveInBackground];
+                }
+            }];
         }
         else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to accept this wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -269,6 +280,15 @@
             [detailTableContents removeObjectAtIndex:tag];
             [indexPathArray removeObjectAtIndex:tag];
             [actionHistoryTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            PFQuery *updateGameCount = [PFQuery queryWithClassName:@"Games"];
+            [updateGameCount whereKey:@"gameId" equalTo:@"1"];
+            [updateGameCount findObjectsInBackgroundWithBlock:^(NSArray *games, NSError *error) {
+                for (PFObject *game in games) {
+                    int pendingCount = [[game objectForKey:@"numberOfPendingWagers"]intValue]-1;
+                    [game setObject:[NSNumber numberWithInt:pendingCount] forKey:@"numberOfPendingWagers"];
+                    [game saveInBackground];
+                }
+            }];
         } 
         else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to reject this wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];

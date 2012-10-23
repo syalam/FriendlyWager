@@ -207,12 +207,16 @@
                                 else {
                                     [itemsToDisplay addObject:[NSDictionary dictionaryWithObjectsAndKeys:object, @"object", object.createdAt, @"date", nil]];
                                 }
+
+                                
                                 NSSortDescriptor *dateDescriptor = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
                                 NSArray *sortDescriptors = [NSArray arrayWithObject:dateDescriptor];
                                 NSArray *sortedArray = [itemsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
-                                //firtPart = YES;
+                                    //firtPart = YES;
                                 [self setContentList:[sortedArray mutableCopy]];
                                 [myActionTableView reloadData];
+                                
+                                
                             }
                             else
                                 NSLog(@"%@",error);

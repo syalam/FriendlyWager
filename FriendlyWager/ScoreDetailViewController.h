@@ -28,5 +28,7 @@
 @property (nonatomic, retain) NSMutableArray* opponentsToWager;
 @property (nonatomic, retain) NSMutableDictionary* gameDataDictionary;
 @property (nonatomic, retain) NSString *sport;
+@property int currentCount;
+@property int pendingCount;
 
 @end

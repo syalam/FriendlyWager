@@ -17,6 +17,13 @@
     IBOutlet UIButton *rankingButton;
     IBOutlet UIButton *makeWagerButton;
     IBOutlet UIImageView *profilePic;
+    IBOutlet UIButton *okButton;
+    IBOutlet UIImageView *tipsOverlay;
+    IBOutlet UIView *tipsView;
+    IBOutlet UIImageView *chatIndicator;
+    IBOutlet UILabel *chatIndicatorLabel;
+    
+    int newItems;
     
     TabBarDelegateViewController *tabBarVc;
     UINavigationController *tabBarNavC;
@@ -31,6 +38,7 @@
 - (IBAction)scoresButtonClicked:(id)sender;
 - (IBAction)rankingButtonClicked:(id)sender;
 - (IBAction)makeWagerButtonClicked:(id)sender;
+- (IBAction)okButtonClicked:(id)sender;
 
 
 @property (nonatomic, retain) PFUser *opponent;

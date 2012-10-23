@@ -33,11 +33,11 @@
         _team2Odds.textAlignment = UITextAlignmentRight;
         _gameTime = [[UILabel alloc]initWithFrame:CGRectMake(80, 50, 60, 30)];
         _wagersLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 50, 60, 30)];
-        _wagerCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(190, 50, 20, 30)];
+        _wagerCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(190, 50, 50, 30)];
         
-        _pendingNotofication = [[UIImageView alloc]initWithFrame:CGRectMake(200, 52, 37, 21)];
+        _pendingNotofication = [[UIImageView alloc]initWithFrame:CGRectMake(210, 52, 37, 21)];
         [_pendingNotofication setContentMode:UIViewContentModeCenter];
-        _pendingCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(200, 52, 37, 21)];
+        _pendingCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 52, 37, 21)];
         [_pendingCountLabel setBackgroundColor:[UIColor clearColor]];
         [_pendingCountLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:12]];
         _pendingCountLabel.textAlignment = NSTextAlignmentCenter;

@@ -72,6 +72,13 @@
     custombackButton.titleLabel.textColor = [UIColor colorWithRed:0.996 green:0.98 blue:0.902 alpha:1];
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
+
+    numberWagers.text = [NSString stringWithFormat:@"%d", self.currentCount];
+    numberPending.text = [NSString stringWithFormat:@"%d", self.pendingCount];
+    if (self.pendingCount > 9) {
+        [pendingNotification setImage:[UIImage imageNamed:@"alertIndicatorLong"]];
+    }
+
     
     self.navigationItem.leftBarButtonItem = backButton;
     [self getWagers];
@@ -214,7 +221,12 @@
             nameLabel.textAlignment = UITextAlignmentLeft;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             nameLabel.backgroundColor = [UIColor clearColor];
-            nameLabel.text = @"None";
+            if (indexPath.section == 0) {
+                nameLabel.text = @"Zero pending wagers on this game";
+            }
+            else {
+                nameLabel.text = @"Zero current wagers on this game";
+            }
             nameLabel.text = [nameLabel.text capitalizedString];
             nameLabel.font = [UIFont boldSystemFontOfSize:17];
             [cell.contentView addSubview:nameLabel];
@@ -277,14 +289,19 @@
     NSMutableArray *pendingWagers = [[NSMutableArray alloc]init];
     PFQuery *wagers = [PFQuery queryWithClassName:@"wagers"];
     [wagers whereKey:@"gameId" equalTo:@"1"];
-    [wagers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    [wagers orderByDescending:@"dateModified"];
+    [wagers setLimit:200];
+    [wagers findObjectsInBackgroundWithBlock:^(NSArray *wagers, NSError *error) {
         if (!error) {
-            for(PFObject *wager in objects)
+            NSMutableArray *userArray = [[NSMutableArray alloc]init];
+            NSMutableArray *isPendingArray = [[NSMutableArray alloc]init];
+            NSMutableArray *oddsArray = [[NSMutableArray alloc]init];
+            
+            for(PFObject *wager in wagers)
             {
                 BOOL isPending;
                 NSString *teamSelected = [wager objectForKey:@"teamWageredToLose"];
                 NSString *odds;
-                PFUser *person = [wager objectForKey:@"wager"];
                 if ([[wager objectForKey:@"wagerAccepted"] boolValue]) {
                     isPending = NO;
                 }
@@ -297,32 +314,44 @@
                 else {
                     odds = @"+ 13";
                 }
-                [person fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                    if (!error) {
-                        if ([object objectForKey:@"name"]) {
-                            NSMutableDictionary *item = [[NSMutableDictionary alloc]initWithObjectsAndKeys:object, @"object", odds, @"odds", nil];
-                            if (!isPending) {
+                [isPendingArray addObject:[NSNumber numberWithBool:isPending]];
+                [oddsArray addObject:odds];
+                NSString *userId = [NSString stringWithFormat:@"%@", [[wager objectForKey:@"wager"]objectId]];
+                [userArray addObject:userId];
+            }
+            PFQuery *queryForUsers = [PFQuery queryForUser];
+            [queryForUsers whereKey:@"objectId" containedIn:userArray];
+            [queryForUsers findObjectsInBackgroundWithBlock:^(NSArray *users, NSError *error) {
+                if (!error) {
+                    for (int i = 0; i<wagers.count; i++) {
+                        PFUser *user;
+                        NSString *wagerUserId = [NSString stringWithFormat:@"%@", [[[wagers objectAtIndex:i] objectForKey:@"wager"]objectId]];
+                        for (int j = 0; j < users.count; j++) {
+                            NSString *userId = [NSString stringWithFormat:@"%@", [[users objectAtIndex:j] objectId]];
+                            if ([wagerUserId isEqualToString:userId]) {
+                                user = [users objectAtIndex:j];
+                            }
+                            
+                        }
+                        if ([user objectForKey:@"name"]) {
+                            NSMutableDictionary *item = [[NSMutableDictionary alloc]initWithObjectsAndKeys:user, @"object", [oddsArray objectAtIndex:i], @"odds", nil];
+                            if (![[isPendingArray objectAtIndex:i]boolValue]) {
                                 [currentWagers addObject:item];
                             }
                             else {
                                 [pendingWagers addObject:item];
                             }
+                            [self setContentList:[NSMutableArray arrayWithObjects:pendingWagers, currentWagers, nil]];
+                            [scoreDetailTableView reloadData];
                         }
-                    
                     }
-                    [self setContentList:[NSMutableArray arrayWithObjects:pendingWagers, currentWagers, nil]];
-                    numberWagers.text = [NSString stringWithFormat:@"%d", currentWagers.count];
-                    numberPending.text = [NSString stringWithFormat:@"%d", pendingWagers.count];
-                    if (pendingWagers.count > 9) {
-                        [pendingNotification setImage:[UIImage imageNamed:@"alertIndicatorLong"]];
-                    }
-                    [scoreDetailTableView reloadData];
 
-                }];
-            }
-            
-            
+                }
+                                                   
+
+            }];
         }
+            
     }];
 }
 
