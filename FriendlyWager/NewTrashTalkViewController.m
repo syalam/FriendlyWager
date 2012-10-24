@@ -104,13 +104,35 @@
     [newTrashTalk setObject:trashTalkTextView.text forKey:@"trashTalkContent"];
     [newTrashTalk setObject:user forKey:@"sender"];
     [newTrashTalk setObject:[user objectForKey:@"name"] forKey:@"senderName"];
+    [newTrashTalk setObject:[NSNumber numberWithInt:1] forKey:@"isNew"];
     if (_recipient) {
         [newTrashTalk setObject:_recipient forKey:@"recipient"];
         [newTrashTalk setObject:[_recipient objectForKey:@"name"] forKey:@"recipientName"];
+        NSString *recipientName = [_recipient objectForKey:@"name"];
+        NSString *senderName = [user objectForKey:@"name"];        
+        NSComparisonResult result = [senderName compare:recipientName];
+        
+        if (result == NSOrderedAscending) {
+            NSString *conversationId = [NSString stringWithFormat:@"%@-%@", senderName, recipientName];
+            [newTrashTalk setObject:conversationId forKey:@"conversationId"];
+        }
+            
+        else if (result == NSOrderedDescending) {
+            NSString *conversationId = [NSString stringWithFormat:@"%@-%@", recipientName, senderName];
+            [newTrashTalk setObject:conversationId forKey:@"conversationId"];
+        }
+        
+        else {
+            NSString *conversationId = [NSString stringWithFormat:@"%@-%@", recipientName, senderName];
+            [newTrashTalk setObject:conversationId forKey:@"conversationId"];
+        }
     }
     else {
         [newTrashTalk setObject:user forKey:@"recipient"];
         [newTrashTalk setObject:[user objectForKey:@"name"] forKey:@"recipientName"];
+        NSString *senderName = [user objectForKey:@"name"];
+        NSString *conversationId = [NSString stringWithFormat:@"%@-%@", senderName, senderName];
+        [newTrashTalk setObject:conversationId forKey:@"conversationId"];
     }
     [newTrashTalk saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
