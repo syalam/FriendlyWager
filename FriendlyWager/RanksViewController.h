@@ -14,7 +14,7 @@
     //IBOutlet UISegmentedControl *rankingControl;
     IBOutlet UIButton *byPoints;
     IBOutlet UIButton *byWins;
-    IBOutlet UIButton *bySport;
+    //IBOutlet UIButton *bySport;
     IBOutlet UIButton *byCity;
     NSMutableArray *myActionOpponentArray;
     NSMutableArray *myActionWagersArray;
@@ -22,7 +22,7 @@
     NSMutableArray *rankingsArray;
     NSArray *rankingsByPoints;
     NSArray *rankingsByWins;
-    NSArray *rankingsBySport;
+    //NSArray *rankingsBySport;
     NSArray *rankingsByCity;
 
 }
@@ -30,7 +30,7 @@
 //- (IBAction)rankingControlToggled:(id)sender;
 - (IBAction)byPointsSelected:(id)sender;
 - (IBAction)byWinsSelected:(id)sender;
-- (IBAction)bySportSelected:(id)sender;
+//- (IBAction)bySportSelected:(id)sender;
 - (IBAction)byCitySelected:(id)sender;
 
 - (void)rankByPoints;

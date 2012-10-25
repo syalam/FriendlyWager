@@ -46,7 +46,7 @@
     
     rankingsByPoints = [[NSArray alloc]initWithObjects:@"Rankings By Points", nil];
     rankingsByWins = [[NSArray alloc]initWithObjects:@"Rankings By Wins", nil];
-    rankingsBySport = [[NSArray alloc]initWithObjects:@"Ranking By Sport", nil];
+    //rankingsBySport = [[NSArray alloc]initWithObjects:@"Ranking By Sport", nil];
     
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
     [button addTarget:self action:@selector(wagerButtonClicked:) forControlEvents:UIControlEventTouchDown];
@@ -211,26 +211,26 @@
     [self rankByPoints];
     [byPoints setImage:[UIImage imageNamed:@"byPointsOn"] forState:UIControlStateNormal];
     [byWins setImage:[UIImage imageNamed:@"byWins"] forState:UIControlStateNormal];
-    [bySport setImage:[UIImage imageNamed:@"bySport"] forState:UIControlStateNormal];
+    //[bySport setImage:[UIImage imageNamed:@"bySport"] forState:UIControlStateNormal];
     [byCity setImage:[UIImage imageNamed:@"byCity"] forState:UIControlStateNormal];
 }
 - (IBAction)byWinsSelected:(id)sender {
     [self rankByWins];
     [byPoints setImage:[UIImage imageNamed:@"byPoints"] forState:UIControlStateNormal];
     [byWins setImage:[UIImage imageNamed:@"byWinsOn"] forState:UIControlStateNormal];
-    [bySport setImage:[UIImage imageNamed:@"bySport"] forState:UIControlStateNormal];
+    //[bySport setImage:[UIImage imageNamed:@"bySport"] forState:UIControlStateNormal];
     [byCity setImage:[UIImage imageNamed:@"byCity"] forState:UIControlStateNormal];
 }
-- (IBAction)bySportSelected:(id)sender {
+/*- (IBAction)bySportSelected:(id)sender {
     [byPoints setImage:[UIImage imageNamed:@"byPoints"] forState:UIControlStateNormal];
     [byWins setImage:[UIImage imageNamed:@"byWins"] forState:UIControlStateNormal];
     [bySport setImage:[UIImage imageNamed:@"bySportOn"] forState:UIControlStateNormal];
     [byCity setImage:[UIImage imageNamed:@"byCity"] forState:UIControlStateNormal];
-}
+}*/
 - (IBAction)byCitySelected:(id)sender {
     [byPoints setImage:[UIImage imageNamed:@"byPoints"] forState:UIControlStateNormal];
     [byWins setImage:[UIImage imageNamed:@"byWins"] forState:UIControlStateNormal];
-    [bySport setImage:[UIImage imageNamed:@"bySport"] forState:UIControlStateNormal];
+    //[bySport setImage:[UIImage imageNamed:@"bySport"] forState:UIControlStateNormal];
     [byCity setImage:[UIImage imageNamed:@"byCityOn"] forState:UIControlStateNormal];
 }
 

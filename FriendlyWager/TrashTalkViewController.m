@@ -151,12 +151,12 @@
                                 }
                                 else {
                                     for (int j = 0; j < idArray.count; j++) {
-                                        NSString *currentConversationId = [[idArray objectAtIndex:j]objectForKey:@"conversationId"];
-                                        if ([currentConversationId isEqualToString:conversationId]) {
+                                        
+                                        if ([[idOnlyArray objectAtIndex:j] isEqualToString:conversationId]) {
                                             NSNumber *currentCount = [[idArray objectAtIndex:j]objectForKey:@"conversationCount"];
                                             int count = [currentCount intValue]+1;
                                             currentCount = [NSNumber numberWithInt:count];
-                                            NSMutableDictionary *newConversationIdItem = [NSMutableDictionary dictionaryWithObjectsAndKeys:currentCount, @"conversationCount", currentConversationId, @"conversationId", nil];
+                                            NSMutableDictionary *newConversationIdItem = [NSMutableDictionary dictionaryWithObjectsAndKeys:currentCount, @"conversationCount", conversationId, @"conversationId", nil];
                                             [idArray replaceObjectAtIndex:j withObject:newConversationIdItem];
                                             //[[idArray objectAtIndex:j]setObject:currentCount forKey:@"conversationCount"];
                                         }
@@ -230,12 +230,12 @@
                                 }
                                 else {
                                     for (int j = 0; j < idArray.count; j++) {
-                                        NSString *currentConversationId = [[idArray objectAtIndex:j]objectForKey:@"conversationId"];
-                                        if ([currentConversationId isEqualToString:conversationId]) {
+                                        
+                                        if ([[idOnlyArray objectAtIndex:j] isEqualToString:conversationId]) {
                                             NSNumber *currentCount = [[idArray objectAtIndex:j]objectForKey:@"conversationCount"];
                                             int count = [currentCount intValue]+1;
                                             currentCount = [NSNumber numberWithInt:count];
-                                            NSMutableDictionary *newConversationIdItem = [NSMutableDictionary dictionaryWithObjectsAndKeys:currentCount, @"conversationCount", currentConversationId, @"conversationId", nil];
+                                            NSMutableDictionary *newConversationIdItem = [NSMutableDictionary dictionaryWithObjectsAndKeys:currentCount, @"conversationCount", conversationId, @"conversationId", nil];
                                             [idArray replaceObjectAtIndex:j withObject:newConversationIdItem];
                                             //[[idArray objectAtIndex:j]setObject:currentCount forKey:@"conversationCount"];
                                         }
@@ -341,12 +341,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d", indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     if (contentList.count != 0) {
         NSString *senderName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"senderName"];
-        //NSString *recipientName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"recipientName"];
+        NSString *recipientName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"recipientName"];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
@@ -444,8 +444,17 @@
         //if (![senderName isEqualToString:recipientName]) {
             UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeCustom];
             [replyButton setFrame:CGRectMake(cell.frame.size.width - 55, cell.frame.size.height - 21, 20, 20)];
-            if ([[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"isNew"]intValue]==1) {
-                [replyButton setImage:[UIImage imageNamed:@"CellArrowYellow"] forState:UIControlStateNormal];
+        int isNew =[[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"isNew"]intValue];
+            if (isNew) {
+                NSString *recipientId = [NSString stringWithFormat:@"%@", [[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] valueForKey:@"recipient"]objectId]];
+                NSString *userId = [[PFUser currentUser]objectId];
+                if ([recipientId isEqualToString:userId]) {
+                    [replyButton setImage:[UIImage imageNamed:@"CellArrowYellow"] forState:UIControlStateNormal];
+                }
+                else {
+                    [replyButton setImage:[UIImage imageNamed:@"CellArrowGray"] forState:UIControlStateNormal];
+                }
+        
             }
             else {
                 [replyButton setImage:[UIImage imageNamed:@"CellArrowGray"] forState:UIControlStateNormal];
@@ -503,9 +512,22 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        PFObject *objectToDelete = [contentList objectAtIndex:indexPath.row];
+        
+        PFObject *objectToDelete = [[contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
         [objectToDelete deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
             if (succeeded) {
+                NSMutableArray *objectsToDelete = [[NSMutableArray alloc]init];
+                for (int i = 0; i<allItems.count; i++) {
+                    if ([[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"conversationId"] isEqualToString:[[[allItems objectAtIndex:i]valueForKey:@"data"] objectForKey:@"conversationId"]]) {
+                        [objectsToDelete addObject:[allItems objectAtIndex:i]];
+                    }
+                }
+                for (int i = 0; i < objectsToDelete.count; i++) {
+                    if (![[contentList objectAtIndex:indexPath.row] isEqual:[objectsToDelete objectAtIndex:i]]) {
+                        [[[objectsToDelete objectAtIndex:i]valueForKey:@"data"] deleteInBackground];
+                    }
+                }
+
                 [contentList removeObjectAtIndex:indexPath.row];
                 [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             }

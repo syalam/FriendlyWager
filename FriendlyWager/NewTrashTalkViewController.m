@@ -49,7 +49,7 @@
     self.title = @"New Trash Talk";
     [self.navigationController setNavigationBarHidden:NO];
     
-    UIImage *buttonImage = [UIImage imageNamed:@"NavBtn2"];
+    UIImage *buttonImage = [UIImage imageNamed:@"navBtn2"];
     UIButton *customCancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     customCancelButton.bounds = CGRectMake( 0, 0, buttonImage.size.width, buttonImage.size.height );
     [customCancelButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
@@ -58,12 +58,11 @@
     [customCancelButton.titleLabel setShadowColor:[UIColor darkGrayColor]];
     [customCancelButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
     [customCancelButton addTarget:self action:@selector(cancelButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:customCancelButton];
     
     self.navigationItem.leftBarButtonItem = cancelButton;
+    
     UIImage *buttonImage2 = [UIImage imageNamed:@"NavBtn"];
-
     UIButton *customSendButton = [UIButton buttonWithType:UIButtonTypeCustom];
     customSendButton.bounds = CGRectMake( 0, 0, buttonImage.size.width, buttonImage.size.height );
     [customSendButton setBackgroundImage:buttonImage2 forState:UIControlStateNormal];
@@ -303,7 +302,7 @@
     //CGFloat height = MAX(size.height, 44.0f);
     
     //return height + (CELL_CONTENT_MARGIN * 2);
-    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, 320 , 100)];
+    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, 306 - 15, 100)];
     //UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 230, 100)];
     label2.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
     label2.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
@@ -399,7 +398,7 @@
         dateLabel.textColor = [UIColor  darkGrayColor];
         
         UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 16)];
-        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, cell.frame.size.width - 10, 100)];
+        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, cell.frame.size.width - 30, 100)];
         //[label2 setEditable:NO];
         //label1.font = [UIFont boldSystemFontOfSize:12];
         label1.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
@@ -462,7 +461,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        PFObject *objectToDelete = [_contentList objectAtIndex:indexPath.row];
+        PFObject *objectToDelete = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
         [objectToDelete deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
             if (succeeded) {
                 [_contentList removeObjectAtIndex:indexPath.row];
