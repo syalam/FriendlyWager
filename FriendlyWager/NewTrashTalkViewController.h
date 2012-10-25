@@ -23,6 +23,7 @@ typedef enum apiCall {
     IBOutlet UISwitch *fbSwitch;
     IBOutlet UILabel *postToFbLabel;
     int currentAPICall;
+    float height1;
     
     NSUserDefaults *fwData;
     
@@ -32,6 +33,9 @@ typedef enum apiCall {
 @property (nonatomic, retain) NSString *fbPostId;
 @property (nonatomic, retain) MyActionSummaryViewController *myActionScreen;
 @property (nonatomic, retain) FeedViewController *feedScreen;
+@property (nonatomic, retain) IBOutlet UITableView *trashTalkTableView;
+@property (nonatomic, retain) NSMutableArray *contentList;
+
 
 - (IBAction)FBSwitchSelected:(id)sender;
 - (void)sendFacebookRequest;

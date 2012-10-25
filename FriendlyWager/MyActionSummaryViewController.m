@@ -447,8 +447,8 @@
     CGFloat height = MAX(size.height, 44.0f);
     
     return height + (CELL_CONTENT_MARGIN * 2);*/
-    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 230, 100)];
-    label2.font = [UIFont systemFontOfSize:12];
+    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, 320 - 64, 100)];
+    label2.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
     label2.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
     label2.numberOfLines = 0;
     label2.lineBreakMode = UILineBreakModeWordWrap;
@@ -456,7 +456,7 @@
     //[label2 setFrame:CGRectMake(10, 20, 244, label2.frame.size.height)];
     [label2 sizeToFit];
     if ((label2.frame.size.height) > 28) {
-        return (40 + label2.frame.size.height);
+        return (30 + label2.frame.size.height);
     }
     else {
         return 58;
@@ -540,7 +540,7 @@
         dateLabel.textColor = [UIColor  darkGrayColor];
         
         UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 16)];
-        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, cell.frame.size.width - 64, 100)];
+        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, cell.frame.size.width - 64, 100)];
         //[label2 setEditable:NO];
         //label1.font = [UIFont boldSystemFontOfSize:12];
         label1.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
@@ -567,8 +567,8 @@
         [cell.contentView addSubview:label2];
         if (![senderName isEqualToString:recipientName]) {
             UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [replyButton setFrame:CGRectMake(cell.frame.size.width - 50, cell.frame.size.height - 22, 20, 20)];
-            [replyButton setImage:[UIImage imageNamed:@"CellArrowYellow"] forState:UIControlStateNormal];
+            [replyButton setFrame:CGRectMake(cell.frame.size.width - 55, cell.frame.size.height - 22, 20, 20)];
+            [replyButton setImage:[UIImage imageNamed:@"CellArrowGray"] forState:UIControlStateNormal];
             [replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             replyButton.tag = indexPath.row;
             

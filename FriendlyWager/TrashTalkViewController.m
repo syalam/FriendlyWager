@@ -37,8 +37,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //[chatIndicator setHidden:YES];
-    //[chatIndicatorLabel setHidden:YES];
+    [chatIndicator setHidden:YES];
+    [chatIndicatorLabel setHidden:YES];
     [self.navigationController.view addSubview:tipsView];
     self.title = @"Home";
     
@@ -98,6 +98,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     newItems = 0;
+    [idArray removeAllObjects];
+    [idOnlyArray removeAllObjects];
     stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     [self.navigationController.navigationBar addSubview:stripes];
@@ -154,15 +156,27 @@
                                             NSNumber *currentCount = [[idArray objectAtIndex:j]objectForKey:@"conversationCount"];
                                             int count = [currentCount intValue]+1;
                                             currentCount = [NSNumber numberWithInt:count];
-                                            [[idArray objectAtIndex:j]setObject:currentCount forKey:@"conversationCount"];
+                                            NSMutableDictionary *newConversationIdItem = [NSMutableDictionary dictionaryWithObjectsAndKeys:currentCount, @"conversationCount", currentConversationId, @"conversationId", nil];
+                                            [idArray replaceObjectAtIndex:j withObject:newConversationIdItem];
+                                            //[[idArray objectAtIndex:j]setObject:currentCount forKey:@"conversationCount"];
                                         }
                                     }
+                                    
                                 }
+
                             }
                             allItems = [sortedArray mutableCopy];
                             
-                            //NSMutableArray *trashTalkToDisplay = [sortedArray mutableCopy];
-                            chatIndicatorLabel.text = [NSString stringWithFormat:@"%d",newItems];
+                            if (newItems > 0) {
+                                chatIndicatorLabel.text = [NSString stringWithFormat:@"%d",newItems];
+                                [chatIndicator setHidden:NO];
+                                [chatIndicatorLabel setHidden:NO];
+                            }
+                            else {
+                                [chatIndicatorLabel setHidden:YES];
+                                [chatIndicator setHidden:YES];
+                            }
+
                             [self setContentList:abreviatedArray];
                             [self.trashTalkTableView reloadData];
                         }
@@ -221,20 +235,27 @@
                                             NSNumber *currentCount = [[idArray objectAtIndex:j]objectForKey:@"conversationCount"];
                                             int count = [currentCount intValue]+1;
                                             currentCount = [NSNumber numberWithInt:count];
-                                            [[idArray objectAtIndex:j]setObject:currentCount forKey:@"conversationCount"];
+                                            NSMutableDictionary *newConversationIdItem = [NSMutableDictionary dictionaryWithObjectsAndKeys:currentCount, @"conversationCount", currentConversationId, @"conversationId", nil];
+                                            [idArray replaceObjectAtIndex:j withObject:newConversationIdItem];
+                                            //[[idArray objectAtIndex:j]setObject:currentCount forKey:@"conversationCount"];
                                         }
                                     }
+
                                 }
                             }
                             allItems = [sortedArray mutableCopy];
 
                             //NSMutableArray *trashTalkToDisplay = [sortedArray mutableCopy];
-                            chatIndicatorLabel.text = [NSString stringWithFormat:@"%d",newItems];
-                            [self setContentList:abreviatedArray];
-                            for (int j = 0; j<idArray.count; j++) {
-                                NSNumber *count = [[idArray objectAtIndex:j]objectForKey:@"conversationCount"];
-                                NSLog(@"Count at index %d: %d",j,[count intValue]);
+                            if (newItems > 0) {
+                                chatIndicatorLabel.text = [NSString stringWithFormat:@"%d",newItems];
+                                [chatIndicator setHidden:NO];
+                                [chatIndicatorLabel setHidden:NO];
                             }
+                            else {
+                                [chatIndicatorLabel setHidden:YES];
+                                [chatIndicator setHidden:YES];
+                            }
+                            [self setContentList:abreviatedArray];
                             [self.trashTalkTableView reloadData];
                             
                             /*PFQuery *queryForUser = [PFQuery queryForUser];
@@ -301,7 +322,7 @@
     //CGFloat height = MAX(size.height, 44.0f);
     
     //return height + (CELL_CONTENT_MARGIN * 2);
-    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 320 - 95, 100)];
+    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, 320 - 95, 100)];
     //UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 230, 100)];
     label2.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
     label2.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
@@ -325,7 +346,7 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     if (contentList.count != 0) {
         NSString *senderName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"senderName"];
-        NSString *recipientName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"recipientName"];
+        //NSString *recipientName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"recipientName"];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
@@ -395,7 +416,7 @@
         dateLabel.textColor = [UIColor  darkGrayColor];
         
         UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 16)];
-        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, cell.frame.size.width - 95, 100)];
+        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, cell.frame.size.width - 95, 100)];
         //[label2 setEditable:NO];
         //label1.font = [UIFont boldSystemFontOfSize:12];
         label1.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
@@ -420,7 +441,7 @@
         
         [cell.contentView addSubview:label1];
         [cell.contentView addSubview:label2];
-        if (![senderName isEqualToString:recipientName]) {
+        //if (![senderName isEqualToString:recipientName]) {
             UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeCustom];
             [replyButton setFrame:CGRectMake(cell.frame.size.width - 55, cell.frame.size.height - 21, 20, 20)];
             if ([[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"isNew"]intValue]==1) {
@@ -437,10 +458,10 @@
             
             label1.text = [senderName capitalizedString];
             
-        }
-        else {
-            label1.text = [senderName capitalizedString];
-        }
+        //}
+        //else {
+        //    label1.text = [senderName capitalizedString];
+        //}
 
     }
     
@@ -450,14 +471,17 @@
     conversationCountLabel.textColor = [UIColor colorWithRed:0.588 green:0.588 blue:0.588 alpha:1];
     conversationCountLabel.textAlignment = NSTextAlignmentCenter;
     conversationCountLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    conversationCountLabel.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-    conversationCountLabel.shadowOffset = CGSizeMake(-1, 0);
+    //conversationCountLabel.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    //conversationCountLabel.shadowOffset = CGSizeMake(-1, 0);
     
     for (int i = 0; i<idOnlyArray.count; i++) {
         if ([[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"conversationId"] isEqualToString:[idOnlyArray objectAtIndex:i]]) {
             int count = [[[idArray objectAtIndex:i] objectForKey:@"conversationCount"]intValue];
-            conversationCountLabel.text = [NSString stringWithFormat:@"%d", count];
-            [cell.contentView addSubview:conversationCountLabel];
+            if (count > 1) {
+                conversationCountLabel.text = [NSString stringWithFormat:@"%d", count];
+                [cell.contentView addSubview:conversationCountLabel];
+            }
+            
         }
     }
 
@@ -571,7 +595,21 @@
             if ([[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"]) {
                 new.fbPostId = [[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"];
             }
+            NSMutableArray *thisConversation = [[NSMutableArray alloc]init];
+            NSString *thisConversationId = [idOnlyArray objectAtIndex:tag];
+            for (int i = 0; i < allItems.count; i++) {
+                if ([[[[allItems objectAtIndex:i]valueForKey:@"data"] objectForKey:@"conversationId"] isEqualToString:thisConversationId]) {
+                    [thisConversation addObject:[allItems objectAtIndex:i]];
+                }
+            }
+            NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
+            NSArray *sortDescriptors = [NSArray arrayWithObject:sortByDate];
+            NSArray *sortedArray = [thisConversation sortedArrayUsingDescriptors:sortDescriptors];
+            [thisConversation removeAllObjects];
+            thisConversation = [sortedArray mutableCopy];
             new.recipient = object;
+            new.contentList = thisConversation;
+            
             [self.navigationController pushViewController:new animated:YES];
         }
         else {
@@ -609,7 +647,7 @@
 }
 
 - (IBAction)okButtonClicked:(id)sender{
-    [UIView animateWithDuration:1.0
+    [UIView animateWithDuration:0.2
                           delay:0.0
                         options:UIViewAnimationCurveEaseInOut
                      animations:^ {
