@@ -133,7 +133,7 @@
     
     NSData *picData = [_userToWager objectForKey:@"picture"];
     if (!picData) {
-        [profilePic setImage:[UIImage imageNamed:@"myFeed2"]];
+        [profilePic setImage:[UIImage imageNamed:@"placeholder"]];
     }
     else {
         [profilePic setImage:[UIImage imageWithData:picData]];

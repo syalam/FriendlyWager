@@ -16,6 +16,8 @@
     IBOutlet UIButton *scoresButton;
     IBOutlet UIButton *rankingButton;
     IBOutlet UIButton *makeWagerButton;
+    IBOutlet UIButton *settingsButton;
+    IBOutlet UIButton *helpButton;
     IBOutlet UIImageView *profilePic;
     IBOutlet UIButton *okButton;
     IBOutlet UIImageView *tipsOverlay;
@@ -42,6 +44,8 @@
 - (IBAction)rankingButtonClicked:(id)sender;
 - (IBAction)makeWagerButtonClicked:(id)sender;
 - (IBAction)okButtonClicked:(id)sender;
+- (IBAction)settingsButtonClicked:(id)sender;
+- (IBAction)helpButtonClicked:(id)sender;
 
 
 @property (nonatomic, retain) PFUser *opponent;

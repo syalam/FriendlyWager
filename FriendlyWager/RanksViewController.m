@@ -147,9 +147,9 @@
         profilePic = [UIImage imageWithData:picData];
     }
     else {
-        profilePic = [UIImage imageNamed:@"myFeed2"];
+        profilePic = [UIImage imageNamed:@"placeholder"];
     }
-    UIImageView *profilePicView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 8, 39, 39)];
+    UIImageView *profilePicView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, 45, 45)];
     [profilePicView setImage:profilePic];
     [cell.contentView addSubview:profilePicView];
     

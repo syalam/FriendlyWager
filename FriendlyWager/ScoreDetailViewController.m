@@ -199,7 +199,7 @@
                 profilePic = [UIImage imageWithData:picData];
             }
             else {
-                profilePic = [UIImage imageNamed:@"myFeed2"];
+                profilePic = [UIImage imageNamed:@"placeholder"];
             }
             UILabel *odds = [[UILabel alloc]initWithFrame:CGRectMake(200, 10, 60, 30)];
             odds.text = [[sectionContents objectAtIndex:indexPath.row]valueForKey:@"odds"];
@@ -209,7 +209,7 @@
             odds.backgroundColor = [UIColor clearColor];
             [cell.contentView addSubview:odds];
             
-            UIImageView *profilePicView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 8, 39, 39)];
+            UIImageView *profilePicView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, 45, 45)];
             profilePicView.contentMode = UIViewContentModeScaleAspectFit;
             [profilePicView setImage:profilePic];
             [cell.contentView addSubview:profilePicView];

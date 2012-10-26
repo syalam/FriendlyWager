@@ -9,6 +9,7 @@
 #import "TrashTalkViewController.h"
 #import "NewTrashTalkViewController.h"
 #import "LoginOptionsViewController.h"
+#import "SettingsViewController.h"
 
 
 #define CELL_CONTENT_WIDTH 320.0f
@@ -678,6 +679,14 @@
                      completion:^(BOOL finished) {
                          [tipsView removeFromSuperview];
                      }];
+}
+
+- (IBAction)settingsButtonClicked:(id)sender {
+    SettingsViewController *svc = [[SettingsViewController alloc]initWithNibName:@"SettingsViewController" bundle:nil];
+    [self.navigationController pushViewController:svc animated:YES];
+}
+- (IBAction)helpButtonClicked:(id)sender {
+    
 }
 
 @end
