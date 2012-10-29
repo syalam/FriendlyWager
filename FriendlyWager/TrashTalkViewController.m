@@ -10,6 +10,7 @@
 #import "NewTrashTalkViewController.h"
 #import "LoginOptionsViewController.h"
 #import "SettingsViewController.h"
+#import "HelpViewController.h"
 
 
 #define CELL_CONTENT_WIDTH 320.0f
@@ -686,7 +687,8 @@
     [self.navigationController pushViewController:svc animated:YES];
 }
 - (IBAction)helpButtonClicked:(id)sender {
-    
+    HelpViewController *hvc = [[HelpViewController alloc]initWithNibName:@"HelpViewController" bundle:nil];
+    [self.navigationController pushViewController:hvc animated:YES];
 }
 
 @end
