@@ -41,7 +41,10 @@
     [super viewDidLoad];
     [chatIndicator setHidden:YES];
     [chatIndicatorLabel setHidden:YES];
-    [self.navigationController.view addSubview:tipsView];
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"tipsOn"]) {
+        [self.navigationController.view addSubview:tipsView];
+
+    }
     self.title = @"Home";
     
     if (_tabBarView) {

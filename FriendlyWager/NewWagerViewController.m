@@ -227,16 +227,30 @@
 - (IBAction)selectTeamButtonClicked:(id)sender {
     teamActionSheet = [[UIActionSheet alloc]init];
     [teamActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
-    UISegmentedControl *closeButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Choose"]];
+    UISegmentedControl *closeButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Done"]];
+    [closeButton setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [closeButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                        [UIColor whiteColor], UITextAttributeTextColor,
+                                        [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5], UITextAttributeTextShadowColor,
+                                        [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
+                                        [UIFont boldSystemFontOfSize:12], UITextAttributeFont,
+                                        nil] 
+forState:UIControlStateNormal];
     closeButton.momentary = YES; 
-    closeButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
+    closeButton.frame = CGRectMake(260, 7.0f, 50.0f, 28.0f);
     closeButton.segmentedControlStyle = UISegmentedControlStyleBar;
-    closeButton.tintColor = [UIColor blackColor];
     closeButton.tag = 1;
     [closeButton addTarget:self action:@selector(chooseButtonClicked:) forControlEvents:UIControlEventValueChanged];
     [teamActionSheet addSubview:closeButton];
     
     UISegmentedControl *cancelButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Cancel"]];
+    [cancelButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                         [UIColor whiteColor], UITextAttributeTextColor,
+                                         [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5], UITextAttributeTextShadowColor,
+                                         [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
+                                         [UIFont boldSystemFontOfSize:12], UITextAttributeFont,
+                                         nil]
+                               forState:UIControlStateNormal];
     cancelButton.momentary = YES; 
     cancelButton.frame = CGRectMake(10.0f, 7.0f, 50.0f, 30.0f);
     cancelButton.segmentedControlStyle = UISegmentedControlStyleBar;
@@ -250,6 +264,7 @@
     [teamPickerView setShowsSelectionIndicator:YES];
     teamPickerView.delegate = self;
     teamPickerView.dataSource = self;
+    [teamPickerView setBackgroundColor:[UIColor colorWithRed:0.533 green:0.71 blue:0.835 alpha:1]];
     
     [teamActionSheet addSubview:teamPickerView];
     [teamActionSheet showInView:self.tabBarController.tabBar];
