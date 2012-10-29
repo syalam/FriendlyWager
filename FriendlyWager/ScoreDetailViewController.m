@@ -309,10 +309,10 @@
                     isPending = YES;
                 }
                 if ([teamSelected isEqualToString:@"Celtics"]) {
-                    odds = @"- 13";
+                    odds = @"- 13.5";
                 }
                 else {
-                    odds = @"+ 13";
+                    odds = @"+ 13.5";
                 }
                 [isPendingArray addObject:[NSNumber numberWithBool:isPending]];
                 [oddsArray addObject:odds];

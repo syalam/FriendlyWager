@@ -47,7 +47,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">newTrashTalkBG.png</string>
+							<string key="NSResourceName">plainBG.png</string>
 						</object>
 					</object>
 					<object class="IBUIImageView" id="196137622">
@@ -69,6 +69,7 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{13, 13}, {294, 447}}</string>
 						<reference key="NSSuperview" ref="955114254"/>
+						<reference key="NSNextKeyView"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
@@ -243,7 +244,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="emptyMiddle.png">{320, 367}</string>
 			<string key="innerShadow.png">{294, 306}</string>
-			<string key="newTrashTalkBG.png">{320, 416}</string>
+			<string key="plainBG.png">{320, 416}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1929</string>
 	</data>

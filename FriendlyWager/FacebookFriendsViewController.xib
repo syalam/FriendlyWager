@@ -41,13 +41,13 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrameSize">{320, 367}</string>
 						<reference key="NSSuperview" ref="12982012"/>
-						<reference key="NSNextKeyView" ref="549746782"/>
+						<reference key="NSNextKeyView" ref="913897899"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">newTrashTalkBG.png</string>
+							<string key="NSResourceName">plainBG.png</string>
 						</object>
 					</object>
 					<object class="IBUITableView" id="873029372">
@@ -56,6 +56,7 @@
 						<array class="NSMutableArray" key="NSSubviews"/>
 						<string key="NSFrame">{{13, 13}, {294, 452}}</string>
 						<reference key="NSSuperview" ref="12982012"/>
+						<reference key="NSNextKeyView"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
@@ -77,7 +78,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{13, 12}, {294, 345}}</string>
 						<reference key="NSSuperview" ref="12982012"/>
-						<reference key="NSNextKeyView" ref="913897899"/>
+						<reference key="NSNextKeyView" ref="873029372"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -91,7 +92,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrameSize">{320, 367}</string>
 						<reference key="NSSuperview" ref="12982012"/>
-						<reference key="NSNextKeyView" ref="873029372"/>
+						<reference key="NSNextKeyView" ref="549746782"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -249,7 +250,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="emptyMiddle.png">{320, 367}</string>
 			<string key="innerShadow.png">{294, 306}</string>
-			<string key="newTrashTalkBG.png">{320, 416}</string>
+			<string key="plainBG.png">{320, 416}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1929</string>
 	</data>

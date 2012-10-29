@@ -373,6 +373,7 @@
         actionDetail.wagerType = @"Current";
         actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
         actionDetail.opponent = _userToWager;
+        actionDetail.wagersArray = [wagersArray mutableCopy];
         actionDetail.title = @"Current";
         [self.navigationController pushViewController:actionDetail animated:YES];
 
@@ -387,6 +388,7 @@
         actionDetail.wagerType = @"Pending";
         actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
         actionDetail.opponent = _userToWager;
+        actionDetail.wagersArray = [wagersArray mutableCopy];
         actionDetail.title = @"Pending";
         [self.navigationController pushViewController:actionDetail animated:YES];
 
@@ -401,6 +403,7 @@
         actionDetail.wagerType = @"History";
         actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
         actionDetail.opponent = _userToWager;
+        actionDetail.wagersArray = [wagersArray mutableCopy];
         actionDetail.title = @"History";
         [self.navigationController pushViewController:actionDetail animated:YES];
     }
