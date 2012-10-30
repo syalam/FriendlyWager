@@ -41,7 +41,7 @@
     [super viewDidLoad];
     [chatIndicator setHidden:YES];
     [chatIndicatorLabel setHidden:YES];
-    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"tipsOn"]) {
+    if (![[NSUserDefaults standardUserDefaults]boolForKey:@"tipsOff"]) {
         [self.navigationController.view addSubview:tipsView];
 
     }

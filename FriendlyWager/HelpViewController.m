@@ -54,11 +54,11 @@
     UIBarButtonItem *selectBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = selectBarButton;
     
-    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"tipsOn"]) {
-        [tipSwitch setOn:YES];
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"tipsOff"]) {
+        [tipSwitch setOn:NO];
     }
     else {
-        [tipSwitch setOn:NO];
+        [tipSwitch setOn:YES];
     }
 
 
@@ -77,10 +77,10 @@
 
 -(void)saveButtonClicked:(id)sender {
     if (tipSwitch.isOn) {
-        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"tipsOn"];
+        [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"tipsOff"];
     }
     else {
-        [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"tipsOn"];
+        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"tipsOff"];
     }
     [self.navigationController popViewControllerAnimated:YES];
     
