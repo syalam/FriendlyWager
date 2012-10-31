@@ -98,12 +98,12 @@
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    return [[PFFacebookUtils facebook]handleOpenURL:url];
+    return [PFFacebookUtils handleOpenURL:url];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [[PFFacebookUtils facebook]handleOpenURL:url];
+    return [PFFacebookUtils handleOpenURL:url];
 }
 
 - (void)application:(UIApplication *)application
