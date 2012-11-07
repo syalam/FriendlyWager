@@ -22,6 +22,7 @@
     
     BOOL newWagerBool;
     UIImageView *stripes;
+    int loaded;
     
 }
 

@@ -10,22 +10,27 @@
 #import <Parse/Parse.h>
 #import "MyActionSummaryViewController.h"
 #import "FeedViewController.h"
+#import "TITokenField.h"
 
 typedef enum apiCall {
     kAPIPostToFeed,
     kAPIGetFromFeed,
 }apiCall;
 
-@interface NewTrashTalkViewController : UIViewController <PF_FBRequestDelegate> {
+@interface NewTrashTalkViewController : UIViewController <PF_FBRequestDelegate, TITokenFieldDelegate> {
     PFObject *newTrashTalk;
     PFUser *user;
     IBOutlet UITextView *trashTalkTextView;
     IBOutlet UISwitch *fbSwitch;
     IBOutlet UILabel *postToFbLabel;
+    IBOutlet UIScrollView *scrollView;
     int currentAPICall;
     float height1;
     
     NSUserDefaults *fwData;
+    TITokenFieldView* tokenFieldView;
+    CGFloat keyboardHeight;
+    NSMutableArray *recipients;
     
 }
 
@@ -35,6 +40,7 @@ typedef enum apiCall {
 @property (nonatomic, retain) FeedViewController *feedScreen;
 @property (nonatomic, retain) IBOutlet UITableView *trashTalkTableView;
 @property (nonatomic, retain) NSMutableArray *contentList;
+@property (nonatomic, retain) NSMutableArray *userArray;
 
 
 - (IBAction)FBSwitchSelected:(id)sender;

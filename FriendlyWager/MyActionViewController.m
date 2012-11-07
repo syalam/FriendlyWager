@@ -58,6 +58,7 @@
     self.navigationItem.rightBarButtonItem = wagerBarButton;*/
     stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
+    loaded = 0;
     [self showWagers];
     
     
@@ -66,7 +67,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     [self.navigationController.navigationBar addSubview:stripes];
-    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"updated"]) {
+    loaded++;
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"updated"] && loaded != 1) {
         [self showWagers];
         [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"updated"];
     }

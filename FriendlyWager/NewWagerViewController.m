@@ -60,11 +60,17 @@
     
     self.navigationItem.leftBarButtonItem = backButton;
 
+    UIGestureRecognizer* recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMethod:)];
+    [(UITapGestureRecognizer *)recognizer setNumberOfTouchesRequired:1];
+    [self.view addGestureRecognizer:recognizer];
+    recognizer.delegate = self;
     
+    [stakesList setEnabled:NO];
     
     newWagerTableView.dataSource = self;
     newWagerTableView.delegate = self;
     NSLog(@"%@", _gameDataDictionary);
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -83,7 +89,11 @@
             _opponentsToWager = _additionalOpponents;
         }
         else {
-            [_opponentsToWager addObjectsFromArray:_additionalOpponents];
+            for (int i = 0; i < _additionalOpponents.count; i++) {
+                if ([_opponentsToWager containsObject:[_additionalOpponents objectAtIndex:i]]) {
+                    [_opponentsToWager addObject:[_additionalOpponents objectAtIndex:i]];
+                }
+            }
         }
     }
     if (_opponentsToWager.count) {
@@ -206,6 +216,11 @@
 
 #pragma mark - IBAction Methods
 - (IBAction)sendButtonClicked:(id)sender {
+    [stakesList resignFirstResponder];
+    if ([stakesList.text isEqualToString:@""]) {
+        [addStakesBg setImage:[UIImage imageNamed:@"addStakesBtn"]];
+    }
+    [self scrollScreenBack];
     UIAlertView *alert;
     if (![selectTeamButton.titleLabel.text isEqualToString:@"Select Team"]) {
         alert = [[UIAlertView alloc]initWithTitle:@"Send Wager" message:@"A new wager will be sent to all selected opponents" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
@@ -271,6 +286,14 @@ forState:UIControlStateNormal];
     [teamActionSheet setBounds:CGRectMake(0,0,320, 500)];
     
     [teamPickerView selectRow:0 inComponent:0 animated:NO];
+}
+
+- (IBAction)addStakesButtonClicked:(id)sender {
+    [self performSelector:@selector(scrollScreen:) withObject:stakesList afterDelay:0.1];
+    [stakesList setEnabled:YES];
+    [addStakesBg setImage:[UIImage imageNamed:@"addStakesBtn2"]];
+    [stakesList becomeFirstResponder];
+
 }
 
 - (void)chooseButtonClicked:(id)sender {
@@ -401,6 +424,10 @@ forState:UIControlStateNormal];
         [createNewWager setObject:[_opponentsToWager objectAtIndex:0] forKey:@"wagee"];
         [createNewWager setObject:[NSNumber numberWithInt:[spreadLabel.text intValue]] forKey:@"tokensWagered"];
         [createNewWager setObject:[NSNumber numberWithBool:NO] forKey:@"wagerAccepted"];
+        if (stakesList.text) {
+            [createNewWager setObject:stakesList.text forKey:@"stakes"];
+        }
+        
         [createNewWager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
                 PFQuery *updateTokenCount = [PFQuery queryWithClassName:@"tokens"];
@@ -454,6 +481,9 @@ forState:UIControlStateNormal];
                         [createWager setObject:[_opponentsToWager objectAtIndex:i] forKey:@"wagee"];
                         [createWager setObject:[NSNumber numberWithInt:[spreadLabel.text intValue]] forKey:@"tokensWagered"];
                         [createWager setObject:[NSNumber numberWithBool:NO] forKey:@"wagerAccepted"];
+                        if (stakesList.text) {
+                            [createWager setObject:stakesList.text forKey:@"stakes"];
+                        }
                         [createWager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                             if (!error) {
                                 if (i == _opponentsToWager.count-1) {
@@ -487,6 +517,66 @@ forState:UIControlStateNormal];
         }];
         
     }
+}
+
+#pragma mark - UITextField Delegate Methods
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeTextInRange:(NSRange)range
+  replacementText:(NSString *)text {
+    if([text isEqualToString:@"\n"]){
+        if ([stakesList.text isEqualToString:@""]) {
+            [addStakesBg setImage:[UIImage imageNamed:@"addStakesBtn"]];
+        }
+        [stakesList resignFirstResponder];
+        [stakesList setEnabled:NO];
+        if ([stakesList.text isEqualToString:@""]) {
+            [addStakesBg setImage:[UIImage imageNamed:@"addStakesBtn"]];
+        }
+        return NO;
+    }
+    else {
+        return YES;
+    }
+}
+
+#pragma mark - Gesture Recognizer Methods
+- (void)tapMethod:(id)sender
+{
+    [stakesList resignFirstResponder];
+    [stakesList setEnabled:NO];
+    if ([stakesList.text isEqualToString:@""]) {
+        [addStakesBg setImage:[UIImage imageNamed:@"addStakesBtn"]];
+    }
+    [self scrollScreenBack];
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if(touch.view == addOthersButton || touch.view == selectTeamButton) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+-(void)scrollScreen:(id)sender {
+    int tag = [sender tag];
+    NSLog(@"%d", tag);
+    CGPoint bottomOffset;
+    bottomOffset = CGPointMake(0, 150);
+
+    [scrollView setContentSize:CGSizeMake(320, 520)];
+    [scrollView setContentOffset:bottomOffset animated:YES];
+}
+
+-(void)scrollScreenBack
+{
+    CGPoint bottomOffest = CGPointMake (0,0);
+    [scrollView setContentSize:CGSizeMake(320, 367)];
+    [scrollView setContentOffset:bottomOffest animated:YES];
+    
 }
 
 @end

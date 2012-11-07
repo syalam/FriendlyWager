@@ -31,12 +31,72 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    recipients = [[NSMutableArray alloc]init];
+    
     [trashTalkTextView becomeFirstResponder];
     user = [PFUser currentUser];
     
+    tokenFieldView = [[TITokenFieldView alloc] initWithFrame:self.view.bounds];
+	[self.view addSubview:tokenFieldView];
+	
+	[tokenFieldView.tokenField setDelegate:self];
+	[tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldFrameDidChange:) forControlEvents:TITokenFieldControlEventFrameDidChange];
+	[tokenFieldView.tokenField setTokenizingCharacters:[NSCharacterSet characterSetWithCharactersInString:@",;."]]; // Default is a comma
+	
+	UIButton * addButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+	[addButton addTarget:self action:@selector(showContactsPicker:) forControlEvents:UIControlEventTouchUpInside];
+	[tokenFieldView.tokenField setRightView:addButton];
+	[tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidBegin];
+	[tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidEnd];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [tokenFieldView.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"newTrashTalkBG"]]];
+    [tokenFieldView.contentView setContentMode:UIViewContentModeTop];
+    [trashTalkTextView removeFromSuperview];
+    [self.trashTalkTableView removeFromSuperview];
+    [tokenFieldView.contentView addSubview:self.trashTalkTableView];
+    [tokenFieldView.contentView addSubview:trashTalkTextView];
+    
+    self.trashTalkTableView = [[UITableView alloc]initWithFrame:CGRectMake(6, 5, 308, 58) style:UITableViewStylePlain];
+    [self.trashTalkTableView setDelegate:self];
+    [self.trashTalkTableView setDataSource:self];
+    [self.trashTalkTableView setBackgroundColor:[UIColor clearColor]];
+    [self.trashTalkTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    [tokenFieldView.contentView addSubview:self.trashTalkTableView];
+    
+    trashTalkTextView = [[UITextView alloc]initWithFrame:CGRectMake(7, 66, 306, 50)];
+    [trashTalkTextView setBackgroundColor:[UIColor clearColor]];
+    [trashTalkTextView setDelegate:self];
+	[trashTalkTextView setFont:[UIFont systemFontOfSize:14]];
+    trashTalkTextView.textColor = [UIColor colorWithRed:0.376 green:0.376 blue:0.376 alpha:1];
+    
+    [tokenFieldView.contentView addSubview:trashTalkTextView];
+    
+    fbSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(237, 126, 77, 27)];
+    [fbSwitch addTarget:self action:@selector(FBSwitchSelected:) forControlEvents:UIControlEventValueChanged];
+    
+    [tokenFieldView.contentView addSubview:fbSwitch];
+    
+    UILabel *fbLabel = [[UILabel alloc]initWithFrame:CGRectMake(100, 126, 150, 27)];
+    fbLabel.textColor = [UIColor whiteColor];
+    fbLabel.shadowColor = [UIColor darkGrayColor];
+    [fbLabel setShadowOffset:CGSizeMake(0, -1)];
+    [fbLabel setBackgroundColor:[UIColor clearColor]];
+    fbLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+    fbLabel.text = @"Share on Facebook";
+    
+    [tokenFieldView.contentView addSubview:fbLabel];
+	
+	// You can call this on either the view on the field.
+	// They both do the same thing.
+	[tokenFieldView becomeFirstResponder];
+
+    
     if ([PFFacebookUtils isLinkedWithUser:user]) {
-        if (_fbPostId) {
-            fbSwitch.on = YES;
+        if ([_recipient objectForKey:@"fbId"]){
+            [fbSwitch setOn:YES];
         }
     }
     else {
@@ -79,21 +139,46 @@
         [self.trashTalkTableView reloadData];
         //NSIndexPath* ipath = [NSIndexPath indexPathForRow: self.contentList.count-1 inSection: 0];
         //[self.trashTalkTableView scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionBottom animated: NO];
-        if (self.contentList.count == 1) {
+        /*if (self.contentList.count == 1) {
             if (height1 < 100) {
                 [trashTalkTextView setFrame:CGRectMake(trashTalkTextView.frame.origin.x, self.trashTalkTableView.frame.origin.y+height1+5, trashTalkTextView.frame.size.width, trashTalkTextView.frame.size.height + (100-height1))];
             }
-        }
-        CGPoint bottomOffset = CGPointMake(0, self.trashTalkTableView.contentSize.height);
-        [self.trashTalkTableView setContentOffset:bottomOffset animated:YES];
+        }*/
+        CGPoint bottomOffset = CGPointMake(0, self.trashTalkTableView.contentSize.height-58);
+        [self.trashTalkTableView setContentOffset:bottomOffset animated:NO];
 
 
     }
     
     else {
         [self.trashTalkTableView setHidden:YES];
-        trashTalkTextView.frame = CGRectMake(7, 7, 306, 200);
+        trashTalkTextView.frame = CGRectMake(7, 7, 306, 110);
     }
+    
+PFQuery *getUsers = [PFQuery queryForUser];
+[getUsers whereKey:@"objectId" notEqualTo:[[PFUser currentUser]objectId]];
+
+[getUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    if (!error) {
+        NSLog(@"%@", objects);
+        //NSMutableArray *searchDataArray = [[NSMutableArray alloc]initWithCapacity:1];
+        /*for (PFUser *object in objects) {
+            [searchDataArray addObject:object];
+        }*/
+        self.userArray= [objects mutableCopy];
+
+        [tokenFieldView setSourceArray:self.userArray];
+
+        
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to find friends at this time. Please try again later" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+}];
+
+
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -157,6 +242,7 @@
     }
     [newTrashTalk saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
+            [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [_recipient objectId]] withMessage:[NSString stringWithFormat:@"%@ %@", [[user objectForKey:@"name"] capitalizedString], @"has sent you a message"]];
             if (fbSwitch.on) {
                 [self sendFacebookRequest];
             }
@@ -517,6 +603,87 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+#pragma mark - TITokenField Methods
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+	
+	CGRect keyboardRect = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+	keyboardHeight = keyboardRect.size.height > keyboardRect.size.width ? keyboardRect.size.width : keyboardRect.size.height;
+	[self resizeViews];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+	keyboardHeight = 0;
+	[self resizeViews];
+}
+
+- (void)resizeViews {
+    int tabBarOffset = self.tabBarController == nil ?  0 : self.tabBarController.tabBar.frame.size.height;
+	[tokenFieldView setFrame:((CGRect){tokenFieldView.frame.origin, {self.view.bounds.size.width, self.view.bounds.size.height + tabBarOffset - keyboardHeight}})];
+}
+
+- (BOOL)tokenField:(TITokenField *)tokenField willRemoveToken:(TIToken *)token {
+	
+	return YES;
+}
+
+- (void)tokenField:(TITokenField *)tokenField didAddToken:(TIToken *)token {
+    if (token.representedObject) {
+        if (![recipients containsObject:token.representedObject]) {
+            [recipients addObject:token.representedObject];
+        }
+    }
+}
+
+- (void)tokenField:(TITokenField *)tokenField didRemoveToken:(TIToken *)token {
+    if (token.representedObject) {
+        if ([recipients containsObject:token.representedObject]) {
+            [recipients removeObject:token.representedObject];
+        }
+    }
+}
+
+- (NSString *)searchResultStringForRepresentedObject:(id)object {
+	
+	return [self displayStringForRepresentedObject:object];
+}
+
+- (NSString *)displayStringForRepresentedObject:(id)object {
+	
+	return [[object objectForKey:@"name"] capitalizedString];
+}
+
+- (void)tokenFieldChangedEditing:(TITokenField *)tokenField {
+	// There's some kind of annoying bug where UITextFieldViewModeWhile/UnlessEditing doesn't do anything.
+	[tokenField setRightViewMode:(tokenField.editing ? UITextFieldViewModeAlways : UITextFieldViewModeNever)];
+}
+
+- (void)tokenFieldFrameDidChange:(TITokenField *)tokenField {
+	[self textViewDidChange:trashTalkTextView];
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+	
+	/*CGFloat oldHeight = tokenFieldView.frame.size.height - tokenFieldView.tokenField.frame.size.height;
+	CGFloat newHeight = textView.contentSize.height + textView.font.lineHeight;
+	
+	CGRect newTextFrame = textView.frame;
+	newTextFrame.size = textView.contentSize;
+	newTextFrame.size.height = newHeight;
+	
+	CGRect newFrame = tokenFieldView.contentView.frame;
+	newFrame.size.height = newHeight;
+	
+	if (newHeight < oldHeight){
+		newTextFrame.size.height = oldHeight;
+		newFrame.size.height = oldHeight;
+	}
+    
+	[tokenFieldView.contentView setFrame:newFrame];
+	[textView setFrame:newTextFrame];
+	[tokenFieldView updateContentSize];*/
 }
 
 

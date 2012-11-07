@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1536</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1929</string>
+			<string key="NS.object.0">1930</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -469,7 +469,7 @@ bw</string>
 							<object class="IBUIImageView" id="874217056">
 								<reference key="NSNextResponder" ref="199038256"/>
 								<int key="NSvFlags">274</int>
-								<string key="NSFrame">{{22, 453}, {276, 445}}</string>
+								<string key="NSFrame">{{22, 453}, {276, 450}}</string>
 								<reference key="NSSuperview" ref="199038256"/>
 								<reference key="NSNextKeyView" ref="269521316"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -1026,6 +1026,6 @@ YWdlciBBcHANLSBUbyBvZmZlciByZXdhcmRzLCBzdXJ2ZXlzIG9yIHByb2Nlc3MgcHVyY2hhc2VzA</s
 			<string key="supportBg.png">{276, 93}</string>
 			<string key="tipsOptionBg.png">{276, 41}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1929</string>
+		<string key="IBCocoaTouchPluginVersion">1930</string>
 	</data>
 </archive>

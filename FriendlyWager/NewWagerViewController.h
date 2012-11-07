@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import "TabsViewController.h"
+#import "TITokenField.h"
 
-@interface NewWagerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource> {
+@interface NewWagerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UIGestureRecognizerDelegate, UITextFieldDelegate> {
     IBOutlet UITableView *newWagerTableView;
     IBOutlet UIButton *sendButton;
     IBOutlet UIButton *addOthersButton;
@@ -20,13 +21,15 @@
     IBOutlet UIImageView *brownArrow;
     IBOutlet UIButton *addStakesButton;
     IBOutlet UILabel *wageeList;
-    IBOutlet UILabel *stakesList;
+    IBOutlet UITextField *stakesList;
     IBOutlet UIImageView *addOpponentsBg;
     IBOutlet UIImageView *addStakesBg;
+    IBOutlet UIScrollView *scrollView;
     
     UIActionSheet *teamActionSheet;
     UIPickerView *teamPickerView;
     UIImageView *stripes;
+    
 
 }
 

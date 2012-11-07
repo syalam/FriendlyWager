@@ -91,7 +91,7 @@
     [button addTarget:self action:@selector(inviteButtonClicked:) forControlEvents:UIControlEventTouchDown];
     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
-    [button setTitle:@"Wager" forState:UIControlStateNormal];
+    [button setTitle:@"Invite" forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
     [button.titleLabel setShadowColor:[UIColor darkGrayColor]];
     [button.titleLabel setShadowOffset:CGSizeMake(0, 1)];
@@ -168,6 +168,7 @@
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.accessoryView.backgroundColor = [UIColor clearColor];
     
     // Configure the cell...
     
@@ -282,10 +283,8 @@
 - (void)inviteButtonClicked:(id) sender {
     NSMutableArray *inviteeArray = [[NSMutableArray alloc]init];
     if (selectedItems.count > 0) {
-        NSString *jsonString = [[selectedItems allValues] JSONString];
-        NSMutableArray *selectedItemsArray = [[NSMutableArray alloc]initWithCapacity:1];
-        selectedItemsArray = [jsonString objectFromJSONString];
-        
+        NSArray *selectedItemsArray = [selectedItems allValues];
+                
         NSLog(@"%@, %d objects", selectedItemsArray, selectedItemsArray.count);
         
         for (NSUInteger i = 0; i < selectedItemsArray.count; i++) {

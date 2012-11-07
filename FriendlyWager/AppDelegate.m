@@ -20,9 +20,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
-     UIRemoteNotificationTypeAlert|
+    [[UIApplication sharedApplication]
+       setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:NO];
+    
+    [application registerForRemoteNotificationTypes:
+     UIRemoteNotificationTypeBadge |
+     UIRemoteNotificationTypeAlert |
      UIRemoteNotificationTypeSound];
+
     
     [TestFlight takeOff:@"110647a709a4c503ce1103795c3421df_ODQ0OTYyMDEyLTA0LTI1IDE4OjUxOjI1LjEzMzU4Mg"];
     
@@ -60,8 +65,10 @@
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
      */
-    if ([PFUser currentUser]) {
+    if (![[NSUserDefaults standardUserDefaults]boolForKey:@"chatPushNotificationsOff"]) {
+        if ([PFUser currentUser]) {
         [PFPush subscribeToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[PFUser currentUser] objectId]]];
+        }
     }
 
 }
@@ -111,7 +118,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 {
     [PFPush storeDeviceToken:newDeviceToken]; // Send parse the device token
     // Subscribe this user to the broadcast channel, ""
-    [PFPush subscribeToChannelInBackground:@" " block:^(BOOL succeeded, NSError *error) {
+    [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"Successfully subscribed to the broadcast channel.");
         } else {
@@ -119,7 +126,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
         }
     }];
 }
-
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [PFPush handlePush:userInfo];

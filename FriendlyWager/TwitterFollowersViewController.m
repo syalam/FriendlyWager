@@ -57,7 +57,7 @@
                     [self fetchFollowers];
                 }
                 else {
-                    
+                    NSLog(@"%@", [error localizedDescription]);
                 }
             }];
         }

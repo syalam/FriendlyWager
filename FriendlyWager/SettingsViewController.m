@@ -67,11 +67,11 @@
     else {
         [facebookConnectSwitch setOn:NO];
     }
-    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"chatPushNotifications"]) {
-        [chatPushNotificationSwitch setOn:YES];
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"chatPushNotificationsOff"]) {
+        [chatPushNotificationSwitch setOn:NO];
     }
     else {
-        [chatPushNotificationSwitch setOn:NO];
+        [chatPushNotificationSwitch setOn:YES];
     }
     
     PFQuery *queryForUser = [PFQuery queryForUser];
@@ -153,11 +153,17 @@
                 [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"facebookConnect"];
             }
             if (chatPushNotificationSwitch.isOn) {
-                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"chatPushNotifications"];
+                [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"chatPushNotificationsOff"];
+                if ([PFUser currentUser]) {
+                    [PFPush subscribeToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[PFUser currentUser] objectId]]];
+                }
                 
             }
             else {
-                [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"chatPushNotifications"];
+                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"chatPushNotificationsOff"];
+                if ([PFUser currentUser]) {
+                    [PFPush unsubscribeFromChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[PFUser currentUser] objectId]]];
+                }
             }
 
             [[PFUser currentUser]setPassword:passwordTextField.text];

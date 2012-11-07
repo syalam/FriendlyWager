@@ -26,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [scrollView setContentSize:CGSizeMake(320, 900)];
+    [scrollView setContentSize:CGSizeMake(320, 905)];
     
     UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];

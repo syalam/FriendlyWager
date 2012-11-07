@@ -286,10 +286,18 @@
         if (!error) {
             int randomNum = arc4random() % objects.count;
             NSMutableArray *userToWager = [[NSMutableArray alloc]initWithObjects:[objects objectAtIndex:randomNum], nil];
-            ScoresViewController *scores = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
-            scores.opponentsToWager = userToWager;
-            scores.wager = YES;
-            [self.navigationController pushViewController:scores animated:YES];
+            if (_wagerInProgress) {
+                _viewController.additionalOpponents = userToWager;
+                [_viewController updateOpponents];
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -2)] animated:YES];
+            }
+            else {
+                ScoresViewController *scores = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
+                scores.opponentsToWager = userToWager;
+                scores.wager = YES;
+                [self.navigationController pushViewController:scores animated:YES];
+
+            }
         } 
     }];
 }

@@ -190,9 +190,9 @@
     pendingCountLabel = [[KBLabel alloc]initWithFrame:CGRectMake(139, 267, 42, 30)];
     [pendingCountLabel setTextColor:[UIColor colorWithRed:.961 green:.7098 blue:.0471 alpha:1]];
     [pendingCountLabel setTextAlignment:NSTextAlignmentCenter];
-    pendingCountLabel.red = .961;
-    pendingCountLabel.green = .7098;
-    pendingCountLabel.blue = .0471;
+    pendingCountLabel.red = 0.4196;
+    pendingCountLabel.green = .282;
+    pendingCountLabel.blue = .1216;
     pendingCountLabel.font = [UIFont boldSystemFontOfSize:27];
     [pendingCountLabel setBackgroundColor:[UIColor clearColor]];
     pendingCountLabel.text = @"0";
@@ -272,6 +272,11 @@
                     currentCountLabel.text = currentWagerCount;
 
                     pendingCountLabel.text = pendingWagerCount;
+                    if (pendingArray.count) {
+                        pendingCountLabel.red = .961;
+                        pendingCountLabel.green = .7098;
+                        pendingCountLabel.blue = .0471;
+                    }
                     
                     historyCountLabel.text = historyWagerCount;
                     
