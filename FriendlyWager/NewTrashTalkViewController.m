@@ -105,15 +105,11 @@
 
     
     if ([PFFacebookUtils isLinkedWithUser:user]) {
-        if ([[PFUser currentUser] objectForKey:@"fbId"]){
-            [fbSwitch setOn:YES];
-        }
+        [fbSwitch setOn:YES];
     }
     else {
-        if (_fbPostId) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"facebook sign in" message:@"You must sign in with a facebook account to share this post on facebook" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign In", nil];
-            [alert show];
-        }
+        [fbSwitch setOn:NO];
+
     }
     
     self.title = @"New Trash Talk";

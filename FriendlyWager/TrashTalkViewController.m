@@ -143,19 +143,20 @@
     [self.navigationController.navigationBar addSubview:stripes];
     if ([PFUser currentUser]) {
         PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
-        [queryForTrashTalk whereKey:@"recipient" containsString:[[PFUser currentUser]objectId]];
+        [queryForTrashTalk whereKey:@"recipients" containsString:[[PFUser currentUser]objectId]];
+        [queryForTrashTalk whereKey:@"sender" notEqualTo:[PFUser currentUser]];
         [queryForTrashTalk orderByDescending:@"updatedAt"];
         [queryForTrashTalk findObjectsInBackgroundWithBlock:^ (NSArray *objects, NSError *error) {
             if (!error) {
                 NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
                 NSString *userId = [[PFUser currentUser]objectId];
-                NSString *isNew;
+                
                 for (PFObject *trashTalkItem in objects) {
                     [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
-                    isNew = [trashTalkItem objectForKey:@"isNew"];
-                    if (![isNew rangeOfString:userId].location == NSNotFound) {
+                    NSString *isNew = [trashTalkItem objectForKey:@"isNew"];
+                    if ([isNew rangeOfString:userId].location != NSNotFound) {
                         newItems = newItems+ 1;
-                        if (![isNew rangeOfString:[NSString stringWithFormat:@",%@", userId]].location == NSNotFound) {
+                        if ([isNew rangeOfString:[NSString stringWithFormat:@",%@", userId]].location != NSNotFound) {
                             isNew = [isNew stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@",%@", userId] withString:@""];
                             
                         }
@@ -163,17 +164,24 @@
                             isNew = [isNew stringByReplacingOccurrencesOfString:userId withString:@""];
                         }
                     }
+                    if (isNew) {
                         [trashTalkItem setObject:isNew forKey:@"isNew"];
                         [trashTalkItem saveInBackground];
+                    }
+                    else {
+                        [trashTalkItem setObject:@"" forKey:@"isNew"];
+                        [trashTalkItem saveInBackground];
+
+                    }
+                    
                 }
                     
                 PFQuery *queryForSentTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
                 [queryForSentTrashTalk whereKey:@"sender" equalTo:[PFUser currentUser]];
-                [queryForSentTrashTalk whereKey:@"recipient" notEqualTo:[PFUser currentUser]];
-                [queryForTrashTalk orderByDescending:@"updatedAt"];
-                [queryForSentTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                [queryForSentTrashTalk orderByDescending:@"updatedAt"];
+                [queryForSentTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects2, NSError *error) {
                     if (!error) {
-                        for (PFObject *sentTrashTalkItem in objects) {
+                        for (PFObject *sentTrashTalkItem in objects2) {
                             [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:sentTrashTalkItem, @"data", sentTrashTalkItem.updatedAt, @"date", nil]];
                         }
                         NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
@@ -224,17 +232,7 @@
                         [self setContentList:abreviatedArray];
                         [self.trashTalkTableView reloadData];
                         
-                        /*PFQuery *queryForUser = [PFQuery queryForUser];
-                         [queryForUser whereKey:@"objectId" equalTo:[[PFUser currentUser] objectId]];
-                         [queryForUser findObjectsInBackgroundWithBlock:^(NSArray *userObjects, NSError *error) {
-                         if (!error) {
-                         _currentUser = [userObjects objectAtIndex:0];
-                         _pic = [UIImage imageWithData:[_currentUser objectForKey:@"picture"]];
-                         if (_pic) {
-                         [profilePic setImage:_pic];
-                         }
-                         }
-                         }];*/
+                     
                     }
                 }];
             }
@@ -311,15 +309,10 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     if (contentList.count != 0) {
         NSString *senderName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"senderName"];
-        NSString *recipientName = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"recipientName"];
-        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
         PFObject *objectToDisplay = [[contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
         NSDate *dateCreated = objectToDisplay.createdAt;
-        //NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        //[dateFormatter setDateFormat:@"EEEE, MMMM d 'at' h:mm a"];
-        //NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
         NSCalendar *calendar = [NSCalendar currentCalendar];
         unsigned int unitFlags =  NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayOrdinalCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit;
         NSDateComponents *messageDateComponents = [calendar components:unitFlags fromDate:dateCreated];
@@ -375,15 +368,12 @@
         UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width - 250, 5, 215, 15)];
         dateLabel.backgroundColor = [UIColor clearColor];
         dateLabel.textAlignment = UITextAlignmentRight;
-        //dateLabel.font = [UIFont systemFontOfSize:11];
         dateLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:11];
         dateLabel.text = dateString;
         dateLabel.textColor = [UIColor  darkGrayColor];
         
         UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 16)];
         UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, cell.frame.size.width - 95, 100)];
-        //[label2 setEditable:NO];
-        //label1.font = [UIFont boldSystemFontOfSize:12];
         label1.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
 
         
@@ -391,14 +381,11 @@
         
         
         label1.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
-        //label2.font = [UIFont systemFontOfSize:12];
         label2.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
         label2.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
         label2.numberOfLines = 0;
         label2.lineBreakMode = UILineBreakModeWordWrap;
         [label2 sizeToFit];
-        //[label2 setFrame:CGRectMake(2, 15, cell.frame.size.width -50, label2.contentSize.height+15)];
-        //[label2 setBounces:NO];
         [label2 sizeToFit];
         label1.backgroundColor = [UIColor clearColor];
         label2.backgroundColor = [UIColor clearColor];
@@ -406,36 +393,23 @@
         
         [cell.contentView addSubview:label1];
         [cell.contentView addSubview:label2];
-        //if (![senderName isEqualToString:recipientName]) {
-            UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [replyButton setFrame:CGRectMake(cell.frame.size.width - 55, cell.frame.size.height - 21, 20, 20)];
-        int isNew =[[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"isNew"]intValue];
-            if (isNew) {
-                NSString *recipientIds = [NSString stringWithFormat:@"%@", [[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] valueForKey:@"recipients"]objectId]];
-                NSString *userId = [[PFUser currentUser]objectId];
-                if ([recipientIds rangeOfString:userId].location == NSNotFound) {
-                    [replyButton setImage:[UIImage imageNamed:@"CellArrowYellow"] forState:UIControlStateNormal];
-                }
-                else {
-                    [replyButton setImage:[UIImage imageNamed:@"CellArrowGray"] forState:UIControlStateNormal];
-                }
+        UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [replyButton setFrame:CGRectMake(cell.frame.size.width - 55, cell.frame.size.height - 21, 20, 20)];
+        NSString *isNew =[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] valueForKey:@"isNew"];
+        NSString *userId = [[PFUser currentUser]objectId];
+        if ([isNew rangeOfString:userId].location != NSNotFound && isNew.length > 1) {
+            [replyButton setImage:[UIImage imageNamed:@"CellArrowYellow"] forState:UIControlStateNormal];
+        }
+        else {
+            [replyButton setImage:[UIImage imageNamed:@"CellArrowGray"] forState:UIControlStateNormal];
+        }
         
-            }
-            else {
-                [replyButton setImage:[UIImage imageNamed:@"CellArrowGray"] forState:UIControlStateNormal];
-            }
+        [replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        replyButton.tag = indexPath.row;
             
-            [replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-            replyButton.tag = indexPath.row;
+        [cell.contentView addSubview:replyButton];
             
-            [cell.contentView addSubview:replyButton];
-            
-            label1.text = [senderName capitalizedString];
-            
-        //}
-        //else {
-        //    label1.text = [senderName capitalizedString];
-        //}
+        label1.text = [senderName capitalizedString];
 
     }
     
@@ -445,8 +419,6 @@
     conversationCountLabel.textColor = [UIColor colorWithRed:0.588 green:0.588 blue:0.588 alpha:1];
     conversationCountLabel.textAlignment = NSTextAlignmentCenter;
     conversationCountLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    //conversationCountLabel.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-    //conversationCountLabel.shadowOffset = CGSizeMake(-1, 0);
     
     for (int i = 0; i<idOnlyArray.count; i++) {
         if ([[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"conversationId"] isEqualToString:[idOnlyArray objectAtIndex:i]]) {
@@ -572,11 +544,21 @@
 -(void)replyButtonClicked:(id)sender {
     NSUInteger tag = [sender tag];
     NSLog(@"%d", tag);
-    NSString *recipient = [[[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"sender"] objectId];
+    NSString *recipients = [[[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"sender"] objectId];
+    recipients = [NSString stringWithFormat:@"%@,%@",recipients,[[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"recipients"]];
+    
     NSString *currentUser = [[PFUser currentUser] objectId];
-    if ([recipient isEqualToString:currentUser]) {
-        recipient = [[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"recipients"];
+    if ([recipients rangeOfString:currentUser].location != NSNotFound) {
+        newItems = newItems+ 1;
+        if ([recipients rangeOfString:[NSString stringWithFormat:@",%@", currentUser]].location != NSNotFound) {
+            recipients = [recipients stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@",%@", currentUser] withString:@""];
+            
+        }
+        else {
+            recipients = [recipients stringByReplacingOccurrencesOfString:currentUser withString:@""];
+        }
     }
+    
 
     NewTrashTalkViewController *new = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
     if ([[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"]) {
@@ -594,7 +576,7 @@
     NSArray *sortedArray = [thisConversation sortedArrayUsingDescriptors:sortDescriptors];
     [thisConversation removeAllObjects];
     thisConversation = [sortedArray mutableCopy];
-    NSArray *recipientList = [recipient componentsSeparatedByString:@","];
+    NSArray *recipientList = [recipients componentsSeparatedByString:@","];
     PFQuery *recipientSearch = [PFQuery queryForUser];
     [recipientSearch whereKey:@"objectId" containedIn:recipientList];
     [recipientSearch findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -602,8 +584,8 @@
             new.recipients = [objects mutableCopy];
             new.contentList = thisConversation;
             [self.navigationController pushViewController:new animated:YES];
-
         }
+            
         else {
             NSLog(@"%@", error);
         }
