@@ -93,6 +93,39 @@
     
     tabBarVc = [[TabBarDelegateViewController alloc]initWithNibName:@"TabBarDelegateViewController" bundle:nil];
     tabBarNavC = [[UINavigationController alloc]initWithRootViewController:tabBarVc];
+    
+    /*PFQuery *allTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
+    [allTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (int j = 0; j < objects.count; j++) {
+                PFObject *item = [objects objectAtIndex:j];
+                NSString *recipientId;
+                NSString *senderId;
+                NSMutableArray *allInvolved = [[NSMutableArray alloc]init];
+                [allInvolved removeAllObjects];
+                recipientId = [[item objectForKey:@"recipient"]objectId];
+                senderId = [[item objectForKey:@"sender"]objectId];
+                [allInvolved addObject:recipientId];
+                [allInvolved addObject:senderId];
+                NSString *conversationId;
+                [allInvolved sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                    return [obj1 localizedCaseInsensitiveCompare:obj2];
+                }];
+                
+                for (int i = 0; i < allInvolved.count; i++) {
+                    if (i == 0) {
+                        conversationId = [allInvolved objectAtIndex:0];
+                    }
+                    else {
+                        conversationId = [NSString stringWithFormat:@"%@,%@", conversationId,[allInvolved objectAtIndex:i]];
+                    }
+                }
+                [item setObject:conversationId forKey:@"conversationId"];
+                [item saveInBackground];
+
+            }
+        }
+    }];*/
 }
 
 - (void)viewDidUnload
@@ -378,9 +411,9 @@
             [replyButton setFrame:CGRectMake(cell.frame.size.width - 55, cell.frame.size.height - 21, 20, 20)];
         int isNew =[[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"isNew"]intValue];
             if (isNew) {
-                NSString *recipientId = [NSString stringWithFormat:@"%@", [[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] valueForKey:@"recipient"]objectId]];
+                NSString *recipientIds = [NSString stringWithFormat:@"%@", [[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] valueForKey:@"recipients"]objectId]];
                 NSString *userId = [[PFUser currentUser]objectId];
-                if ([recipientId isEqualToString:userId]) {
+                if ([recipientIds rangeOfString:userId].location == NSNotFound) {
                     [replyButton setImage:[UIImage imageNamed:@"CellArrowYellow"] forState:UIControlStateNormal];
                 }
                 else {
@@ -539,37 +572,40 @@
 -(void)replyButtonClicked:(id)sender {
     NSUInteger tag = [sender tag];
     NSLog(@"%d", tag);
-    PFObject *recipient = [[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"sender"];
-    PFObject *currentUser = [PFUser currentUser];
-    if ([[recipient objectId] isEqualToString:[currentUser objectId]]) {
-        recipient = [[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"recipient"];
+    NSString *recipient = [[[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"sender"] objectId];
+    NSString *currentUser = [[PFUser currentUser] objectId];
+    if ([recipient isEqualToString:currentUser]) {
+        recipient = [[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"recipients"];
     }
-    [recipient fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+
+    NewTrashTalkViewController *new = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
+    if ([[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"]) {
+        new.fbPostId = [[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"];
+    }
+    NSMutableArray *thisConversation = [[NSMutableArray alloc]init];
+    NSString *thisConversationId = [idOnlyArray objectAtIndex:tag];
+    for (int i = 0; i < allItems.count; i++) {
+        if ([[[[allItems objectAtIndex:i]valueForKey:@"data"] objectForKey:@"conversationId"] isEqualToString:thisConversationId]) {
+            [thisConversation addObject:[allItems objectAtIndex:i]];
+        }
+    }
+    NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortByDate];
+    NSArray *sortedArray = [thisConversation sortedArrayUsingDescriptors:sortDescriptors];
+    [thisConversation removeAllObjects];
+    thisConversation = [sortedArray mutableCopy];
+    NSArray *recipientList = [recipient componentsSeparatedByString:@","];
+    PFQuery *recipientSearch = [PFQuery queryForUser];
+    [recipientSearch whereKey:@"objectId" containedIn:recipientList];
+    [recipientSearch findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
-            NewTrashTalkViewController *new = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
-            if ([[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"]) {
-                new.fbPostId = [[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"];
-            }
-            NSMutableArray *thisConversation = [[NSMutableArray alloc]init];
-            NSString *thisConversationId = [idOnlyArray objectAtIndex:tag];
-            for (int i = 0; i < allItems.count; i++) {
-                if ([[[[allItems objectAtIndex:i]valueForKey:@"data"] objectForKey:@"conversationId"] isEqualToString:thisConversationId]) {
-                    [thisConversation addObject:[allItems objectAtIndex:i]];
-                }
-            }
-            NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
-            NSArray *sortDescriptors = [NSArray arrayWithObject:sortByDate];
-            NSArray *sortedArray = [thisConversation sortedArrayUsingDescriptors:sortDescriptors];
-            [thisConversation removeAllObjects];
-            thisConversation = [sortedArray mutableCopy];
-            new.recipient = object;
+            new.recipients = [objects mutableCopy];
             new.contentList = thisConversation;
-            
             [self.navigationController pushViewController:new animated:YES];
+
         }
         else {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to reply at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
+            NSLog(@"%@", error);
         }
     }];
 }

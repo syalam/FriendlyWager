@@ -17,7 +17,7 @@ typedef enum apiCall {
     kAPIGetFromFeed,
 }apiCall;
 
-@interface NewTrashTalkViewController : UIViewController <PF_FBRequestDelegate, TITokenFieldDelegate> {
+@interface NewTrashTalkViewController : UIViewController <PF_FBRequestDelegate, TITokenFieldDelegate, UIGestureRecognizerDelegate> {
     PFObject *newTrashTalk;
     PFUser *user;
     IBOutlet UITextView *trashTalkTextView;
@@ -27,20 +27,24 @@ typedef enum apiCall {
     int currentAPICall;
     float height1;
     
+    
     NSUserDefaults *fwData;
     TITokenFieldView* tokenFieldView;
     CGFloat keyboardHeight;
-    NSMutableArray *recipients;
+    BOOL somethingElse;
     
+    NSMutableArray *requestIdsArray;
+    int countRequests;
 }
 
-@property (nonatomic, retain) PFObject *recipient;
 @property (nonatomic, retain) NSString *fbPostId;
 @property (nonatomic, retain) MyActionSummaryViewController *myActionScreen;
 @property (nonatomic, retain) FeedViewController *feedScreen;
 @property (nonatomic, retain) IBOutlet UITableView *trashTalkTableView;
 @property (nonatomic, retain) NSMutableArray *contentList;
 @property (nonatomic, retain) NSMutableArray *userArray;
+@property (nonatomic, retain) NSMutableArray *recipients;
+
 
 
 - (IBAction)FBSwitchSelected:(id)sender;

@@ -14,7 +14,6 @@
 @end
 
 @implementation NewTrashTalkViewController
-@synthesize recipient = _recipient;
 @synthesize fbPostId = _fbPostId;
 @synthesize myActionScreen = _myActionScreen;
 @synthesize feedScreen = _feedScreen;
@@ -31,9 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    recipients = [[NSMutableArray alloc]init];
-    
+        
     [trashTalkTextView becomeFirstResponder];
     user = [PFUser currentUser];
     
@@ -53,8 +50,15 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [tokenFieldView.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"newTrashTalkBG"]]];
     [tokenFieldView.contentView setContentMode:UIViewContentModeTop];
+    UIImageView *contentViewBg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, tokenFieldView.contentView.frame.size.width, tokenFieldView.contentView.frame.size.height)];
+    [contentViewBg setImage:[UIImage imageNamed:@"newTrashTalkBG"]];
+    [contentViewBg setContentMode:UIViewContentModeTop];
+    [tokenFieldView.contentView addSubview:contentViewBg];
+    
     [trashTalkTextView removeFromSuperview];
     [self.trashTalkTableView removeFromSuperview];
+    [fbSwitch removeFromSuperview];
+    [tokenFieldView.contentView addSubview:fbSwitch];
     [tokenFieldView.contentView addSubview:self.trashTalkTableView];
     [tokenFieldView.contentView addSubview:trashTalkTextView];
     
@@ -92,10 +96,16 @@
 	// You can call this on either the view on the field.
 	// They both do the same thing.
 	[tokenFieldView becomeFirstResponder];
+    
+    UIGestureRecognizer* recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMethod:)];
+    [(UITapGestureRecognizer *)recognizer setNumberOfTouchesRequired:1];
+    [self.view addGestureRecognizer:recognizer];
+    recognizer.delegate = self;
+
 
     
     if ([PFFacebookUtils isLinkedWithUser:user]) {
-        if ([_recipient objectForKey:@"fbId"]){
+        if ([[PFUser currentUser] objectForKey:@"fbId"]){
             [fbSwitch setOn:YES];
         }
     }
@@ -154,31 +164,37 @@
         [self.trashTalkTableView setHidden:YES];
         trashTalkTextView.frame = CGRectMake(7, 7, 306, 110);
     }
+    for (int i = 0; i < _recipients.count; i++) {
+        TIToken *tokenToAdd = [[TIToken alloc]initWithTitle:[[[_recipients objectAtIndex:i]objectForKey:@"name"] capitalizedString] representedObject:[_recipients objectAtIndex:i]];
+        [tokenFieldView.tokenField addToken:tokenToAdd];
+    }
     
-PFQuery *getUsers = [PFQuery queryForUser];
-[getUsers whereKey:@"objectId" notEqualTo:[[PFUser currentUser]objectId]];
-
-[getUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-    if (!error) {
-        NSLog(@"%@", objects);
-        //NSMutableArray *searchDataArray = [[NSMutableArray alloc]initWithCapacity:1];
-        /*for (PFUser *object in objects) {
-            [searchDataArray addObject:object];
-        }*/
-        self.userArray= [objects mutableCopy];
-
-        [tokenFieldView setSourceArray:self.userArray];
-
-        
-    }
-    else {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to find friends at this time. Please try again later" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-    }
-}];
-
-
-
+    PFQuery *getUsers = [PFQuery queryForUser];
+    [getUsers whereKey:@"name" notEqualTo:[user objectForKey:@"name"]];
+    [getUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSLog(@"%@", objects);
+            //NSMutableArray *searchDataArray = [[NSMutableArray alloc]initWithCapacity:1];
+            /*for (PFUser *object in objects) {
+             [searchDataArray addObject:object];
+             }*/
+            self.userArray= [objects mutableCopy];
+            if ([self.userArray containsObject:[PFUser currentUser]]) {
+                [self.userArray removeObject:[PFUser currentUser]];
+            }
+            
+            [tokenFieldView setSourceArray:self.userArray];
+            
+            
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to find friends at this time. Please try again later" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
+    
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -210,44 +226,86 @@ PFQuery *getUsers = [PFQuery queryForUser];
     [newTrashTalk setObject:trashTalkTextView.text forKey:@"trashTalkContent"];
     [newTrashTalk setObject:user forKey:@"sender"];
     [newTrashTalk setObject:[user objectForKey:@"name"] forKey:@"senderName"];
-    if (_recipient) {
-        [newTrashTalk setObject:_recipient forKey:@"recipient"];
-        [newTrashTalk setObject:[NSNumber numberWithInt:1] forKey:@"isNew"];
-        [newTrashTalk setObject:[_recipient objectForKey:@"name"] forKey:@"recipientName"];
-        NSString *recipientName = [_recipient objectForKey:@"name"];
-        NSString *senderName = [user objectForKey:@"name"];        
-        NSComparisonResult result = [senderName compare:recipientName];
-        
-        if (result == NSOrderedAscending) {
-            NSString *conversationId = [NSString stringWithFormat:@"%@-%@", senderName, recipientName];
-            [newTrashTalk setObject:conversationId forKey:@"conversationId"];
-        }
+    if (_recipients.count) {
+        if ([trashTalkTextView.text isEqualToString:@""]) {
+            somethingElse = YES;
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Empty" message:@"You didn't type in a message" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+            somethingElse = NO;
             
-        else if (result == NSOrderedDescending) {
-            NSString *conversationId = [NSString stringWithFormat:@"%@-%@", recipientName, senderName];
-            [newTrashTalk setObject:conversationId forKey:@"conversationId"];
         }
-        
         else {
-            NSString *conversationId = [NSString stringWithFormat:@"%@-%@", recipientName, senderName];
+            [_recipients sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                return [[obj1 objectId] localizedCaseInsensitiveCompare:[obj2 objectId]];
+            }];
+            NSString *recipientList;
+            for (int i = 0; i < _recipients.count; i++) {
+                if (i == 0) {
+                    recipientList = [[_recipients objectAtIndex:0]objectId];
+                }
+                else {
+                    recipientList = [NSString stringWithFormat:@"%@,%@", recipientList, [[_recipients objectAtIndex:i]objectId]];
+                }
+            }
+            
+            NSMutableArray *allInvolved = [_recipients mutableCopy];
+            [allInvolved addObject:user];
+            NSString *conversationId;
+            [allInvolved sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                return [[obj1 objectId] localizedCaseInsensitiveCompare:[obj2 objectId]];
+            }];
+            
+            for (int i = 0; i < allInvolved.count; i++) {
+                if (i == 0) {
+                    conversationId = [[allInvolved objectAtIndex:0]objectId];
+                }
+                else {
+                    conversationId = [NSString stringWithFormat:@"%@,%@", conversationId,[[allInvolved objectAtIndex:i]objectId]];
+                }
+            }
+            
+            [newTrashTalk setObject:recipientList forKey:@"recipients"];
+            [newTrashTalk setObject:recipientList forKey:@"isNew"];
             [newTrashTalk setObject:conversationId forKey:@"conversationId"];
+            //[newTrashTalk setObject:[_recipient objectForKey:@"name"] forKey:@"recipientName"];
         }
     }
     else {
-        [newTrashTalk setObject:user forKey:@"recipient"];
-        [newTrashTalk setObject:[user objectForKey:@"name"] forKey:@"recipientName"];
-        NSString *senderName = [user objectForKey:@"name"];
-        NSString *conversationId = [NSString stringWithFormat:@"%@-%@", senderName, senderName];
-        [newTrashTalk setObject:conversationId forKey:@"conversationId"];
+        somethingElse = YES;
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"No Recipients" message:@"You didn't specify any valid recipients" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        somethingElse = NO;
     }
     [newTrashTalk saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
-            [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [_recipient objectId]] withMessage:[NSString stringWithFormat:@"%@ %@", [[user objectForKey:@"name"] capitalizedString], @"has sent you a message"]];
+            for (int i = 0; i < _recipients.count; i++) {
+                [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[_recipients objectAtIndex:i] objectId]] withMessage:[NSString stringWithFormat:@"%@ %@", [[user objectForKey:@"name"] capitalizedString], @"has sent you a message"]];
+            }
+            
             if (fbSwitch.on) {
-                [self sendFacebookRequest];
+                requestIdsArray = [[NSMutableArray alloc]init];
+                for (int i = 0; i < _recipients.count; i++) {
+                    NSString *fbId = [[_recipients objectAtIndex:i]objectForKey:@"fbId"];
+                    if (i == 0) {
+                        if (fbId) {
+                            [requestIdsArray addObject:fbId];
+                        }
+                        
+                    }
+                    else {
+                        if (fbId) {
+                            [requestIdsArray addObject:fbId];
+                        }
+                        
+                    }
+                }
+                
+                if (requestIdsArray.count) {
+                    [self sendFacebookRequest];
+
+                }
             }
             else {
-                //[self.navigationController dismissModalViewControllerAnimated:YES];
                 if (_myActionScreen) {
                     [_myActionScreen loadTrashTalk];
                 }
@@ -256,6 +314,8 @@ PFQuery *getUsers = [PFQuery queryForUser];
                 }
                 [self.navigationController popViewControllerAnimated:YES];
             }
+            //[self.navigationController dismissModalViewControllerAnimated:YES];
+            
         }
         else {
             NSLog(@"%@", error);
@@ -266,14 +326,8 @@ PFQuery *getUsers = [PFQuery queryForUser];
 - (IBAction)FBSwitchSelected:(id)sender {
     if (fbSwitch.on) {
         if ([PFFacebookUtils isLinkedWithUser:user]) {
-            if ([_recipient objectForKey:@"fbId"]){
-                [fbSwitch setOn:YES];
-            }
-            else {
-                [fbSwitch setOn:NO];
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Notice" message:[NSString stringWithFormat:@"%@'s %@", [_recipient objectForKey:@"name"], @"account is not linked to Facebook"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alert show];
-            }
+            [fbSwitch setOn:YES];
+
         }
         else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Facebook Sign In Required" message:@"You must sign in with a facebook account to use this feature" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign In", nil];
@@ -286,59 +340,50 @@ PFQuery *getUsers = [PFQuery queryForUser];
 
 - (void)sendFacebookRequest {
     if (currentAPICall == kAPIPostToFeed) {
-        NSString *postToWall;
-        if (_recipient) {
-            postToWall = [_recipient objectForKey:@"fbId"];
-        }
-        else {
-            postToWall = @"me";
-        }
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkTextView.text, @"message", nil];
-        if (_fbPostId) {
-            [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/comments", _fbPostId] andParams:params andHttpMethod:@"POST" andDelegate:self];
-        }
-        else {
-            [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", postToWall] andParams:params andHttpMethod:@"POST" andDelegate:self];
+        if (requestIdsArray.count) {
+            if (requestIdsArray.count) {
+                countRequests = 1;
+                NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkTextView.text, @"message", nil];
+                [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", [requestIdsArray objectAtIndex:0]] andParams:params andHttpMethod:@"POST" andDelegate:self];
+            }
         }
     }
 }
-
 - (void)request:(PF_FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
     NSLog(@"received response");
 }
 
 - (void)request:(PF_FBRequest *)request didLoad:(id)result {
-    NSLog(@"%@", [result objectForKey:@"id"]);
-    if (_fbPostId) {
-        [newTrashTalk setObject:_fbPostId forKey:@"fbID"];
+    NSLog(@"%@", result);
+    
+    if (countRequests < requestIdsArray.count) {
+        countRequests++;
+        
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkTextView.text, @"message", nil];
+        [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", [requestIdsArray objectAtIndex:countRequests - 1]] andParams:params andHttpMethod:@"POST" andDelegate:self];
+        
     }
     else {
-        [newTrashTalk setObject:[result objectForKey:@"id"] forKey:@"fbID"];
+        if (_myActionScreen) {
+            [_myActionScreen loadTrashTalk];
+        }
+        else if (_feedScreen) {
+            [_feedScreen loadTrashTalk];
+        }
+        [self.navigationController popViewControllerAnimated:YES];
     }
-    [newTrashTalk saveInBackgroundWithBlock:^(BOOL succeded, NSError *error) {
-        if (succeded) {
-            //[self.navigationController dismissModalViewControllerAnimated:YES];
-            if (_myActionScreen) {
-                [_myActionScreen loadTrashTalk];
-            }
-            else if (_feedScreen) {
-                [_feedScreen loadTrashTalk];
-            }
-            [self.navigationController popViewControllerAnimated:YES];
-        } 
-    }];
 }
 
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
     NSLog(@"%@", error);
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:[NSString stringWithFormat:@"Unable to share this message with %@ on Facebook", [_recipient objectForKey:@"name"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to share this message on Facebook" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
 }
 
 
 #pragma mark - UIAlertView Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (currentAPICall == kAPIPostToFeed) {
+    if (currentAPICall == kAPIPostToFeed && !somethingElse) {
         [self.navigationController popViewControllerAnimated:YES];
     }
     else {
@@ -358,7 +403,7 @@ PFQuery *getUsers = [PFQuery queryForUser];
                 }
             }];
         }
-        else {
+        else if (!somethingElse){
             [fbSwitch setOn:NO animated:YES];
         }
     }
@@ -379,23 +424,11 @@ PFQuery *getUsers = [PFQuery queryForUser];
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //NSString *text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
-    
-    //CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
-    
-    //CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
-    
-    //CGFloat height = MAX(size.height, 44.0f);
-    
-    //return height + (CELL_CONTENT_MARGIN * 2);
     UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, 306 - 15, 100)];
-    //UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 230, 100)];
     label2.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
     label2.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
     label2.numberOfLines = 0;
     label2.lineBreakMode = UILineBreakModeWordWrap;
-    //[label2 sizeToFit];
-    //[label2 setFrame:CGRectMake(10, 20, 244, label2.frame.size.height)];
     [label2 sizeToFit];
     if ((label2.frame.size.height) > 28) {
         height1 = (30 + label2.frame.size.height);
@@ -630,17 +663,23 @@ PFQuery *getUsers = [PFQuery queryForUser];
 }
 
 - (void)tokenField:(TITokenField *)tokenField didAddToken:(TIToken *)token {
-    if (token.representedObject) {
-        if (![recipients containsObject:token.representedObject]) {
-            [recipients addObject:token.representedObject];
+    if (![token.representedObject isEqual:nil]) {
+        if (![_recipients containsObject:token.representedObject]) {
+            if (_recipients.count == 0) {
+                _recipients = [[NSMutableArray alloc]initWithObjects:token.representedObject, nil];
+            }
+            else {
+                
+                [_recipients addObject:token.representedObject];
+            }
         }
     }
 }
 
 - (void)tokenField:(TITokenField *)tokenField didRemoveToken:(TIToken *)token {
     if (token.representedObject) {
-        if ([recipients containsObject:token.representedObject]) {
-            [recipients removeObject:token.representedObject];
+        if ([_recipients containsObject:token.representedObject]) {
+            [_recipients removeObject:token.representedObject];
         }
     }
 }
@@ -686,5 +725,18 @@ PFQuery *getUsers = [PFQuery queryForUser];
 	[tokenFieldView updateContentSize];*/
 }
 
+#pragma mark - Gesture Recognizer Methods
+- (void)tapMethod:(id)sender
+{
+    [trashTalkTextView becomeFirstResponder];
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if(touch.view == tokenFieldView.contentView) {
+        return YES;
+    }
+    
+    return NO;
+}
 
 @end

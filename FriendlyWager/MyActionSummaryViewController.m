@@ -364,7 +364,7 @@
 }
 - (IBAction)chatButtonClicked:(id)sender {
     NewTrashTalkViewController *ntvc = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
-    ntvc.recipient = _userToWager;
+    ntvc.recipients = [[NSMutableArray alloc]initWithObjects:_userToWager, nil];
     ntvc.myActionScreen = self;
     [self.navigationController pushViewController:ntvc animated:YES];
 }
@@ -424,7 +424,7 @@
             if ([[[_contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"]) {
                 new.fbPostId = [[[_contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"];
             }
-            new.recipient = object;
+            new.recipients = [[NSMutableArray alloc]initWithObjects:object, nil];
             [self.navigationController pushViewController:new animated:YES];
         }
         else {
@@ -732,7 +732,7 @@
 
 - (void)loadTrashTalk {
     PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
-    [queryForTrashTalk whereKey:@"recipient" equalTo:_userToWager];
+    [queryForTrashTalk whereKey:@"recipients" containsString:[_userToWager objectId]];
     [queryForTrashTalk whereKey:@"sender" equalTo:[PFUser currentUser]];
     [queryForTrashTalk orderByDescending:@"updatedAt"];
     [queryForTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -742,7 +742,7 @@
                 [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
             }
             PFQuery *queryForReceivedTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
-            [queryForReceivedTrashTalk whereKey:@"recipient" equalTo:[PFUser currentUser]];
+            [queryForReceivedTrashTalk whereKey:@"recipients" containsString:[[PFUser currentUser]objectId]];
             [queryForReceivedTrashTalk whereKey:@"sender" equalTo:_userToWager];
             [queryForReceivedTrashTalk orderByDescending:@"updatedAt"];
             [queryForReceivedTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {

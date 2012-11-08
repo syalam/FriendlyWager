@@ -61,7 +61,7 @@
     passwordTextField.tag = 0;
     repeatTextField.tag = 1;
     
-    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"facebookConnect"]) {
+    if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]){
         [facebookConnectSwitch setOn:YES];
     }
     else {
@@ -196,12 +196,13 @@
 
 - (IBAction)facebookConnectSwitchToggled:(id)sender {
     if (facebookConnectSwitch.isOn) {
-        if ([currentUser objectForKey:@"fbId"]){
+        if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
             [facebookConnectSwitch setOn:YES];
+            
         }
         else {
-            [facebookConnectSwitch setOn:NO];
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Notice" message:@"Your account is not linked to Facebook" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Facebook Sign In Required" message:@"You must sign in with a facebook account to use this feature" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign In", nil];
+            fb = YES;
             [alert show];
         }
 
@@ -214,5 +215,31 @@
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
 }
+
+#pragma mark - UIAlertView Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
+        [PFFacebookUtils linkUser:[PFUser currentUser] permissions:permissions block:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                [facebookConnectSwitch setOn:YES animated:YES];
+            }
+            else {
+                UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                    message:@"This facebook account is associated with another user"
+                                                                   delegate:self
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                [alertView show];
+            }
+        }];
+    }
+    else if (fb) {
+        fb = NO;
+        [facebookConnectSwitch setOn:NO animated:YES];
+    }
+}
+
+
 
 @end

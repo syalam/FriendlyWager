@@ -16,6 +16,7 @@
     IBOutlet UISwitch *chatPushNotificationSwitch;
     
     PFUser *currentUser;
+    BOOL fb;
 }
 
 - (IBAction)facebookConnectSwitchToggled:(id)sender;
