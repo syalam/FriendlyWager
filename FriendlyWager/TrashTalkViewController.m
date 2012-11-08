@@ -55,31 +55,6 @@
         [rankingButton setHidden:YES];
         
     }
-    //bgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    //bgView.contentMode = UIViewContentModeBottom;
-    
-    //UIImage *postButtonImage = [UIImage imageNamed:@"FW_PG16_Post_Button"];
-    //UIButton *customPostButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    //customPostButton.bounds = CGRectMake( 0, 0, postButtonImage.size.width, postButtonImage.size.height );
-    //[customPostButton setImage:postButtonImage forState:UIControlStateNormal];
-    //[customPostButton addTarget:self action:@selector(newTrashTalkButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    //UIBarButtonItem *newTrashTalkButton = [[UIBarButtonItem alloc] initWithCustomView:customPostButton];
-    
-    //self.navigationItem.rightBarButtonItem = newTrashTalkButton;
-    //navItem.rightBarButtonItem = newTrashTalkButton;
-    
-    /*UIImage *backButtonImage = [UIImage imageNamed:@"FW_PG16_Back_Button"];
-    UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
-    [custombackButton setImage:backButtonImage forState:UIControlStateNormal];
-    [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
-    
-    self.navigationItem.leftBarButtonItem = backButton;*/
-    //navItem.leftBarButtonItem = backButton;
-    
-    //UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc]initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(signOutButtonClicked:)];
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 75, 28)];
     [button addTarget:self action:@selector(signOutButtonClicked:) forControlEvents:UIControlEventTouchDown];
     [button setBackgroundImage:[UIImage imageNamed:@"SignoutBtn"] forState:UIControlStateNormal];
@@ -94,38 +69,6 @@
     tabBarVc = [[TabBarDelegateViewController alloc]initWithNibName:@"TabBarDelegateViewController" bundle:nil];
     tabBarNavC = [[UINavigationController alloc]initWithRootViewController:tabBarVc];
     
-    /*PFQuery *allTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
-    [allTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            for (int j = 0; j < objects.count; j++) {
-                PFObject *item = [objects objectAtIndex:j];
-                NSString *recipientId;
-                NSString *senderId;
-                NSMutableArray *allInvolved = [[NSMutableArray alloc]init];
-                [allInvolved removeAllObjects];
-                recipientId = [[item objectForKey:@"recipient"]objectId];
-                senderId = [[item objectForKey:@"sender"]objectId];
-                [allInvolved addObject:recipientId];
-                [allInvolved addObject:senderId];
-                NSString *conversationId;
-                [allInvolved sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-                    return [obj1 localizedCaseInsensitiveCompare:obj2];
-                }];
-                
-                for (int i = 0; i < allInvolved.count; i++) {
-                    if (i == 0) {
-                        conversationId = [allInvolved objectAtIndex:0];
-                    }
-                    else {
-                        conversationId = [NSString stringWithFormat:@"%@,%@", conversationId,[allInvolved objectAtIndex:i]];
-                    }
-                }
-                [item setObject:conversationId forKey:@"conversationId"];
-                [item saveInBackground];
-
-            }
-        }
-    }];*/
 }
 
 - (void)viewDidUnload
@@ -163,17 +106,18 @@
                         else {
                             isNew = [isNew stringByReplacingOccurrencesOfString:userId withString:@""];
                         }
-                    }
-                    if (isNew) {
-                        [trashTalkItem setObject:isNew forKey:@"isNew"];
-                        [trashTalkItem saveInBackground];
-                    }
-                    else {
-                        [trashTalkItem setObject:@"" forKey:@"isNew"];
-                        [trashTalkItem saveInBackground];
+                        if (isNew) {
+                            [trashTalkItem setObject:isNew forKey:@"isNew"];
+                            [trashTalkItem saveInBackground];
+                        }
+                        else {
+                            [trashTalkItem setObject:@"" forKey:@"isNew"];
+                            [trashTalkItem saveInBackground];
+                            
+                        }
 
                     }
-                    
+                                        
                 }
                     
                 PFQuery *queryForSentTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];

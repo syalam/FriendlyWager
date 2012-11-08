@@ -263,7 +263,61 @@
             [newTrashTalk setObject:recipientList forKey:@"recipients"];
             [newTrashTalk setObject:recipientList forKey:@"isNew"];
             [newTrashTalk setObject:conversationId forKey:@"conversationId"];
-            //[newTrashTalk setObject:[_recipient objectForKey:@"name"] forKey:@"recipientName"];
+            
+            [newTrashTalk saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    for (int i = 0; i < _recipients.count; i++) {
+                        [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[_recipients objectAtIndex:i] objectId]] withMessage:[NSString stringWithFormat:@"%@ %@", [[user objectForKey:@"name"] capitalizedString], @"has sent you a message"]];
+                    }
+                    
+                    if (fbSwitch.on) {
+                        requestIdsArray = [[NSMutableArray alloc]init];
+                        for (int i = 0; i < _recipients.count; i++) {
+                            NSString *fbId = [[_recipients objectAtIndex:i]objectForKey:@"fbId"];
+                            if (i == 0) {
+                                if (fbId) {
+                                    [requestIdsArray addObject:fbId];
+                                }
+                                
+                            }
+                            else {
+                                if (fbId) {
+                                    [requestIdsArray addObject:fbId];
+                                }
+                                
+                            }
+                        }
+                        
+                        if (requestIdsArray.count) {
+                            [self sendFacebookRequest];
+                            
+                        }
+                        else {
+                            if (_myActionScreen) {
+                                [_myActionScreen loadTrashTalk];
+                            }
+                            else if (_feedScreen) {
+                                [_feedScreen loadTrashTalk];
+                            }
+                            [self.navigationController popViewControllerAnimated:YES];
+                        }
+                        
+                    }
+                    else {
+                        if (_myActionScreen) {
+                            [_myActionScreen loadTrashTalk];
+                        }
+                        else if (_feedScreen) {
+                            [_feedScreen loadTrashTalk];
+                        }
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
+                }
+                else {
+                    NSLog(@"%@", error);
+                }
+            }];
+            
         }
     }
     else {
@@ -272,51 +326,8 @@
         [alert show];
         somethingElse = NO;
     }
-    [newTrashTalk saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            for (int i = 0; i < _recipients.count; i++) {
-                [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[_recipients objectAtIndex:i] objectId]] withMessage:[NSString stringWithFormat:@"%@ %@", [[user objectForKey:@"name"] capitalizedString], @"has sent you a message"]];
-            }
-            
-            if (fbSwitch.on) {
-                requestIdsArray = [[NSMutableArray alloc]init];
-                for (int i = 0; i < _recipients.count; i++) {
-                    NSString *fbId = [[_recipients objectAtIndex:i]objectForKey:@"fbId"];
-                    if (i == 0) {
-                        if (fbId) {
-                            [requestIdsArray addObject:fbId];
-                        }
-                        
-                    }
-                    else {
-                        if (fbId) {
-                            [requestIdsArray addObject:fbId];
-                        }
-                        
-                    }
-                }
-                
-                if (requestIdsArray.count) {
-                    [self sendFacebookRequest];
-
-                }
-            }
-            else {
-                if (_myActionScreen) {
-                    [_myActionScreen loadTrashTalk];
-                }
-                else if (_feedScreen) {
-                    [_feedScreen loadTrashTalk];
-                }
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-            //[self.navigationController dismissModalViewControllerAnimated:YES];
-            
-        }
-        else {
-            NSLog(@"%@", error);
-        }
-    }];
+                            //[self.navigationController dismissModalViewControllerAnimated:YES];
+    
 }
 
 - (IBAction)FBSwitchSelected:(id)sender {
