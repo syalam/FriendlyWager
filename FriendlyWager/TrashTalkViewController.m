@@ -80,114 +80,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    newItems = 0;
-    [idArray removeAllObjects];
-    [idOnlyArray removeAllObjects];
-    [self.navigationController.navigationBar addSubview:stripes];
-    if ([PFUser currentUser]) {
-        PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
-        [queryForTrashTalk whereKey:@"recipients" containsString:[[PFUser currentUser]objectId]];
-        [queryForTrashTalk whereKey:@"sender" notEqualTo:[PFUser currentUser]];
-        [queryForTrashTalk orderByDescending:@"updatedAt"];
-        [queryForTrashTalk findObjectsInBackgroundWithBlock:^ (NSArray *objects, NSError *error) {
-            if (!error) {
-                NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
-                NSString *userId = [[PFUser currentUser]objectId];
-                
-                for (PFObject *trashTalkItem in objects) {
-                    [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
-                    NSString *isNew = [trashTalkItem objectForKey:@"isNew"];
-                    if ([isNew rangeOfString:userId].location != NSNotFound) {
-                        newItems = newItems+ 1;
-                        if ([isNew rangeOfString:[NSString stringWithFormat:@",%@", userId]].location != NSNotFound) {
-                            isNew = [isNew stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@",%@", userId] withString:@""];
-                            
-                        }
-                        else {
-                            isNew = [isNew stringByReplacingOccurrencesOfString:userId withString:@""];
-                        }
-                        if (isNew) {
-                            [trashTalkItem setObject:isNew forKey:@"isNew"];
-                            [trashTalkItem saveInBackground];
-                        }
-                        else {
-                            [trashTalkItem setObject:@"" forKey:@"isNew"];
-                            [trashTalkItem saveInBackground];
-                            
-                        }
-
-                    }
-                                        
-                }
-                    
-                PFQuery *queryForSentTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
-                [queryForSentTrashTalk whereKey:@"sender" equalTo:[PFUser currentUser]];
-                [queryForSentTrashTalk orderByDescending:@"updatedAt"];
-                [queryForSentTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects2, NSError *error) {
-                    if (!error) {
-                        for (PFObject *sentTrashTalkItem in objects2) {
-                            [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:sentTrashTalkItem, @"data", sentTrashTalkItem.updatedAt, @"date", nil]];
-                        }
-                        NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
-                        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByDate];
-                        NSArray *sortedArray = [trashTalkArray sortedArrayUsingDescriptors:sortDescriptors];
-                        NSMutableArray *abreviatedArray = [[NSMutableArray alloc]init];
-                        NSMutableDictionary *conversationIdItem = [[NSMutableDictionary alloc]init];
-                        NSString *conversationId;
-                        NSMutableDictionary *conversationItem = [[NSMutableDictionary alloc]init];
-                        
-                        for (int i = 0; i < sortedArray.count; i++) {
-                            conversationId = [[[sortedArray objectAtIndex:i]valueForKey:@"data"] objectForKey:@"conversationId"];
-                            conversationItem = [sortedArray objectAtIndex:i];
-                            if (![idOnlyArray containsObject:conversationId]) {
-                                [conversationIdItem setObject:[NSNumber numberWithInt:1] forKey:@"conversationCount"];
-                                [conversationIdItem setObject:conversationId forKey:@"conversationId"];
-                                [idOnlyArray addObject:conversationId];
-                                [idArray addObject:conversationIdItem];
-                                [abreviatedArray addObject:conversationItem];
-                            }
-                            else {
-                                for (int j = 0; j < idArray.count; j++) {
-                                    
-                                    if ([[idOnlyArray objectAtIndex:j] isEqualToString:conversationId]) {
-                                        NSNumber *currentCount = [[idArray objectAtIndex:j]objectForKey:@"conversationCount"];
-                                        int count = [currentCount intValue]+1;
-                                        currentCount = [NSNumber numberWithInt:count];
-                                        NSMutableDictionary *newConversationIdItem = [NSMutableDictionary dictionaryWithObjectsAndKeys:currentCount, @"conversationCount", conversationId, @"conversationId", nil];
-                                        [idArray replaceObjectAtIndex:j withObject:newConversationIdItem];
-                                        //[[idArray objectAtIndex:j]setObject:currentCount forKey:@"conversationCount"];
-                                    }
-                                }
-                                
-                            }
-                        }
-                        allItems = [sortedArray mutableCopy];
-                        
-                        //NSMutableArray *trashTalkToDisplay = [sortedArray mutableCopy];
-                        if (newItems > 0) {
-                            chatIndicatorLabel.text = [NSString stringWithFormat:@"%d",newItems];
-                            [chatIndicator setHidden:NO];
-                            [chatIndicatorLabel setHidden:NO];
-                        }
-                        else {
-                            [chatIndicatorLabel setHidden:YES];
-                            [chatIndicator setHidden:YES];
-                        }
-                        [self setContentList:abreviatedArray];
-                        [self.trashTalkTableView reloadData];
-                        
-                     
-                    }
-                }];
-            }
-        }];
-    }
-    else {
-        LoginOptionsViewController *loginVc = [[LoginOptionsViewController alloc]initWithNibName:@"LoginOptionsViewController" bundle:nil];
-        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
-        [self.navigationController presentModalViewController:navc animated:NO];
-    }
     
+    [self getTrashTalk];
     
 }
 
@@ -339,9 +233,8 @@
         [cell.contentView addSubview:label2];
         UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [replyButton setFrame:CGRectMake(cell.frame.size.width - 55, cell.frame.size.height - 21, 20, 20)];
-        NSString *isNew =[[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] valueForKey:@"isNew"];
-        NSString *userId = [[PFUser currentUser]objectId];
-        if ([isNew rangeOfString:userId].location != NSNotFound && isNew.length > 1) {
+        
+        if ([[[contentList objectAtIndex:indexPath.row]valueForKey:@"wasNew"] boolValue]) {
             [replyButton setImage:[UIImage imageNamed:@"CellArrowYellow"] forState:UIControlStateNormal];
         }
         else {
@@ -395,6 +288,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         PFObject *objectToDelete = [[contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
+
         [objectToDelete deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
             if (succeeded) {
                 NSMutableArray *objectsToDelete = [[NSMutableArray alloc]init];
@@ -582,6 +476,121 @@
 - (IBAction)helpButtonClicked:(id)sender {
     HelpViewController *hvc = [[HelpViewController alloc]initWithNibName:@"HelpViewController" bundle:nil];
     [self.navigationController pushViewController:hvc animated:YES];
+}
+
+#pragma mark - Helper methods
+
+- (void)getTrashTalk {
+    newItems = 0;
+    [idArray removeAllObjects];
+    [idOnlyArray removeAllObjects];
+    [self.navigationController.navigationBar addSubview:stripes];
+    if ([PFUser currentUser]) {
+        PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
+        [queryForTrashTalk whereKey:@"recipients" containsString:[[PFUser currentUser]objectId]];
+        [queryForTrashTalk whereKey:@"sender" notEqualTo:[PFUser currentUser]];
+        [queryForTrashTalk orderByDescending:@"updatedAt"];
+        [queryForTrashTalk findObjectsInBackgroundWithBlock:^ (NSArray *objects, NSError *error) {
+            if (!error) {
+                NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
+                NSString *userId = [[PFUser currentUser]objectId];
+                
+                for (PFObject *trashTalkItem in objects) {
+                    
+                    [trashTalkArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", [NSNumber numberWithBool:NO], @"wasNew", nil]];
+                    NSString *isNew = [trashTalkItem objectForKey:@"isNew"];
+                    if ([isNew rangeOfString:userId].location != NSNotFound) {
+                        newItems = newItems+ 1;
+                        [[trashTalkArray objectAtIndex:trashTalkArray.count-1]setObject:[NSNumber numberWithBool:YES] forKey:@"wasNew"];
+                        if ([isNew rangeOfString:[NSString stringWithFormat:@",%@", userId]].location != NSNotFound) {
+                            isNew = [isNew stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@",%@", userId] withString:@""];
+                            
+                        }
+                        else {
+                            isNew = [isNew stringByReplacingOccurrencesOfString:userId withString:@""];
+                        }
+                        if (isNew) {
+                            [trashTalkItem setObject:isNew forKey:@"isNew"];
+                            [trashTalkItem saveInBackground];
+                        }
+                        else {
+                            [trashTalkItem setObject:@"" forKey:@"isNew"];
+                            [trashTalkItem saveInBackground];
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
+                PFQuery *queryForSentTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
+                [queryForSentTrashTalk whereKey:@"sender" equalTo:[PFUser currentUser]];
+                [queryForSentTrashTalk orderByDescending:@"updatedAt"];
+                [queryForSentTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects2, NSError *error) {
+                    if (!error) {
+                        for (PFObject *sentTrashTalkItem in objects2) {
+                            [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:sentTrashTalkItem, @"data", sentTrashTalkItem.updatedAt, @"date", nil]];
+                        }
+                        NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
+                        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByDate];
+                        NSArray *sortedArray = [trashTalkArray sortedArrayUsingDescriptors:sortDescriptors];
+                        NSMutableArray *abreviatedArray = [[NSMutableArray alloc]init];
+                        NSMutableDictionary *conversationIdItem = [[NSMutableDictionary alloc]init];
+                        NSString *conversationId;
+                        NSMutableDictionary *conversationItem = [[NSMutableDictionary alloc]init];
+                        
+                        for (int i = 0; i < sortedArray.count; i++) {
+                            conversationId = [[[sortedArray objectAtIndex:i]valueForKey:@"data"] objectForKey:@"conversationId"];
+                            conversationItem = [sortedArray objectAtIndex:i];
+                            if (![idOnlyArray containsObject:conversationId]) {
+                                [conversationIdItem setObject:[NSNumber numberWithInt:1] forKey:@"conversationCount"];
+                                [conversationIdItem setObject:conversationId forKey:@"conversationId"];
+                                [idOnlyArray addObject:conversationId];
+                                [idArray addObject:conversationIdItem];
+                                [abreviatedArray addObject:conversationItem];
+                            }
+                            else {
+                                for (int j = 0; j < idArray.count; j++) {
+                                    
+                                    if ([[idOnlyArray objectAtIndex:j] isEqualToString:conversationId]) {
+                                        NSNumber *currentCount = [[idArray objectAtIndex:j]objectForKey:@"conversationCount"];
+                                        int count = [currentCount intValue]+1;
+                                        currentCount = [NSNumber numberWithInt:count];
+                                        NSMutableDictionary *newConversationIdItem = [NSMutableDictionary dictionaryWithObjectsAndKeys:currentCount, @"conversationCount", conversationId, @"conversationId", nil];
+                                        [idArray replaceObjectAtIndex:j withObject:newConversationIdItem];
+                                        //[[idArray objectAtIndex:j]setObject:currentCount forKey:@"conversationCount"];
+                                    }
+                                }
+                                
+                            }
+                        }
+                        allItems = [sortedArray mutableCopy];
+                        
+                        //NSMutableArray *trashTalkToDisplay = [sortedArray mutableCopy];
+                        if (newItems > 0) {
+                            chatIndicatorLabel.text = [NSString stringWithFormat:@"%d",newItems];
+                            [chatIndicator setHidden:NO];
+                            [chatIndicatorLabel setHidden:NO];
+                        }
+                        else {
+                            [chatIndicatorLabel setHidden:YES];
+                            [chatIndicator setHidden:YES];
+                        }
+                        [self setContentList:abreviatedArray];
+                        [self.trashTalkTableView reloadData];
+                        
+                        
+                    }
+                }];
+            }
+        }];
+    }
+    else {
+        LoginOptionsViewController *loginVc = [[LoginOptionsViewController alloc]initWithNibName:@"LoginOptionsViewController" bundle:nil];
+        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
+        [self.navigationController presentModalViewController:navc animated:NO];
+    }
+
 }
 
 @end

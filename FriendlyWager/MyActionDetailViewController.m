@@ -480,20 +480,10 @@
     [wagerObject setObject:[NSNumber numberWithBool:YES] forKey:@"wagerAccepted"];
     [wagerObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
+            [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [_opponent objectId]] withMessage:[NSString stringWithFormat:@"%@ %@", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], @"accepted your wager"]];
             [_wagerObjects removeObjectAtIndex:tag-1];
             //[indexPathArray removeObjectAtIndex:tag];
             [actionHistoryTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            PFQuery *updateGameCount = [PFQuery queryWithClassName:@"Games"];
-            [updateGameCount whereKey:@"gameId" equalTo:@"1"];
-            [updateGameCount getFirstObjectInBackgroundWithBlock:^(PFObject *game, NSError *error) {
-                if (!error) {
-                    int currentCount = [[game objectForKey:@"numberOfWagers"] intValue]+1;
-                    int pendingCount = [[game objectForKey:@"numberOfPendingWagers"]intValue]-1;
-                    [game setObject:[NSNumber numberWithInt:currentCount] forKey:@"numberOfWagers"];
-                    [game setObject:[NSNumber numberWithInt:pendingCount] forKey:@"numberOfPendingWagers"];
-                    [game saveInBackground];
-                }
-            }];
         }
         else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to accept this wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -508,19 +498,11 @@
     PFObject *wagerObject = [_wagerObjects objectAtIndex:tag-1];
     [wagerObject deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
+            [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [_opponent objectId]] withMessage:[NSString stringWithFormat:@"%@ %@", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], @"rejected your wager"]];
             [_wagerObjects removeObjectAtIndex:tag-1];
             //[indexPathArray removeObjectAtIndex:tag];
             [actionHistoryTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            PFQuery *updateGameCount = [PFQuery queryWithClassName:@"Games"];
-            [updateGameCount whereKey:@"gameId" equalTo:@"1"];
-            [updateGameCount getFirstObjectInBackgroundWithBlock:^(PFObject *game, NSError *error) {
-                if (!error) {
-                    int pendingCount = [[game objectForKey:@"numberOfPendingWagers"]intValue]-1;
-                    [game setObject:[NSNumber numberWithInt:pendingCount] forKey:@"numberOfPendingWagers"];
-                    [game saveInBackground];
-                }
-            }];
-        } 
+        }
         else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to reject this wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];

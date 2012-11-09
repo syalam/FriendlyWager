@@ -439,34 +439,14 @@ forState:UIControlStateNormal];
                         [tokenObject setValue:[NSNumber numberWithInt:updatedTokenCount] forKey:@"tokenCount"];
                         [tokenObject saveInBackground];
 
+                            [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[_opponentsToWager objectAtIndex:0] objectId]] withMessage:[NSString stringWithFormat:@"%@ %@", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], @"proposed a wager with you"]];
+
+
+
                     }
      
                 }];
                 
-                PFQuery *updateGameCount = [PFQuery queryWithClassName:@"Games"];
-                [updateGameCount whereKey:@"gameId" equalTo:@"1"];
-                
-                [updateGameCount getFirstObjectInBackgroundWithBlock:^(PFObject *game, NSError *error) {
-                    int pendingCount = [[game valueForKey:@"numberOfPendingWagers"]intValue]+_opponentsToWager.count;
-                    [game setObject:[NSNumber numberWithInt:pendingCount] forKey:@"numberOfPendingWagers"];
-                    [game saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        if (!error) {
-                            if (_opponentsToWager.count == 1) {
-                                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"updated"];
-                                [SVProgressHUD dismiss];
-                                if (_tabParentView) {
-                                    [_tabParentView.navigationController dismissViewControllerAnimated:YES completion:NULL];
-                                }
-                                else {
-                                    [self.navigationController popToRootViewControllerAnimated:YES];
-                                }
-                            }
-                            
-                        }
-                    }];
-
-                }];
-  
                 if (_opponentsToWager.count > 1) {
                     for (int i = 1; i < _opponentsToWager.count; i++) {
                         PFObject *createWager = [PFObject objectWithClassName:@"wagers"];
@@ -486,6 +466,7 @@ forState:UIControlStateNormal];
                         }
                         [createWager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                             if (!error) {
+                                [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[_opponentsToWager objectAtIndex:i] objectId]] withMessage:[NSString stringWithFormat:@"%@ %@", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], @"proposed a wager with you"]];
                                 if (i == _opponentsToWager.count-1) {
                                     [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"updated"];
                                     [SVProgressHUD dismiss];
@@ -505,7 +486,20 @@ forState:UIControlStateNormal];
                     }
 
                 }
-
+                else {
+                    
+                    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"updated"];
+                    [SVProgressHUD dismiss];
+                    if (_tabParentView) {
+                        [_tabParentView.navigationController dismissViewControllerAnimated:YES completion:NULL];
+                    }
+                    else {
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                    }
+                    
+                    
+                }
+                
             }
          
             else {

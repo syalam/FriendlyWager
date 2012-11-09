@@ -417,19 +417,37 @@
 -(void)replyButtonClicked:(id)sender {
     NSUInteger tag = [sender tag];
     NSLog(@"%d", tag);
-    PFObject *recipient = [[[_contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"sender"];
-    [recipient fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        if (!error) {
-            NewTrashTalkViewController *new = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
-            if ([[[_contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"]) {
-                new.fbPostId = [[[_contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"];
-            }
-            new.recipients = [[NSMutableArray alloc]initWithObjects:object, nil];
-            [self.navigationController pushViewController:new animated:YES];
+    NSString *recipients = [[[[_contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"sender"] objectId];
+    recipients = [NSString stringWithFormat:@"%@,%@",recipients,[[[_contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"recipients"]];
+    
+    NSString *currentUser = [[PFUser currentUser] objectId];
+    if ([recipients rangeOfString:currentUser].location != NSNotFound) {
+        if ([recipients rangeOfString:[NSString stringWithFormat:@",%@", currentUser]].location != NSNotFound) {
+            recipients = [recipients stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@",%@", currentUser] withString:@""];
+            
         }
         else {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to reply at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
+            recipients = [recipients stringByReplacingOccurrencesOfString:currentUser withString:@""];
+        }
+    }
+    
+    
+    NewTrashTalkViewController *new = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
+    if ([[[_contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"]) {
+        new.fbPostId = [[[_contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"fbID"];
+    }
+    
+    NSArray *recipientList = [recipients componentsSeparatedByString:@","];
+    PFQuery *recipientSearch = [PFQuery queryForUser];
+    [recipientSearch whereKey:@"objectId" containedIn:recipientList];
+    [recipientSearch findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            new.recipients = [objects mutableCopy];
+            [self.navigationController pushViewController:new animated:YES];
+        }
+        
+        else {
+            NSLog(@"%@", error);
         }
     }];
 }

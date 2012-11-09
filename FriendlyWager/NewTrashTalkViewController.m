@@ -41,9 +41,9 @@
 	[tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldFrameDidChange:) forControlEvents:TITokenFieldControlEventFrameDidChange];
 	[tokenFieldView.tokenField setTokenizingCharacters:[NSCharacterSet characterSetWithCharactersInString:@",;."]]; // Default is a comma
 	
-	UIButton * addButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
-	[addButton addTarget:self action:@selector(showContactsPicker:) forControlEvents:UIControlEventTouchUpInside];
-	[tokenFieldView.tokenField setRightView:addButton];
+	//UIButton * addButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+	//[addButton addTarget:self action:@selector(showContactsPicker:) forControlEvents:UIControlEventTouchUpInside];
+	//[tokenFieldView.tokenField setRightView:addButton];
 	[tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidBegin];
 	[tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidEnd];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -343,6 +343,15 @@
     }
 }
 
+- (void)showContactsPicker:(id)sender {
+	
+	// Show some kind of contacts picker in here.
+	// For now, here's how to add and customize tokens.
+	[tokenFieldView tokenFieldTextDidChange:tokenFieldView.tokenField];
+	
+}
+
+
 #pragma mark - Facebook delegate methods
 
 - (void)sendFacebookRequest {
@@ -383,8 +392,18 @@
 
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
     NSLog(@"%@", error);
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to share this message on Facebook" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alert show];
+    if (countRequests < requestIdsArray.count) {
+        countRequests++;
+        
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkTextView.text, @"message", nil];
+        [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", [requestIdsArray objectAtIndex:countRequests - 1]] andParams:params andHttpMethod:@"POST" andDelegate:self];
+        
+    }
+    else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    /*UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to share this message on Facebook" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];*/
 }
 
 

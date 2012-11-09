@@ -46,6 +46,8 @@
 - (IBAction)okButtonClicked:(id)sender;
 - (IBAction)settingsButtonClicked:(id)sender;
 - (IBAction)helpButtonClicked:(id)sender;
+- (void)getTrashTalk;
+
 
 
 @property (nonatomic, retain) PFUser *opponent;

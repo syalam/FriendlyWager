@@ -128,7 +128,13 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 }
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    [PFPush handlePush:userInfo];
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateBackground) {
+        [PFPush handlePush:userInfo];
+    }
+    else {
+        [_trashTalkViewController getTrashTalk];
+    }
 }
 
 @end

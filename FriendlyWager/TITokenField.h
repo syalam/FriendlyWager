@@ -85,6 +85,8 @@
 @property (nonatomic, readonly) NSArray * tokenTitles;
 
 - (void)updateContentSize;
+- (void)resultsForSearchString:(NSString *)searchString;
+- (void)tokenFieldTextDidChange:(TITokenField *)field;
 
 @end
 

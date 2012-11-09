@@ -285,19 +285,27 @@
 
 #pragma mark - Helper Methods
 - (void)getWagers {
-    PFQuery *gameCount = [PFQuery queryWithClassName:@"Games"];
-    [gameCount whereKey:@"sport" equalTo:@"Basketball"];
-    [gameCount findObjectsInBackgroundWithBlock:^(NSArray *games, NSError *error) {
+    PFQuery *currentCount = [PFQuery queryWithClassName:@"wagers"];
+    [currentCount whereKey:@"gameId" equalTo:@"1"];
+    [currentCount whereKey:@"wagerAccepted" equalTo:[NSNumber numberWithBool:YES]];
+    [currentCount countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
         if (!error) {
-            for(PFObject *game in games)
-            {
-                currentWagers = [[game objectForKey:@"numberOfWagers"]intValue];
-                pendingWagers = [[game objectForKey:@"numberOfPendingWagers"]intValue];
-                [self.tableView reloadData];
-                    
-            }
+            currentWagers = number;
+            
+            PFQuery *pendingCount = [PFQuery queryWithClassName:@"wagers"];
+            [pendingCount whereKey:@"gameId" equalTo:@"1"];
+            [pendingCount whereKey:@"wagerAccepted" equalTo:[NSNumber numberWithBool:NO]];
+            
+            [pendingCount countObjectsInBackgroundWithBlock:^(int number2, NSError *error) {
+                if (!error) {
+                    pendingWagers = number2;
+                    [self.tableView reloadData];
+                }
+            
+            }];
         }
     }];
+
 }
 
 
