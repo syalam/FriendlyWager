@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A0055C416530F6C003836F4 /* fwAppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A0055C216530F6C003836F4 /* fwAppIcon.png */; };
+		1A0055C516530F6C003836F4 /* fwAppIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A0055C316530F6C003836F4 /* fwAppIcon@2x.png */; };
 		1A009B15161A60FE00676781 /* KBLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A009B14161A60FE00676781 /* KBLabel.m */; };
 		1A009B1E161A86DC00676781 /* whiteArrow@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A009B1C161A86DC00676781 /* whiteArrow@2x~iphone.png */; };
 		1A009B1F161A86DC00676781 /* whiteArrow~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A009B1D161A86DC00676781 /* whiteArrow~iphone.png */; };
@@ -384,6 +386,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A0055C216530F6C003836F4 /* fwAppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fwAppIcon.png; sourceTree = "<group>"; };
+		1A0055C316530F6C003836F4 /* fwAppIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fwAppIcon@2x.png"; sourceTree = "<group>"; };
 		1A009B13161A60FE00676781 /* KBLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KBLabel.h; sourceTree = "<group>"; };
 		1A009B14161A60FE00676781 /* KBLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KBLabel.m; sourceTree = "<group>"; };
 		1A009B1C161A86DC00676781 /* whiteArrow@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x~iphone.png"; sourceTree = "<group>"; };
@@ -1224,6 +1228,8 @@
 		F714E15414A1A88400E24956 = {
 			isa = PBXGroup;
 			children = (
+				1A0055C216530F6C003836F4 /* fwAppIcon.png */,
+				1A0055C316530F6C003836F4 /* fwAppIcon@2x.png */,
 				1AE18C2D16262D91007BD57F /* appIconPlain@2x.png */,
 				1AE18C2B16262D7A007BD57F /* appIconPlain.png */,
 				1AE18C1E1624EE9C007BD57F /* appIcon.png */,
@@ -2300,6 +2306,8 @@
 				1AC405CC163EAB1300DA40D5 /* reject@2x.png in Resources */,
 				1AC405CF163EB39700DA40D5 /* plainBG.png in Resources */,
 				1AC405D0163EB39700DA40D5 /* plainBG@2x.png in Resources */,
+				1A0055C416530F6C003836F4 /* fwAppIcon.png in Resources */,
+				1A0055C516530F6C003836F4 /* fwAppIcon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

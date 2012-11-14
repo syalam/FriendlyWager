@@ -10,8 +10,8 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>appIconPlain.png</string>
-		<string>appIconPlain@2x.png</string>
+		<string>fwAppIcon.png</string>
+		<string>fwAppIcon@2x.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
@@ -19,8 +19,8 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
-				<string>appIconPlain.png</string>
-				<string>appIconPlain@2x.png</string>
+				<string>fwAppIcon.png</string>
+				<string>fwAppIcon@2x.png</string>
 			</array>
 		</dict>
 	</dict>
