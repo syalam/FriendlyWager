@@ -40,12 +40,13 @@ static NSString * const password = @"Mhfgsy63Jd";
 }
 
 + (void)getOdds:(NSMutableDictionary*)params
-                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+                 success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+                 failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure {
     FWHTTPClient *httpClient = [self setupHTTPClient];
     [params setObject:userName forKey:@"Username"];
     [params setObject:password forKey:@"Password"];
-    [httpClient  getPath:@"Odds" parameters:params success:success failure:failure];
+    //[httpClient  getPath:@"Odds" parameters:params success:success failure:failure];
+    [httpClient getXMLPath:@"Odds" parameters:params data:nil success:success failure:failure];
 }
 
 @end

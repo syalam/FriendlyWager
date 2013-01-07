@@ -95,12 +95,19 @@
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
     NSMutableDictionary *params = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"Basketball", @"Sport", @"NBA", @"League", @"01/01/2013", @"StartDate", @"01/07/2013", @"EndDate", nil];
-    [FWAPI getOdds:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
+    /*[FWAPI getOdds:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", [responseObject description]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", operation.responseString);
+    }];*/
+    
+    [FWAPI getOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
+        NSLog(@"%@", XMLParser);
+        XMLParser.delegate = self;
+        [XMLParser parse];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
+        NSLog(@"%@", XMLParser);
     }];
-
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
