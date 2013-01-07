@@ -39,7 +39,4 @@
                                     path:(NSString *)path
                               parameters:(NSDictionary *)parameters
                                     data:(NSData*)data;
-
--(NSString*)userName;
--(NSString*)password;
 @end

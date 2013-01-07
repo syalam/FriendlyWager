@@ -9,7 +9,7 @@
 #import "FWAPI.h"
 #import "FWHTTPClient.h"
 
-static NSString * const kBMHTTPClientBaseURLString = @"http://services.ChalkGaming.com/ChalkServices";
+static NSString * const kBMHTTPClientBaseURLString = @"http://services.chalkgaming.com/ChalkServices.asmx?op=";
 static NSString * const userName = @"MajfyT673";
 static NSString * const password = @"Mhfgsy63Jd";
 

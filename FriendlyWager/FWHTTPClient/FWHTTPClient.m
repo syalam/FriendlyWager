@@ -9,7 +9,7 @@
 #import "FWHTTPClient.h"
 #import "AFXMLRequestOperation.h"
 
-static NSString * const kBMHTTPClientBaseURLString = @"http://services.ChalkGaming.com/ChalkServices";
+static NSString * const kBMHTTPClientBaseURLString = @"http://services.chalkgaming.com/ChalkServices.asmx?op=";
 
 @implementation FWHTTPClient
 + (FWHTTPClient *)sharedClient {
