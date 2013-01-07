@@ -45,6 +45,17 @@ static NSString * const kBMHTTPClientBaseURLString = @"http://services.chalkgami
     [self enqueueHTTPRequestOperation:operation];
 }
 
+- (void)getXMLPath:(NSString *)path
+     parameters:(NSDictionary *)parameters
+           data:(NSData*)data
+        success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+        failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure
+{
+    NSURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:parameters data:data];
+    //AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:success failure:failure];
+    AFXMLRequestOperation *operation = [AFXMLRequestOperation XMLParserRequestOperationWithRequest:request success:success failure:failure];
+    [self enqueueHTTPRequestOperation:operation];
+}
 
 - (void)postPath:(NSString *)path
       parameters:(NSDictionary *)parameters

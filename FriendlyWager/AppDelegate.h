@@ -10,7 +10,7 @@
 #import <Parse/Parse.h>
 #import "TrashTalkViewController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate, NSXMLParserDelegate> {
 
 }
 
