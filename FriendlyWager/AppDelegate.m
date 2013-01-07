@@ -103,6 +103,8 @@
     
     [FWAPI getOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
         NSLog(@"%@", XMLParser);
+        xmlBookArray = [[NSMutableArray alloc]init];
+        xmlGameArray = [[NSMutableArray alloc]init];
         XMLParser.delegate = self;
         [XMLParser parse];
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
@@ -149,6 +151,26 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
     }
     else {
         [_trashTalkViewController getTrashTalk];
+    }
+}
+
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
+    NSLog(@"%@", string);
+}
+
+- (void)parser:(NSXMLParser *)parser foundElementDeclarationWithName:(NSString *)elementName model:(NSString *)model {
+    NSLog(@"%@", elementName);
+    NSLog(@"%@", model);
+}
+
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict {
+    if ([elementName isEqualToString:@"Game"]) {
+        [xmlGameArray addObject:attributeDict];
+        NSLog(@"%@", xmlGameArray);
+    }
+    if ([elementName isEqualToString:@"Book"]) {
+        [xmlBookArray addObject:attributeDict];
+        NSLog(@"%@", xmlBookArray);
     }
 }
 
