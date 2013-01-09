@@ -67,4 +67,65 @@ typedef enum OAuthProvider {
 + (void)getOdds:(NSMutableDictionary*)params
         success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
         failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
+
+//---------------------------------------------
+/// @name Fetches a list of scores and odds from the server
+///---------------------------------------------
+/**
+ Retrieve list of odds and scores from the server
+ @return An array of odds and scores
+ @param params dictionary object containing captured request information
+ Sport
+ League
+ StartDate
+ EndDate
+ */
++ (void)getScoresAndOdds:(NSMutableDictionary*)params
+        success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+        failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
+
+//---------------------------------------------
+/// @name Fetches a game preview from the server
+///---------------------------------------------
+/**
+ Retrieve game preview from the server
+ @return A dictionary of odds
+ @param params dictionary object containing captured request information
+ Sport
+ League
+ GameId
+ */
++ (void)getGamePreview:(NSMutableDictionary*)params
+                 success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+                 failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
+
+//---------------------------------------------
+/// @name Fetches a list of GameId's for which Previews are available
+///---------------------------------------------
+/**
+ Retrieve a list of GameId's for which Previews are available from the server
+ @return A list of GameId's
+ @param params dictionary object containing captured request information
+ Sport
+ League
+ StartDate
+ EndDate
+ */
++ (void)getPreviewList:(NSMutableDictionary*)params
+               success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+               failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
+
+//---------------------------------------------
+/// @name Fetches Teasers and subsets of Data to build an intro page for each sport///---------------------------------------------
+/**
+ Retrieve a link to a splash screen from the server
+ @return strings of information
+ @param params dictionary object containing captured request information
+ Sport
+ League
+ */
++ (void)getSplashScreen:(NSMutableDictionary*)params
+               success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+               failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
+
 @end

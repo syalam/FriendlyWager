@@ -10,12 +10,14 @@
 #import <Parse/Parse.h>
 #import "TabsViewController.h"
 
-@interface ScoreSummaryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate> {
+@interface ScoreSummaryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, NSXMLParserDelegate> {
     NSString *opponent;
     NSArray *leftArray;
     NSArray *rightArray;
-    int currentWagers;
-    int pendingWagers;
+    NSMutableArray *xmlGameArray;
+    NSMutableArray *xmlBovadaArray;
+    NSMutableArray *xml5DimesArray;
+    NSMutableArray *dateArray;
     
     BOOL newWagerVisible;
     UIImageView *stripes;

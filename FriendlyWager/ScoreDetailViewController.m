@@ -27,9 +27,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil scoreData:(NSDictionary *)scoreData {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
-        scoreDataDictionary = [[NSDictionary alloc]initWithDictionary:scoreData];
-        
+        // Custom initialization        
     }
     return self;
 }
@@ -53,14 +51,6 @@
     self.title = @"Scores";
     stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     
-    NSMutableArray *firstSection = [[NSMutableArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team", @"+13.5", @"teamScore", @"Celtics", @"team2", @"-13.5", @"team2Score", nil], nil];
-    
-    NSMutableArray *secondSection = [[NSMutableArray alloc]init];
-    NSArray *scoreDetailsArray = [[NSArray alloc]initWithObjects:firstSection, secondSection, nil];
-    //[self setContentList:scoreDetailsArray];
-    
-    //UIBarButtonItem *wagerButton = [[UIBarButtonItem alloc]initWithTitle:@"Wager" style:UIBarButtonItemStyleBordered target:self action:@selector(wagerButtonClicked:)];
-    //self.navigationItem.rightBarButtonItem = wagerButton;
     UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
     custombackButton.bounds = CGRectMake( 0, 0, backButtonImage.size.width, backButtonImage.size.height );
@@ -73,11 +63,28 @@
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
 
-    numberWagers.text = [NSString stringWithFormat:@"%d", self.currentCount];
-    numberPending.text = [NSString stringWithFormat:@"%d", self.pendingCount];
-    if (self.pendingCount > 9) {
-        [pendingNotification setImage:[UIImage imageNamed:@"alertIndicatorLong"]];
+    homeTeam.text = [_gameDataDictionary valueForKey:@"homeTeam"];
+    awayTeam.text = [_gameDataDictionary valueForKey:@"awayTeam"];
+    homeOdds.text = [_gameDataDictionary valueForKey:@"homeOdds"];
+    awayOdds.text = [_gameDataDictionary valueForKey:@"awayOdds"];
+    gameTime.text = [_gameDataDictionary valueForKey:@"gameTime"];
+    
+    NSNumber *currentWagers = [_gameDataDictionary valueForKey:@"currentWagers"];
+    NSNumber *pendingWagers = [_gameDataDictionary valueForKey:@"pendingWagers"];
+    if ([currentWagers intValue] > 0) {
+        numberWagers.text = [NSString stringWithFormat:@"%d", [currentWagers intValue]];
     }
+    if ([pendingWagers intValue] > 0) {
+        numberPending.text = [NSString stringWithFormat:@"%d", [pendingWagers intValue]];
+        if ([pendingWagers intValue] > 9) {
+            [pendingNotification setImage:[UIImage imageNamed:@"alertIndicatorLong"]];
+        }
+        else {
+            [pendingNotification setImage:[UIImage imageNamed:@"alertIndicator"]];
+        }
+
+    }
+    
 
     
     self.navigationItem.leftBarButtonItem = backButton;
@@ -155,11 +162,14 @@
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (self.contentList.count == 0) {
+        return 2;
+    }
     return self.contentList.count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (![[self.contentList objectAtIndex:section] count]) {
+    if ([[self.contentList objectAtIndex:section] count] == 0) {
         return 1;
     }
     else {
@@ -185,7 +195,7 @@
         cell.backgroundColor = [UIColor clearColor];
         if (sectionContents.count) {
             UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(55, 10, 200, 30)];
-            nameLabel.textColor = [UIColor blackColor];
+            nameLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:52.0/255.0 blue:46.0/255.0 alpha:1.0];
             nameLabel.textAlignment = UITextAlignmentLeft;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             nameLabel.backgroundColor = [UIColor clearColor];
@@ -204,7 +214,7 @@
             UILabel *odds = [[UILabel alloc]initWithFrame:CGRectMake(200, 10, 60, 30)];
             odds.text = [[sectionContents objectAtIndex:indexPath.row]valueForKey:@"odds"];
             odds.font = [UIFont boldSystemFontOfSize:17];
-            odds.textColor = [UIColor blackColor];
+            odds.textColor = [UIColor colorWithRed:58.0/255.0 green:52.0/255.0 blue:46.0/255.0 alpha:1.0];
             odds.textAlignment = UITextAlignmentRight;
             odds.backgroundColor = [UIColor clearColor];
             [cell.contentView addSubview:odds];
@@ -213,6 +223,7 @@
             profilePicView.contentMode = UIViewContentModeScaleAspectFit;
             [profilePicView setImage:profilePic];
             [cell.contentView addSubview:profilePicView];
+            nameLabel.text = [nameLabel.text capitalizedString];
 
         }
         else {
@@ -222,12 +233,13 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             nameLabel.backgroundColor = [UIColor clearColor];
             if (indexPath.section == 0) {
-                nameLabel.text = @"Zero pending wagers on this game";
+                nameLabel.text = @"No pending wagers on this game";
+                [nameLabel setAdjustsFontSizeToFitWidth:YES];
             }
             else {
-                nameLabel.text = @"Zero current wagers on this game";
+                nameLabel.text = @"No current wagers on this game";
+                [nameLabel setAdjustsFontSizeToFitWidth:YES];
             }
-            nameLabel.text = [nameLabel.text capitalizedString];
             nameLabel.font = [UIFont boldSystemFontOfSize:17];
             [cell.contentView addSubview:nameLabel];
 
@@ -266,14 +278,14 @@
 #pragma mark - Button Clicks
 - (IBAction)makeAWagerButtonTapped:(id)sender {
     [self viewWillDisappear:YES];
-    NSDictionary *gameDataDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team1", @"1", @"team1Id", @"Celtics", @"team2", @"2", @"team2Id", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate date], @"date", @"1", @"gameId", nil];
-    NSLog(@"%@", gameDataDictionary);
+    //NSDictionary *gameDataDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team1", @"1", @"team1Id", @"Celtics", @"team2", @"2", @"team2Id", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate date], @"date", @"1", @"gameId", nil];
+    NSLog(@"%@", _gameDataDictionary);
     NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
     newWager.sport = _sport;
     if (_opponentsToWager.count > 0) {
         newWager.opponentsToWager = _opponentsToWager;
     }
-    newWager.gameDataDictionary = gameDataDictionary;
+    newWager.gameDataDictionary = _gameDataDictionary;
     [newWager updateOpponents];
     [self.navigationController pushViewController:newWager animated:YES];
     //[self.tabBarController setSelectedIndex:0];
@@ -288,7 +300,7 @@
     NSMutableArray *currentWagers = [[NSMutableArray alloc]init];
     NSMutableArray *pendingWagers = [[NSMutableArray alloc]init];
     PFQuery *wagers = [PFQuery queryWithClassName:@"wagers"];
-    [wagers whereKey:@"gameId" equalTo:@"1"];
+    [wagers whereKey:@"gameId" equalTo:[_gameDataDictionary valueForKey:@"gameId"]];
     [wagers orderByDescending:@"dateModified"];
     [wagers setLimit:200];
     [wagers findObjectsInBackgroundWithBlock:^(NSArray *wagers, NSError *error) {
@@ -296,6 +308,9 @@
             NSMutableArray *userArray = [[NSMutableArray alloc]init];
             NSMutableArray *isPendingArray = [[NSMutableArray alloc]init];
             NSMutableArray *oddsArray = [[NSMutableArray alloc]init];
+            if (wagers.count) {
+                [scoreDetailTableView reloadData];
+            }
             
             for(PFObject *wager in wagers)
             {
@@ -308,11 +323,13 @@
                 else {
                     isPending = YES;
                 }
-                if ([teamSelected isEqualToString:@"Celtics"]) {
-                    odds = @"- 13.5";
+                if ([teamSelected isEqualToString:[_gameDataDictionary valueForKey:@"homeTeam"]]) {
+                    NSNumber *oddsNumber = [_gameDataDictionary valueForKey:@"homeOdds"];
+                    odds = [NSString stringWithFormat:@"%d", [oddsNumber intValue]];
                 }
                 else {
-                    odds = @"+ 13.5";
+                    NSNumber *oddsNumber = [_gameDataDictionary valueForKey:@"awayOdds"];
+                    odds = [NSString stringWithFormat:@"%d", [oddsNumber intValue]];
                 }
                 [isPendingArray addObject:[NSNumber numberWithBool:isPending]];
                 [oddsArray addObject:odds];

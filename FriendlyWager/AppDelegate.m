@@ -94,22 +94,16 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
-    NSMutableDictionary *params = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"Basketball", @"Sport", @"NBA", @"League", @"01/01/2013", @"StartDate", @"01/07/2013", @"EndDate", nil];
-    /*[FWAPI getOdds:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", [responseObject description]);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", operation.responseString);
-    }];*/
-    
-    [FWAPI getOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Hockey", @"Sport", @"NHL", @"League", @"01/12/2013", @"StartDate",@"01/19/2013", @"EndDate", nil];
+    [FWAPI getPreviewList:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
         NSLog(@"%@", XMLParser);
-        xmlBookArray = [[NSMutableArray alloc]init];
-        xmlGameArray = [[NSMutableArray alloc]init];
+        results = [[NSMutableArray alloc]init];
         XMLParser.delegate = self;
         [XMLParser parse];
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
         NSLog(@"%@", XMLParser);
     }];
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -154,8 +148,20 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
     }
 }
 
+#pragma mark - NSXMLParser Delegate Methods
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-    NSLog(@"%@", string);
+    
+    NSCharacterSet * set = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789"] invertedSet];
+    NSString *firstLetter = [string substringWithRange:NSMakeRange(0, 1)];
+    
+    if ([firstLetter rangeOfCharacterFromSet:set].location != NSNotFound) {
+        NSLog(@"This string contains illegal characters");
+        NSLog(@"%@", string);
+    }
+    else {
+        NSLog(@"%@", string);
+    }
+        
 }
 
 - (void)parser:(NSXMLParser *)parser foundElementDeclarationWithName:(NSString *)elementName model:(NSString *)model {
@@ -164,14 +170,16 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
 }
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict {
-    if ([elementName isEqualToString:@"Game"]) {
-        [xmlGameArray addObject:attributeDict];
-        NSLog(@"%@", xmlGameArray);
-    }
-    if ([elementName isEqualToString:@"Book"]) {
-        [xmlBookArray addObject:attributeDict];
-        NSLog(@"%@", xmlBookArray);
-    }
+    [results addObject:attributeDict];
+    NSLog(@"%@", attributeDict);
+}
+
+- (void)parser:(NSXMLParser *)parser foundAttributeDeclarationWithName:(NSString *)attributeName forElement:(NSString *)elementName type:(NSString *)type defaultValue:(NSString *)defaultValue {
+    NSLog(@"%@", attributeName);
+}
+
+- (void)parserDidEndDocument:(NSXMLParser *)parser {
+    NSLog(@"%@", results);
 }
 
 @end

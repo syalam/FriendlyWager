@@ -10,6 +10,8 @@
 #import "ScoreDetailViewController.h"
 #import "NewWagerViewController.h"
 #import "ScoreSummaryCell.h"
+#import "FWAPI.h"
+#import "SVProgressHUD.h"
 
 @implementation ScoreSummaryViewController
 @synthesize opponent = _opponent;
@@ -84,13 +86,31 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
     self.navigationItem.leftBarButtonItem = backButton;
-    //[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG9_BG"]]];
+    [SVProgressHUD showWithStatus:@"Getting Game Info"];
+    NSDate *currentDate = [NSDate date];
+    NSDate *weekFromNow = [currentDate dateByAddingTimeInterval:604800];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *currentDateComponents = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:currentDate];
+    NSDateComponents *weekFromNowComponents = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:weekFromNow];
+    NSString *currentDateString = [NSString stringWithFormat:@"%d/%d/%d", [currentDateComponents month], [currentDateComponents day], [currentDateComponents year]];
+    NSString *weekFromNowString = [NSString stringWithFormat:@"%d/%d/%d", [weekFromNowComponents month], [weekFromNowComponents day], [weekFromNowComponents year]];
     
-    /*NSArray *todayArray = [NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team1", @"Celtics", @"team2", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate date], @"date", nil], nil];
-    NSArray *tomorrowArray = [NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Knicks", @"team1", @"Kings", @"team2", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate dateWithTimeInterval:(24*60*60) sinceDate:[NSDate date]], @"date", nil], nil];
+    NSLog(@"%@", currentDateString);
+    NSLog(@"%@", weekFromNowString);
     
-    [self setContentList:[NSMutableArray arrayWithObjects:todayArray, tomorrowArray, nil]];*/
-    [self getWagers];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"Basketball", @"Sport", @"NBA", @"League", currentDateString, @"StartDate", weekFromNowString, @"EndDate", nil];
+    [FWAPI getScoresAndOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
+        NSLog(@"%@", XMLParser);
+        xmlBovadaArray = [[NSMutableArray alloc]init];
+        xml5DimesArray = [[NSMutableArray alloc]init];
+        xmlGameArray = [[NSMutableArray alloc]init];
+        dateArray = [[NSMutableArray alloc]init];
+        XMLParser.delegate = self;
+        [XMLParser parse];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
+        NSLog(@"%@", XMLParser);
+    }];
+
 }
 
 - (void)viewDidUnload
@@ -112,6 +132,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
     [stripes removeFromSuperview];
     
 }
@@ -125,11 +146,13 @@
 
 #pragma mark - TableView Delegate Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    NSLog(@"Number of sections%d", _contentList.count);
+    return _contentList.count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    NSLog(@"Number of rows in section %d: %d", section, [_contentList[section] count]);
+    return [_contentList[section] count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -144,21 +167,34 @@
     if (cell == nil) {
         cell = [[ScoreSummaryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    [cell.gameImageView setImage:[UIImage imageNamed:@"lakersCeltic"]];
-    [cell.team1Label setText:@"Lakers"];
-    [cell.team2Label setText:@"Celtics"];
-    [cell.team1Odds setText:@"+13.5"];
-    [cell.team2Odds setText:@"-13.5"];
-    [cell.gameTime setText:@"4:00 PM"];
+    NSMutableArray *sectionContent = _contentList[indexPath.section];
+    NSMutableDictionary *allInfo = sectionContent[indexPath.row];
+    NSMutableDictionary *gameInfo = [allInfo valueForKey:@"game"];
+    NSMutableDictionary *fiveDimes = [allInfo valueForKey:@"5dimes"];
+    //NSMutableDictionary *bovada = [allInfo valueForKey:@"bovada"];
+    //[cell.gameImageView setImage:[UIImage imageNamed:@"lakersCeltic"]];
+    [cell.team1Label setText:[gameInfo valueForKey:@"HomeTeam"]];
+    //NSLog(@"%@", allInfo);
+    [cell.team2Label setText:[gameInfo valueForKey:@"AwayTeam"]];
+    [cell.team1Odds setText:[fiveDimes valueForKey:@"HomeSpread"]];
+    [cell.team2Odds setText:[fiveDimes valueForKey:@"AwaySpread"]];
+    [cell.gameTime setText:[gameInfo valueForKey:@"GameTime"]];
     [cell.wagersLabel setText:@"Wagers"];
-    [cell.wagerCountLabel setText:[NSString stringWithFormat:@"%d",currentWagers]];
-    [cell.pendingCountLabel setText:[NSString stringWithFormat:@"%d",pendingWagers]];
-    if (pendingWagers > 9) {
+    NSNumber *currentWagers = [gameInfo valueForKey:@"currentWagers"];
+    NSNumber *pendingWagers = [gameInfo valueForKey:@"pendingWagers"];
+    if ([currentWagers intValue] > 0) {
+        [cell.wagerCountLabel setText:[NSString stringWithFormat:@"%d",[currentWagers intValue]]];
+    }
+    if ([pendingWagers intValue] > 0) {
+        [cell.pendingCountLabel setText:[NSString stringWithFormat:@"%d",[pendingWagers intValue]]];
+        if ([pendingWagers intValue] > 9) {
             [cell.pendingNotofication setImage:[UIImage imageNamed:@"alertIndicatorLong"]];
         }
-    else {
-        [cell.pendingNotofication setImage:[UIImage imageNamed:@"alertIndicator"]];
+        else {
+            [cell.pendingNotofication setImage:[UIImage imageNamed:@"alertIndicator"]];
             
+        }
+
     }
     
     cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"gameCell"]];
@@ -171,8 +207,25 @@
 
 #pragma mark - TableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSMutableArray *sectionContent = _contentList[indexPath.section];
+    NSMutableDictionary *allInfo = sectionContent[indexPath.row];
+    NSMutableDictionary *gameInfo = [allInfo valueForKey:@"game"];
+    NSMutableDictionary *fiveDimes = [allInfo valueForKey:@"5dimes"];
+    NSString *homeTeam = [gameInfo valueForKey:@"HomeTeam"];
+    NSString *homeTeamId = [gameInfo valueForKey:@"HomeTeamId"];
+    NSString *awayTeam = [gameInfo valueForKey:@"AwayTeam"];
+    NSString *awayTeamId = [gameInfo valueForKey:@"AwayTeamId"];
+    NSString *homeOdds = [fiveDimes valueForKey:@"HomeSpread"];
+    NSString *awayOdds = [fiveDimes valueForKey:@"AwaySpread"];
+    NSString *gameDate = [gameInfo valueForKey:@"GameDate"];
+    NSString *gameTime = [gameInfo valueForKey:@"GameTime"];
+    NSString *gameId = [gameInfo valueForKey:@"GameId"];
+    NSNumber *currentWagers = [gameInfo valueForKey:@"currentWagers"];
+    NSNumber *pendingWagers = [gameInfo valueForKey:@"pendingWagers"];
+    
+    NSMutableDictionary *gameDataDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:homeTeam, @"homeTeam", homeTeamId, @"homeTeamId", awayTeam, @"awayTeam", awayTeamId, @"awayTeamId", homeOdds, @"homeOdds",awayOdds, @"awayOdds", gameDate, @"date", gameId, @"gameId", gameTime, @"gameTime", currentWagers, @"currentWagers", pendingWagers, @"pendingWagers", nil];
+    
     if (_wager) {
-        NSDictionary *gameDataDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Lakers", @"team1", @"1", @"team1Id", @"Celtics", @"team2", @"2", @"team2Id", @"13.5", @"odds", [UIImage imageNamed:@"sports.jpg"], @"image", [NSDate date], @"date", @"1", @"gameId", nil];
         NSLog(@"%@", gameDataDictionary);
         NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
         newWager.sport = _sport;
@@ -188,8 +241,7 @@
     else {
         ScoreDetailViewController *sdvc = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil];
         sdvc.opponentsToWager = _opponentsToWager;
-        sdvc.currentCount = currentWagers;
-        sdvc.pendingCount = pendingWagers;
+        sdvc.gameDataDictionary = gameDataDictionary;
         [self.navigationController pushViewController:sdvc animated:YES];
     }
     
@@ -209,6 +261,13 @@
     
     [relativeDayLabel setBackgroundColor:[UIColor clearColor]];
     [dateLabel setBackgroundColor:[UIColor clearColor]];
+    
+    NSMutableArray *sectionContent = _contentList[section];
+    NSMutableDictionary *allInfo = sectionContent[0];
+    NSMutableDictionary *gameInfo = [allInfo valueForKey:@"game"];
+
+    NSString *dateString = [gameInfo objectForKey:@"GameDate"];
+    dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@""];
     
     if (section == 0) {
         relativeDayLabel.text = @"Today";
@@ -285,29 +344,97 @@
 
 #pragma mark - Helper Methods
 - (void)getWagers {
-    PFQuery *currentCount = [PFQuery queryWithClassName:@"wagers"];
-    [currentCount whereKey:@"gameId" equalTo:@"1"];
-    [currentCount whereKey:@"wagerAccepted" equalTo:[NSNumber numberWithBool:YES]];
-    [currentCount countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
-        if (!error) {
-            currentWagers = number;
-            
-            PFQuery *pendingCount = [PFQuery queryWithClassName:@"wagers"];
-            [pendingCount whereKey:@"gameId" equalTo:@"1"];
-            [pendingCount whereKey:@"wagerAccepted" equalTo:[NSNumber numberWithBool:NO]];
-            
-            [pendingCount countObjectsInBackgroundWithBlock:^(int number2, NSError *error) {
-                if (!error) {
-                    pendingWagers = number2;
-                    [self.tableView reloadData];
-                }
-            
-            }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (int i = 0; i < _contentList.count; i++) {
+            NSMutableArray *sectionContent = _contentList[i];
+            for (int j = 0; j < sectionContent.count; j ++) {
+                NSMutableDictionary *allInfo = sectionContent[j];
+                NSMutableDictionary *gameInfo = [allInfo valueForKey:@"game"];
+                PFQuery *currentCount = [PFQuery queryWithClassName:@"wagers"];
+                [currentCount whereKey:@"gameId" equalTo:[gameInfo valueForKey:@"GameId"]];
+                [currentCount whereKey:@"wagerAccepted" equalTo:[NSNumber numberWithBool:YES]];
+                [currentCount countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
+                    if (!error) {
+                        [gameInfo setObject:[NSNumber numberWithInt:number] forKey:@"currentWagers"];
+                        PFQuery *pendingCount = [PFQuery queryWithClassName:@"wagers"];
+                        [pendingCount whereKey:@"gameId" equalTo:[gameInfo valueForKey:@"GameId"]];
+                        [pendingCount whereKey:@"wagerAccepted" equalTo:[NSNumber numberWithBool:NO]];
+                        [pendingCount countObjectsInBackgroundWithBlock:^(int number2, NSError *error) {
+                            if (!error) {
+                                [gameInfo setObject:[NSNumber numberWithInt:number] forKey:@"pendingWagers"];
+                                if (j == sectionContent.count - 1 && i == _contentList.count - 1) {
+                                    [SVProgressHUD dismiss];
+                                    [self.tableView reloadData];
+                                }
+                                
+                            }
+                            
+                        }];
+                        
+                    }
+                    
+                }];
+            }
         }
-    }];
-
+    });
+    
 }
 
+#pragma mark - NSXMLParser Delegate Methods
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
+    NSLog(@"%@", string);
+}
+
+- (void)parser:(NSXMLParser *)parser foundElementDeclarationWithName:(NSString *)elementName model:(NSString *)model {
+    NSLog(@"%@", elementName);
+    NSLog(@"%@", model);
+}
+
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict {
+    if ([elementName isEqualToString:@"Game"]) {
+        NSMutableDictionary *attributesCopy = [attributeDict mutableCopy];
+        [xmlGameArray addObject:attributesCopy];
+        //NSLog(@"%@", attributeDict);
+    }
+    if ([elementName isEqualToString:@"Book"]) {
+        if ([[attributeDict valueForKey:@"BookName"] isEqualToString:@"BOVADA"]) {
+            [xmlBovadaArray addObject:attributeDict];
+            //NSLog(@"%@", attributeDict);
+        }
+        else {
+            [xml5DimesArray addObject:attributeDict];
+            //NSLog(@"%@", attributeDict);
+        }
+    }
+}
+
+- (void)parserDidEndDocument:(NSXMLParser *)parser {
+    NSLog(@"%@", xmlGameArray);
+    _contentList = [[NSMutableArray alloc]init];
+    if (xmlGameArray.count != 0) {
+        NSString *gameDate = [[NSString alloc]init];
+        gameDate = [xmlGameArray[0] objectForKey:@"GameDate"];
+        _contentList[0] = [[NSMutableArray alloc]init];
+        NSMutableDictionary *gamePlusOdds = [[NSMutableDictionary alloc]initWithObjectsAndKeys:xmlGameArray[0], @"game", xml5DimesArray[0], @"5dimes", xmlBovadaArray[0], @"bovada", nil];
+        [_contentList[0] addObject:gamePlusOdds];
+        int contentListIndex = 0;
+        
+        for (int i = 1; i < xmlGameArray.count; i++) {
+            gamePlusOdds = [NSMutableDictionary dictionaryWithObjectsAndKeys:xmlGameArray[i], @"game", xml5DimesArray[i], @"5dimes", xmlBovadaArray[i], @"bovada", nil];
+            if ([[xmlGameArray[i] valueForKey:@"GameDate"]isEqualToString:gameDate]) {
+                [_contentList[contentListIndex] addObject:gamePlusOdds];
+            }
+            else {
+                contentListIndex ++;
+                gameDate = [xmlGameArray[i] objectForKey:@"GameDate"];
+                [_contentList addObject: [[NSMutableArray alloc]init]];
+                [_contentList[contentListIndex] addObject:gamePlusOdds];
+            }
+        }
+        [self getWagers];
+
+    }
+}
 
 
 @end

@@ -15,7 +15,11 @@
     IBOutlet UILabel *numberWagers;
     IBOutlet UILabel *numberPending;
     IBOutlet UIImageView *pendingNotification;
-    NSDictionary *scoreDataDictionary;
+    IBOutlet UILabel *homeTeam;
+    IBOutlet UILabel *awayTeam;
+    IBOutlet UILabel *homeOdds;
+    IBOutlet UILabel *awayOdds;
+    IBOutlet UILabel *gameTime;
     UIImageView *stripes;
    
 }
@@ -28,7 +32,5 @@
 @property (nonatomic, retain) NSMutableArray* opponentsToWager;
 @property (nonatomic, retain) NSMutableDictionary* gameDataDictionary;
 @property (nonatomic, retain) NSString *sport;
-@property int currentCount;
-@property int pendingCount;
 
 @end

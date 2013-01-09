@@ -254,7 +254,6 @@
 		1AE5968C169A467200AD6707 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE59683169A467200AD6707 /* UIImageView+AFNetworking.m */; };
 		1AE59699169A508600AD6707 /* FWAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE59698169A508600AD6707 /* FWAPI.m */; };
 		1AE5969D169A56C300AD6707 /* FWHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE5969C169A56C300AD6707 /* FWHTTPClient.m */; };
-		1AE596A1169B571E00AD6707 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE596A0169B571E00AD6707 /* XMLReader.m */; };
 		1AF54871162736F600AC383B /* lakersCeltic.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AF5486F162736F600AC383B /* lakersCeltic.png */; };
 		1AF54872162736F600AC383B /* lakersCeltic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AF54870162736F600AC383B /* lakersCeltic@2x.png */; };
 		1AF548771627450900AC383B /* alertIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AF548731627450900AC383B /* alertIndicator.png */; };
@@ -660,8 +659,6 @@
 		1AE59698169A508600AD6707 /* FWAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FWAPI.m; sourceTree = "<group>"; };
 		1AE5969B169A56C300AD6707 /* FWHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FWHTTPClient.h; path = FWHTTPClient/FWHTTPClient.h; sourceTree = "<group>"; };
 		1AE5969C169A56C300AD6707 /* FWHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FWHTTPClient.m; path = FWHTTPClient/FWHTTPClient.m; sourceTree = "<group>"; };
-		1AE5969F169B571E00AD6707 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLReader.h; path = XMLReader/XMLReader.h; sourceTree = "<group>"; };
-		1AE596A0169B571E00AD6707 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLReader.m; path = XMLReader/XMLReader.m; sourceTree = "<group>"; };
 		1AF5486F162736F600AC383B /* lakersCeltic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lakersCeltic.png; sourceTree = "<group>"; };
 		1AF54870162736F600AC383B /* lakersCeltic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lakersCeltic@2x.png"; sourceTree = "<group>"; };
 		1AF548731627450900AC383B /* alertIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alertIndicator.png; sourceTree = "<group>"; };
@@ -1296,15 +1293,6 @@
 			name = FWHTTPClient;
 			sourceTree = "<group>";
 		};
-		1AE5969E169B56E500AD6707 /* XMLReader */ = {
-			isa = PBXGroup;
-			children = (
-				1AE5969F169B571E00AD6707 /* XMLReader.h */,
-				1AE596A0169B571E00AD6707 /* XMLReader.m */,
-			);
-			name = XMLReader;
-			sourceTree = "<group>";
-		};
 		8C4AA61B14D13C7200A6013F /* Reset Password */ = {
 			isa = PBXGroup;
 			children = (
@@ -1817,7 +1805,6 @@
 		F7CDD73E14ABDC820038FE6B /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
-				1AE5969E169B56E500AD6707 /* XMLReader */,
 				1AE5969A169A567C00AD6707 /* FWHTTPClient */,
 				1AE59696169A4F2A00AD6707 /* FWAPI */,
 				1AE59670169A467200AD6707 /* AFNetworking */,
@@ -2498,7 +2485,6 @@
 				1AE5968C169A467200AD6707 /* UIImageView+AFNetworking.m in Sources */,
 				1AE59699169A508600AD6707 /* FWAPI.m in Sources */,
 				1AE5969D169A56C300AD6707 /* FWHTTPClient.m in Sources */,
-				1AE596A1169B571E00AD6707 /* XMLReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

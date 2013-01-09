@@ -26,7 +26,9 @@
         
         _gameImageView = [[UIImageView alloc]initWithFrame:CGRectMake(7, 7, 65, 65)];
         _team1Label = [[UILabel alloc]initWithFrame:CGRectMake(80, 0, 120, 30)];
+        [_team1Label setAdjustsFontSizeToFitWidth:YES];
         _team2Label = [[UILabel alloc]initWithFrame:CGRectMake(80, 25, 120, 30)];
+        [_team2Label setAdjustsFontSizeToFitWidth:YES];
         _team1Odds = [[UILabel alloc]initWithFrame:CGRectMake(200, 0, 60, 30)];
         _team1Odds.textAlignment = UITextAlignmentRight;
         _team2Odds = [[UILabel alloc]initWithFrame:CGRectMake(200, 25, 60, 30)];

@@ -11,8 +11,7 @@
 #import "TrashTalkViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, NSXMLParserDelegate> {
-    NSMutableArray *xmlGameArray;
-    NSMutableArray *xmlBookArray;
+    NSMutableArray *results;
 }
 
 @property (strong, nonatomic) UIWindow *window;
