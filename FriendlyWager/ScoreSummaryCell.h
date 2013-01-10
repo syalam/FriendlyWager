@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCImageView.h"
 
 @interface ScoreSummaryCell : UITableViewCell
 
-@property (nonatomic, retain) UIImageView *gameImageView;
+@property (nonatomic, retain) TCImageView *gameImageView;
+@property (nonatomic, retain) TCImageView *homeImageView;
+@property (nonatomic, retain) TCImageView *awayImageView;
 @property (nonatomic, retain) UILabel *team1Label;
 @property (nonatomic, retain) UILabel *team2Label;
 @property (nonatomic, retain) UILabel *team1Odds;

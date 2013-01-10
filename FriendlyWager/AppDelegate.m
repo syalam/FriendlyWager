@@ -94,8 +94,8 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Hockey", @"Sport", @"NHL", @"League", @"01/12/2013", @"StartDate",@"01/19/2013", @"EndDate", nil];
-    [FWAPI getPreviewList:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Basketball", @"Sport", @"", @"League", @"01/12/2013", @"StartDate",@"01/19/2013", @"EndDate", nil];
+    [FWAPI getOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
         NSLog(@"%@", XMLParser);
         results = [[NSMutableArray alloc]init];
         XMLParser.delegate = self;

@@ -24,7 +24,12 @@
     if (self) {
         // Initialization code
         
-        _gameImageView = [[UIImageView alloc]initWithFrame:CGRectMake(7, 7, 65, 65)];
+        _gameImageView = [[TCImageView alloc]initWithFrame:CGRectMake(7, 7, 65, 65)];
+        [_gameImageView setContentMode:UIViewContentModeScaleAspectFit];
+        _homeImageView = [[TCImageView alloc]initWithFrame:CGRectMake(7, 7, 33, 33)];
+        [_homeImageView setContentMode:UIViewContentModeScaleAspectFit];
+        _awayImageView = [[TCImageView alloc]initWithFrame:CGRectMake(40, 7, 33, 33)];
+        [_awayImageView setContentMode:UIViewContentModeScaleAspectFit];
         _team1Label = [[UILabel alloc]initWithFrame:CGRectMake(80, 0, 120, 30)];
         [_team1Label setAdjustsFontSizeToFitWidth:YES];
         _team2Label = [[UILabel alloc]initWithFrame:CGRectMake(80, 25, 120, 30)];
@@ -70,6 +75,8 @@
         [_wagersLabel setTextColor:[UIColor lightGrayColor]];
         [_wagerCountLabel setTextColor:[UIColor darkGrayColor]];
         
+        [self.contentView addSubview:_homeImageView];
+        [self.contentView addSubview:_awayImageView];
         [self.contentView addSubview:_gameImageView];
         [self.contentView addSubview:_team1Label];
         [self.contentView addSubview:_team2Label];

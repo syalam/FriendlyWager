@@ -18,6 +18,9 @@
     NSMutableArray *xmlBovadaArray;
     NSMutableArray *xml5DimesArray;
     NSMutableArray *dateArray;
+    int currentIndex;
+    int currentIndexImages;
+    BOOL retrieveImages;
     
     BOOL newWagerVisible;
     UIImageView *stripes;

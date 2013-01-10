@@ -116,6 +116,7 @@
 		1A33B8B215E072520029D428 /* scoresOffBtn@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B8A415E072520029D428 /* scoresOffBtn@2x~iphone.png */; };
 		1A33B8B315E072520029D428 /* scoresOnBtn@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B8A515E072520029D428 /* scoresOnBtn@2x~iphone.png */; };
 		1A33B8B415E072520029D428 /* tabBarBackground@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A33B8A615E072520029D428 /* tabBarBackground@2x~iphone.png */; };
+		1A3B3EBA169E1B670059FDB5 /* TCImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B3EB9169E1B670059FDB5 /* TCImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1A45985916543BEB00AC9376 /* fwAppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A45985716543BEB00AC9376 /* fwAppIcon.png */; };
 		1A45985A16543BEB00AC9376 /* fwAppIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A45985816543BEB00AC9376 /* fwAppIcon@2x.png */; };
 		1A5059FD16361104001ED44C /* feedIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A5059FB16361104001ED44C /* feedIcon.png */; };
@@ -507,6 +508,8 @@
 		1A33B8A415E072520029D428 /* scoresOffBtn@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scoresOffBtn@2x~iphone.png"; sourceTree = "<group>"; };
 		1A33B8A515E072520029D428 /* scoresOnBtn@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scoresOnBtn@2x~iphone.png"; sourceTree = "<group>"; };
 		1A33B8A615E072520029D428 /* tabBarBackground@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBarBackground@2x~iphone.png"; sourceTree = "<group>"; };
+		1A3B3EB8169E1B670059FDB5 /* TCImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCImageView.h; sourceTree = "<group>"; };
+		1A3B3EB9169E1B670059FDB5 /* TCImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCImageView.m; sourceTree = "<group>"; };
 		1A45985716543BEB00AC9376 /* fwAppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fwAppIcon.png; sourceTree = "<group>"; };
 		1A45985816543BEB00AC9376 /* fwAppIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fwAppIcon@2x.png"; sourceTree = "<group>"; };
 		1A5059FB16361104001ED44C /* feedIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = feedIcon.png; sourceTree = "<group>"; };
@@ -1107,6 +1110,15 @@
 				1A33B87815E0300D0029D428 /* tabBarBackground~iphone.png */,
 			);
 			name = "Tab Bar";
+			sourceTree = "<group>";
+		};
+		1A3B3EB7169E1B670059FDB5 /* TCImageView */ = {
+			isa = PBXGroup;
+			children = (
+				1A3B3EB8169E1B670059FDB5 /* TCImageView.h */,
+				1A3B3EB9169E1B670059FDB5 /* TCImageView.m */,
+			);
+			path = TCImageView;
 			sourceTree = "<group>";
 		};
 		1A541B3F1649806E00F1A68D /* TITokenField */ = {
@@ -1805,6 +1817,7 @@
 		F7CDD73E14ABDC820038FE6B /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
+				1A3B3EB7169E1B670059FDB5 /* TCImageView */,
 				1AE5969A169A567C00AD6707 /* FWHTTPClient */,
 				1AE59696169A4F2A00AD6707 /* FWAPI */,
 				1AE59670169A467200AD6707 /* AFNetworking */,
@@ -2485,6 +2498,7 @@
 				1AE5968C169A467200AD6707 /* UIImageView+AFNetworking.m in Sources */,
 				1AE59699169A508600AD6707 /* FWAPI.m in Sources */,
 				1AE5969D169A56C300AD6707 /* FWHTTPClient.m in Sources */,
+				1A3B3EBA169E1B670059FDB5 /* TCImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
