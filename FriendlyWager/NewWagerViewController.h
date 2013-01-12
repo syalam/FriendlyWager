@@ -30,6 +30,12 @@
     UIPickerView *teamPickerView;
     UIImageView *stripes;
     
+    int saveCount;
+    NSString *teamWageredId;
+    NSString *teamWageredToWin;
+    NSString *teamWageredToLose;
+    NSString *teamWageredToLoseId;
+    
 
 }
 

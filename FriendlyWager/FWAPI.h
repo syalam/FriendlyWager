@@ -68,6 +68,22 @@ typedef enum OAuthProvider {
         success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
         failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
 
+///---------------------------------------------
+/// @name Fetches a list of odds for soccer from the server
+///---------------------------------------------
+/**
+ Retrieve list of odds from the server
+ @return An array of odds for soccer games
+ @param params dictionary object containing captured request information
+ Sport
+ League
+ StartDate
+ EndDate
+ */
++ (void)getSoccerOdds:(NSMutableDictionary*)params
+        success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+        failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
+
 //---------------------------------------------
 /// @name Fetches a list of scores and odds from the server
 ///---------------------------------------------
@@ -85,11 +101,44 @@ typedef enum OAuthProvider {
         failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
 
 //---------------------------------------------
+/// @name Fetches a list of soccer scores and odds from the server
+///---------------------------------------------
+/**
+ Retrieve list of soccer odds and scores from the server
+ @return An array of soccer odds and scores
+ @param params dictionary object containing captured request information
+ Sport
+ League
+ StartDate
+ EndDate
+ */
++ (void)getSoccerScoresAndOdds:(NSMutableDictionary*)params
+                 success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+                 failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
+
+
+//---------------------------------------------
+/// @name Fetches a schedule for the month from the server
+///---------------------------------------------
+/**
+ Retrieve a schedule for the month for a particular league from the server
+ @return A schedule
+ @param params dictionary object containing captured request information
+ Sport
+ League
+ Month
+ */
++ (void)getSchedule:(NSMutableDictionary*)params
+                 success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+                 failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
+
+
+//---------------------------------------------
 /// @name Fetches a game preview from the server
 ///---------------------------------------------
 /**
  Retrieve game preview from the server
- @return A dictionary of odds
+ @return preview information for a game
  @param params dictionary object containing captured request information
  Sport
  League
@@ -98,6 +147,21 @@ typedef enum OAuthProvider {
 + (void)getGamePreview:(NSMutableDictionary*)params
                  success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
                  failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
+
+//---------------------------------------------
+/// @name Fetches a soccer game preview from the server
+///---------------------------------------------
+/**
+ Retrieve soccer game preview from the server
+ @return preview information for a soccer game
+ @param params dictionary object containing captured request information
+ Sport
+ League
+ GameId
+ */
++ (void)getSoccerGamePreview:(NSMutableDictionary*)params
+               success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+               failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
 
 //---------------------------------------------
 /// @name Fetches a list of GameId's for which Previews are available
@@ -127,5 +191,22 @@ typedef enum OAuthProvider {
 + (void)getSplashScreen:(NSMutableDictionary*)params
                success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
                failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
+
+//---------------------------------------------
+/// @name Fetches a game recap from the server
+///---------------------------------------------
+/**
+ Retrieve game recap from the server
+ @return recap information for a game
+ @param params dictionary object containing captured request information
+ Sport
+ League
+ GameId
+ */
++ (void)getGameRecap:(NSMutableDictionary*)params
+               success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+               failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
+
+
 
 @end

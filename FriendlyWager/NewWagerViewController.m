@@ -42,7 +42,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    saveCount = 0;
     self.title = @"Make a Wager";
     stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     
@@ -114,8 +114,8 @@
     }
     
         
-    PFQuery *tokenCountForUser = [PFQuery queryWithClassName:@"tokens"];
-    [tokenCountForUser whereKey:@"user" equalTo:[PFUser currentUser]];
+    PFQuery *tokenCountForUser = [PFQuery queryForUser];
+    [tokenCountForUser whereKey:@"objectId" equalTo:[[PFUser currentUser]objectId]];
     [tokenCountForUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (objects.count > 0) {
@@ -124,10 +124,10 @@
                     NSLog(@"%d", _opponentsToWager.count);
                     int tokensForThisWager ;
                     if (_opponentsToWager.count) {
-                        tokensForThisWager = tokenCount / _opponentsToWager.count;
+                        tokensForThisWager =(tokenCount / _opponentsToWager.count);
                     }
                     else {
-                        tokensForThisWager = tokenCount/2;
+                        tokensForThisWager = tokenCount;
                     }
                     
                     spreadSlider.minimumValue = 0;
@@ -135,28 +135,6 @@
                     spreadSlider.continuous = YES;
                     spreadLabel.text = [NSString stringWithFormat:@"%.0f", spreadSlider.value];
                 }
-            }
-            else {
-                PFObject *tokens = [PFObject objectWithClassName:@"tokens"];
-                [tokens setValue:[PFUser currentUser] forKey:@"user"];
-                [tokens setValue:[NSNumber numberWithInt:5] forKey:@"tokenCount"];
-                [tokens setValue:[NSDate date] forKey:@"autoAwardDate"];
-                [tokens saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    if (!error) {
-                        int tokenCount = [[tokens objectForKey:@"tokenCount"]intValue];
-                        int tokensForThisWager;
-                        if (_opponentsToWager.count) {
-                            tokensForThisWager = tokenCount / _opponentsToWager.count;
-                        }
-                        else {
-                            tokensForThisWager = tokenCount/2;
-                        }
-                        spreadSlider.minimumValue = 0;
-                        spreadSlider.maximumValue = tokensForThisWager;
-                        spreadSlider.continuous = YES;
-                        spreadLabel.text = [NSString stringWithFormat:@"%.0f", spreadSlider.value];
-                    } 
-                }];
             }
         }
         else {
@@ -301,10 +279,10 @@ forState:UIControlStateNormal];
     NSString *pickerItem;
     switch (indexOfPicker) {
         case 0:
-            pickerItem = [_gameDataDictionary objectForKey:@"team1"];
+            pickerItem = [_gameDataDictionary objectForKey:@"homeTeam"];
             break;
         case 1:
-            pickerItem = [_gameDataDictionary objectForKey:@"team2"];
+            pickerItem = [_gameDataDictionary objectForKey:@"awayTeam"];
             break;
             
         default:
@@ -376,10 +354,10 @@ forState:UIControlStateNormal];
     NSString *title;
     switch (row) {
         case 0:
-            title = [_gameDataDictionary objectForKey:@"team1"];
+            title = [_gameDataDictionary objectForKey:@"homeTeam"];
             break;
         case 1:
-            title = [_gameDataDictionary objectForKey:@"team2"];
+            title = [_gameDataDictionary objectForKey:@"awayTeam"];
             break;
             
         default:
@@ -393,125 +371,93 @@ forState:UIControlStateNormal];
     if(buttonIndex == 1) {
         [SVProgressHUD showWithStatus:@"Creating Wager"];
         
-        NSString *teamWageredId;
-        NSString *teamWageredToWin;
-        NSString *teamWageredToLose;
-        NSString *teamWageredToLoseId;
-        if ([selectTeamButton.titleLabel.text isEqualToString:[_gameDataDictionary objectForKey:@"team1"]]) {
-            teamWageredId = [_gameDataDictionary objectForKey:@"team1Id"];
-            teamWageredToWin = [_gameDataDictionary objectForKey:@"team1"];
+        if ([selectTeamButton.titleLabel.text isEqualToString:[_gameDataDictionary objectForKey:@"homeTeam"]]) {
+            teamWageredId = [_gameDataDictionary objectForKey:@"homeTeamId"];
+            teamWageredToWin = [_gameDataDictionary objectForKey:@"homeTeam"];
             
-            teamWageredToLoseId = [_gameDataDictionary objectForKey:@"team2Id"];
-            teamWageredToLose = [_gameDataDictionary objectForKey:@"team2"];
+            teamWageredToLoseId = [_gameDataDictionary objectForKey:@"awayTeamId"];
+            teamWageredToLose = [_gameDataDictionary objectForKey:@"awayTeam"];
             
         }
         else {
-            teamWageredId = [_gameDataDictionary objectForKey:@"team2Id"];
-            teamWageredToWin = [_gameDataDictionary objectForKey:@"team2"];
+            teamWageredId = [_gameDataDictionary objectForKey:@"awayTeamId"];
+            teamWageredToWin = [_gameDataDictionary objectForKey:@"awayTeam"];
             
-            teamWageredToLoseId = [_gameDataDictionary objectForKey:@"team1Id"];
-            teamWageredToLose = [_gameDataDictionary objectForKey:@"team1"];
+            teamWageredToLoseId = [_gameDataDictionary objectForKey:@"homeTeamId"];
+            teamWageredToLose = [_gameDataDictionary objectForKey:@"homeTeam"];
         }
-        PFObject *createNewWager = [PFObject objectWithClassName:@"wagers"];
-        [createNewWager setObject:[_gameDataDictionary objectForKey:@"gameId"] forKey:@"gameId"];
-        [createNewWager setObject:teamWageredId forKey:@"teamWageredToWinId"];
-        [createNewWager setObject:teamWageredToWin forKey:@"teamWageredToWin"];
-        [createNewWager setObject:teamWageredToLoseId forKey:@"teamWageredToLoseId"];
-        [createNewWager setObject:teamWageredToLose forKey:@"teamWageredToLose"];
-        [createNewWager setObject:[PFUser currentUser] forKey:@"wager"];
-        //WILL NEED TO ADD REAL SPORT HERE ONCE API IS LIVE
-        [createNewWager setObject:@"NBA Basketball" forKey:@"sport"];
-        [createNewWager setObject:[_opponentsToWager objectAtIndex:0] forKey:@"wagee"];
-        [createNewWager setObject:[NSNumber numberWithInt:[spreadLabel.text intValue]] forKey:@"tokensWagered"];
-        [createNewWager setObject:[NSNumber numberWithBool:NO] forKey:@"wagerAccepted"];
-        if (stakesList.text) {
-            [createNewWager setObject:stakesList.text forKey:@"stakes"];
-        }
+        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"updated"];
         
-        [createNewWager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                PFQuery *updateTokenCount = [PFQuery queryWithClassName:@"tokens"];
-                [updateTokenCount whereKey:@"user" equalTo:[PFUser currentUser]];
-                [updateTokenCount getFirstObjectInBackgroundWithBlock:^(PFObject *tokenObject, NSError *error) {
-                    if (!error) {
-                        int currentTokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
-                        int updatedTokenCount = currentTokenCount - [spreadLabel.text intValue];
-                        [tokenObject setValue:[NSNumber numberWithInt:updatedTokenCount] forKey:@"tokenCount"];
-                        [tokenObject saveInBackground];
+        [self saveWager];
 
-                            [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[_opponentsToWager objectAtIndex:0] objectId]] withMessage:[NSString stringWithFormat:@"%@ %@", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], @"proposed a wager with you"]];
-
-
-
-                    }
-     
-                }];
-                
-                if (_opponentsToWager.count > 1) {
-                    for (int i = 1; i < _opponentsToWager.count; i++) {
-                        PFObject *createWager = [PFObject objectWithClassName:@"wagers"];
-                        [createWager setObject:[_gameDataDictionary objectForKey:@"gameId"] forKey:@"gameId"];
-                        [createWager setObject:teamWageredId forKey:@"teamWageredToWinId"];
-                        [createWager setObject:teamWageredToWin forKey:@"teamWageredToWin"];
-                        [createWager setObject:teamWageredToLoseId forKey:@"teamWageredToLoseId"];
-                        [createWager setObject:teamWageredToLose forKey:@"teamWageredToLose"];
-                        [createWager setObject:[PFUser currentUser] forKey:@"wager"];
-                        //WILL NEED TO ADD REAL SPORT HERE ONCE API IS LIVE
-                        [createWager setObject:@"NBA Basketball" forKey:@"sport"];
-                        [createWager setObject:[_opponentsToWager objectAtIndex:i] forKey:@"wagee"];
-                        [createWager setObject:[NSNumber numberWithInt:[spreadLabel.text intValue]] forKey:@"tokensWagered"];
-                        [createWager setObject:[NSNumber numberWithBool:NO] forKey:@"wagerAccepted"];
-                        if (stakesList.text) {
-                            [createWager setObject:stakesList.text forKey:@"stakes"];
-                        }
-                        [createWager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                            if (!error) {
-                                [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[_opponentsToWager objectAtIndex:i] objectId]] withMessage:[NSString stringWithFormat:@"%@ %@", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], @"proposed a wager with you"]];
-                                if (i == _opponentsToWager.count-1) {
-                                    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"updated"];
-                                    [SVProgressHUD dismiss];
-                                    if (_tabParentView) {
-                                        [_tabParentView.navigationController dismissViewControllerAnimated:YES completion:NULL];
-                                    }
-                                    else {
-                                        [self.navigationController popToRootViewControllerAnimated:YES];
-                                    }
-                                    
-                                }
-
-                            }
-                            
-                        }];
-                         
-                    }
-
-                }
-                else {
-                    
-                    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"updated"];
-                    [SVProgressHUD dismiss];
-                    if (_tabParentView) {
-                        [_tabParentView.navigationController dismissViewControllerAnimated:YES completion:NULL];
-                    }
-                    else {
-                        [self.navigationController popToRootViewControllerAnimated:YES];
-                    }
-                    
-                    
-                }
-                
-            }
-         
-            else {
-                NSLog(@"%@", error);
-                [SVProgressHUD dismiss];
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"error" message:@"Unable to create this wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alert show];
-            }
-        }];
-        
     }
 }
+
+#pragma mark - Helper Methods
+-(void) saveWager {
+    PFObject *createNewWager = [PFObject objectWithClassName:@"wagers"];
+    [createNewWager setObject:[_gameDataDictionary valueForKey:@"gameId"] forKey:@"gameId"];
+    [createNewWager setObject:teamWageredId forKey:@"teamWageredToWinId"];
+    [createNewWager setObject:teamWageredToWin forKey:@"teamWageredToWin"];
+    [createNewWager setObject:teamWageredToLoseId forKey:@"teamWageredToLoseId"];
+    [createNewWager setObject:teamWageredToLose forKey:@"teamWageredToLose"];
+    [createNewWager setObject:[PFUser currentUser] forKey:@"wager"];
+    [createNewWager setObject:[_gameDataDictionary valueForKey:@"league"] forKey:@"sport"];
+    [createNewWager setObject:[_gameDataDictionary valueForKey:@"date"] forKey:@"gameDate"];
+    [createNewWager setObject:[_opponentsToWager objectAtIndex:saveCount] forKey:@"wagee"];
+    [createNewWager setObject:[NSNumber numberWithInt:[spreadLabel.text intValue]] forKey:@"tokensWagered"];
+    [createNewWager setObject:[NSNumber numberWithBool:NO] forKey:@"wagerAccepted"];
+    if (stakesList.text) {
+        [createNewWager setObject:stakesList.text forKey:@"stakes"];
+    }
+    
+    [createNewWager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            PFQuery *updateTokenCount = [PFQuery queryForUser];
+            [updateTokenCount whereKey:@"objectId" equalTo:[[PFUser currentUser]objectId]];
+            [updateTokenCount getFirstObjectInBackgroundWithBlock:^(PFObject *tokenObject, NSError *error) {
+                if (!error) {
+                    int currentTokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
+                    int updatedTokenCount = currentTokenCount - ([spreadLabel.text intValue] *_opponentsToWager.count);
+                    [tokenObject setValue:[NSNumber numberWithInt:updatedTokenCount] forKey:@"tokenCount"];
+                    [tokenObject saveInBackground];
+                    if ([stakesList.text isEqualToString:@""]) {
+                        [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[_opponentsToWager objectAtIndex:saveCount] objectId]] withMessage:[NSString stringWithFormat:@"%@ wagered %@ that %@ would beat %@", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], spreadLabel.text, teamWageredToWin, teamWageredToLose]];
+                    }
+                    else {
+                        [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[_opponentsToWager objectAtIndex:saveCount] objectId]] withMessage:[NSString stringWithFormat:@"%@ wagered %@ and %@ that %@ would beat %@", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], spreadLabel.text, stakesList.text, teamWageredToWin, teamWageredToLose]];
+                    }
+                    
+                    if (saveCount < _opponentsToWager.count-1) {
+                        saveCount++;
+                        [self saveWager];
+                    }
+                    else {
+                        [SVProgressHUD dismiss];
+                        if (_tabParentView) {
+                            [_tabParentView.navigationController dismissViewControllerAnimated:YES completion:NULL];
+                        }
+                        else {
+                            [self.navigationController popToRootViewControllerAnimated:YES];
+                        }
+
+                    }
+
+                }
+                
+            }];
+        }
+        else {
+            NSLog(@"%@", error);
+            [SVProgressHUD dismiss];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"error" message:@"Unable to create this wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+
+    }];
+
+}
+
 
 #pragma mark - UITextField Delegate Methods
 - (void)textFieldDidBeginEditing:(UITextField *)textField {

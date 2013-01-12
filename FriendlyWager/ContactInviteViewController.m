@@ -329,8 +329,8 @@
     switch (result)
     {
         case MFMailComposeResultSent: {
-            PFQuery *awardTokens = [PFQuery queryWithClassName:@"tokens"];
-            [awardTokens whereKey:@"user" equalTo:[PFUser currentUser]];
+            PFQuery *awardTokens = [PFQuery queryForUser];
+            [awardTokens whereKey:@"objectId" equalTo:[[PFUser currentUser]objectId]];
             [awardTokens findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                 if (!error) {
                     //check if user exists in this table

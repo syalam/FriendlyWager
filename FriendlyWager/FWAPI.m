@@ -48,6 +48,15 @@ static NSString * const password = @"Mhfgsy63Jd";
     [httpClient getXMLPath:@"Odds" parameters:params data:nil success:success failure:failure];
 }
 
++ (void)getSoccerOdds:(NSMutableDictionary*)params
+              success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+              failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure {
+    FWHTTPClient *httpClient = [self setupHTTPClient];
+    [params setObject:userName forKey:@"Username"];
+    [params setObject:password forKey:@"Password"];
+    [httpClient getXMLPath:@"SoccerOdds" parameters:params data:nil success:success failure:failure];
+}
+
 + (void)getScoresAndOdds:(NSMutableDictionary*)params
                  success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
                  failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure {
@@ -58,6 +67,24 @@ static NSString * const password = @"Mhfgsy63Jd";
         
 }
 
++ (void)getSoccerScoresAndOdds:(NSMutableDictionary*)params
+                       success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+                       failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure {
+    FWHTTPClient *httpClient = [self setupHTTPClient];
+    [params setObject:userName forKey:@"Username"];
+    [params setObject:password forKey:@"Password"];
+    [httpClient getXMLPath:@"SoccerOddsAndScores" parameters:params data:nil success:success failure:failure];
+}
+
++ (void)getSchedule:(NSMutableDictionary*)params
+            success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+            failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure {
+    FWHTTPClient *httpClient = [self setupHTTPClient];
+    [params setObject:userName forKey:@"Username"];
+    [params setObject:password forKey:@"Password"];
+    [httpClient getXMLPath:@"Schedule" parameters:params data:nil success:success failure:failure];
+}
+
 + (void)getGamePreview:(NSMutableDictionary*)params
                success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
                failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure {
@@ -65,6 +92,15 @@ static NSString * const password = @"Mhfgsy63Jd";
     [params setObject:userName forKey:@"Username"];
     [params setObject:password forKey:@"Password"];
     [httpClient getXMLPath:@"Preview" parameters:params data:nil success:success failure:failure];
+}
+
++ (void)getSoccerGamePreview:(NSMutableDictionary*)params
+                     success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+                     failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure {
+    FWHTTPClient *httpClient = [self setupHTTPClient];
+    [params setObject:userName forKey:@"Username"];
+    [params setObject:password forKey:@"Password"];
+    [httpClient getXMLPath:@"SoccerPreview" parameters:params data:nil success:success failure:failure];
 }
 
 + (void)getPreviewList:(NSMutableDictionary*)params
@@ -84,5 +120,6 @@ static NSString * const password = @"Mhfgsy63Jd";
     [params setObject:password forKey:@"Password"];
     [httpClient getXMLPath:@"SplashScreen" parameters:params data:nil success:success failure:failure];
 }
+
 
 @end

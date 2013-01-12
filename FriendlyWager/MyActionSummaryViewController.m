@@ -239,7 +239,7 @@
                 if ([wager objectForKey:@"finalScore"]) {
                     [historyArray addObject:wager];
                 }
-                else if ([wager objectForKey:@"wagerAccepted"] == [NSNumber numberWithBool:NO]) {
+                else if ([wager objectForKey:@"wagerAccepted"] == [NSNumber numberWithBool:NO] && ![wager objectForKey:@"teamWageredToWinScore"]) {
                     [pendingArray addObject:wager];
                 }
                 else {
@@ -676,8 +676,8 @@
 
 #pragma mark - Helper methods
 - (void)getPointCount {
-    PFQuery *queryForTokens = [PFQuery queryWithClassName:@"tokens"];
-    [queryForTokens whereKey:@"user" equalTo:_userToWager];
+    PFQuery *queryForTokens = [PFQuery queryForUser];
+    [queryForTokens whereKey:@"objectId" equalTo:[_userToWager objectId]];
     [queryForTokens findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (objects.count > 0) {

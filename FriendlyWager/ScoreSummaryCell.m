@@ -24,21 +24,23 @@
     if (self) {
         // Initialization code
         
-        _gameImageView = [[TCImageView alloc]initWithFrame:CGRectMake(7, 7, 65, 65)];
+        _gameImageView = [[TCImageView alloc]initWithFrame:CGRectMake(10, 10, 50, 50)];
         [_gameImageView setContentMode:UIViewContentModeScaleAspectFit];
-        _homeImageView = [[TCImageView alloc]initWithFrame:CGRectMake(7, 7, 33, 33)];
+        _homeImageView = [[TCImageView alloc]initWithFrame:CGRectMake(10, 10, 25, 25)];
         [_homeImageView setContentMode:UIViewContentModeScaleAspectFit];
-        _awayImageView = [[TCImageView alloc]initWithFrame:CGRectMake(40, 7, 33, 33)];
+        _awayImageView = [[TCImageView alloc]initWithFrame:CGRectMake(35, 10, 25, 25)];
         [_awayImageView setContentMode:UIViewContentModeScaleAspectFit];
-        _team1Label = [[UILabel alloc]initWithFrame:CGRectMake(80, 0, 120, 30)];
+        _team1Label = [[UILabel alloc]initWithFrame:CGRectMake(70, 10, 130, 20)];
         [_team1Label setAdjustsFontSizeToFitWidth:YES];
-        _team2Label = [[UILabel alloc]initWithFrame:CGRectMake(80, 25, 120, 30)];
+        [_team1Label setMinimumFontSize:12];
+        _team2Label = [[UILabel alloc]initWithFrame:CGRectMake(70, 30, 130, 20)];
         [_team2Label setAdjustsFontSizeToFitWidth:YES];
-        _team1Odds = [[UILabel alloc]initWithFrame:CGRectMake(200, 0, 60, 30)];
+        [_team2Label setMinimumFontSize:12];
+        _team1Odds = [[UILabel alloc]initWithFrame:CGRectMake(200, 10, 60, 20)];
         _team1Odds.textAlignment = UITextAlignmentRight;
-        _team2Odds = [[UILabel alloc]initWithFrame:CGRectMake(200, 25, 60, 30)];
+        _team2Odds = [[UILabel alloc]initWithFrame:CGRectMake(200, 30, 60, 20)];
         _team2Odds.textAlignment = UITextAlignmentRight;
-        _gameTime = [[UILabel alloc]initWithFrame:CGRectMake(80, 50, 60, 30)];
+        _gameTime = [[UILabel alloc]initWithFrame:CGRectMake(70, 50, 70, 30)];
         _wagersLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 50, 60, 30)];
         _wagerCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(190, 50, 50, 30)];
         
@@ -59,7 +61,7 @@
         [_wagersLabel setBackgroundColor:[UIColor clearColor]];
         [_wagerCountLabel setBackgroundColor:[UIColor clearColor]];
         
-        UIFont *mainFont = [UIFont boldSystemFontOfSize:19];
+        UIFont *mainFont = [UIFont boldSystemFontOfSize:17];
         [_team1Label setFont:mainFont];
         [_team2Label setFont:mainFont];
         [_team1Odds setFont:mainFont];

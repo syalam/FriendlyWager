@@ -103,8 +103,8 @@
         }
     }];
     
-    PFQuery *queryForTokens = [PFQuery queryWithClassName:@"tokens"];
-    [queryForTokens whereKey:@"user" equalTo:[PFUser currentUser]];
+    PFQuery *queryForTokens = [PFQuery queryForUser];
+    [queryForTokens whereKey:@"objectId" equalTo:[[PFUser currentUser]objectId]];
     [queryForTokens findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (objects.count > 0) {

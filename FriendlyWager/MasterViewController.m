@@ -209,8 +209,8 @@
         
         
         //award user 5 tokens everyday
-        PFQuery *dailyTokens = [PFQuery queryWithClassName:@"tokens"];
-        [dailyTokens whereKey:@"user" equalTo:currentUser];
+        PFQuery *dailyTokens = [PFQuery queryForUser];
+        [dailyTokens whereKey:@"objectId" equalTo:[currentUser objectId]];
         [dailyTokens findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
                 //check if user exists in this table

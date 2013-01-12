@@ -54,7 +54,6 @@
     [super viewDidLoad];
     retrieveImages = NO;
     currentIndex = 0;
-    currentIndexImages = 0;
     newWagerVisible = NO;
     if (_wager) {
         self.title = @"Make a Wager";
@@ -97,18 +96,75 @@
     NSString *currentDateString = [NSString stringWithFormat:@"%d/%d/%d", [currentDateComponents month], [currentDateComponents day], [currentDateComponents year]];
     NSString *weekFromNowString = [NSString stringWithFormat:@"%d/%d/%d", [weekFromNowComponents month], [weekFromNowComponents day], [weekFromNowComponents year]];
     
-    NSMutableDictionary *params = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"Basketball", @"Sport", @"NBA", @"League", currentDateString, @"StartDate", weekFromNowString, @"EndDate", nil];
-    [FWAPI getScoresAndOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
-        xmlBovadaArray = [[NSMutableArray alloc]init];
-        xml5DimesArray = [[NSMutableArray alloc]init];
-        xmlGameArray = [[NSMutableArray alloc]init];
-        dateArray = [[NSMutableArray alloc]init];
-        XMLParser.delegate = self;
-        [XMLParser parse];
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
-        NSLog(@"%@", error);
-    }];
-
+    if ([self.league isEqualToString:@"NBA"] || [self.league isEqualToString:@"NCAAB"]) {
+        self.sport = @"Basketball";
+        iconImage = [UIImage imageNamed:@"basketballIcn"];
+    }
+    else if ([self.league isEqualToString:@"NFL"] || [self.league isEqualToString:@"NCAAF"]) {
+        self.sport = @"Football";
+        iconImage = [UIImage imageNamed:@"footballIcn"];
+    }
+    else if ([self.league isEqualToString:@"MLB"]) {
+        self.sport = @"Baseball";
+        iconImage = [UIImage imageNamed:@"baseballIcn"];
+    }
+    else if ([self.league isEqualToString:@"NHL"]) {
+        self.sport = @"Hockey";
+        iconImage = [UIImage imageNamed:@"hockeyIcn"];
+    }
+    else if ([self.league isEqualToString:@"EPL"]) {
+        self.sport = @"Soccer";
+        self.league = @"1000";
+        iconImage = [UIImage imageNamed:@"soccerIcn"];
+    }
+    else if ([self.league isEqualToString:@"MLS"]) {
+        self.sport = @"Soccer";
+        self.league = @"1534";
+        iconImage = [UIImage imageNamed:@"soccerIcn"];
+    }
+    else if ([self.league isEqualToString:@"NASCAR"]) {
+        self.sport = @"AutoRacing";
+        iconImage = [UIImage imageNamed:@"autoRacingIcn"];
+    }
+    else if ([self.league isEqualToString:@"Boxing"]) {
+        self.sport = @"Fighting";
+        iconImage = [UIImage imageNamed:@"boxingIcn"];
+    }
+    else {
+        self.sport = @"Fighting";
+        iconImage = [UIImage imageNamed:@"mmaIcn"];
+    }
+    NSMutableDictionary *params;
+    
+    if ([self.sport isEqualToString:@"Soccer"]) {
+        params = [[NSMutableDictionary alloc]initWithObjectsAndKeys:self.sport, @"Sport", self.league, @"League", currentDateString, @"StartDate", weekFromNowString, @"EndDate", nil];
+        [FWAPI getSoccerOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
+            xmlBovadaArray = [[NSMutableArray alloc]init];
+            xml5DimesArray = [[NSMutableArray alloc]init];
+            xmlGameArray = [[NSMutableArray alloc]init];
+            dateArray = [[NSMutableArray alloc]init];
+            XMLParser.delegate = self;
+            [XMLParser parse];
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
+            [SVProgressHUD dismiss];
+            NSLog(@"%@", error);
+        }];
+    }
+    else {
+        params = [[NSMutableDictionary alloc]initWithObjectsAndKeys:self.sport, @"Sport", self.league, @"League", currentDateString, @"StartDate", weekFromNowString, @"EndDate", nil];
+        [FWAPI getOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
+            xmlBovadaArray = [[NSMutableArray alloc]init];
+            xml5DimesArray = [[NSMutableArray alloc]init];
+            xmlGameArray = [[NSMutableArray alloc]init];
+            dateArray = [[NSMutableArray alloc]init];
+            XMLParser.delegate = self;
+            [XMLParser parse];
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
+            [SVProgressHUD dismiss];
+            NSLog(@"%@", error);
+        }];
+    }
+    
 }
 
 - (void)viewDidUnload
@@ -167,25 +223,32 @@
     NSMutableDictionary *allInfo = sectionContent[indexPath.row];
     NSMutableDictionary *gameInfo = [allInfo valueForKey:@"game"];
     NSMutableDictionary *fiveDimes = [allInfo valueForKey:@"5dimes"];
-    //NSMutableDictionary *bovada = [allInfo valueForKey:@"bovada"];
-    if ([gameInfo valueForKey:@"homeImageLink"] && ![cell.homeImageView image]) {
-        [cell.gameImageView setImage:nil];
-        [cell.homeImageView reloadWithUrl:[gameInfo valueForKey:@"homeImageLink"]];
+    NSMutableDictionary *bovada = [allInfo valueForKey:@"bovada"];
+    if (![[fiveDimes valueForKey:@"ImageFile"]isEqualToString:@""] && ![self.sport isEqualToString:@"Soccer"]) {
+         [cell.awayImageView reloadWithUrl:[fiveDimes valueForKey:@"ImageFile"]];
     }
-    else if (![cell.homeImageView image] && ![cell.gameImageView image]) {
-        [cell.gameImageView setImage:[UIImage imageNamed:@"basketballIcn"]];
+    else {
+        [cell.gameImageView setImage:iconImage];
         [cell.gameImageView sizeToFit];
         [cell.gameImageView setContentMode:UIViewContentModeScaleAspectFit];
     }
-
-    if ([gameInfo valueForKey:@"awayImageLink"] && ![cell.awayImageView image]) {
-        [cell.gameImageView setImage:nil];
-        [cell.awayImageView reloadWithUrl:[gameInfo valueForKey:@"awayImageLink"]];
+    if ([[fiveDimes valueForKey:@"HomeSpread"]isEqualToString:@""]) {
+        [cell.team1Odds setText:[bovada valueForKey:@"HomeSpread"]];
+        [cell.team2Odds setText:[bovada valueForKey:@"AwaySpread"]];
     }
+    else {
+        [cell.team1Odds setText:[fiveDimes valueForKey:@"HomeSpread"]];
+        [cell.team2Odds setText:[fiveDimes valueForKey:@"AwaySpread"]];
+    }
+    if (([cell.team1Odds.text isEqualToString:@""] && [cell.team2Odds.text isEqualToString:@""]) || [self.sport isEqualToString:@"Soccer"]) {
+        [cell.team1Label setFrame:CGRectMake(cell.team1Label.frame.origin.x, cell.team1Label.frame.origin.y, cell.team1Label.frame.size.width + 20, cell.team1Label.frame.size.height)];
+        
+        [cell.team2Label setFrame:CGRectMake(cell.team2Label.frame.origin.x, cell.team2Label.frame.origin.y, cell.team2Label.frame.size.width + 20, cell.team2Label.frame.size.height)];
+    }
+
     [cell.team1Label setText:[gameInfo valueForKey:@"HomeTeam"]];
     [cell.team2Label setText:[gameInfo valueForKey:@"AwayTeam"]];
-    [cell.team1Odds setText:[fiveDimes valueForKey:@"HomeSpread"]];
-    [cell.team2Odds setText:[fiveDimes valueForKey:@"AwaySpread"]];
+
     [cell.gameTime setText:[gameInfo valueForKey:@"GameTime"]];
     [cell.wagersLabel setText:@"Wagers"];
     NSNumber *currentWagers = [gameInfo valueForKey:@"currentWagers"];
@@ -214,6 +277,7 @@
 
 #pragma mark - TableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    ScoreSummaryCell *cell = (ScoreSummaryCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSMutableArray *sectionContent = _contentList[indexPath.section];
     NSMutableDictionary *allInfo = sectionContent[indexPath.row];
     NSMutableDictionary *gameInfo = [allInfo valueForKey:@"game"];
@@ -229,8 +293,12 @@
     NSString *gameId = [gameInfo valueForKey:@"GameId"];
     NSNumber *currentWagers = [gameInfo valueForKey:@"currentWagers"];
     NSNumber *pendingWagers = [gameInfo valueForKey:@"pendingWagers"];
-    
-    NSMutableDictionary *gameDataDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:homeTeam, @"homeTeam", homeTeamId, @"homeTeamId", awayTeam, @"awayTeam", awayTeamId, @"awayTeamId", homeOdds, @"homeOdds",awayOdds, @"awayOdds", gameDate, @"date", gameId, @"gameId", gameTime, @"gameTime", currentWagers, @"currentWagers", pendingWagers, @"pendingWagers", nil];
+    UIImage *image = [cell.gameImageView image];
+    if (!homeOdds) {
+        homeOdds = @"";
+        awayOdds = @"";
+    }
+    NSMutableDictionary *gameDataDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:homeTeam, @"homeTeam", homeTeamId, @"homeTeamId", awayTeam, @"awayTeam", awayTeamId, @"awayTeamId", homeOdds, @"homeOdds",awayOdds, @"awayOdds", gameDate, @"date", gameId, @"gameId", gameTime, @"gameTime", currentWagers, @"currentWagers", pendingWagers, @"pendingWagers", image, @"image", self.sport, @"sport", self.league, @"league", nil];
     
     if (_wager) {
         NewWagerViewController *newWager = [[NewWagerViewController alloc]initWithNibName:@"NewWagerViewController" bundle:nil];
@@ -304,6 +372,7 @@
 #pragma mark - Button Clicks
 - (void)backButtonClicked:(id)sender {
     [self viewWillDisappear:YES];
+    stopQuerying = YES;
     NSArray *viewControllers = [self.navigationController viewControllers];
     [[viewControllers objectAtIndex:viewControllers.count-2]viewWillAppear:YES];
     [self.navigationController popViewControllerAnimated:YES];
@@ -370,7 +439,7 @@
             [pendingCount countObjectsInBackgroundWithBlock:^(int number2, NSError *error) {
                 if (!error) {
                     [gameInfo setObject:[NSNumber numberWithInt:number] forKey:@"pendingWagers"];
-                    if (currentIndex < xmlGameArray.count-1) {
+                    if (currentIndex < xmlGameArray.count-1 && !stopQuerying) {
                         currentIndex++;
                         [self.tableView reloadData];
                         [self getWagers];
@@ -389,27 +458,41 @@
 }
 
 - (void)getImages {
-    NSString *gameId = [xmlGameArray[currentIndexImages] valueForKey:@"GameId"];
-    NSMutableDictionary *params = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"Basketball", @"Sport", @"NBA", @"League", gameId, @"GameId", nil];
-    [FWAPI getGamePreview:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
-        NSLog(@"%@", XMLParser);
-        XMLParser.delegate = self;
-        [XMLParser parse];
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
-        NSLog(@"%@", error);
-    }];
-    
+    NSString *gameId = [xmlGameArray[currentIndex] valueForKey:@"GameId"];
+    if ([self.sport isEqualToString:@"Soccer"]) {
+        NSMutableDictionary *params = [[NSMutableDictionary alloc]initWithObjectsAndKeys:self.sport, @"Sport", self.league, @"League", gameId, @"GameId", nil];
+        [FWAPI getSoccerGamePreview:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
+            NSLog(@"%@", XMLParser);
+            XMLParser.delegate = self;
+            [XMLParser parse];
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
+            NSLog(@"%@", error);
+        }];
+
+    }
+    else {
+        NSMutableDictionary *params = [[NSMutableDictionary alloc]initWithObjectsAndKeys:self.sport, @"Sport", self.league, @"League", gameId, @"GameId", nil];
+        [FWAPI getGamePreview:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
+            NSLog(@"%@", XMLParser);
+            XMLParser.delegate = self;
+            [XMLParser parse];
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
+            NSLog(@"%@", error);
+        }];
+    }
 }
 
 #pragma mark - NSXMLParser Delegate Methods
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
+    NSLog(@"%@", string);
     if ([string rangeOfString:@".jpg"].location != NSNotFound) {
-        if ([xmlGameArray[currentIndexImages] valueForKey:@"awayImageLink"]) {
-            [xmlGameArray[currentIndexImages] setObject:string forKey:@"homeImageLink"];
+        if ([xmlGameArray[currentIndex] valueForKey:@"awayImageLink"]) {
+            [xmlGameArray[currentIndex] setObject:string forKey:@"homeImageLink"];
         }
         else {
-            [xmlGameArray[currentIndexImages] setObject:string forKey:@"awayImageLink"];
+            [xmlGameArray[currentIndex] setObject:string forKey:@"awayImageLink"];
             [self.tableView reloadData];
         }
     }
@@ -419,20 +502,31 @@
 }
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict {
-    if ([elementName isEqualToString:@"Game"]) {
-        NSMutableDictionary *attributesCopy = [attributeDict mutableCopy];
-        [attributesCopy setObject:[NSNumber numberWithInt:-1] forKey:@"currentWagers"];
-        [xmlGameArray addObject:attributesCopy];
-        //NSLog(@"%@", attributeDict);
-    }
-    if ([elementName isEqualToString:@"Book"]) {
-        if ([[attributeDict valueForKey:@"BookName"] isEqualToString:@"BOVADA"]) {
-            [xmlBovadaArray addObject:attributeDict];
+    if (![self.sport isEqualToString:@"Soccer"]) {
+        if ([elementName isEqualToString:@"Game"]) {
+            NSMutableDictionary *attributesCopy = [attributeDict mutableCopy];
+            [attributesCopy setObject:[NSNumber numberWithInt:-1] forKey:@"currentWagers"];
+            [xmlGameArray addObject:attributesCopy];
             //NSLog(@"%@", attributeDict);
         }
-        else {
-            [xml5DimesArray addObject:attributeDict];
-            //NSLog(@"%@", attributeDict);
+        if ([elementName isEqualToString:@"Book"]) {
+            if ([[attributeDict valueForKey:@"BookName"] isEqualToString:@"BOVADA"]) {
+                [xmlBovadaArray addObject:attributeDict];
+                //NSLog(@"%@", attributeDict);
+            }
+            else {
+                [xml5DimesArray addObject:attributeDict];
+                //NSLog(@"%@", attributeDict);
+            }
+        }
+    }
+    else {
+        if ([attributeDict valueForKey:@"AwayTeam"]) {
+            NSMutableDictionary *attributesCopy = [attributeDict mutableCopy];
+            [attributesCopy setObject:[NSNumber numberWithInt:-1] forKey:@"currentWagers"];
+            [xmlGameArray addObject:attributesCopy];
+            NSLog(@"%@", attributeDict);
+
         }
     }
 }
@@ -441,39 +535,73 @@
     if (!retrieveImages) {
         //NSLog(@"%@", xmlGameArray);
         _contentList = [[NSMutableArray alloc]init];
-        if (xmlGameArray.count != 0) {
-            NSString *gameDate = [[NSString alloc]init];
-            gameDate = [xmlGameArray[0] objectForKey:@"GameDate"];
-            _contentList[0] = [[NSMutableArray alloc]init];
-            NSMutableDictionary *gamePlusOdds = [[NSMutableDictionary alloc]initWithObjectsAndKeys:xmlGameArray[0], @"game", xml5DimesArray[0], @"5dimes", xmlBovadaArray[0], @"bovada", nil];
-            [_contentList[0] addObject:gamePlusOdds];
-            int contentListIndex = 0;
-            
-            for (int i = 1; i < xmlGameArray.count; i++) {
-                gamePlusOdds = [NSMutableDictionary dictionaryWithObjectsAndKeys:xmlGameArray[i], @"game", xml5DimesArray[i], @"5dimes", xmlBovadaArray[i], @"bovada", nil];
-                if ([[xmlGameArray[i] valueForKey:@"GameDate"]isEqualToString:gameDate]) {
-                    [_contentList[contentListIndex] addObject:gamePlusOdds];
+        if (![self.sport isEqualToString:@"Soccer"]) {
+            if (xmlGameArray.count != 0) {
+                NSString *gameDate = [[NSString alloc]init];
+                gameDate = [xmlGameArray[0] objectForKey:@"GameDate"];
+                _contentList[0] = [[NSMutableArray alloc]init];
+                NSMutableDictionary *gamePlusOdds = [[NSMutableDictionary alloc]initWithObjectsAndKeys:xmlGameArray[0], @"game", xml5DimesArray[0], @"5dimes", xmlBovadaArray[0], @"bovada", nil];
+                [_contentList[0] addObject:gamePlusOdds];
+                int contentListIndex = 0;
+                
+                for (int i = 1; i < xmlGameArray.count; i++) {
+                    gamePlusOdds = [NSMutableDictionary dictionaryWithObjectsAndKeys:xmlGameArray[i], @"game", xml5DimesArray[i], @"5dimes", xmlBovadaArray[i], @"bovada", nil];
+                    if ([[xmlGameArray[i] valueForKey:@"GameDate"]isEqualToString:gameDate]) {
+                        [_contentList[contentListIndex] addObject:gamePlusOdds];
+                    }
+                    else {
+                        contentListIndex ++;
+                        gameDate = [xmlGameArray[i] objectForKey:@"GameDate"];
+                        [_contentList addObject: [[NSMutableArray alloc]init]];
+                        [_contentList[contentListIndex] addObject:gamePlusOdds];
+                    }
                 }
-                else {
-                    contentListIndex ++;
-                    gameDate = [xmlGameArray[i] objectForKey:@"GameDate"];
-                    [_contentList addObject: [[NSMutableArray alloc]init]];
-                    [_contentList[contentListIndex] addObject:gamePlusOdds];
-                }
+                [self.tableView reloadData];
+                [SVProgressHUD dismiss];
+                retrieveImages = YES;
+                [self getImages];
+                
             }
-            [self.tableView reloadData];
-            [SVProgressHUD dismiss];
-            retrieveImages = YES;
-            [self getImages];
+            else {
+                [SVProgressHUD dismiss];
+            }
             
+        }
+        else {
+            if (xmlGameArray.count != 0) {
+                NSString *gameDate = [[NSString alloc]init];
+                gameDate = [xmlGameArray[0] objectForKey:@"GameDate"];
+                _contentList[0] = [[NSMutableArray alloc]init];
+                NSMutableDictionary *gamePlusOdds = [[NSMutableDictionary alloc]initWithObjectsAndKeys:xmlGameArray[0], @"game", nil];
+                [_contentList[0] addObject:gamePlusOdds];
+                int contentListIndex = 0;
+                
+                for (int i = 1; i < xmlGameArray.count; i++) {
+                    gamePlusOdds = [NSMutableDictionary dictionaryWithObjectsAndKeys:xmlGameArray[i], @"game", nil];
+                    if ([[xmlGameArray[i] valueForKey:@"GameDate"]isEqualToString:gameDate]) {
+                        [_contentList[contentListIndex] addObject:gamePlusOdds];
+                    }
+                    else {
+                        contentListIndex ++;
+                        gameDate = [xmlGameArray[i] objectForKey:@"GameDate"];
+                        [_contentList addObject: [[NSMutableArray alloc]init]];
+                        [_contentList[contentListIndex] addObject:gamePlusOdds];
+                    }
+                }
+                [self.tableView reloadData];
+                [SVProgressHUD dismiss];
+                retrieveImages = YES;
+                [self getWagers];
+                
+            }
+            else {
+                [SVProgressHUD dismiss];
+            }
+
         }
     }
     else {
-        currentIndexImages ++;
-        if (currentIndexImages < xmlGameArray.count) {
-            [self getImages];
-        }
-        else {
+        if (currentIndex < xmlGameArray.count && !stopQuerying) {
             [self getWagers];
         }
     }

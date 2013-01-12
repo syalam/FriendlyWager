@@ -20,6 +20,7 @@
     IBOutlet UILabel *homeOdds;
     IBOutlet UILabel *awayOdds;
     IBOutlet UILabel *gameTime;
+    IBOutlet UIImageView *gameImage;
     UIImageView *stripes;
    
 }

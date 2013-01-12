@@ -21,6 +21,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    currentIndex = 0;
+    currentIndex2 = 0;
     [[UIApplication sharedApplication]
        setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:NO];
     
@@ -71,6 +73,8 @@
         [PFPush subscribeToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[PFUser currentUser] objectId]]];
         }
     }
+    currentIndex = 0;
+    currentIndex2 = 0;
 
 }
 
@@ -93,17 +97,44 @@
 {
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-     */
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Basketball", @"Sport", @"", @"League", @"01/12/2013", @"StartDate",@"01/19/2013", @"EndDate", nil];
-    [FWAPI getOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
-        NSLog(@"%@", XMLParser);
-        results = [[NSMutableArray alloc]init];
-        XMLParser.delegate = self;
-        [XMLParser parse];
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
-        NSLog(@"%@", XMLParser);
-    }];
+     *NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Basketball", @"Sport", @"NBA", @"League", @"01/10/2013", @"StartDate", @"01/10/2013", @"EndDate", nil];
+     [FWAPI getScoresAndOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
+     NSLog(@"%@", XMLParser);
+     
+     XMLParser.delegate = self;
+     [XMLParser parse];
+     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
+     NSLog(@"%@", error);
+     }];
+*/
+    if ([PFUser currentUser]) {
+        PFQuery *wagersMade = [PFQuery queryWithClassName:@"wagers"];
+        [wagersMade whereKey:@"wager" equalTo:[PFUser currentUser]];
+        [wagersMade whereKeyDoesNotExist:@"teamWageredToWinScore"];
+        [wagersMade whereKey:@"wagerAccepted" equalTo:[NSNumber numberWithBool:YES]];
+        [wagersMade whereKeyExists:@"gameDate"];
+        
+        PFQuery *wagersAccepted = [PFQuery queryWithClassName:@"wagers"];
+        [wagersAccepted whereKey:@"wager" equalTo:[PFUser currentUser]];
+        [wagersAccepted whereKeyDoesNotExist:@"teamWageredToWinScore"];
+        [wagersAccepted whereKey:@"wagerAccepted" equalTo:[NSNumber numberWithBool:YES]];
+        [wagersAccepted whereKeyExists:@"gameDate"];
+        
+        PFQuery *allWagers = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:wagersMade, wagersAccepted, nil]];
+        [allWagers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                results = [[NSMutableArray alloc]init];
+                results = [objects mutableCopy];
+                gameResults = [[NSMutableArray alloc]init];
+                if (results.count > 0) {
+                    [self getResults];
+                }
+            
+            }
+        }];
 
+    }
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -148,6 +179,164 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
     }
 }
 
+#pragma mark - Helper Methods
+- (void)getResults {
+    PFObject *wagerObject = results[currentIndex];
+    NSString *gameDate = [wagerObject valueForKey:@"gameDate"];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"MMddyyyy"];
+    NSString *gameDateModified = [gameDate stringByReplacingOccurrencesOfString:@"/" withString:@""];
+    NSDate *date = [dateFormat dateFromString:gameDateModified];
+    NSDate *currentDate = [NSDate date];
+    NSString *league = [wagerObject valueForKey:@"sport"];
+    NSString *sport;
+    if (([league isEqualToString:@"1000"] || [league isEqualToString:@"1534"]) && [currentDate compare:date] == NSOrderedDescending) {
+        sport = @"Soccer";
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:sport, @"Sport", league, @"League", gameDate, @"StartDate", gameDate, @"EndDate", nil];
+        [FWAPI getSoccerScoresAndOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
+            NSLog(@"%@", XMLParser);
+            
+            XMLParser.delegate = self;
+            [XMLParser parse];
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
+            NSLog(@"%@", error);
+        }];
+
+    }
+    else if ([currentDate compare:date] == NSOrderedDescending){
+        if ([league isEqualToString:@"NBA"] || [league isEqualToString:@"NCAAB"]) {
+            sport = @"Basketball";
+        }
+        else if ([league isEqualToString:@"NFL"] || [league isEqualToString:@"NCAAF"]) {
+            sport = @"Football";
+        }
+        else if ([league isEqualToString:@"MLB"]) {
+            sport = @"Baseball";
+        }
+        else if ([league isEqualToString:@"NHL"]) {
+            sport = @"Hockey";
+        }
+        else if ([league isEqualToString:@"NASCAR"]) {
+            sport = @"AutoRacing";
+        }
+        else if ([league isEqualToString:@"Boxing"] || [league isEqualToString:@"UFC"]) {
+            sport = @"Fighting";
+        }
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:sport, @"Sport", league, @"League", gameDate, @"StartDate", gameDate, @"EndDate", nil];
+        [FWAPI getScoresAndOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
+            NSLog(@"%@", XMLParser);
+            
+            XMLParser.delegate = self;
+            [XMLParser parse];
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
+            NSLog(@"%@", error);
+        }];
+
+    }
+}
+
+- (void)updateDB {
+    NSDictionary *currentObject = [gameResults objectAtIndex:currentIndex2];
+    NSDictionary *gameObject = [currentObject objectForKey:@"gameObject"];
+    PFObject *wagerObject = [currentObject objectForKey:@"parseObject"];
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc]init];
+    [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSNumber *homeScore = [numberFormatter numberFromString:[gameObject valueForKey:@"HomeScore"]];
+    NSNumber *awayScore = [numberFormatter numberFromString:[gameObject valueForKey:@"AwayScore"]];
+    NSString *homeTeam = [gameObject valueForKey:@"HomeTeam"];
+    NSString *awayTeam = [gameObject valueForKey:@"AwayTeam"];
+    if ([[wagerObject valueForKey:@"teamWageredToWin"] isEqualToString:homeTeam]) {
+        [wagerObject setObject:homeScore forKey:@"teamWageredToWinScore"];
+        [wagerObject setObject:awayScore forKey:@"teamWageredToLoseScore"];
+    }
+    else {
+        [wagerObject setObject:homeScore forKey:@"teamWageredToWinScore"];
+        [wagerObject setObject:awayScore forKey:@"teamWageredToLoseScore"];
+    }
+    [wagerObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            PFUser *wager = [wagerObject objectForKey:@"wager"];
+            [wager fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                if (!error) {
+                    if ([[wager objectForKey:@"objectId"]isEqualToString:[PFUser currentUser]]) {
+                        NSNumber *teamWageredToWinScore = [wagerObject valueForKey:@"teamWageredToWinScore"];
+                        NSNumber *teamWageredToLoseScore = [wagerObject valueForKey:@"teamWageredToLoseScore"];
+                        int tokensWagered = [[wagerObject valueForKey:@"tokensWagered"] intValue];
+                        PFUser *wagee = [wagerObject objectForKey:@"wagee"];
+                        [wagee fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                            
+                            if ([teamWageredToWinScore intValue] > [teamWageredToLoseScore intValue]) {
+                                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"You Won!" message:[NSString stringWithFormat:@"You won %d tokens and %@ from %@ because %@ beat %@", tokensWagered, [wagerObject valueForKey:@"stakes"], [wagee valueForKey:@"name"], [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                [alert show];
+                                int tokens = [[wager valueForKey:@"tokenCount"]intValue];
+                                tokens = tokens + (tokensWagered*2);
+                                [wager setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
+                                [wager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                    if (currentIndex2 < gameResults.count-1) {
+                                        currentIndex2++;
+                                        [self updateDB];
+                                    }
+                                }];
+                            }
+                            else {
+                                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"You Lost!" message:[NSString stringWithFormat:@"You lost %d tokens and %@ from %@ because %@ lost against %@", tokensWagered, [wagerObject valueForKey:@"stakes"], [wagee valueForKey:@"name"], [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                [alert show];
+                                int tokens = [[wager valueForKey:@"tokenCount"]intValue];
+                                tokens = tokens - tokensWagered;
+                                [wager setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
+                                [wager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                    if (currentIndex2 < gameResults.count-1) {
+                                        currentIndex2++;
+                                        [self updateDB];
+                                    }
+                                }];
+
+                            }
+                        }];
+                    }
+                    else {
+                        NSNumber *teamWageredToWinScore = [wagerObject valueForKey:@"teamWageredToWinScore"];
+                        NSNumber *teamWageredToLoseScore = [wagerObject valueForKey:@"teamWageredToLoseScore"];
+                        int tokensWagered = [[wagerObject valueForKey:@"tokensWagered"] intValue];
+                        PFUser *wagee = [wagerObject objectForKey:@"wagee"];
+                        [wagee fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                            
+                            if ([teamWageredToWinScore intValue] < [teamWageredToLoseScore intValue]) {
+                                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"You Won!" message:[NSString stringWithFormat:@"You won %d tokens and %@ from %@ because %@ beat %@", tokensWagered, [wagerObject valueForKey:@"stakes"], [wager valueForKey:@"name"], [wagerObject objectForKey:@"teamWageredToLose"], [wagerObject objectForKey:@"teamWageredToWin"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                [alert show];
+                                int tokens = [[wagee valueForKey:@"tokenCount"]intValue];
+                                tokens = tokens + (tokensWagered*2);
+                                [wagee setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
+                                [wagee saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                    if (currentIndex2 < gameResults.count-1) {
+                                        currentIndex2++;
+                                        [self updateDB];
+                                    }
+                                }];
+                            }
+                            else {
+                                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"You Lost!" message:[NSString stringWithFormat:@"You lost %d tokens and %@ from %@ because %@ lost against %@", tokensWagered, [wagerObject valueForKey:@"stakes"], [wager valueForKey:@"name"], [wagerObject objectForKey:@"teamWageredToLose"], [wagerObject objectForKey:@"teamWageredToWin"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                [alert show];
+                                int tokens = [[wagee valueForKey:@"tokenCount"]intValue];
+                                tokens = tokens - tokensWagered;
+                                [wagee setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
+                                [wagee saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                    if (currentIndex2 < gameResults.count-1) {
+                                        currentIndex2++;
+                                        [self updateDB];
+                                    }
+                                }];
+                                
+                            }
+                        }];
+
+                    }
+                }
+            }];
+        }
+    }];
+}
+
 #pragma mark - NSXMLParser Delegate Methods
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     
@@ -170,16 +359,30 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
 }
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict {
-    [results addObject:attributeDict];
-    NSLog(@"%@", attributeDict);
+    if ([attributeDict objectForKey:@"HomeTeam"]) {
+        NSString *desiredGameId = [results[currentIndex]objectForKey:@"gameId"];
+        NSString *currentGameId = [attributeDict objectForKey:@"GameId"];
+        NSString *homeScore = [attributeDict objectForKey:@"HomeScore"];
+        if ([desiredGameId isEqualToString:currentGameId] && ![homeScore isEqualToString:@""]) {
+            NSDictionary *gameAndPFObject = [[NSDictionary alloc]initWithObjectsAndKeys:results[currentIndex], @"parseObject", attributeDict, @"gameObject", nil];
+            [gameResults addObject:gameAndPFObject];
+        }
+        NSLog(@"%@", attributeDict);
+    }
+    
 }
 
 - (void)parser:(NSXMLParser *)parser foundAttributeDeclarationWithName:(NSString *)attributeName forElement:(NSString *)elementName type:(NSString *)type defaultValue:(NSString *)defaultValue {
-    NSLog(@"%@", attributeName);
 }
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
-    NSLog(@"%@", results);
+    if (currentIndex < results.count-1) {
+        currentIndex++;
+        [self getResults];
+    }
+    else {
+        [self updateDB];
+    }
 }
 
 @end

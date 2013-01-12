@@ -93,17 +93,18 @@
     }
     
     //[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG3_BG"]]];
-    NSArray *football = [[NSArray alloc]initWithObjects:@"Football", [UIImage imageNamed:@"footballIcn"], nil];
-    NSArray *golf = [[NSArray alloc]initWithObjects:@"Golf", [UIImage imageNamed:@"golfIcn"], nil];
-    NSArray *baseball = [[NSArray alloc]initWithObjects:@"Baseball", [UIImage imageNamed:@"baseballIcn"], nil];
-    NSArray *basketball = [[NSArray alloc]initWithObjects:@"Basketball", [UIImage imageNamed:@"basketballIcn"], nil];
-    NSArray *tennis = [[NSArray alloc]initWithObjects:@"Tennis", [UIImage imageNamed:@"tennisIcn"], nil];
-    NSArray *soccer = [[NSArray alloc]initWithObjects:@"Soccer", [UIImage imageNamed:@"soccerIcn"], nil];
-    NSArray *autoRacing = [[NSArray alloc]initWithObjects:@"Auto Racing", [UIImage imageNamed:@"autoRacingIcn"], nil];
+    NSArray *nfl = [[NSArray alloc]initWithObjects:@"NFL", [UIImage imageNamed:@"footballIcn"], nil];
+    NSArray *ncaaf = [[NSArray alloc]initWithObjects:@"NCAAF", [UIImage imageNamed:@"footballIcn"], nil];
+    NSArray *nba = [[NSArray alloc]initWithObjects:@"NBA", [UIImage imageNamed:@"basketballIcn"], nil];
+    NSArray *ncaab = [[NSArray alloc]initWithObjects:@"NCAAB", [UIImage imageNamed:@"basketballIcn"], nil];
+    NSArray *mlb = [[NSArray alloc]initWithObjects:@"MLB", [UIImage imageNamed:@"baseballIcn"], nil];
+    NSArray *nhl = [[NSArray alloc]initWithObjects:@"NHL", [UIImage imageNamed:@"hockeyIcn"], nil];
+    NSArray *epl = [[NSArray alloc]initWithObjects:@"EPL", [UIImage imageNamed:@"soccerIcn"], nil];
+    NSArray *mls = [[NSArray alloc]initWithObjects:@"MLS", [UIImage imageNamed:@"soccerIcn"], nil];    
+    NSArray *nascar = [[NSArray alloc]initWithObjects:@"NASCAR", [UIImage imageNamed:@"autoRacingIcn"], nil];
     NSArray *boxing  = [[NSArray alloc]initWithObjects:@"Boxing", [UIImage imageNamed:@"boxingIcn"], nil];
-    NSArray *hockey = [[NSArray alloc]initWithObjects:@"Hockey", [UIImage imageNamed:@"hockeyIcn"], nil];
-    NSArray *mma = [[NSArray alloc]initWithObjects:@"Mixed Martial Arts", [UIImage imageNamed:@"mmaIcn"], nil];
-    scoresArray = [[NSArray alloc]initWithObjects:football, golf, baseball, basketball, tennis, soccer, autoRacing, boxing, hockey, mma, nil];
+    NSArray *mma = [[NSArray alloc]initWithObjects:@"UFC", [UIImage imageNamed:@"mmaIcn"], nil];
+    scoresArray = [[NSArray alloc]initWithObjects:nfl, ncaaf, nba, ncaab, mlb, nhl, epl, mls, nascar, boxing, mma, nil];
     [self setContentList:scoresArray];
     
     
@@ -196,7 +197,7 @@
         if (_opponentsToWager) {
             scoreSummary.opponentsToWager = _opponentsToWager;
         }
-        scoreSummary.sport = [contentForThisRow objectAtIndex:0];
+        scoreSummary.league = [contentForThisRow objectAtIndex:0];
         scoreSummary.title = [contentForThisRow objectAtIndex:0];
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];

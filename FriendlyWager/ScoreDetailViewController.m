@@ -62,13 +62,16 @@
     custombackButton.titleLabel.textColor = [UIColor colorWithRed:0.996 green:0.98 blue:0.902 alpha:1];
     [custombackButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
-
+    [homeTeam setAdjustsFontSizeToFitWidth:YES];
+    [homeTeam setMinimumFontSize:12];
+    [awayTeam setAdjustsFontSizeToFitWidth:YES];
+    [awayTeam setMinimumFontSize:12];
     homeTeam.text = [_gameDataDictionary valueForKey:@"homeTeam"];
     awayTeam.text = [_gameDataDictionary valueForKey:@"awayTeam"];
     homeOdds.text = [_gameDataDictionary valueForKey:@"homeOdds"];
     awayOdds.text = [_gameDataDictionary valueForKey:@"awayOdds"];
     gameTime.text = [_gameDataDictionary valueForKey:@"gameTime"];
-    
+        
     NSNumber *currentWagers = [_gameDataDictionary valueForKey:@"currentWagers"];
     NSNumber *pendingWagers = [_gameDataDictionary valueForKey:@"pendingWagers"];
     if ([currentWagers intValue] > 0) {
@@ -83,6 +86,9 @@
             [pendingNotification setImage:[UIImage imageNamed:@"alertIndicator"]];
         }
 
+    }
+    else {
+        [pendingNotification setHidden:YES];
     }
     
 
@@ -145,6 +151,20 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    UIImage *image = [_gameDataDictionary valueForKey:@"image"];
+    [gameImage setImage:image];
+    if (image.size.width < gameImage.frame.size.width && image.size.height < gameImage.frame.size.height) {
+        [gameImage sizeToFit];
+    }
+    if ([homeOdds.text isEqualToString:@""]) {
+        [homeTeam setFrame:CGRectMake(homeTeam.frame.origin.x, homeTeam.frame.origin.y, homeTeam.frame.size.width + 20, homeTeam.frame.size.height)];
+        [awayTeam setFrame:CGRectMake(awayTeam.frame.origin.x, awayTeam.frame.origin.y, awayTeam.frame.size.width + 20, awayTeam.frame.size.height)];
+        
+    }
+
+}
 
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -335,6 +355,19 @@
                 [oddsArray addObject:odds];
                 NSString *userId = [NSString stringWithFormat:@"%@", [[wager objectForKey:@"wager"]objectId]];
                 [userArray addObject:userId];
+            }
+            if (wagers.count - isPendingArray.count > 0 && [numberWagers.text isEqualToString:@""]) {
+                numberWagers.text = [NSString stringWithFormat:@"%d", wagers.count - isPendingArray.count];
+            }
+            if (isPendingArray.count) {
+                if (isPendingArray.count > 9) {
+                    [pendingNotification setImage:[UIImage imageNamed:@"alertIndicatorLong"]];
+                }
+                else {
+                    [pendingNotification setImage:[UIImage imageNamed:@"alertIndicator"]];
+                }
+
+                numberPending.text = [NSString stringWithFormat:@"%d", isPendingArray.count];
             }
             PFQuery *queryForUsers = [PFQuery queryForUser];
             [queryForUsers whereKey:@"objectId" containedIn:userArray];

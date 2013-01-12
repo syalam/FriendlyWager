@@ -11,8 +11,8 @@
 @implementation KiipAwards
 
 - (void)setAwards {
-    PFQuery *getTokenCount = [PFQuery queryWithClassName:@"tokens"];
-    [getTokenCount whereKey:@"user" equalTo:[PFUser currentUser]];
+    PFQuery *getTokenCount = [PFQuery queryForUser];
+    [getTokenCount whereKey:@"objectId" equalTo:[[PFUser currentUser]objectId]];
     [getTokenCount findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             for (PFObject *tokenObject in objects) {

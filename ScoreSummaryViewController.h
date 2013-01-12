@@ -19,11 +19,12 @@
     NSMutableArray *xml5DimesArray;
     NSMutableArray *dateArray;
     int currentIndex;
-    int currentIndexImages;
     BOOL retrieveImages;
+    BOOL stopQuerying;
     
     BOOL newWagerVisible;
     UIImageView *stripes;
+    UIImage *iconImage;
 
 }
 
@@ -33,6 +34,7 @@
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) PFObject *opponent;
 @property (nonatomic, retain) NSString *sport;
+@property (nonatomic, retain) NSString *league;
 @property (nonatomic, retain) NSMutableArray *opponentsToWager;
 @property (nonatomic, retain) TabsViewController *tabParentView;
 @property (nonatomic) BOOL wager;

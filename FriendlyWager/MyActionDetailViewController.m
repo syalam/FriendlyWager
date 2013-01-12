@@ -263,16 +263,21 @@
         
         if ([_wagerType isEqualToString:@"Current"]) {
             UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 70, 20)];
-            UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(95, 10, 70, 30)];
-            teamLabel.numberOfLines = 2;
-            teamLabel.lineBreakMode = UILineBreakModeWordWrap;
-            teamLabel.textAlignment = UITextAlignmentLeft;
-            UILabel *teamToWinLabel = [[UILabel alloc]initWithFrame:CGRectMake(215, 10, 70, 20)];
+            UILabel *team1Label = [[UILabel alloc]initWithFrame:CGRectMake(95, 10, 60, 15)];
+            UILabel *team2Label = [[UILabel alloc]initWithFrame:CGRectMake(95, 25, 60, 15)];
+            UILabel *teamToWinLabel = [[UILabel alloc]initWithFrame:CGRectMake(215, 10, 60, 20)];
             teamToWinLabel.textAlignment = UITextAlignmentRight;
             
             dateLabel.font = [UIFont boldSystemFontOfSize:12];
-            teamLabel.font = [UIFont boldSystemFontOfSize:12];
+            team1Label.font = [UIFont boldSystemFontOfSize:12];
+            [team1Label setAdjustsFontSizeToFitWidth:YES];
+            [team2Label setAdjustsFontSizeToFitWidth:YES];
+            [team1Label setMinimumFontSize:9];
+            [team2Label setMinimumFontSize:9];
+            team2Label.font = [UIFont boldSystemFontOfSize:12];
             teamToWinLabel.font = [UIFont boldSystemFontOfSize:12];
+            [teamToWinLabel setAdjustsFontSizeToFitWidth:YES];
+            [teamToWinLabel setMinimumFontSize:9];
             
             PFObject *wagerObject = [_wagerObjects objectAtIndex:indexPath.row-1];
             
@@ -283,8 +288,8 @@
             NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
             
             dateLabel.text = dateToDisplay;
-            teamLabel.text = [NSString stringWithFormat:@"%@\n%@", [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]];
-            
+            team1Label.text = [wagerObject objectForKey:@"teamWageredToWin"];
+            team2Label.text = [wagerObject objectForKey:@"teamWageredToLose"];
             
             if ([[[wagerObject objectForKey:@"wagee"]objectId] isEqualToString:[[PFUser currentUser]objectId]]) {
                 teamToWinLabel.text = [wagerObject objectForKey:@"teamWageredToLose"];
@@ -295,11 +300,13 @@
             
             UIColor *textColor = [UIColor colorWithRed:0.376 green:0.376 blue:0.376 alpha:1];
             dateLabel.textColor = textColor;
-            teamLabel.textColor = textColor;
+            team1Label.textColor = textColor;
+            team2Label.textColor = textColor;
             teamToWinLabel.textColor = textColor;
             
             dateLabel.backgroundColor = [UIColor clearColor];
-            teamLabel.backgroundColor = [UIColor clearColor];
+            team1Label.backgroundColor = [UIColor clearColor];
+            team2Label.backgroundColor = [UIColor clearColor];
             teamToWinLabel.backgroundColor = [UIColor clearColor];
             
 
@@ -307,7 +314,8 @@
                 
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell addSubview:dateLabel];
-            [cell addSubview:teamLabel];
+            [cell addSubview:team1Label];
+            [cell addSubview:team2Label];
             [cell addSubview:teamToWinLabel];
             [cell.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]]];
 
@@ -315,16 +323,21 @@
         
         else if ([_wagerType isEqualToString:@"Pending"]){
             UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 70, 20)];
-            UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(95, 10, 70, 30)];
-            teamLabel.numberOfLines = 2;
-            teamLabel.lineBreakMode = UILineBreakModeWordWrap;
-            teamLabel.textAlignment = UITextAlignmentLeft;
-            UILabel *teamToWinLabel = [[UILabel alloc]initWithFrame:CGRectMake(160, 10, 70, 20)];
+            UILabel *team1Label = [[UILabel alloc]initWithFrame:CGRectMake(95, 10, 60, 15)];
+            UILabel *team2Label = [[UILabel alloc]initWithFrame:CGRectMake(95, 25, 60, 15)];
+            UILabel *teamToWinLabel = [[UILabel alloc]initWithFrame:CGRectMake(160, 10, 60, 20)];
             teamToWinLabel.textAlignment = UITextAlignmentLeft;
             
             dateLabel.font = [UIFont boldSystemFontOfSize:12];
-            teamLabel.font = [UIFont boldSystemFontOfSize:12];
+            team1Label.font = [UIFont boldSystemFontOfSize:12];
+            [team1Label setAdjustsFontSizeToFitWidth:YES];
+            [team2Label setAdjustsFontSizeToFitWidth:YES];
+            [team1Label setMinimumFontSize:9];
+            [team2Label setMinimumFontSize:9];
+            team2Label.font = [UIFont boldSystemFontOfSize:12];
             teamToWinLabel.font = [UIFont boldSystemFontOfSize:12];
+            [teamToWinLabel setAdjustsFontSizeToFitWidth:YES];
+            [teamToWinLabel setMinimumFontSize:9];
             
             PFObject *wagerObject = [_wagerObjects objectAtIndex:indexPath.row-1];
             
@@ -335,9 +348,8 @@
             NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
             
             dateLabel.text = dateToDisplay;
-            teamLabel.text = [NSString stringWithFormat:@"%@\n%@", [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]];
-            
-            
+            team1Label.text = [wagerObject objectForKey:@"teamWageredToWin"];
+            team2Label.text = [wagerObject objectForKey:@"teamWageredToLose"];
             if ([[[wagerObject objectForKey:@"wagee"]objectId] isEqualToString:[[PFUser currentUser]objectId]]) {
                 teamToWinLabel.text = [wagerObject objectForKey:@"teamWageredToLose"];
             }
@@ -347,17 +359,20 @@
             
             UIColor *textColor = [UIColor colorWithRed:0.376 green:0.376 blue:0.376 alpha:1];
             dateLabel.textColor = textColor;
-            teamLabel.textColor = textColor;
+            team1Label.textColor = textColor;
+            team2Label.textColor = textColor;
             teamToWinLabel.textColor = textColor;
             
             dateLabel.backgroundColor = [UIColor clearColor];
-            teamLabel.backgroundColor = [UIColor clearColor];
+            team1Label.backgroundColor = [UIColor clearColor];
+            team2Label.backgroundColor = [UIColor clearColor];
             teamToWinLabel.backgroundColor = [UIColor clearColor];
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
                 
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell addSubview:dateLabel];
-            [cell addSubview:teamLabel];
+            [cell addSubview:team1Label];
+            [cell addSubview:team2Label];
             [cell addSubview:teamToWinLabel];
             [cell.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]]];
             
@@ -386,16 +401,21 @@
         
         else {
             UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 70, 20)];
-            UILabel *teamLabel = [[UILabel alloc]initWithFrame:CGRectMake(95, 10, 70, 30)];
-            teamLabel.numberOfLines = 2;
-            teamLabel.lineBreakMode = UILineBreakModeWordWrap;
-            teamLabel.textAlignment = UITextAlignmentLeft;
-            UILabel *teamToWinLabel = [[UILabel alloc]initWithFrame:CGRectMake(160, 10, 70, 20)];
+            UILabel *team1Label = [[UILabel alloc]initWithFrame:CGRectMake(95, 10, 60, 15)];
+            UILabel *team2Label = [[UILabel alloc]initWithFrame:CGRectMake(95, 25, 60, 15)];
+            UILabel *teamToWinLabel = [[UILabel alloc]initWithFrame:CGRectMake(160, 10, 60, 20)];
             teamToWinLabel.textAlignment = UITextAlignmentLeft;
             
             dateLabel.font = [UIFont boldSystemFontOfSize:12];
-            teamLabel.font = [UIFont boldSystemFontOfSize:12];
+            team1Label.font = [UIFont boldSystemFontOfSize:12];
+            [team1Label setAdjustsFontSizeToFitWidth:YES];
+            [team2Label setAdjustsFontSizeToFitWidth:YES];
+            [team1Label setMinimumFontSize:9];
+            [team2Label setMinimumFontSize:9];
+            team2Label.font = [UIFont boldSystemFontOfSize:12];
             teamToWinLabel.font = [UIFont boldSystemFontOfSize:12];
+            [teamToWinLabel setAdjustsFontSizeToFitWidth:YES];
+            [teamToWinLabel setMinimumFontSize:9];
             
             PFObject *wagerObject = [_wagerObjects objectAtIndex:indexPath.row-1];
             
@@ -406,8 +426,8 @@
             NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
             
             dateLabel.text = dateToDisplay;
-            teamLabel.text = [NSString stringWithFormat:@"%@\n%@", [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]];
-            
+            team1Label.text = [wagerObject objectForKey:@"teamWageredToWin"];
+            team2Label.text = [wagerObject objectForKey:@"teamWageredToLose"];
             
             if ([[[wagerObject objectForKey:@"wagee"]objectId] isEqualToString:[[PFUser currentUser]objectId]]) {
                 teamToWinLabel.text = [wagerObject objectForKey:@"teamWageredToLose"];
@@ -419,17 +439,20 @@
             
             UIColor *textColor = [UIColor colorWithRed:0.376 green:0.376 blue:0.376 alpha:1];
             dateLabel.textColor = textColor;
-            teamLabel.textColor = textColor;
+            team1Label.textColor = textColor;
+            team2Label.textColor = textColor;
             teamToWinLabel.textColor = textColor;
             
             dateLabel.backgroundColor = [UIColor clearColor];
-            teamLabel.backgroundColor = [UIColor clearColor];
+            team1Label.backgroundColor = [UIColor clearColor];
+            team2Label.backgroundColor = [UIColor clearColor];
             teamToWinLabel.backgroundColor = [UIColor clearColor];
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
                 
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell addSubview:dateLabel];
-            [cell addSubview:teamLabel];
+            [cell addSubview:team1Label];
+            [cell addSubview:team2Label];
             [cell addSubview:teamToWinLabel];
             [cell.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]]];
                 
@@ -476,15 +499,34 @@
 -(void)acceptWagerButtonClicked:(id)sender {
     NSUInteger tag = [sender tag];
     NSIndexPath *indexPath = [indexPathArray objectAtIndex:tag];
-    PFObject *wagerObject = [_wagerObjects objectAtIndex:tag-1];
-    [wagerObject setObject:[NSNumber numberWithBool:YES] forKey:@"wagerAccepted"];
-    [wagerObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [_opponent objectId]] withMessage:[NSString stringWithFormat:@"%@ %@", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], @"accepted your wager"]];
-            [_wagerObjects removeObjectAtIndex:tag-1];
-            //[indexPathArray removeObjectAtIndex:tag];
-            [actionHistoryTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    PFQuery *updateTokenCount = [PFQuery queryForUser];
+    [updateTokenCount whereKey:@"objectId" equalTo:[[PFUser currentUser]objectId]];
+    [updateTokenCount getFirstObjectInBackgroundWithBlock:^(PFObject *tokenObject, NSError *error) {
+        if (!error) {
+            int currentTokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
+            PFObject *wagerObject = [_wagerObjects objectAtIndex:tag-1];
+            NSNumber *tokensWagered = [wagerObject objectForKey:@"tokensWagered"];
+            if (currentTokenCount >= [tokensWagered intValue]) {
+                [wagerObject setObject:[NSNumber numberWithBool:YES] forKey:@"wagerAccepted"];
+                [wagerObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [_opponent objectId]] withMessage:[NSString stringWithFormat:@"%@ accepted your wager for the %@ - %@ game", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]]];
+                        [_wagerObjects removeObjectAtIndex:tag-1];
+                        //[indexPathArray removeObjectAtIndex:tag];
+                        [actionHistoryTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    }
+                    int newTokenCount = currentTokenCount - [tokensWagered intValue];
+                    [tokenObject setObject:[NSNumber numberWithInt:newTokenCount] forKey:@"tokenCount"];
+                    [tokenObject saveInBackground];
+                }];
+            }
+            else {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Token Count" message:@"You don't have enough tokens to accept this wager" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+
+            }
         }
+        
         else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to accept this wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
@@ -498,7 +540,7 @@
     PFObject *wagerObject = [_wagerObjects objectAtIndex:tag-1];
     [wagerObject deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
-            [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [_opponent objectId]] withMessage:[NSString stringWithFormat:@"%@ %@", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], @"rejected your wager"]];
+            [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [_opponent objectId]] withMessage:[NSString stringWithFormat:@"%@ rejected your wager for the %@ - %@ game", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]]];
             [_wagerObjects removeObjectAtIndex:tag-1];
             //[indexPathArray removeObjectAtIndex:tag];
             [actionHistoryTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
