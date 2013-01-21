@@ -11,13 +11,10 @@
 #import "TabsViewController.h"
 #import "TITokenField.h"
 
-@interface NewWagerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UIGestureRecognizerDelegate, UITextFieldDelegate> {
-    IBOutlet UITableView *newWagerTableView;
+@interface NewWagerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UIGestureRecognizerDelegate, UITextFieldDelegate, NSXMLParserDelegate> {
     IBOutlet UIButton *sendButton;
     IBOutlet UIButton *addOthersButton;
     IBOutlet UIButton *selectTeamButton;
-    IBOutlet UISlider *spreadSlider;
-    IBOutlet UILabel *spreadLabel;
     IBOutlet UIImageView *brownArrow;
     IBOutlet UIButton *addStakesButton;
     IBOutlet UILabel *wageeList;
@@ -31,10 +28,14 @@
     UIImageView *stripes;
     
     int saveCount;
+    int tokenCount;
     NSString *teamWageredId;
     NSString *teamWageredToWin;
     NSString *teamWageredToLose;
     NSString *teamWageredToLoseId;
+    BOOL buyTokens;
+    
+    NSMutableArray *xmlGameArray;
     
 
 }
@@ -47,10 +48,7 @@
 
 - (void)updateOpponents;
 
-
-@property (nonatomic, retain) NSMutableArray* contentList;
 @property (nonatomic, retain) NSDictionary *gameDataDictionary;
-@property (nonatomic, retain) PFObject *opponent;
 @property (nonatomic, retain) NSMutableArray *opponentsToWager;
 @property (nonatomic, retain) NSMutableArray *additionalOpponents;
 @property (nonatomic, retain) TabsViewController *tabParentView;

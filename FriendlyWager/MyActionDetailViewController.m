@@ -40,16 +40,6 @@
     stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     
     detailWithPersonLabel.text = [NSString stringWithFormat:@"%@ %@ %@", @"Wagers", @"with", [[_opponent objectForKey:@"name"] capitalizedString]];
-    /*if ([_wagerType isEqualToString:@"Current"]) {
-        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG6_BG"]]];
-    }
-    else if ([_wagerType isEqualToString:@"Pending"]) {
-        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG7_BG"]]];
-        pointLabel.text = @"Accept";
-    }
-    else {
-        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG8_BG"]]];
-    }*/
     indexPathArray = [[NSMutableArray alloc]init];
     //detailTableContents = [[NSMutableArray alloc]initWithArray:_wagerObjects];
     NSLog(@"%@", _wagerObjects);
@@ -469,10 +459,10 @@
                 }
                 else {
                     if([[wagerObject objectForKey:@"teamWageredToWinScore"]intValue] > [[wagerObject objectForKey:@"teamWageredToLoseScore"]intValue]) {
-                            [winLoss setImage:[UIImage imageNamed:@"loss"]];
+                            [winLoss setImage:[UIImage imageNamed:@"win"]];
                     }
                     else {
-                        [winLoss setImage:[UIImage imageNamed:@"win"]];
+                        [winLoss setImage:[UIImage imageNamed:@"loss"]];
                             
                     }
                 }

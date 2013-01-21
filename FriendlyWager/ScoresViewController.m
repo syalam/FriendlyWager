@@ -101,10 +101,7 @@
     NSArray *nhl = [[NSArray alloc]initWithObjects:@"NHL", [UIImage imageNamed:@"hockeyIcn"], nil];
     NSArray *epl = [[NSArray alloc]initWithObjects:@"EPL", [UIImage imageNamed:@"soccerIcn"], nil];
     NSArray *mls = [[NSArray alloc]initWithObjects:@"MLS", [UIImage imageNamed:@"soccerIcn"], nil];    
-    NSArray *nascar = [[NSArray alloc]initWithObjects:@"NASCAR", [UIImage imageNamed:@"autoRacingIcn"], nil];
-    NSArray *boxing  = [[NSArray alloc]initWithObjects:@"Boxing", [UIImage imageNamed:@"boxingIcn"], nil];
-    NSArray *mma = [[NSArray alloc]initWithObjects:@"UFC", [UIImage imageNamed:@"mmaIcn"], nil];
-    scoresArray = [[NSArray alloc]initWithObjects:nfl, ncaaf, nba, ncaab, mlb, nhl, epl, mls, nascar, boxing, mma, nil];
+    scoresArray = [[NSArray alloc]initWithObjects:nfl, ncaaf, nba, ncaab, mlb, nhl, epl, mls, nil];
     [self setContentList:scoresArray];
     
     

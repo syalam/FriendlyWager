@@ -113,9 +113,6 @@
     feedLabel.text = [NSString stringWithFormat:@"%@'s Feed",[_userToWager objectForKey:@"name"]];
     feedLabel.text = [feedLabel.text capitalizedString];
     
-    //[wagerButton addSubview:wagerLabel];
-    //[wagerButton addSubview:wagerOpponentLabel];
-    
     
     UILabel *trashTalkLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 35, chatButton.frame.size.width, 20)];
     trashTalkLabel.text = @"Trash Talk";
@@ -230,93 +227,63 @@
     PFQuery *queryForWagered = [PFQuery queryWithClassName:@"wagers"];
     [queryForWagered whereKey:@"wager" equalTo:[PFUser currentUser]];
     [queryForWagered whereKey:@"wagee" equalTo:_userToWager];
-    [queryForWagered findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    PFQuery *queryForWagee = [PFQuery queryWithClassName:@"wagers"];
+    [queryForWagee whereKey:@"wager" equalTo:_userToWager];
+    [queryForWagee whereKey:@"wagee" equalTo:[PFUser currentUser]];
+    PFQuery *allWagers = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:queryForWagered, queryForWagee, nil]];
+    [allWagers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             NSMutableArray *currentArray = [[NSMutableArray alloc]init];
             NSMutableArray *pendingArray = [[NSMutableArray alloc]init];
             NSMutableArray *historyArray = [[NSMutableArray alloc]init];
+            
             for (PFObject *wager in objects) {
-                if ([wager objectForKey:@"finalScore"]) {
+                NSString *gameDate = [wager valueForKey:@"gameDate"];
+                gameDate = [NSString stringWithFormat:@"%@ %@", gameDate, [wager valueForKey:@"gameTime"]];
+                NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+                [dateFormat setDateFormat:@"MMddyyyy HH:mm"];
+                [dateFormat setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"EST"]];
+                NSString *gameDateModified = [gameDate stringByReplacingOccurrencesOfString:@"/" withString:@""];
+                NSDate *date = [dateFormat dateFromString:gameDateModified];
+                NSDate *currentDate = [NSDate date];
+
+                if ([currentDate compare:date] == NSOrderedDescending && [[wager objectForKey:@"wagerAccepted"] isEqual:[NSNumber numberWithBool:YES]] && [wager objectForKey:@"teamWageredToWinScore"]) {
                     [historyArray addObject:wager];
                 }
-                else if ([wager objectForKey:@"wagerAccepted"] == [NSNumber numberWithBool:NO] && ![wager objectForKey:@"teamWageredToWinScore"]) {
+                else if ([[wager objectForKey:@"wagerAccepted"] isEqual:[NSNumber numberWithBool:NO]] && [currentDate compare:date] == NSOrderedAscending) {
                     [pendingArray addObject:wager];
                 }
-                else {
+                else if ([[wager objectForKey:@"wagerAccepted"] isEqual:[NSNumber numberWithBool:YES]] && [currentDate compare:date] == NSOrderedAscending) {
                     [currentArray addObject:wager];
                 }
+                
             }
-            PFQuery *queryForWagee = [PFQuery queryWithClassName:@"wagers"];
-            [queryForWagee whereKey:@"wager" equalTo:_userToWager];
-            [queryForWagee whereKey:@"wagee" equalTo:[PFUser currentUser]];
-            [queryForWagee findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-                if (!error) {
-                    for (PFObject *wagee in objects) {
-                        if ([wagee objectForKey:@"winningTeamId"]) {
-                            [historyArray addObject:wagee];
-                        }
-                        else if ([wagee objectForKey:@"wagerAccepted"] == [NSNumber numberWithBool:NO]) {
-                            [pendingArray addObject:wagee];
-                        }
-                        else {
-                            [currentArray addObject:wagee];
-                        }
-                    } 
-                    NSString *currentWagerCount = [NSString stringWithFormat:@"%d", currentArray.count];
-                    NSString *pendingWagerCount = [NSString stringWithFormat:@"%d", pendingArray.count];
-                    NSString *historyWagerCount = [NSString stringWithFormat:@"%d", historyArray.count];
-                    NSLog(@"%@", currentWagerCount);
-                    NSLog(@"%@", pendingWagerCount);
-                    NSLog(@"%@", historyWagerCount);
-                    
-                    currentCountLabel.text = currentWagerCount;
+            NSString *currentWagerCount = [NSString stringWithFormat:@"%d", currentArray.count];
+            NSString *pendingWagerCount = [NSString stringWithFormat:@"%d", pendingArray.count];
+            NSString *historyWagerCount = [NSString stringWithFormat:@"%d", historyArray.count];
+            NSLog(@"%@", currentWagerCount);
+            NSLog(@"%@", pendingWagerCount);
+            NSLog(@"%@", historyWagerCount);
+            currentCountLabel.text = currentWagerCount;
+            
+            pendingCountLabel.text = pendingWagerCount;
+            if (pendingArray.count) {
+                pendingCountLabel.red = .961;
+                pendingCountLabel.green = .7098;
+                pendingCountLabel.blue = .0471;
+            }
+            
+            historyCountLabel.text = historyWagerCount;
+            
+            NSArray *currentWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Current", @"type", currentWagerCount, @"wagers",currentArray, @"wagerObjects", nil], nil];
+            NSArray *pendingWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Pending", @"type", pendingWagerCount, @"wagers", pendingArray, @"wagerObjects", nil] , nil];
+            NSArray *historyWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"History", @"type", historyWagerCount, @"wagers", historyArray, @"wagerObjects", nil], nil];
+            
+            wagersArray = [[NSArray alloc]initWithObjects:currentWagersArray, pendingWagersArray, historyWagersArray, nil];
+            //[wagersTableView reloadData];
+            [_tableView reloadData];
+        }
 
-                    pendingCountLabel.text = pendingWagerCount;
-                    if (pendingArray.count) {
-                        pendingCountLabel.red = .961;
-                        pendingCountLabel.green = .7098;
-                        pendingCountLabel.blue = .0471;
-                    }
-                    
-                    historyCountLabel.text = historyWagerCount;
-                    
-                    /*UIFont *font =  [UIFont boldSystemFontOfSize:28];
-                    CGPoint point = CGPointMake(0,0);
-                    
-                    CGContextRef context = UIGraphicsGetCurrentContext();
-                    
-                    CGContextSetRGBFillColor(context, 0.4196, 0.282, 0.1216, 1);
-                    CGContextSetRGBStrokeColor(context, 1, 1, 1, 1);
-                    CGContextSetTextDrawingMode(context, kCGTextFillStroke);
-                    CGContextSaveGState(context);
-
-                     [currentCountLabel.text drawAtPoint:point withFont:font];
-                    [historyCountLabel.text drawAtPoint:point withFont:font];
-                    CGContextRestoreGState(context);*/
-                    
-                    /*context = UIGraphicsGetCurrentContext();
-                    
-                    CGContextSetRGBFillColor(context, 0.961, 0.7098, 0.0471, 1);
-                    CGContextSetRGBStrokeColor(context, 1, 1, 1, 1);
-                    CGContextSetTextDrawingMode(context, kCGTextFillStroke);
-                    CGContextSaveGState(context);
-                    
-                    [pendingCountLabel.text drawAtPoint:point withFont:font];
-                  
-                    CGContextRestoreGState(context);*/
-                    
-                    
-                    NSArray *currentWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Current", @"type", currentWagerCount, @"wagers",currentArray, @"wagerObjects", nil], nil];
-                    NSArray *pendingWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Pending", @"type", pendingWagerCount, @"wagers", pendingArray, @"wagerObjects", nil] , nil];
-                    NSArray *historyWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"History", @"type", historyWagerCount, @"wagers", historyArray, @"wagerObjects", nil], nil];
-                    
-                    wagersArray = [[NSArray alloc]initWithObjects:currentWagersArray, pendingWagersArray, historyWagersArray, nil];
-                    //[wagersTableView reloadData];
-                    [_tableView reloadData];
-                    
-                }
-            }];
-        } 
     }];
 }
 
@@ -353,14 +320,6 @@
     sports.opponentsToWager = userToWager;
     sports.wager = YES;
     [self.navigationController pushViewController:sports animated:YES];
-    /*UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:sports];
-    if (_tabParentView) {
-        sports.tabParentView = _tabParentView;
-        [_tabParentView.navigationController presentViewController:navc animated:YES completion:NULL];
-    }
-    else {
-        [self.navigationController presentViewController:navc animated:YES completion:NULL];
-    }*/
 }
 - (IBAction)chatButtonClicked:(id)sender {
     NewTrashTalkViewController *ntvc = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
@@ -464,15 +423,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    /*NSString *text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
-    
-    CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
-    
-    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
-    
-    CGFloat height = MAX(size.height, 44.0f);
-    
-    return height + (CELL_CONTENT_MARGIN * 2);*/
     UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, 320 - 64, 100)];
     label2.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
     label2.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
@@ -502,23 +452,33 @@
         
         PFObject *objectToDisplay = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
         NSDate *dateCreated = objectToDisplay.createdAt;
-        //NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        //[dateFormatter setDateFormat:@"EEEE, MMMM d 'at' h:mm a"];
-        //NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
+
         NSCalendar *calendar = [NSCalendar currentCalendar];
         unsigned int unitFlags =  NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayOrdinalCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit;
         NSDateComponents *messageDateComponents = [calendar components:unitFlags fromDate:dateCreated];
-        NSDateComponents *todayDateComponents = [calendar components:unitFlags fromDate:[NSDate date]];
-        
-        NSUInteger dayOfYearForMessage = [calendar ordinalityOfUnit:NSDayCalendarUnit inUnit:NSYearCalendarUnit forDate:dateCreated];
-        NSUInteger dayOfYearForToday = [calendar ordinalityOfUnit:NSDayCalendarUnit inUnit:NSYearCalendarUnit forDate:[NSDate date]];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        [dateFormatter setDateFormat:@"MM/dd/yyyy"];
+        NSString *dateCreatedString = [dateFormatter stringFromDate:dateCreated];
+        NSLog(@"%@", dateCreatedString);
+        NSDate *today = [NSDate date];
+        NSString *todayString = [dateFormatter stringFromDate:today];
+        NSDate *yesterday = [today dateByAddingTimeInterval:-(60*60*24)];
+        NSString *yesterdayString = [dateFormatter stringFromDate:yesterday];
+        NSDate *twoDays = [yesterday dateByAddingTimeInterval:-(60*60*24)];
+        NSString *twoDaysString = [dateFormatter stringFromDate:twoDays];
+        NSDate *threeDays = [twoDays dateByAddingTimeInterval:-(60*60*24)];
+        NSString *threeDaysString = [dateFormatter stringFromDate:threeDays];
+        NSDate *fourDays = [threeDays dateByAddingTimeInterval:-(60*60*24)];
+        NSString *fourDaysString = [dateFormatter stringFromDate:fourDays];
+        NSDate *fiveDays = [fourDays dateByAddingTimeInterval:-(60*60*24)];
+        NSString *fiveDaysString = [dateFormatter stringFromDate:fiveDays];
+        NSDate *sixDays = [fiveDays dateByAddingTimeInterval:-(60*60*24)];
+        NSString *sixDaysString = [dateFormatter stringFromDate:sixDays];
         
         
         NSString *dateString;
         
-        if ([messageDateComponents year] == [todayDateComponents year] &&
-            [messageDateComponents month] == [todayDateComponents month] &&
-            [messageDateComponents day] == [todayDateComponents day])
+        if ([dateCreatedString isEqualToString:todayString])
         {
             int hours = [messageDateComponents hour];
             int minutes = [messageDateComponents minute];
@@ -538,37 +498,28 @@
                 amPm = @"AM";
             }
             dateString = [NSString stringWithFormat:@"%d:%02d %@", hours, minutes, amPm];
-        } else if ([messageDateComponents year] == [todayDateComponents year] &&
-                   dayOfYearForMessage == (dayOfYearForToday-1))
+        } else if ([dateCreatedString isEqualToString:yesterdayString])
         {
             dateString = @"Yesterday";
-        } else if ([messageDateComponents year] == [todayDateComponents year] &&
-                   dayOfYearForMessage > (dayOfYearForToday-6))
+        } else if ([dateCreatedString isEqualToString:twoDaysString] || [dateCreatedString isEqualToString:threeDaysString] || [dateCreatedString isEqualToString:fourDaysString] || [dateCreatedString isEqualToString:fiveDaysString] || [dateCreatedString isEqualToString:sixDaysString])
         {
             
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"EEEE"];
             dateString = [dateFormatter stringFromDate:dateCreated];
             
         } else {
-            
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yy"];
-            dateString = [NSString stringWithFormat:@"%02d/%02d/%@", [messageDateComponents day], [messageDateComponents month], [dateFormatter stringFromDate:dateCreated]];
+            dateString = dateCreatedString;
         }
         
         UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width - 250, 5, 215, 15)];
         dateLabel.backgroundColor = [UIColor clearColor];
         dateLabel.textAlignment = UITextAlignmentRight;
-        //dateLabel.font = [UIFont systemFontOfSize:11];
         dateLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:11];
         dateLabel.text = dateString;
         dateLabel.textColor = [UIColor  darkGrayColor];
         
         UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 16)];
         UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, cell.frame.size.width - 64, 100)];
-        //[label2 setEditable:NO];
-        //label1.font = [UIFont boldSystemFontOfSize:12];
         label1.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
         
         
@@ -576,14 +527,11 @@
         
         
         label1.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
-        //label2.font = [UIFont systemFontOfSize:12];
         label2.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
         label2.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
         label2.numberOfLines = 0;
         label2.lineBreakMode = UILineBreakModeWordWrap;
         [label2 sizeToFit];
-        //[label2 setFrame:CGRectMake(2, 15, cell.frame.size.width -50, label2.contentSize.height+15)];
-        //[label2 setBounces:NO];
         [label2 sizeToFit];
         label1.backgroundColor = [UIColor clearColor];
         label2.backgroundColor = [UIColor clearColor];
@@ -593,7 +541,8 @@
         [cell.contentView addSubview:label2];
         if (![senderName isEqualToString:recipientName]) {
             UIButton *replyButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [replyButton setFrame:CGRectMake(cell.frame.size.width - 55, cell.frame.size.height - 22, 20, 20)];
+            [replyButton setFrame:CGRectMake(cell.frame.size.width - 85, cell.frame.size.height - 51, 50, 50)];
+            [replyButton setImageEdgeInsets:UIEdgeInsetsMake(30, 30, 0, 0)];
             [replyButton setImage:[UIImage imageNamed:@"CellArrowGray"] forState:UIControlStateNormal];
             [replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             replyButton.tag = indexPath.row;
@@ -667,9 +616,6 @@
     UIImageView *backgroundImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, cell.frame.size.height - 58, 294, 58)];
     [backgroundImage setImage:[UIImage imageNamed:@"CellBG1"]];
     [cell addSubview:backgroundImage];
-    //cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]];
-    //cell.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    //cell.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
     
 }
 
@@ -695,54 +641,42 @@
     NSMutableArray *lossArray = [[NSMutableArray alloc]init];
     PFQuery *queryGameWagered = [PFQuery queryWithClassName:@"wagers"];
     [queryGameWagered whereKey:@"wager" equalTo:_userToWager];
-    [queryGameWagered findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    PFQuery *queryWageredMe = [PFQuery queryWithClassName:@"wagers"];
+    [queryWageredMe whereKey:@"wagee" equalTo:_userToWager];
+    PFQuery *allWagers = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:queryGameWagered, queryWageredMe, nil]];
+    [allWagers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             for (NSUInteger i = 0; i < objects.count; i++) {
                 PFObject *wagerObject = [objects objectAtIndex:i];
                 PFUser *personWagered = [wagerObject objectForKey:@"wagee"];
                 if ([wagerObject objectForKey:@"teamWageredToWinScore"] && [wagerObject objectForKey:@"teamWageredToLoseScore"]) {
-                    [personWagered fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                        if (!error) {
-                            int teamWageredToWinScore = [[wagerObject objectForKey:@"teamWageredToWinScore"]intValue];
-                            int teamWageredToLoseScore = [[wagerObject objectForKey:@"teamWageredToLoseScore"]intValue];
+                    
+                    int teamWageredToWinScore = [[wagerObject objectForKey:@"teamWageredToWinScore"]intValue];
+                    int teamWageredToLoseScore = [[wagerObject objectForKey:@"teamWageredToLoseScore"]intValue];
                             
                             
-                            if (teamWageredToWinScore > teamWageredToLoseScore) {
-                                [winArray addObject:@""];
-                            }
-                            else {
-                                [lossArray addObject:@""];
-                            }
-                        }
-                        
-                        winLabel.text = [NSString stringWithFormat:@"%d", winArray.count];
-                        lossLabel.text = [NSString stringWithFormat:@"%d", lossArray.count];
-                    }];
-                }
-            }
-        }
-    }];
-    PFQuery *queryWageredMe = [PFQuery queryWithClassName:@"wagers"];
-    [queryWageredMe whereKey:@"wagee" equalTo:_userToWager];
-    [queryWageredMe findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFObject *wageredMe in objects) {
-            PFUser *personWageredMe = [wageredMe objectForKey:@"wager"];
-            if ([wageredMe objectForKey:@"teamWageredToWinScore"] && [wageredMe objectForKey:@"teamWageredToLoseScore"]) {
-                [personWageredMe fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                    if (!error) {
-                        int teamWageredToWinScore = [[wageredMe objectForKey:@"teamWageredToWinScore"]intValue];
-                        int teamWageredToLoseScore = [[wageredMe objectForKey:@"teamWageredToLoseScore"]intValue];
-                        
-                        if (teamWageredToWinScore < teamWageredToLoseScore) {
+                    if (teamWageredToWinScore > teamWageredToLoseScore) {
+                        if (![[personWagered objectId] isEqualToString:[[PFUser currentUser]objectId]]) {
                             [winArray addObject:@""];
                         }
                         else {
                             [lossArray addObject:@""];
                         }
-                        winLabel.text = [NSString stringWithFormat:@"%d", winArray.count];
-                        lossLabel.text = [NSString stringWithFormat:@"%d", lossArray.count];
+
                     }
-                }];
+                    else {
+                        if ([[personWagered objectId] isEqualToString:[[PFUser currentUser]objectId]]) {
+                            [winArray addObject:@""];
+                        }
+                        else {
+                            [lossArray addObject:@""];
+                        }
+
+                    }
+                }
+                        
+                winLabel.text = [NSString stringWithFormat:@"%d", winArray.count];
+                lossLabel.text = [NSString stringWithFormat:@"%d", lossArray.count];
             }
         }
     }];
@@ -752,31 +686,19 @@
     PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
     [queryForTrashTalk whereKey:@"recipients" containsString:[_userToWager objectId]];
     [queryForTrashTalk whereKey:@"sender" equalTo:[PFUser currentUser]];
-    [queryForTrashTalk orderByDescending:@"updatedAt"];
-    [queryForTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    PFQuery *queryForReceivedTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
+    [queryForReceivedTrashTalk whereKey:@"recipients" containsString:[[PFUser currentUser]objectId]];
+    [queryForReceivedTrashTalk whereKey:@"sender" equalTo:_userToWager];
+    PFQuery *queryForAllTrashTalk = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:queryForTrashTalk, queryForReceivedTrashTalk, nil]];
+    [queryForAllTrashTalk orderByDescending:@"createdAt"];
+    [queryForAllTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
             for (PFObject *trashTalkItem in objects) {
-                [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
+                [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", nil]];
             }
-            PFQuery *queryForReceivedTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
-            [queryForReceivedTrashTalk whereKey:@"recipients" containsString:[[PFUser currentUser]objectId]];
-            [queryForReceivedTrashTalk whereKey:@"sender" equalTo:_userToWager];
-            [queryForReceivedTrashTalk orderByDescending:@"updatedAt"];
-            [queryForReceivedTrashTalk findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-                if (!error) {
-                    for (PFObject *trashTalkItem in objects) {
-                        [trashTalkArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", trashTalkItem.updatedAt, @"date", nil]];
-                    }
-                    NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
-                    NSArray *sortDescriptors = [NSArray arrayWithObject:sortByDate];
-                    NSArray *sortedArray = [trashTalkArray sortedArrayUsingDescriptors:sortDescriptors];
-                    NSMutableArray *trashTalkToDisplay = [sortedArray mutableCopy];
-                    
-                    [self setContentList:trashTalkToDisplay];
-                    [self.tableView reloadData];
-                }
-            }];
+            [self setContentList:trashTalkArray];
+            [self.tableView reloadData];
         }
     }];
 }

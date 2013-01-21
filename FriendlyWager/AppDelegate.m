@@ -110,13 +110,13 @@
     if ([PFUser currentUser]) {
         PFQuery *wagersMade = [PFQuery queryWithClassName:@"wagers"];
         [wagersMade whereKey:@"wager" equalTo:[PFUser currentUser]];
-        [wagersMade whereKeyDoesNotExist:@"teamWageredToWinScore"];
+        [wagersMade whereKey:@"wagerUpdated" equalTo:[NSNumber numberWithBool:NO]];
         [wagersMade whereKey:@"wagerAccepted" equalTo:[NSNumber numberWithBool:YES]];
         [wagersMade whereKeyExists:@"gameDate"];
         
         PFQuery *wagersAccepted = [PFQuery queryWithClassName:@"wagers"];
-        [wagersAccepted whereKey:@"wager" equalTo:[PFUser currentUser]];
-        [wagersAccepted whereKeyDoesNotExist:@"teamWageredToWinScore"];
+        [wagersAccepted whereKey:@"wagee" equalTo:[PFUser currentUser]];
+        [wagersAccepted whereKey:@"wageeUpdated" equalTo:[NSNumber numberWithBool:NO]];
         [wagersAccepted whereKey:@"wagerAccepted" equalTo:[NSNumber numberWithBool:YES]];
         [wagersAccepted whereKeyExists:@"gameDate"];
         
@@ -182,17 +182,11 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
 #pragma mark - Helper Methods
 - (void)getResults {
     PFObject *wagerObject = results[currentIndex];
-    NSString *gameDate = [wagerObject valueForKey:@"gameDate"];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"MMddyyyy"];
-    NSString *gameDateModified = [gameDate stringByReplacingOccurrencesOfString:@"/" withString:@""];
-    NSDate *date = [dateFormat dateFromString:gameDateModified];
-    NSDate *currentDate = [NSDate date];
     NSString *league = [wagerObject valueForKey:@"sport"];
     NSString *sport;
-    if (([league isEqualToString:@"1000"] || [league isEqualToString:@"1534"]) && [currentDate compare:date] == NSOrderedDescending) {
+    if ([league isEqualToString:@"1000"] || [league isEqualToString:@"1534"]) {
         sport = @"Soccer";
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:sport, @"Sport", league, @"League", gameDate, @"StartDate", gameDate, @"EndDate", nil];
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:sport, @"Sport", league, @"League", [wagerObject objectForKey:@"gameDate"], @"StartDate", [wagerObject objectForKey:@"gameDate"], @"EndDate", nil];
         [FWAPI getSoccerScoresAndOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
             NSLog(@"%@", XMLParser);
             
@@ -203,7 +197,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
         }];
 
     }
-    else if ([currentDate compare:date] == NSOrderedDescending){
+    else {
         if ([league isEqualToString:@"NBA"] || [league isEqualToString:@"NCAAB"]) {
             sport = @"Basketball";
         }
@@ -222,7 +216,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
         else if ([league isEqualToString:@"Boxing"] || [league isEqualToString:@"UFC"]) {
             sport = @"Fighting";
         }
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:sport, @"Sport", league, @"League", gameDate, @"StartDate", gameDate, @"EndDate", nil];
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:sport, @"Sport", league, @"League", [wagerObject objectForKey:@"gameDate"], @"StartDate", [wagerObject objectForKey:@"gameDate"], @"EndDate", nil];
         [FWAPI getScoresAndOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
             NSLog(@"%@", XMLParser);
             
@@ -244,21 +238,22 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSNumber *homeScore = [numberFormatter numberFromString:[gameObject valueForKey:@"HomeScore"]];
     NSNumber *awayScore = [numberFormatter numberFromString:[gameObject valueForKey:@"AwayScore"]];
     NSString *homeTeam = [gameObject valueForKey:@"HomeTeam"];
-    NSString *awayTeam = [gameObject valueForKey:@"AwayTeam"];
     if ([[wagerObject valueForKey:@"teamWageredToWin"] isEqualToString:homeTeam]) {
         [wagerObject setObject:homeScore forKey:@"teamWageredToWinScore"];
         [wagerObject setObject:awayScore forKey:@"teamWageredToLoseScore"];
     }
     else {
-        [wagerObject setObject:homeScore forKey:@"teamWageredToWinScore"];
-        [wagerObject setObject:awayScore forKey:@"teamWageredToLoseScore"];
+        [wagerObject setObject:homeScore forKey:@"teamWageredToLoseScore"];
+        [wagerObject setObject:awayScore forKey:@"teamWageredToWinScore"];
     }
     [wagerObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             PFUser *wager = [wagerObject objectForKey:@"wager"];
             [wager fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
                 if (!error) {
-                    if ([[wager objectForKey:@"objectId"]isEqualToString:[PFUser currentUser]]) {
+                    if ([[wager objectId]isEqualToString:[[PFUser currentUser]objectId]]) {
+                        [wagerObject setObject:[NSNumber numberWithBool:YES] forKey:@"wagerUpdated"];
+                        [wagerObject saveEventually];
                         NSNumber *teamWageredToWinScore = [wagerObject valueForKey:@"teamWageredToWinScore"];
                         NSNumber *teamWageredToLoseScore = [wagerObject valueForKey:@"teamWageredToLoseScore"];
                         int tokensWagered = [[wagerObject valueForKey:@"tokensWagered"] intValue];
@@ -266,11 +261,28 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                         [wagee fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
                             
                             if ([teamWageredToWinScore intValue] > [teamWageredToLoseScore intValue]) {
-                                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"You Won!" message:[NSString stringWithFormat:@"You won %d tokens and %@ from %@ because %@ beat %@", tokensWagered, [wagerObject valueForKey:@"stakes"], [wagee valueForKey:@"name"], [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                UIAlertView *alert;
+                                if (![[wagerObject valueForKey:@"stakes"] isEqualToString:@""]) {
+                                    alert = [[UIAlertView alloc]initWithTitle:@"You Won!" message:[NSString stringWithFormat:@"You won %d tokens and %@ from %@ because %@ beat %@", tokensWagered, [wagerObject valueForKey:@"stakes"], [[wagee valueForKey:@"name"]capitalizedString], [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                }
+                                else {
+                                    alert = [[UIAlertView alloc]initWithTitle:@"You Won!" message:[NSString stringWithFormat:@"You won %d tokens from %@ because %@ beat %@", tokensWagered, [[wagee valueForKey:@"name"]capitalizedString], [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                }
+                                
                                 [alert show];
                                 int tokens = [[wager valueForKey:@"tokenCount"]intValue];
                                 tokens = tokens + (tokensWagered*2);
                                 [wager setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
+                                int wins = 0;
+                                if ([wager valueForKey:@"winCount"]) {
+                                    int wins = [[wager valueForKey:@"winCount"]intValue];
+                                    wins++;
+
+                                }
+                                else {
+                                    wins = 1;
+                                }
+                                [wager setObject:[NSNumber numberWithInt:wins] forKey:@"winCount"];
                                 [wager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                     if (currentIndex2 < gameResults.count-1) {
                                         currentIndex2++;
@@ -278,11 +290,41 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                                     }
                                 }];
                             }
-                            else {
-                                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"You Lost!" message:[NSString stringWithFormat:@"You lost %d tokens and %@ from %@ because %@ lost against %@", tokensWagered, [wagerObject valueForKey:@"stakes"], [wagee valueForKey:@"name"], [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                            else if ([teamWageredToWinScore intValue] < [teamWageredToLoseScore intValue]) {
+                                UIAlertView *alert;
+                                if (![[wagerObject valueForKey:@"stakes"]isEqualToString:@""]) {
+                                    alert = [[UIAlertView alloc]initWithTitle:@"You Lost!" message:[NSString stringWithFormat:@"You lost %d tokens and %@ from %@ because %@ lost against %@", tokensWagered, [wagerObject valueForKey:@"stakes"], [[wagee valueForKey:@"name"]capitalizedString], [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                }
+                                else {
+                                    alert = [[UIAlertView alloc]initWithTitle:@"You Lost!" message:[NSString stringWithFormat:@"You lost %d tokens from %@ because %@ lost against %@", tokensWagered, [[wagee valueForKey:@"name"]capitalizedString], [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                }
+                                
                                 [alert show];
                                 int tokens = [[wager valueForKey:@"tokenCount"]intValue];
                                 tokens = tokens - tokensWagered;
+                                [wager setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
+                                int losses = 0;
+                                if ([wager valueForKey:@"lossCount"]) {
+                                    int losses = [[wager valueForKey:@"lossCount"]intValue];
+                                    losses++;
+                                }
+                                else {
+                                    losses = 1;
+                                }
+                                [wager setObject:[NSNumber numberWithInt:losses] forKey:@"lossCount"];
+                                [wager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                    if (currentIndex2 < gameResults.count-1) {
+                                        currentIndex2++;
+                                        [self updateDB];
+                                    }
+                                }];
+
+                            }
+                            else {
+                                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Tie!" message:[NSString stringWithFormat:@"You tied against %@ because %@ tied against %@", [wagee objectForKey:@"name"],[wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                [alert show];
+                                int tokens = [[wager valueForKey:@"tokenCount"]intValue];
+                                tokens = tokens + tokensWagered;
                                 [wager setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
                                 [wager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                     if (currentIndex2 < gameResults.count-1) {
@@ -295,6 +337,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                         }];
                     }
                     else {
+                        [wagerObject setObject:[NSNumber numberWithBool:YES] forKey:@"wageeUpdated"];
+                        [wagerObject saveEventually];
                         NSNumber *teamWageredToWinScore = [wagerObject valueForKey:@"teamWageredToWinScore"];
                         NSNumber *teamWageredToLoseScore = [wagerObject valueForKey:@"teamWageredToLoseScore"];
                         int tokensWagered = [[wagerObject valueForKey:@"tokensWagered"] intValue];
@@ -302,11 +346,27 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                         [wagee fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
                             
                             if ([teamWageredToWinScore intValue] < [teamWageredToLoseScore intValue]) {
-                                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"You Won!" message:[NSString stringWithFormat:@"You won %d tokens and %@ from %@ because %@ beat %@", tokensWagered, [wagerObject valueForKey:@"stakes"], [wager valueForKey:@"name"], [wagerObject objectForKey:@"teamWageredToLose"], [wagerObject objectForKey:@"teamWageredToWin"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                UIAlertView *alert;
+                                if (![[wagerObject valueForKey:@"stakes"]isEqualToString:@""]) {
+                                    alert = [[UIAlertView alloc]initWithTitle:@"You Won!" message:[NSString stringWithFormat:@"You won %d tokens and %@ from %@ because %@ beat %@", tokensWagered, [wagerObject valueForKey:@"stakes"], [[wager valueForKey:@"name"]capitalizedString], [wagerObject objectForKey:@"teamWageredToLose"], [wagerObject objectForKey:@"teamWageredToWin"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                }
+                                else {
+                                    alert = [[UIAlertView alloc]initWithTitle:@"You Won!" message:[NSString stringWithFormat:@"You won %d tokens from %@ because %@ beat %@", tokensWagered, [[wager valueForKey:@"name"]capitalizedString], [wagerObject objectForKey:@"teamWageredToLose"], [wagerObject objectForKey:@"teamWageredToWin"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                }
+                                
                                 [alert show];
                                 int tokens = [[wagee valueForKey:@"tokenCount"]intValue];
                                 tokens = tokens + (tokensWagered*2);
                                 [wagee setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
+                                int wins = 0;
+                                if ([wagee valueForKey:@"winCount"]) {
+                                    wins = [[wagee valueForKey:@"winCount"]intValue];
+                                    wins ++;
+                                }
+                                else {
+                                    wins = 1;
+                                }
+                                [wagee setObject:[NSNumber numberWithInt:wins] forKey:@"winCount"];
                                 [wagee saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                     if (currentIndex2 < gameResults.count-1) {
                                         currentIndex2++;
@@ -314,11 +374,40 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                                     }
                                 }];
                             }
-                            else {
-                                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"You Lost!" message:[NSString stringWithFormat:@"You lost %d tokens and %@ from %@ because %@ lost against %@", tokensWagered, [wagerObject valueForKey:@"stakes"], [wager valueForKey:@"name"], [wagerObject objectForKey:@"teamWageredToLose"], [wagerObject objectForKey:@"teamWageredToWin"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                            else if ([teamWageredToWinScore intValue] > [teamWageredToLoseScore intValue]){
+                                UIAlertView *alert;
+                                if (![[wagerObject valueForKey:@"stakes"]isEqualToString:@""]) {
+                                    alert = [[UIAlertView alloc]initWithTitle:@"You Lost!" message:[NSString stringWithFormat:@"You lost %d tokens and %@ from %@ because %@ lost against %@", tokensWagered, [wagerObject valueForKey:@"stakes"], [[wager valueForKey:@"name"]capitalizedString], [wagerObject objectForKey:@"teamWageredToLose"], [wagerObject objectForKey:@"teamWageredToWin"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                }
+                                else {
+                                    alert = [[UIAlertView alloc]initWithTitle:@"You Lost!" message:[NSString stringWithFormat:@"You lost %d tokens from %@ because %@ lost against %@", tokensWagered, [[wager valueForKey:@"name"]capitalizedString], [wagerObject objectForKey:@"teamWageredToLose"], [wagerObject objectForKey:@"teamWageredToWin"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                }
                                 [alert show];
                                 int tokens = [[wagee valueForKey:@"tokenCount"]intValue];
                                 tokens = tokens - tokensWagered;
+                                [wagee setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
+                                int losses = 0;
+                                if ([wagee valueForKey:@"lossCount"]) {
+                                    losses = [[wagee valueForKey:@"lossCount"]intValue];
+                                    losses ++;
+                                }
+                                else {
+                                    losses = 1;
+                                }
+                                [wagee setObject:[NSNumber numberWithInt:losses] forKey:@"lossCount"];
+                                [wagee saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                    if (currentIndex2 < gameResults.count-1) {
+                                        currentIndex2++;
+                                        [self updateDB];
+                                    }
+                                }];
+                                
+                            }
+                            else {
+                                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Tie!" message:[NSString stringWithFormat:@"You tied with %@ because %@ tied against %@", [wager objectForKey:@"name"], [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                [alert show];
+                                int tokens = [[wagee valueForKey:@"tokenCount"]intValue];
+                                tokens = tokens + tokensWagered;
                                 [wagee setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
                                 [wagee saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                     if (currentIndex2 < gameResults.count-1) {
@@ -328,6 +417,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                                 }];
                                 
                             }
+
                         }];
 
                     }
@@ -362,8 +452,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
     if ([attributeDict objectForKey:@"HomeTeam"]) {
         NSString *desiredGameId = [results[currentIndex]objectForKey:@"gameId"];
         NSString *currentGameId = [attributeDict objectForKey:@"GameId"];
-        NSString *homeScore = [attributeDict objectForKey:@"HomeScore"];
-        if ([desiredGameId isEqualToString:currentGameId] && ![homeScore isEqualToString:@""]) {
+        NSString *status = [attributeDict objectForKey:@"Status"];
+        if ([desiredGameId isEqualToString:currentGameId] && [status isEqualToString:@"Final"]) {
             NSDictionary *gameAndPFObject = [[NSDictionary alloc]initWithObjectsAndKeys:results[currentIndex], @"parseObject", attributeDict, @"gameObject", nil];
             [gameResults addObject:gameAndPFObject];
         }
@@ -381,7 +471,10 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
         [self getResults];
     }
     else {
-        [self updateDB];
+        if (gameResults.count > 0) {
+            [self updateDB];
+        }
+    
     }
 }
 

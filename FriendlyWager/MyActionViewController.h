@@ -15,14 +15,14 @@
     
     UINavigationController *navController;
     
-    NSMutableArray *myActionOpponentArray;
-    NSMutableArray *myActionWagersArray;
-    
     NSUserDefaults *fwData;
     
     BOOL newWagerBool;
     UIImageView *stripes;
     int loaded;
+    NSMutableArray *userArray;
+    NSMutableArray *idArray;
+    int currentIndex;
     
 }
 

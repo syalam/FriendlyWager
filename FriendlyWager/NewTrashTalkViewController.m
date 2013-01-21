@@ -41,9 +41,6 @@
 	[tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldFrameDidChange:) forControlEvents:TITokenFieldControlEventFrameDidChange];
 	[tokenFieldView.tokenField setTokenizingCharacters:[NSCharacterSet characterSetWithCharactersInString:@",;."]]; // Default is a comma
 	
-	//UIButton * addButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
-	//[addButton addTarget:self action:@selector(showContactsPicker:) forControlEvents:UIControlEventTouchUpInside];
-	//[tokenFieldView.tokenField setRightView:addButton];
 	[tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidBegin];
 	[tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidEnd];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -143,13 +140,6 @@
 
     if (self.contentList) {
         [self.trashTalkTableView reloadData];
-        //NSIndexPath* ipath = [NSIndexPath indexPathForRow: self.contentList.count-1 inSection: 0];
-        //[self.trashTalkTableView scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionBottom animated: NO];
-        /*if (self.contentList.count == 1) {
-            if (height1 < 100) {
-                [trashTalkTextView setFrame:CGRectMake(trashTalkTextView.frame.origin.x, self.trashTalkTableView.frame.origin.y+height1+5, trashTalkTextView.frame.size.width, trashTalkTextView.frame.size.height + (100-height1))];
-            }
-        }*/
         CGPoint bottomOffset = CGPointMake(0, self.trashTalkTableView.contentSize.height-58);
         [self.trashTalkTableView setContentOffset:bottomOffset animated:NO];
 
@@ -402,8 +392,7 @@
     else {
         [self.navigationController popViewControllerAnimated:YES];
     }
-    /*UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to share this message on Facebook" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alert show];*/
+
 }
 
 
@@ -452,7 +441,7 @@
 {
     UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, 306 - 15, 100)];
     label2.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
-    label2.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
+    label2.text = [[[_contentList objectAtIndex:_contentList.count - (indexPath.row+1)]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
     label2.numberOfLines = 0;
     label2.lineBreakMode = UILineBreakModeWordWrap;
     [label2 sizeToFit];
@@ -472,30 +461,40 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     if (_contentList.count != 0) {
-        NSString *senderName = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"senderName"];
-        //NSString *recipientName = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"recipientName"];
+        NSString *senderName = [[[_contentList objectAtIndex:_contentList.count - (indexPath.row+1)]valueForKey:@"data"] objectForKey:@"senderName"];
+
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        PFObject *objectToDisplay = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
+        PFObject *objectToDisplay = [[_contentList objectAtIndex:_contentList.count - (indexPath.row+1)]valueForKey:@"data"];
         NSDate *dateCreated = objectToDisplay.createdAt;
-        //NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        //[dateFormatter setDateFormat:@"EEEE, MMMM d 'at' h:mm a"];
-        //NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
+
         NSCalendar *calendar = [NSCalendar currentCalendar];
         unsigned int unitFlags =  NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayOrdinalCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit;
         NSDateComponents *messageDateComponents = [calendar components:unitFlags fromDate:dateCreated];
-        NSDateComponents *todayDateComponents = [calendar components:unitFlags fromDate:[NSDate date]];
-        
-        NSUInteger dayOfYearForMessage = [calendar ordinalityOfUnit:NSDayCalendarUnit inUnit:NSYearCalendarUnit forDate:dateCreated];
-        NSUInteger dayOfYearForToday = [calendar ordinalityOfUnit:NSDayCalendarUnit inUnit:NSYearCalendarUnit forDate:[NSDate date]];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        [dateFormatter setDateFormat:@"MM/dd/yyyy"];
+        NSString *dateCreatedString = [dateFormatter stringFromDate:dateCreated];
+        NSLog(@"%@", dateCreatedString);
+        NSDate *today = [NSDate date];
+        NSString *todayString = [dateFormatter stringFromDate:today];
+        NSDate *yesterday = [today dateByAddingTimeInterval:-(60*60*24)];
+        NSString *yesterdayString = [dateFormatter stringFromDate:yesterday];
+        NSDate *twoDays = [yesterday dateByAddingTimeInterval:-(60*60*24)];
+        NSString *twoDaysString = [dateFormatter stringFromDate:twoDays];
+        NSDate *threeDays = [twoDays dateByAddingTimeInterval:-(60*60*24)];
+        NSString *threeDaysString = [dateFormatter stringFromDate:threeDays];
+        NSDate *fourDays = [threeDays dateByAddingTimeInterval:-(60*60*24)];
+        NSString *fourDaysString = [dateFormatter stringFromDate:fourDays];
+        NSDate *fiveDays = [fourDays dateByAddingTimeInterval:-(60*60*24)];
+        NSString *fiveDaysString = [dateFormatter stringFromDate:fiveDays];
+        NSDate *sixDays = [fiveDays dateByAddingTimeInterval:-(60*60*24)];
+        NSString *sixDaysString = [dateFormatter stringFromDate:sixDays];
         
         
         NSString *dateString;
         
-        if ([messageDateComponents year] == [todayDateComponents year] &&
-            [messageDateComponents month] == [todayDateComponents month] &&
-            [messageDateComponents day] == [todayDateComponents day])
+        if ([dateCreatedString isEqualToString:todayString])
         {
             int hours = [messageDateComponents hour];
             int minutes = [messageDateComponents minute];
@@ -515,37 +514,28 @@
                 amPm = @"AM";
             }
             dateString = [NSString stringWithFormat:@"%d:%02d %@", hours, minutes, amPm];
-        } else if ([messageDateComponents year] == [todayDateComponents year] &&
-                   dayOfYearForMessage == (dayOfYearForToday-1))
+        } else if ([dateCreatedString isEqualToString:yesterdayString])
         {
             dateString = @"Yesterday";
-        } else if ([messageDateComponents year] == [todayDateComponents year] &&
-                   dayOfYearForMessage > (dayOfYearForToday-6))
+        } else if ([dateCreatedString isEqualToString:twoDaysString] || [dateCreatedString isEqualToString:threeDaysString] || [dateCreatedString isEqualToString:fourDaysString] || [dateCreatedString isEqualToString:fiveDaysString] || [dateCreatedString isEqualToString:sixDaysString])
         {
             
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"EEEE"];
             dateString = [dateFormatter stringFromDate:dateCreated];
             
         } else {
-            
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yy"];
-            dateString = [NSString stringWithFormat:@"%02d/%02d/%@", [messageDateComponents day], [messageDateComponents month], [dateFormatter stringFromDate:dateCreated]];
+            dateString = dateCreatedString;
         }
         
         UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width - 250, 5, 215, 15)];
         dateLabel.backgroundColor = [UIColor clearColor];
         dateLabel.textAlignment = UITextAlignmentRight;
-        //dateLabel.font = [UIFont systemFontOfSize:11];
         dateLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:11];
         dateLabel.text = dateString;
         dateLabel.textColor = [UIColor  darkGrayColor];
         
         UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 16)];
         UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, cell.frame.size.width - 30, 100)];
-        //[label2 setEditable:NO];
-        //label1.font = [UIFont boldSystemFontOfSize:12];
         label1.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
         
         
@@ -553,14 +543,11 @@
         
         
         label1.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
-        //label2.font = [UIFont systemFontOfSize:12];
         label2.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
-        label2.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
+        label2.text = [[[_contentList objectAtIndex:_contentList.count - (indexPath.row+1)]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
         label2.numberOfLines = 0;
         label2.lineBreakMode = UILineBreakModeWordWrap;
         [label2 sizeToFit];
-        //[label2 setFrame:CGRectMake(2, 15, cell.frame.size.width -50, label2.contentSize.height+15)];
-        //[label2 setBounces:NO];
         [label2 sizeToFit];
         label1.backgroundColor = [UIColor clearColor];
         label2.backgroundColor = [UIColor clearColor];
@@ -568,14 +555,9 @@
         
         [cell.contentView addSubview:label1];
         [cell.contentView addSubview:label2];
-        //if (![senderName isEqualToString:recipientName]) {
         
         label1.text = [senderName capitalizedString];
         
-        //}
-        //else {
-        //    label1.text = [senderName capitalizedString];
-        //}
         
     }
     
@@ -585,8 +567,6 @@
     conversationCountLabel.textColor = [UIColor colorWithRed:0.588 green:0.588 blue:0.588 alpha:1];
     conversationCountLabel.textAlignment = NSTextAlignmentCenter;
     conversationCountLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    //conversationCountLabel.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-    //conversationCountLabel.shadowOffset = CGSizeMake(-1, 0);
     
     cell.contentView.backgroundColor = [UIColor clearColor];
     cell.backgroundColor = [UIColor clearColor];
@@ -606,10 +586,10 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        PFObject *objectToDelete = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
+        PFObject *objectToDelete = [[_contentList objectAtIndex:_contentList.count - (indexPath.row+1)]valueForKey:@"data"];
         [objectToDelete deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
             if (succeeded) {
-                [_contentList removeObjectAtIndex:indexPath.row];
+                [_contentList removeObjectAtIndex:_contentList.count - (indexPath.row+1)];
                 [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             }
             else {
@@ -629,27 +609,10 @@
     UIImageView *backgroundImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, cell.frame.size.height - 58, 308, 58)];
     [backgroundImage setImage:[UIImage imageNamed:@"CellBG1"]];
     [cell addSubview:backgroundImage];
-    //cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]];
-    //cell.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    //cell.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
+
     
 }
 
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 #pragma mark - Table view delegate
 
@@ -731,24 +694,6 @@
 
 - (void)textViewDidChange:(UITextView *)textView {
 	
-	/*CGFloat oldHeight = tokenFieldView.frame.size.height - tokenFieldView.tokenField.frame.size.height;
-	CGFloat newHeight = textView.contentSize.height + textView.font.lineHeight;
-	
-	CGRect newTextFrame = textView.frame;
-	newTextFrame.size = textView.contentSize;
-	newTextFrame.size.height = newHeight;
-	
-	CGRect newFrame = tokenFieldView.contentView.frame;
-	newFrame.size.height = newHeight;
-	
-	if (newHeight < oldHeight){
-		newTextFrame.size.height = oldHeight;
-		newFrame.size.height = oldHeight;
-	}
-    
-	[tokenFieldView.contentView setFrame:newFrame];
-	[textView setFrame:newTextFrame];
-	[tokenFieldView updateContentSize];*/
 }
 
 #pragma mark - Gesture Recognizer Methods

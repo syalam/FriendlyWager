@@ -19,12 +19,15 @@
     NSMutableArray *xml5DimesArray;
     NSMutableArray *dateArray;
     int currentIndex;
-    BOOL retrieveImages;
     BOOL stopQuerying;
     
     BOOL newWagerVisible;
     UIImageView *stripes;
     UIImage *iconImage;
+    NSTimeInterval timeDifference;
+    
+    IBOutlet UILabel *noData;
+    IBOutlet UIImageView *innerShadow;
 
 }
 

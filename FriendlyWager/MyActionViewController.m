@@ -9,6 +9,7 @@
 #import "MyActionViewController.h"
 #import "LedgerViewController.h"
 #import "MyActionSummaryViewController.h"
+#import "SVProgressHUD.h"
 
 @implementation MyActionViewController
 @synthesize tabParentView = _tabParentView;
@@ -47,18 +48,10 @@
     myActionTableView.delegate = self;
     
     
-    /*UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
-    [button addTarget:self action:@selector(wagerButtonClicked:) forControlEvents:UIControlEventTouchDown];
-    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
-    [button setTitle:@"Wager" forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    UIBarButtonItem *wagerBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
-    self.navigationItem.rightBarButtonItem = wagerBarButton;*/
     stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     loaded = 0;
+    [SVProgressHUD showWithStatus:@"Getting opponent list"];
     [self showWagers];
     
     
@@ -122,11 +115,11 @@
     nameLabel.textAlignment = UITextAlignmentLeft;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     nameLabel.backgroundColor = [UIColor clearColor];
-    nameLabel.text = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"object"] objectForKey:@"name"];
+    nameLabel.text = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"name"];
     nameLabel.text = [nameLabel.text capitalizedString];
     nameLabel.font = [UIFont boldSystemFontOfSize:17];
     [cell.contentView addSubview:nameLabel];
-    NSData *picData = [[[_contentList objectAtIndex:indexPath.row]valueForKey:@"object"] objectForKey:@"picture"];
+    NSData *picData = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"picture"];
     UIImage *profilePic;
     if (picData) {
         profilePic = [UIImage imageWithData:picData];
@@ -151,11 +144,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self viewWillDisappear:YES];
-    MyActionSummaryViewController *actionSummary = [[MyActionSummaryViewController alloc]initWithNibName:@"MyActionSummaryViewController" bundle:nil CurrentWagers:[myActionWagersArray objectAtIndex:indexPath.row] opponentName:[myActionOpponentArray objectAtIndex:indexPath.row]];
+    MyActionSummaryViewController *actionSummary = [[MyActionSummaryViewController alloc]initWithNibName:@"MyActionSummaryViewController" bundle:nil];
     if (_tabParentView) {
         actionSummary.tabParentView = _tabParentView;
     }
-    actionSummary.userToWager = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"object"];
+    actionSummary.userToWager = [_contentList objectAtIndex:indexPath.row];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [actionSummary viewWillAppear:NO];
     [self.navigationController pushViewController:actionSummary animated:YES];
@@ -172,126 +165,77 @@
 
 #pragma mark - Helper Methods
 - (void)showWagers {
-    NSMutableArray *itemsToDisplay = [[NSMutableArray alloc]init];
+    idArray = [[NSMutableArray alloc]init];
     PFQuery *previouslyWageredQuery = [PFQuery queryWithClassName:@"wagers"];
     [previouslyWageredQuery whereKey:@"wager" equalTo:[PFUser currentUser]];
-    //[previouslyWageredQuery orderByDescending:@"createdAt"];
     PFQuery *wageredMe = [PFQuery queryWithClassName:@"wagers"];
     [wageredMe whereKey:@"wagee" equalTo:[PFUser currentUser]];
-    //[wageredMe orderByAscending:@"createdAt"];
     PFQuery *compoundQuery = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:previouslyWageredQuery, wageredMe, nil]];
     [compoundQuery orderByDescending:@"createdAt"];
     [compoundQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (objects.count > 0) {
-                for (PFObject *wagerObject in objects) {
+                PFObject *wagerObject;
+                for (int i = 0; i < objects.count; i++) {
+                    wagerObject = objects[i];
                     PFUser *person = [wagerObject objectForKey:@"wagee"];
-                   // NSString *currentUserId = [[PFUser currentUser] objectId];
                     if ([[person objectId ]isEqualToString:[[PFUser currentUser] objectId]]) {
                         person = [wagerObject objectForKey:@"wager"];
                     }
-                    if (![[person objectId ]isEqualToString:[[PFUser currentUser] objectId]]) {
-                        [person fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                            if (!error) {
-                                if (itemsToDisplay.count > 0) {
-                                    BOOL duplicate = NO;
-                                    for (NSUInteger i = 0; i < itemsToDisplay.count; i++) {
-                                        NSString *itemInArray = [[[itemsToDisplay objectAtIndex:i]valueForKey:@"object"] objectId];
-                                        NSString *objectItem = [object objectId];
-                                        if ([itemInArray isEqualToString:objectItem]) {
-                                            duplicate = YES;
-                                        }
-                                    }
-                                    if (!duplicate) {
-                                        [itemsToDisplay addObject:[NSDictionary dictionaryWithObjectsAndKeys:object, @"object", object.createdAt, @"date", nil]];
-                                    }
-                                }
-                                else {
-                                    [itemsToDisplay addObject:[NSDictionary dictionaryWithObjectsAndKeys:object, @"object", object.createdAt, @"date", nil]];
-                                }
-
-                                
-                                NSSortDescriptor *dateDescriptor = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
-                                NSArray *sortDescriptors = [NSArray arrayWithObject:dateDescriptor];
-                                NSArray *sortedArray = [itemsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
-                                    //firtPart = YES;
-                                [self setContentList:[sortedArray mutableCopy]];
-                                [myActionTableView reloadData];
-                                
-                                
+                    
+                    if (![idArray containsObject:[person objectId]]) {
+                        [idArray addObject:[person objectId]];
+                        if (i == objects.count - 1) {
+                            if (idArray > 0) {
+                                currentIndex = 0;
+                                userArray = [[NSMutableArray alloc]init];
+                                [self getUsers];
                             }
-                            else
-                                NSLog(@"%@",error);
-                        }];
+                        
+                        }
+                    }
+                    else {
+                        if (i == objects.count - 1) {
+                            if (idArray > 0) {
+                                currentIndex = 0;
+                                userArray = [[NSMutableArray alloc]init];
+                                [self getUsers];
+                            }
+                            
+                        }
 
                     }
+
                 }
+                
             }
         }
         else
+            [SVProgressHUD dismiss];
             NSLog(@"%@", error);
     }];
 }
 
-/*-(void)showWageredMe {
-    NSMutableArray *itemsToDisplay = [[NSMutableArray alloc]init];
-    PFQuery *wageredMe = [PFQuery queryWithClassName:@"wagers"];
-    [wageredMe whereKey:@"wagee" equalTo:[PFUser currentUser]];
-    [wageredMe orderByAscending:@"createdAt"];
-    [wageredMe findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+- (void)getUsers {
+    PFQuery *userQuery = [PFQuery queryForUser];
+    [userQuery whereKey:@"objectId" equalTo:idArray[currentIndex]];
+    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         if (!error) {
-            if (objects.count > 0) {
-                for (PFObject *wagerObject in objects) {
-                    PFObject *wagee = [wagerObject objectForKey:@"wager"];
-                    [wagee fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                        if (!error) {
-                            if (itemsToDisplay.count > 0) {
-                                BOOL duplicate = NO;
-                                for (NSUInteger i = 0; i < itemsToDisplay.count; i++) {
-                                    NSString *itemInArray = [[[itemsToDisplay objectAtIndex:i]valueForKey:@"object"] objectId];
-                                    NSString *objectItem = [object objectId];
-                                    if ([itemInArray isEqualToString:objectItem]) {
-                                        duplicate = YES;
-                                    }
-                                }
-                                if (!duplicate) {
-                                    [itemsToDisplay addObject:[NSDictionary dictionaryWithObjectsAndKeys:object, @"object", object.createdAt, @"date", nil]];
-                                }
-                            }
-                            else {
-                                [itemsToDisplay addObject:[NSDictionary dictionaryWithObjectsAndKeys:object, @"object", object.createdAt, @"date", nil]];
-                            }
-                            
-                            NSSortDescriptor *dateDescriptor = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
-                            NSArray *sortDescriptors = [NSArray arrayWithObject:dateDescriptor];
-                            if (!firtPart) {
-                                NSArray *sortedArray = [itemsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
-                                
-                                [self setContentList:[sortedArray mutableCopy]];
-                                //[myActionTableView reloadData];
-                            }
-                            else {
-                                [_contentList addObjectsFromArray:itemsToDisplay];
-                                NSArray *sortedArray = [_contentList sortedArrayUsingDescriptors:sortDescriptors];
-                                
-                                [self setContentList:[sortedArray mutableCopy]];
-                                firtPart = NO;
-                                //[myActionTableView reloadData];
-
-                            }
-                            
-                        }
-                        else
-                            NSLog(@"%@", error);
-                    }];
-                }
+            [userArray addObject:object];
+            if (currentIndex < idArray.count - 1) {
+                currentIndex ++;
+                [self getUsers];
+            }
+            else {
+                [SVProgressHUD dismiss];
+                _contentList = userArray;
+                [myActionTableView reloadData];
             }
         }
-        else
-            NSLog(@"%@", error);
+        else {
+            [SVProgressHUD dismiss];
+        }
     }];
-
-}*/
-
+}
 
 @end

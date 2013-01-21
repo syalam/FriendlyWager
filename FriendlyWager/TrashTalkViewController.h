@@ -34,8 +34,6 @@
     
     UIImageView *stripes;
     NSMutableArray *allItems;
-    NSMutableArray *idArray;
-    NSMutableArray *idOnlyArray;
 }
 
 - (IBAction)newTrashTalkButtonClicked:(id)sender;

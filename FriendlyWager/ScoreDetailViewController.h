@@ -9,19 +9,19 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface ScoreDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface ScoreDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSXMLParserDelegate> {
     IBOutlet UITableView *scoreDetailTableView;
     IBOutlet UIButton *makeWagerButton;
     IBOutlet UILabel *numberWagers;
-    IBOutlet UILabel *numberPending;
-    IBOutlet UIImageView *pendingNotification;
     IBOutlet UILabel *homeTeam;
     IBOutlet UILabel *awayTeam;
     IBOutlet UILabel *homeOdds;
     IBOutlet UILabel *awayOdds;
     IBOutlet UILabel *gameTime;
+    IBOutlet UILabel *oddsLabel;
     IBOutlet UIImageView *gameImage;
     UIImageView *stripes;
+    NSMutableArray *xmlGameArray;
    
 }
 

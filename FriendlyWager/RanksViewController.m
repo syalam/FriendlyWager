@@ -184,7 +184,7 @@
         if (!error) {
             // The find succeeded.
             NSLog(@"Successfully retrieved %d scores.", objects.count);
-            MyActionSummaryViewController *actionSummary = [[MyActionSummaryViewController alloc]initWithNibName:@"MyActionSummaryViewController" bundle:nil newWager:YES opponentName:[[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"]];
+            MyActionSummaryViewController *actionSummary = [[MyActionSummaryViewController alloc]initWithNibName:@"MyActionSummaryViewController" bundle:nil];
             actionSummary.userToWager = [objects objectAtIndex:0];
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             [actionSummary viewWillAppear:NO];
@@ -235,46 +235,32 @@
 }
 
 - (void)wagerButtonClicked:(id)sender {
-    [self.tabBarController setSelectedIndex:1];
+    [self.tabBarController setSelectedIndex:2];
 }
 
 #pragma mark - Helper Methods
 - (void)rankByPoints {
     _rankCategory = @"Rankings By Points";
     NSMutableArray *itemsToDisplay = [[NSMutableArray alloc]init];
-    PFQuery *getRanking = [PFQuery queryWithClassName:@"tokens"];
+    PFQuery *getRanking = [PFQuery queryForUser];
     [getRanking orderByDescending:@"tokenCount"];
     [getRanking setLimit:25];
     [getRanking findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
-            for (PFObject *tokenObject in objects) {
+            for (PFObject *userObject in objects) {
                 NSMutableDictionary *itemDictionary = [[NSMutableDictionary alloc]init];
-                [itemDictionary setObject:[tokenObject objectForKey:@"tokenCount"] forKey:@"tokenCount"];
-                PFObject *personName = [tokenObject objectForKey:@"user"];
-                [personName fetchIfNeededInBackgroundWithBlock:^(PFObject *user, NSError *error) {
-                    if (!error) {
-                        if ([user objectForKey:@"name"]) {
-                            [itemDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
-                            if ([user objectForKey:@"picture"]) {
-                                [itemDictionary setObject:[user objectForKey:@"picture"] forKey:@"picture"];
-                            }                        }
-                        [itemsToDisplay addObject:itemDictionary];
-                        
-                        NSSortDescriptor *tokenDescriptor = [[NSSortDescriptor alloc]initWithKey:@"tokenCount" ascending:NO];
-                        NSArray *sortDescriptors = [NSArray arrayWithObject:tokenDescriptor];
-                        NSArray *sortedArray = [itemsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
-                        
-                        
-                        /*ageDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"age"
-                         ascending:YES] autorelease];
-                         sortDescriptors = [NSArray arrayWithObject:ageDescriptor];
-                         sortedArray = [employeesArray sortedArrayUsingDescriptors:sortDescriptors];*/
-                        
-                        [self setContentList:[sortedArray mutableCopy]];
-                        [_tableView reloadData];
-                    }
-                }];
+                [itemDictionary setObject:[userObject objectForKey:@"tokenCount"] forKey:@"tokenCount"];
+                [itemDictionary setObject:[userObject objectForKey:@"name"] forKey:@"name"];
+                if ([userObject objectForKey:@"picture"]) {
+                    [itemDictionary setObject:[userObject objectForKey:@"picture"] forKey:@"picture"];
+
+                }
+                [itemsToDisplay addObject:itemDictionary];
+
             }
+            [self setContentList:itemsToDisplay];
+            [_tableView reloadData];
+
         }
     }];
 
@@ -282,35 +268,31 @@
 - (void)rankByWins {
     _rankCategory = @"Rankings By Wins";
     NSMutableArray *objectsToDisplay = [[NSMutableArray alloc]init];
-    PFQuery *getWinCounts = [PFQuery queryWithClassName:@"results"];
-    [getWinCounts orderByDescending:@"totalWins"];
+    PFQuery *getWinCounts = [PFQuery queryForUser];
+    [getWinCounts orderByDescending:@"winCount"];
     [getWinCounts setLimit:30];
     [getWinCounts findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             for (PFObject *resultObject in objects) {
                 NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc]init];
-                [resultDictionary setObject:[resultObject objectForKey:@"totalWins"] forKey:@"totalWins"];
-                PFUser *user = [resultObject objectForKey:@"user"];
-                [user fetchIfNeededInBackgroundWithBlock:^(PFObject *user, NSError *error) {
-                    if (!error) {
-                        [resultDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
-                        if ([user objectForKey:@"picture"]) {
-                            [resultDictionary setObject:[user objectForKey:@"picture"] forKey:@"picture"];
-                        }
-                        
-                    
-                        if ([user objectForKey:@"name"]) {
-                            [objectsToDisplay addObject:resultDictionary];
-                        }
-                    }
-                    NSSortDescriptor *winsDescriptor = [[NSSortDescriptor alloc]initWithKey:@"totalWins" ascending:NO];
-                    NSArray *sortDescriptors = [NSArray arrayWithObject:winsDescriptor];
-                    NSArray *sortedArray = [objectsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
-                    
-                    [self setContentList:[sortedArray mutableCopy]];
-                    [_tableView reloadData];
-                }];
+                if ([resultObject objectForKey:@"winCount"]) {
+                    [resultDictionary setObject:[resultObject objectForKey:@"winCount"] forKey:@"totalWins"];
+                }
+                else {
+                    [resultDictionary setObject:[NSNumber numberWithInt:0] forKey:@"totalWins"];
+                }
+                [resultDictionary setObject:[resultObject objectForKey:@"name"] forKey:@"name"];
+                if ([resultObject objectForKey:@"picture"]) {
+                    [resultDictionary setObject:[resultObject objectForKey:@"picture"] forKey:@"picture"];
+                }
+                
+                if ([resultObject objectForKey:@"name"]) {
+                    [objectsToDisplay addObject:resultDictionary];
+                }
             }
+            [self setContentList:objectsToDisplay];
+            [_tableView reloadData];
+
         }
     }];
 }
