@@ -127,7 +127,7 @@
             [user setObject:stateTextField.text forKey:@"state"];
             [user setObject:favoriteSportTextField.text forKey:@"favorite_sport"];
             [user setObject:favoriteTeamTextField.text forKey:@"favorite_team"];
-            [user setObject:[NSNumber numberWithInt:5] forKey:@"tokenCount"];
+            [user setObject:[NSNumber numberWithInt:50] forKey:@"tokenCount"];
             [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error) {
                     // Hooray! Let them use the app now.

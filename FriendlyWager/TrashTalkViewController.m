@@ -11,6 +11,7 @@
 #import "LoginOptionsViewController.h"
 #import "SettingsViewController.h"
 #import "HelpViewController.h"
+#import "SVProgressHUD.h"
 
 
 #define CELL_CONTENT_WIDTH 320.0f
@@ -43,6 +44,7 @@
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     [chatIndicator setHidden:YES];
     [chatIndicatorLabel setHidden:YES];
+    NSLog(@"%@", [[NSUserDefaults standardUserDefaults]valueForKey:@"tipsOff"]);
     if (![[NSUserDefaults standardUserDefaults]boolForKey:@"tipsOff"]) {
         [self.navigationController.view addSubview:tipsView];
 
@@ -77,8 +79,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self getTrashTalk];
+    
     
 }
 
@@ -111,23 +113,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //NSString *text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
-    
-    //CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
-    
-    //CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
-    
-    //CGFloat height = MAX(size.height, 44.0f);
-    
-    //return height + (CELL_CONTENT_MARGIN * 2);
     UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, 320 - 95, 100)];
-    //UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 230, 100)];
     label2.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
     label2.text = [[[contentList objectAtIndex:indexPath.row]valueForKey:@"data"] objectForKey:@"trashTalkContent"];
     label2.numberOfLines = 0;
     label2.lineBreakMode = UILineBreakModeWordWrap;
-    //[label2 sizeToFit];
-    //[label2 setFrame:CGRectMake(10, 20, 244, label2.frame.size.height)];
     [label2 sizeToFit];
     if ((label2.frame.size.height) > 28) {
         return (30 + label2.frame.size.height);
@@ -427,6 +417,12 @@
 }
 
 - (void)signOutButtonClicked:(id)sender {
+    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+    NSDictionary * dict = [defs dictionaryRepresentation];
+    for (id key in dict) {
+        [defs removeObjectForKey:key];
+    }
+    [defs synchronize];
     [PFUser logOut];
     LoginOptionsViewController *loginVc = [[LoginOptionsViewController alloc]initWithNibName:@"LoginOptionsViewController" bundle:nil];
     UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:loginVc];
@@ -480,6 +476,7 @@
     newItems = 0;
     [self.navigationController.navigationBar addSubview:stripes];
     if ([PFUser currentUser]) {
+        [SVProgressHUD showWithStatus:@"Getting trash talk"];
         PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
         [queryForTrashTalk whereKey:@"recipients" containsString:[[PFUser currentUser]objectId]];
         [queryForTrashTalk whereKey:@"sender" notEqualTo:[PFUser currentUser]];
@@ -491,7 +488,12 @@
             if (!error) {
                 NSMutableArray *trashTalkArray = [[NSMutableArray alloc]init];
                 NSString *userId = [[PFUser currentUser]objectId];
-                
+                if (objects.count == 0) {
+                    [noTrashTalkLabel setText:@"No trash talk to display. Send a message to a friend!"];
+                }
+                else {
+                    [noTrashTalkLabel setText:@""];
+                }
                 for (PFObject *trashTalkItem in objects) {
                     
                     [trashTalkArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", [NSNumber numberWithBool:NO], @"wasNew", [trashTalkItem objectForKey:@"conversationId"], @"conversationId", nil]];
@@ -559,8 +561,12 @@
                     [chatIndicatorLabel setHidden:YES];
                     [chatIndicator setHidden:YES];
                 }
+                [SVProgressHUD dismiss];
                 [self setContentList:abreviatedArray];
                 [self.trashTalkTableView reloadData];
+            }
+            else {
+                [SVProgressHUD dismiss];
             }
 
         }];

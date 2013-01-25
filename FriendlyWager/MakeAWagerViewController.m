@@ -20,7 +20,6 @@
 @synthesize wagerInProgress = _wagerInProgress;
 @synthesize opponentsToWager  = _opponentsToWager;
 @synthesize viewController = _viewController;
-@synthesize contentList;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,23 +43,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    wagerTableView.dataSource = self;
-    wagerTableView.delegate = self;
     
 
     self.title = @"Make a Wager";
 
     stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
-    
-    NSArray *tableContentsArray = [[NSArray alloc]initWithObjects:@"Search for Opponent", @"Previously Wagered", @"Facebook Friend", @"Twitter Follower", @"Random Opponent", @"Invite to Friendly Wager", nil];
-    
-    NSMutableArray *wagersArray = [[NSMutableArray alloc]initWithCapacity:1];
-    
-    for (NSUInteger i = 0; i < tableContentsArray.count; i++) {
-        NSArray *sectionArray = [[NSArray alloc]initWithObjects:[tableContentsArray objectAtIndex:i],nil];
-        [wagersArray addObject:sectionArray];
-    }
-    [self setContentList:wagersArray];
     
     if (_wagerInProgress) {
         UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
@@ -97,10 +84,10 @@
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     [self.navigationController.navigationBar addSubview:stripes];
     NSUserDefaults *newWager = [NSUserDefaults alloc];
-    if ([newWager objectForKey:@"opponent"]) {
+    /*if ([newWager objectForKey:@"opponent"]) {
         TabsViewController *tabsController = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil];
         [self.navigationController pushViewController:tabsController animated:YES];
-    }
+    }*/
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -121,92 +108,6 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-#pragma mark - Table view data source
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.contentList.count;
-}
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:section];
-    return sectionContents.count;  
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
-    id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
-    
-    static NSString *CellIdentifier = @"MakeAWagerTableViewCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.textLabel.text = contentForThisRow;
-        cell.textLabel.textAlignment = UITextAlignmentCenter;
-        [cell.textLabel setBackgroundColor:[UIColor clearColor]];
-        [cell setBackgroundColor:[UIColor clearColor]];
-        [cell.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"longYellowBtn"]]];
-    }
-    return cell;
-}
-
-#pragma mark - TableView Delegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
-    picker.peoplePickerDelegate = self;
-    
-    
-    if (indexPath.section == 0) {
-        OpponentSearchViewController *search = [[OpponentSearchViewController alloc]initWithNibName:@"OpponentSearchViewController" bundle:nil];
-        if (_wagerInProgress) {
-            search.wagerInProgress = YES;
-            search.opponentsToWager = _opponentsToWager;
-            search.viewController = _viewController;
-        }
-        [self.navigationController pushViewController:search animated:YES];
-    }
-    else if (indexPath.section == 1) {
-        PreviouslyWageredViewController *pwvc = [[PreviouslyWageredViewController alloc]initWithNibName:@"PreviouslyWageredViewController" bundle:nil];
-        if (_wagerInProgress) {
-            pwvc.wagerInProgress = YES;
-            pwvc.opponentsToWager = _opponentsToWager;
-            pwvc.viewController = _viewController;
-        }
-        
-        [self.navigationController pushViewController:pwvc animated:YES];
-    }    
-    else if (indexPath.section == 2) {
-        PFUser *currentUser = [PFUser currentUser];
-        if ([PFFacebookUtils isLinkedWithUser:currentUser]) {
-            FacebookFriendsViewController *facebookFriends = [[FacebookFriendsViewController alloc]initWithNibName:@"FacebookFriendsViewController" bundle:nil];
-            if (_wagerInProgress) {
-                facebookFriends.wagerInProgress = YES;
-                facebookFriends.opponentsToWager = _opponentsToWager;
-                facebookFriends.viewController = _viewController;
-            }
-            [self.navigationController pushViewController:facebookFriends animated:YES];
-        }
-        else {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Facebook Sign In Required" message:@"You must sign in with a facebook account to use this feature" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign In", nil];
-            [alert show];
-        }        
-    }
-    else if (indexPath.section == 3) {
-        TwitterFollowersViewController *twitterFollowers = [[TwitterFollowersViewController alloc]initWithNibName:@"TwitterFollowersViewController" bundle:nil];
-        [self.navigationController pushViewController:twitterFollowers animated:YES];
-    }
-
-    else if (indexPath.section == 4) {
-        NSLog(@"%@", @"Random Selected");
-        [self selectRandomOpponent];
-    }
-    
-    else if (indexPath.section == 5) {
-        ContactInviteViewController *civc = [[ContactInviteViewController alloc]initWithNibName:@"ContactInviteViewController" bundle:nil];
-        [self.navigationController pushViewController:civc animated:YES];
-    }
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - Button Clicks
@@ -258,7 +159,7 @@
 #pragma mark - UIAlertView Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
+        NSArray *permissions = [[NSArray alloc] initWithObjects:@"user_location", @"publish_stream", @"email", nil];
         PFUser *user = [PFUser currentUser];
         //[user linkToFacebook:permissions block:^(BOOL succeeded, NSError *error) {
         [PFFacebookUtils linkUser:user permissions:permissions block:^(BOOL succeeded, NSError *error) {

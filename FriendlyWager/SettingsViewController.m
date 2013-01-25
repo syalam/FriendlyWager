@@ -7,6 +7,8 @@
 //
 
 #import "SettingsViewController.h"
+#import "AppDelegate.h"
+#import "SVProgressHUD.h"
 
 @interface SettingsViewController ()
 
@@ -61,7 +63,7 @@
     passwordTextField.tag = 0;
     repeatTextField.tag = 1;
     
-    if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]){
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"facebookConnect"]){
         [facebookConnectSwitch setOn:YES];
     }
     else {
@@ -219,12 +221,14 @@
 #pragma mark - UIAlertView Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
+        [SVProgressHUD showWithStatus:@"Signing in with Facebook"];
+        NSArray *permissions = [[NSArray alloc] initWithObjects:@"user_location", @"email", @"publish_stream", nil];
         [PFFacebookUtils linkUser:[PFUser currentUser] permissions:permissions block:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
                 [facebookConnectSwitch setOn:YES animated:YES];
             }
             else {
+                [SVProgressHUD dismiss];
                 UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error"
                                                                     message:@"This facebook account is associated with another user"
                                                                    delegate:self
@@ -240,6 +244,56 @@
     }
 }
 
+- (void)request:(PF_FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
+    NSLog(@"received response");
+}
+
+- (void)request:(PF_FBRequest *)request didLoad:(id)result {
+    //save the users username and email address to parse
+
+    if ([result objectForKey:@"name"]) {
+        [currentUser setObject:[[result objectForKey:@"name"] lowercaseString] forKey:@"name"];
+    }
+    if ([result objectForKey:@"id"]) {
+        [currentUser setObject:[result objectForKey:@"id"] forKey:@"fbId"];
+    }
+    if ([result objectForKey:@"email"] && !currentUser.email) {
+        currentUser.email = [result objectForKey:@"email"];
+    }
+    if ([result objectForKey:@"user_location"] && ![currentUser valueForKey:@"city"]) {
+        [currentUser setObject:[result objectForKey:@"user_location"] forKey:@"city"];
+    }
+    if ([result objectForKey:@"picture"]) {
+        imageData = [[NSMutableData alloc] init];
+        NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", [result objectForKey:@"id"]]];
+        NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:pictureURL
+                                                                  cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                              timeoutInterval:2.0f];
+        // Run network request asynchronously
+        NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+
+    }
+
+}
+
+// Called every time a chunk of the data is received
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [imageData appendData:data]; // Build the image
+}
+
+// Called when the entire image is finished downloading
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    // Set the image in the header imageView
+    
+    [currentUser setObject:imageData forKey:@"picture"];
+    [currentUser saveInBackground];
+    [SVProgressHUD dismissWithSuccess:@"Facebook sign-in successful"];
+    //TODO: REMOVE ME
+}
+- (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
+    [SVProgressHUD dismissWithError:@"Unable to sign into Facebook"];
+    NSLog(@"%@", error);
+}
 
 
 @end

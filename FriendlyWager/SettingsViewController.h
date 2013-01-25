@@ -17,6 +17,8 @@
     
     PFUser *currentUser;
     BOOL fb;
+    NSMutableData *imageData;
+
 }
 
 - (IBAction)facebookConnectSwitchToggled:(id)sender;

@@ -20,9 +20,14 @@ typedef enum apiCall {
 @interface FacebookFriendsViewController : UIViewController <PF_FBRequestDelegate, UITableViewDataSource, UITableViewDelegate> {
     NSMutableDictionary *selectedItems;
     NSMutableArray *indexTableViewTitles;
+    NSMutableArray *resultSetArray;
     
     int currentApiCall;
     NSString *uid;
+    
+    IBOutlet UIButton *currentButton;
+    BOOL currentSelected;
+    IBOutlet UIButton *inviteButton;
 }
 
 @property (nonatomic, retain) NSMutableArray *contentList;
@@ -31,7 +36,9 @@ typedef enum apiCall {
 @property (nonatomic, retain) NewWagerViewController *viewController;
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 
-- (void)sortSections:(NSMutableArray *)resultSetArray;
+- (void)sortSections;
 - (void)sendFacebookRequest;
+- (IBAction)showCurrentUsers:(id)sender;
+- (IBAction)showOtherUsers:(id)sender;
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "RanksViewController.h"
-#import "RankingsDetailViewController.h"
 #import "ScoresViewController.h"
 #import "MyActionSummaryViewController.h"
 
@@ -46,7 +45,6 @@
     
     rankingsByPoints = [[NSArray alloc]initWithObjects:@"Rankings By Points", nil];
     rankingsByWins = [[NSArray alloc]initWithObjects:@"Rankings By Wins", nil];
-    //rankingsBySport = [[NSArray alloc]initWithObjects:@"Ranking By Sport", nil];
     
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
     [button addTarget:self action:@selector(wagerButtonClicked:) forControlEvents:UIControlEventTouchDown];
@@ -83,8 +81,6 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    //NSArray *sectionContents = [[self contentList] objectAtIndex:section];
-    //return sectionContents.count;
     return _contentList.count;
 }
 
@@ -132,14 +128,6 @@
         [cell addSubview:rankLabel];
     }
     
-    /*else {
-        
-        cityLabel.text = [[cityArray objectAtIndex:indexPath.row]objectForKey:@"city"];
-        rankLabel.text = [[cityArray objectAtIndex:indexPath.row]objectForKey:@"rank"];
-        
-        [cell addSubview:cityLabel];
-        [cell addSubview:rankLabel];
-    }*/
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSData *picData = [[_contentList objectAtIndex:indexPath.row]objectForKey:@"picture"];
     UIImage *profilePic;
@@ -158,23 +146,6 @@
     [cell.contentView addSubview:arrow];
     
     return cell;
-    
-    /*NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
-    id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
-    
-    static NSString *CellIdentifier = @"RanksTableViewCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG4_City_button"]];
-    cell.backgroundColor = [UIColor clearColor];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.textAlignment = UITextAlignmentCenter;
-    cell.textLabel.text = contentForThisRow;
-    return cell;*/
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -198,39 +169,23 @@
 }
 
 #pragma mark IBAction Methods
-/*- (IBAction)rankingControlToggled:(id)sender {
-    if (rankingControl.selectedSegmentIndex == 0) {
-        [self rankByPoints];
-    }
-    else if (rankingControl.selectedSegmentIndex == 1) {
-        [self rankByWins];
-    }
-}*/
 
 - (IBAction)byPointsSelected:(id)sender {
     [self rankByPoints];
     [byPoints setImage:[UIImage imageNamed:@"byPointsOn"] forState:UIControlStateNormal];
     [byWins setImage:[UIImage imageNamed:@"byWins"] forState:UIControlStateNormal];
-    //[bySport setImage:[UIImage imageNamed:@"bySport"] forState:UIControlStateNormal];
     [byCity setImage:[UIImage imageNamed:@"byCity"] forState:UIControlStateNormal];
 }
 - (IBAction)byWinsSelected:(id)sender {
     [self rankByWins];
     [byPoints setImage:[UIImage imageNamed:@"byPoints"] forState:UIControlStateNormal];
     [byWins setImage:[UIImage imageNamed:@"byWinsOn"] forState:UIControlStateNormal];
-    //[bySport setImage:[UIImage imageNamed:@"bySport"] forState:UIControlStateNormal];
     [byCity setImage:[UIImage imageNamed:@"byCity"] forState:UIControlStateNormal];
 }
-/*- (IBAction)bySportSelected:(id)sender {
-    [byPoints setImage:[UIImage imageNamed:@"byPoints"] forState:UIControlStateNormal];
-    [byWins setImage:[UIImage imageNamed:@"byWins"] forState:UIControlStateNormal];
-    [bySport setImage:[UIImage imageNamed:@"bySportOn"] forState:UIControlStateNormal];
-    [byCity setImage:[UIImage imageNamed:@"byCity"] forState:UIControlStateNormal];
-}*/
+
 - (IBAction)byCitySelected:(id)sender {
     [byPoints setImage:[UIImage imageNamed:@"byPoints"] forState:UIControlStateNormal];
     [byWins setImage:[UIImage imageNamed:@"byWins"] forState:UIControlStateNormal];
-    //[bySport setImage:[UIImage imageNamed:@"bySport"] forState:UIControlStateNormal];
     [byCity setImage:[UIImage imageNamed:@"byCityOn"] forState:UIControlStateNormal];
 }
 
@@ -296,57 +251,5 @@
         }
     }];
 }
-- (void)rankBySport {
-    /*NSString *sportSort;
-    if ([_sport isEqualToString:@"NFL Football"]) {
-        sportSort = @"nflWins";
-    }
-    else if ([_sport isEqualToString:@"College Football"]) {
-        sportSort = @"collegeFootballWins";
-    }
-    else if ([_sport isEqualToString:@"MLB Baseball"]) {
-        sportSort = @"mlbWins";
-    }
-    else if ([_sport isEqualToString:@"NBA Basketball"]) {
-        sportSort = @"nbaWins";
-    }
-    else if ([_sport isEqualToString:@"College Basketball"]) {
-        sportSort = @"collegeBasketballWins";
-    }
-    
-    NSMutableArray *objectsToDisplay = [[NSMutableArray alloc]init];
-    PFQuery *getWinBySportCounts = [PFQuery queryWithClassName:@"results"];
-    [getWinBySportCounts orderByDescending:sportSort];
-    [getWinBySportCounts setLimit:30];
-    [getWinBySportCounts findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            for (PFObject *resultObject in objects) {
-                if ([[resultObject objectForKey:sportSort]intValue] > 0) {
-                    NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc]init];
-                    [resultDictionary setObject:[resultObject objectForKey:sportSort] forKey:@"totalWins"];
-                    PFUser *user = [resultObject objectForKey:@"user"];
-                    [user fetchIfNeededInBackgroundWithBlock:^(PFObject *user, NSError *error) {
-                        if (!error) {
-                            [resultDictionary setObject:[user objectForKey:@"name"] forKey:@"name"];
-                        }
-                        [objectsToDisplay addObject:resultDictionary];
-                        
-                        NSSortDescriptor *winsDescriptor = [[NSSortDescriptor alloc]initWithKey:@"totalWins" ascending:NO];
-                        NSArray *sortDescriptors = [NSArray arrayWithObject:winsDescriptor];
-                        NSArray *sortedArray = [objectsToDisplay sortedArrayUsingDescriptors:sortDescriptors];
-                        
-                        [self setContentList:[sortedArray mutableCopy]];
-                        [_tableView reloadData];
-                    }];
-                }
-            }
-        }
-    }];*/
-    
-    [self setContentList:nil];
-    [_tableView reloadData];
-}
-
-
 
 @end

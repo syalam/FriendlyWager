@@ -14,6 +14,7 @@
 #import "Kiip.h"
 #import "AppDelegate.h"
 #import "ResetPasswordViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 
 @implementation LoginOptionsViewController
@@ -102,15 +103,16 @@
 
 
 - (IBAction)facebookLoginButtonClicked:(id)sender {
-    [SVProgressHUD showWithStatus:@"Logging In"];
-    
-    NSArray* permissions = [NSArray arrayWithObjects:@"publish_stream", @"email", nil];
+    [SVProgressHUD showWithStatus:@"Signing in with Facebook"];
+    NSArray* permissions = [NSArray arrayWithObjects:@"publish_stream", @"email", @"user_location", nil];
     
     [PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error) {
         if (!user) {
+            [SVProgressHUD dismiss];
             NSLog(@"Uh oh. The user cancelled the Facebook login.");
         }
         else {
+            [SVProgressHUD dismiss];
             NSLog(@"User logged in through Facebook!");
             NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                            @"email,name,picture,username,id",  @"fields",
@@ -121,6 +123,7 @@
 }
 
 - (IBAction)signInButtonClicked:(id)sender {
+    [SVProgressHUD showWithStatus:@"Signing in"];
     [PFUser logInWithUsernameInBackground:userNameTextField.text password:passwordTextField.text 
                                     block:^(PFUser *user, NSError *error) {
                                         NSString *errorString = [[error userInfo] objectForKey:@"error"];
@@ -130,8 +133,10 @@
                                             delegate.trashTalkViewController.currentUser = user;
                                             delegate.trashTalkViewController.pic = [UIImage imageWithData:[user objectForKey:@"picture"]];
                                             [[KPManager sharedManager] unlockAchievement:@"1"];
+                                            [SVProgressHUD dismissWithSuccess:@"Sign-in successful"];
                                             [self.navigationController dismissModalViewControllerAnimated:YES];
                                         } else {
+                                            [SVProgressHUD dismiss];
                                             UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
                                                                                                 message:errorString 
                                                                                                delegate:self 
@@ -168,6 +173,9 @@
                     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
                     delegate.trashTalkViewController.currentUser = user;
                     delegate.trashTalkViewController.pic = [UIImage imageWithData:profilePicData];
+                    if (![user objectForKey:@"tokenCount"]) {
+                        [user setObject:[NSNumber numberWithInt:50] forKey:@"tokenCount"];
+                    }
                     [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                         if (!error) {
                             [self.navigationController dismissModalViewControllerAnimated:YES];
@@ -207,7 +215,7 @@
 - (void)request:(PF_FBRequest *)request didLoad:(id)result {
     //save the users username and email address to parse
     fbUser = [PFUser currentUser];
-    if ([result objectForKey:@"username"]) {
+    if ([result objectForKey:@"username"] && !fbUser.username) {
         fbUser.username = [[result objectForKey:@"username"]lowercaseString];
     }
     if ([result objectForKey:@"name"]) {
@@ -216,8 +224,14 @@
     if ([result objectForKey:@"id"]) {
         [fbUser setObject:[result objectForKey:@"id"] forKey:@"fbId"];
     }
-    if ([result objectForKey:@"email"]) {
+    if ([result objectForKey:@"email"] && !fbUser.email) {
         fbUser.email = [result objectForKey:@"email"];
+    }
+    if ([result objectForKey:@"user_location"] && ![fbUser valueForKey:@"city"]) {
+        [fbUser setObject:[result objectForKey:@"user_location"] forKey:@"city"];
+    }
+    if (![result objectForKey:@"tokenCount"]) {
+        [fbUser setObject:[NSNumber numberWithInt:50] forKey:@"tokenCount"];
     }
     if ([result objectForKey:@"picture"]) {
         imageData = [[NSMutableData alloc] init];
@@ -227,16 +241,8 @@
                                                               timeoutInterval:2.0f];
         // Run network request asynchronously
         NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
-        //[user setObject:[NSData dataWithContentsOfURL:[NSURL URLWithString:[result objectForKey:@"picture"]]] forKey:@"picture"];
     }
-    /*AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
-    delegate.trashTalkViewController.currentUser = user;
 
-    [user saveInBackground];
-    [SVProgressHUD dismiss];
-    //TODO: REMOVE ME
-    [[KPManager sharedManager] unlockAchievement:@"1"];
-    [self.navigationController dismissModalViewControllerAnimated:YES];*/
 }
 
 // Called every time a chunk of the data is received
@@ -252,14 +258,16 @@
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
     delegate.trashTalkViewController.currentUser = fbUser;
     delegate.trashTalkViewController.pic = [UIImage imageWithData:imageData];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"facebookConnect"];
     [fbUser saveInBackground];
-    [SVProgressHUD dismiss];
+    [SVProgressHUD dismissWithSuccess:@"Facebook sign-in successful"];
     //TODO: REMOVE ME
     [[KPManager sharedManager] unlockAchievement:@"1"];
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
     NSLog(@"%@", error);
+    [SVProgressHUD dismissWithError:@"Sign-in unsuccessful. Please try again"];
 }
 
 #pragma mark - Gesture Recognizer Methods

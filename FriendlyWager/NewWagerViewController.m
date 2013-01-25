@@ -442,6 +442,8 @@ forState:UIControlStateNormal];
     [createNewWager setObject:[_opponentsToWager objectAtIndex:saveCount] forKey:@"wagee"];
     [createNewWager setObject:[NSNumber numberWithInt:5] forKey:@"tokensWagered"];
     [createNewWager setObject:[NSNumber numberWithBool:NO] forKey:@"wagerAccepted"];
+    [createNewWager setObject:[NSNumber numberWithBool:NO] forKey:@"wagerUpdated"];
+    [createNewWager setObject:[NSNumber numberWithBool:NO] forKey:@"wageeUpdated"];
     if (stakesList.text) {
         [createNewWager setObject:stakesList.text forKey:@"stakes"];
     }

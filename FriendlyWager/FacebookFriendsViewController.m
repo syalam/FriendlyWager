@@ -45,13 +45,12 @@
     [super viewDidLoad];
     
     [SVProgressHUD showWithStatus:@"Loading Facebook Friends"];
-    
+    currentSelected = YES;
+    [currentButton setEnabled:NO];
+    [inviteButton setEnabled:NO];
     selectedItems = [[NSMutableDictionary alloc]initWithCapacity:1];
     indexTableViewTitles = [[NSMutableArray alloc]initWithCapacity:1];
-    
-    [self.navigationController setNavigationBarHidden:NO];
-    [self.navigationController.navigationBar setTintColor:[UIColor clearColor]];
-    
+        
     self.title = @"Make a Wager";
     
     currentApiCall = kAPIRetrieveFriendList;    
@@ -144,7 +143,7 @@
     [SVProgressHUD dismiss];
     if (currentApiCall == kAPIRetrieveFriendList) {
         if ([result objectForKey:@"data"]) {
-            NSMutableArray *resultSetArray = [[NSMutableArray alloc]initWithCapacity:1];
+            resultSetArray = [[NSMutableArray alloc]initWithCapacity:1];
             NSMutableArray *resultSetArray1 = [[NSMutableArray alloc]initWithCapacity:1];
             NSMutableArray *allFbFriends = [[NSMutableArray alloc]initWithCapacity:1];
             NSMutableArray *FWFriends = [[NSMutableArray alloc]initWithCapacity:1];
@@ -165,14 +164,16 @@
                     fwFbUid = [NSString stringWithFormat:@"%@",[[FWFriends objectAtIndex:c]valueForKey:@"uid"]];
                     if ([allFbUid isEqualToString:fwFbUid]) {
                         added = YES;
-                        [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"YES", @"isFW", nil]];
+                        [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", [[allFbFriends objectAtIndex:i]valueForKey:@"name"], @"name", @"YES", @"isFW", nil]];
                     }
                 }
                 if (!added) {
-                    [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", @"NO", @"isFW", nil]];
+                    [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", [[allFbFriends objectAtIndex:i]valueForKey:@"name"], @"name", @"NO", @"isFW", nil]];
                 }
             }
-            [self sortSections:resultSetArray];
+            [currentButton setEnabled:YES];
+            [inviteButton setEnabled:YES];
+            [self sortSections];
         }
         
     }
@@ -252,12 +253,12 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     if ([[contentForThisRow valueForKey:@"isFW"]isEqualToString:@"YES"]) {
-        UILabel *fwLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 20, 40, 20)];
+        /*UILabel *fwLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 20, 40, 20)];
         fwLabel.text = @"FW";
         fwLabel.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
         fwLabel.font = [UIFont boldSystemFontOfSize:16];
         [fwLabel setBackgroundColor:[UIColor clearColor]];
-        [cell addSubview:fwLabel];
+        [cell addSubview:fwLabel];*/
         
         if ([[contentForThisRow valueForKey:@"isFW"]isEqualToString:@"YES"]) {
             if ([selectedItems objectForKey:[NSString stringWithFormat:@"item %d %d", indexPath.section, indexPath.row]]) {
@@ -276,7 +277,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [indexTableViewTitles objectAtIndex:section];
+      return [indexTableViewTitles objectAtIndex:section];
 }
 
 
@@ -287,45 +288,6 @@
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
     return index;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -410,30 +372,48 @@
         [alert show];
     }
 }
+
+- (IBAction)showCurrentUsers:(id)sender {
+    if (!currentSelected) {
+        currentSelected = YES;
+        [currentButton setImage:[UIImage imageNamed:@"onFWBtnON"] forState:UIControlStateNormal];
+        [inviteButton setImage:[UIImage imageNamed:@"inviteFWBtnOFF"] forState:UIControlStateNormal];
+        [self sortSections];
+    }
+}
+
+- (IBAction)showOtherUsers:(id)sender {
+    if (currentSelected) {
+        currentSelected = NO;
+        [currentButton setImage:[UIImage imageNamed:@"onFWBtnOFF"] forState:UIControlStateNormal];
+        [inviteButton setImage:[UIImage imageNamed:@"inviteFWBtnON"] forState:UIControlStateNormal];
+        [self sortSections];
+    }
+
+}
+
+
 #pragma mark - Helper Methods
-- (void)sortSections:(NSMutableArray *)resultSetArray {
+- (void)sortSections {
     NSArray *indexTitles = [[NSArray alloc]initWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
     
     NSMutableArray *itemsToDisplay = [[NSMutableArray alloc]initWithCapacity:1];
     
-    NSMutableArray *namesArray = [[NSMutableArray alloc]initWithCapacity:1];
-    for (NSUInteger i = 0; i < resultSetArray.count; i++) {
-        [namesArray addObject:[[[resultSetArray objectAtIndex:i]valueForKey:@"data"]valueForKey:@"name"]];
-    }
-    
+    [indexTableViewTitles removeAllObjects];
     for (NSUInteger i = 0; i < indexTitles.count; i++) {
-        NSMutableArray *sectionContent = [[NSMutableArray alloc]initWithCapacity:1];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"SELF BEGINSWITH '%@'", [indexTitles objectAtIndex:i]]];
-        NSArray *elements = [namesArray filteredArrayUsingPredicate:predicate];
-        for (NSUInteger counter = 0; counter < resultSetArray.count; counter ++) {
-            for (NSUInteger i2 = 0; i2 < elements.count; i2++) {
-                NSString *fullArrayName = [NSString stringWithFormat:@"%@", [[[resultSetArray objectAtIndex:counter]valueForKey:@"data"]valueForKey:@"name"]];
-                NSString *elementsName = [NSString stringWithFormat:@"%@", [elements objectAtIndex:i2]];
-                if ([elementsName isEqualToString:fullArrayName]) {
-                    [sectionContent addObject:[resultSetArray objectAtIndex:counter]];
-                }
-            }
+        NSArray *sectionContent = [[NSMutableArray alloc]init];
+        NSPredicate *predicate;
+        predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"name BEGINSWITH '%@'", [indexTitles objectAtIndex:i]]];
+        NSArray *firstPass = [resultSetArray filteredArrayUsingPredicate:predicate];
+        if (currentSelected) {
+            predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"isFW MATCHES \"%@\"", @"YES"]];
+            
         }
+        else {
+            predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"isFW MATCHES \"%@\"", @"NO"]];
+        }
+        
+        sectionContent = [firstPass filteredArrayUsingPredicate:predicate];
         if (sectionContent.count > 0) {
             [indexTableViewTitles addObject:[indexTitles objectAtIndex:i]];
             [itemsToDisplay addObject:sectionContent];

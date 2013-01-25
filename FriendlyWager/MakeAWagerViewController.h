@@ -14,7 +14,6 @@
 #import "NewWagerViewController.h"
 
 @interface MakeAWagerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ABPeoplePickerNavigationControllerDelegate> {
-    IBOutlet UITableView *wagerTableView;
     IBOutlet UIButton *searchBtn;
     IBOutlet UIButton *previousBtn;
     IBOutlet UIButton *fbFriendBtn;
@@ -26,7 +25,6 @@
     
 }
 
-@property (nonatomic, retain) NSArray* contentList;
 @property (nonatomic, retain) NSMutableArray *opponentsToWager;
 @property (nonatomic)BOOL wagerInProgress;
 @property (nonatomic, retain) NewWagerViewController *viewController;

@@ -11,7 +11,6 @@
 #import "ScoresViewController.h"
 #import "RanksViewController.h"
 #import "TrashTalkViewController.h"
-#import "FeedViewController.h"
 
 @interface TabBarDelegateViewController ()
 

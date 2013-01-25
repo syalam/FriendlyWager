@@ -24,6 +24,7 @@
     IBOutlet UIView *tipsView;
     IBOutlet UIImageView *chatIndicator;
     IBOutlet UILabel *chatIndicatorLabel;
+    IBOutlet UILabel *noTrashTalkLabel;
     
     int newItems;
     

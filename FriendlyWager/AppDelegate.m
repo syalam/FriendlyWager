@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 
-#import "MasterViewController.h"
 #import "LoginOptionsViewController.h"
 #import "LoadScreenViewController.h"
 #import "TestFlight.h" 
@@ -272,22 +271,33 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                                 [alert show];
                                 int tokens = [[wager valueForKey:@"tokenCount"]intValue];
                                 tokens = tokens + (tokensWagered*2);
-                                [wager setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
                                 int wins = 0;
                                 if ([wager valueForKey:@"winCount"]) {
-                                    int wins = [[wager valueForKey:@"winCount"]intValue];
-                                    wins++;
+                                    wins = [[wager valueForKey:@"winCount"]intValue];
+                                    wins = wins + 1;
 
                                 }
                                 else {
                                     wins = 1;
                                 }
+                                
+                                [wager setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
                                 [wager setObject:[NSNumber numberWithInt:wins] forKey:@"winCount"];
                                 [wager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                                    if (currentIndex2 < gameResults.count-1) {
-                                        currentIndex2++;
-                                        [self updateDB];
+                                    if (!error) {
+                                        if (currentIndex2 < gameResults.count-1) {
+                                            currentIndex2++;
+                                            [self updateDB];
+                                        }
                                     }
+                                    else {
+                                        [wager saveEventually];
+                                        if (currentIndex2 < gameResults.count-1) {
+                                            currentIndex2++;
+                                            [self updateDB];
+                                        }
+                                    }
+                                 
                                 }];
                             }
                             else if ([teamWageredToWinScore intValue] < [teamWageredToLoseScore intValue]) {
@@ -300,13 +310,10 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                                 }
                                 
                                 [alert show];
-                                int tokens = [[wager valueForKey:@"tokenCount"]intValue];
-                                tokens = tokens - tokensWagered;
-                                [wager setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
                                 int losses = 0;
                                 if ([wager valueForKey:@"lossCount"]) {
-                                    int losses = [[wager valueForKey:@"lossCount"]intValue];
-                                    losses++;
+                                    losses = [[wager valueForKey:@"lossCount"]intValue];
+                                    losses = losses + 1;;
                                 }
                                 else {
                                     losses = 1;
@@ -317,6 +324,14 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                                         currentIndex2++;
                                         [self updateDB];
                                     }
+                                    else {
+                                        [wager saveEventually];
+                                        if (currentIndex2 < gameResults.count-1) {
+                                            currentIndex2++;
+                                            [self updateDB];
+                                        }
+                                    }
+
                                 }];
 
                             }
@@ -331,6 +346,14 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                                         currentIndex2++;
                                         [self updateDB];
                                     }
+                                    else {
+                                        [wager saveEventually];
+                                        if (currentIndex2 < gameResults.count-1) {
+                                            currentIndex2++;
+                                            [self updateDB];
+                                        }
+                                    }
+
                                 }];
 
                             }
@@ -357,18 +380,23 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                                 [alert show];
                                 int tokens = [[wagee valueForKey:@"tokenCount"]intValue];
                                 tokens = tokens + (tokensWagered*2);
-                                [wagee setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
                                 int wins = 0;
                                 if ([wagee valueForKey:@"winCount"]) {
                                     wins = [[wagee valueForKey:@"winCount"]intValue];
-                                    wins ++;
+                                    wins = wins + 1;
                                 }
                                 else {
                                     wins = 1;
                                 }
+                                [wagee setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
                                 [wagee setObject:[NSNumber numberWithInt:wins] forKey:@"winCount"];
                                 [wagee saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                     if (currentIndex2 < gameResults.count-1) {
+                                        currentIndex2++;
+                                        [self updateDB];
+                                    }
+                                    else {
+                                        [wagee saveEventually];
                                         currentIndex2++;
                                         [self updateDB];
                                     }
@@ -383,13 +411,10 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                                     alert = [[UIAlertView alloc]initWithTitle:@"You Lost!" message:[NSString stringWithFormat:@"You lost %d tokens from %@ because %@ lost against %@", tokensWagered, [[wager valueForKey:@"name"]capitalizedString], [wagerObject objectForKey:@"teamWageredToLose"], [wagerObject objectForKey:@"teamWageredToWin"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                                 }
                                 [alert show];
-                                int tokens = [[wagee valueForKey:@"tokenCount"]intValue];
-                                tokens = tokens - tokensWagered;
-                                [wagee setObject:[NSNumber numberWithInt:tokens] forKey:@"tokenCount"];
                                 int losses = 0;
                                 if ([wagee valueForKey:@"lossCount"]) {
                                     losses = [[wagee valueForKey:@"lossCount"]intValue];
-                                    losses ++;
+                                    losses = losses + 1;
                                 }
                                 else {
                                     losses = 1;
@@ -400,6 +425,12 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                                         currentIndex2++;
                                         [self updateDB];
                                     }
+                                    else {
+                                        [wagee saveEventually];
+                                        currentIndex2++;
+                                        [self updateDB];
+                                    }
+
                                 }];
                                 
                             }
@@ -414,6 +445,12 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                                         currentIndex2++;
                                         [self updateDB];
                                     }
+                                    else {
+                                        [wagee saveEventually];
+                                        currentIndex2++;
+                                        [self updateDB];
+                                    }
+
                                 }];
                                 
                             }
@@ -466,6 +503,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
 }
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
+    NSLog(@"%@", gameResults);
     if (currentIndex < results.count-1) {
         currentIndex++;
         [self getResults];

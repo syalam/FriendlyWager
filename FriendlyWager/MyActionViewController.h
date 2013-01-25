@@ -12,6 +12,7 @@
 
 @interface MyActionViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     IBOutlet UITableView *myActionTableView;
+    IBOutlet UILabel *noOpponentsLabel;
     
     UINavigationController *navController;
     
@@ -23,7 +24,6 @@
     NSMutableArray *userArray;
     NSMutableArray *idArray;
     int currentIndex;
-    
 }
 
 - (void)showWagers;

@@ -8,6 +8,7 @@
 
 #import "NewTrashTalkViewController.h"
 #import "JSONKit.h"
+#import "SVProgressHUD.h"
 
 @interface NewTrashTalkViewController ()
 
@@ -16,7 +17,6 @@
 @implementation NewTrashTalkViewController
 @synthesize fbPostId = _fbPostId;
 @synthesize myActionScreen = _myActionScreen;
-@synthesize feedScreen = _feedScreen;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -101,7 +101,7 @@
 
 
     
-    if ([PFFacebookUtils isLinkedWithUser:user]) {
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"facebookConnect"] &&![[NSUserDefaults standardUserDefaults]boolForKey:@"noSharing"]) {
         [fbSwitch setOn:YES];
     }
     else {
@@ -160,10 +160,6 @@
     [getUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             NSLog(@"%@", objects);
-            //NSMutableArray *searchDataArray = [[NSMutableArray alloc]initWithCapacity:1];
-            /*for (PFUser *object in objects) {
-             [searchDataArray addObject:object];
-             }*/
             self.userArray= [objects mutableCopy];
             if ([self.userArray containsObject:[PFUser currentUser]]) {
                 [self.userArray removeObject:[PFUser currentUser]];
@@ -214,10 +210,8 @@
     [newTrashTalk setObject:[user objectForKey:@"name"] forKey:@"senderName"];
     if (_recipients.count) {
         if ([trashTalkTextView.text isEqualToString:@""]) {
-            somethingElse = YES;
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Empty" message:@"You didn't type in a message" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Empty" message:@"You didn't type in a message" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
-            somethingElse = NO;
             
         }
         else {
@@ -279,15 +273,13 @@
                         }
                         
                         if (requestIdsArray.count) {
+                            currentAPICall = kAPIPostToFeed;
                             [self sendFacebookRequest];
                             
                         }
                         else {
                             if (_myActionScreen) {
                                 [_myActionScreen loadTrashTalk];
-                            }
-                            else if (_feedScreen) {
-                                [_feedScreen loadTrashTalk];
                             }
                             [self.navigationController popViewControllerAnimated:YES];
                         }
@@ -296,9 +288,6 @@
                     else {
                         if (_myActionScreen) {
                             [_myActionScreen loadTrashTalk];
-                        }
-                        else if (_feedScreen) {
-                            [_feedScreen loadTrashTalk];
                         }
                         [self.navigationController popViewControllerAnimated:YES];
                     }
@@ -311,10 +300,8 @@
         }
     }
     else {
-        somethingElse = YES;
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"No Recipients" message:@"You didn't specify any valid recipients" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"No Recipients" message:@"You didn't specify any valid recipients" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        somethingElse = NO;
     }
                             //[self.navigationController dismissModalViewControllerAnimated:YES];
     
@@ -324,12 +311,16 @@
     if (fbSwitch.on) {
         if ([PFFacebookUtils isLinkedWithUser:user]) {
             [fbSwitch setOn:YES];
+            [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"noSharing"];
 
         }
         else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Facebook Sign In Required" message:@"You must sign in with a facebook account to use this feature" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign In", nil];
             [alert show];
         }
+    }
+    else {
+        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"noSharing"];
     }
 }
 
@@ -345,6 +336,7 @@
 #pragma mark - Facebook delegate methods
 
 - (void)sendFacebookRequest {
+    [SVProgressHUD showWithStatus:@"Posting to facebook"];
     if (currentAPICall == kAPIPostToFeed) {
         if (requestIdsArray.count) {
             if (requestIdsArray.count) {
@@ -361,54 +353,105 @@
 
 - (void)request:(PF_FBRequest *)request didLoad:(id)result {
     NSLog(@"%@", result);
-    
-    if (countRequests < requestIdsArray.count) {
-        countRequests++;
-        
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkTextView.text, @"message", nil];
-        [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", [requestIdsArray objectAtIndex:countRequests - 1]] andParams:params andHttpMethod:@"POST" andDelegate:self];
-        
+    if (currentAPICall == kAPIPostToFeed) {
+        if (countRequests < requestIdsArray.count) {
+            countRequests++;
+            
+            NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkTextView.text, @"message", nil];
+            [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", [requestIdsArray objectAtIndex:countRequests - 1]] andParams:params andHttpMethod:@"POST" andDelegate:self];
+            
+        }
+        else {
+            if (_myActionScreen) {
+                [_myActionScreen loadTrashTalk];
+            }
+            [SVProgressHUD dismiss];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+
     }
     else {
-        if (_myActionScreen) {
-            [_myActionScreen loadTrashTalk];
+        //save the users username and email address to parse
+        
+        if ([result objectForKey:@"name"]) {
+            [user setObject:[[result objectForKey:@"name"] lowercaseString] forKey:@"name"];
         }
-        else if (_feedScreen) {
-            [_feedScreen loadTrashTalk];
+        if ([result objectForKey:@"id"]) {
+            [user setObject:[result objectForKey:@"id"] forKey:@"fbId"];
         }
-        [self.navigationController popViewControllerAnimated:YES];
+        if ([result objectForKey:@"email"] && !user.email) {
+            user.email = [result objectForKey:@"email"];
+        }
+        if ([result objectForKey:@"user_location"] && ![user valueForKey:@"city"]) {
+            [user setObject:[result objectForKey:@"user_location"] forKey:@"city"];
+        }
+        if ([result objectForKey:@"picture"]) {
+            imageData = [[NSMutableData alloc] init];
+            NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", [result objectForKey:@"id"]]];
+            NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:pictureURL
+                                                                      cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                                  timeoutInterval:2.0f];
+            // Run network request asynchronously
+            NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+            
+        }
+
     }
 }
 
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
     NSLog(@"%@", error);
-    if (countRequests < requestIdsArray.count) {
-        countRequests++;
-        
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkTextView.text, @"message", nil];
-        [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", [requestIdsArray objectAtIndex:countRequests - 1]] andParams:params andHttpMethod:@"POST" andDelegate:self];
-        
+    if (currentAPICall == kAPIPostToFeed) {
+        if (countRequests < requestIdsArray.count) {
+            countRequests++;
+            
+            NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkTextView.text, @"message", nil];
+            [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", [requestIdsArray objectAtIndex:countRequests - 1]] andParams:params andHttpMethod:@"POST" andDelegate:self];
+            
+        }
+        else {
+            [SVProgressHUD dismiss];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+
     }
     else {
-        [self.navigationController popViewControllerAnimated:YES];
+        [SVProgressHUD dismissWithError:@"Unable to sign into Facebook"];
     }
-
 }
 
+// Called every time a chunk of the data is received
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [imageData appendData:data]; // Build the image
+}
+
+// Called when the entire image is finished downloading
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    // Set the image in the header imageView
+    
+    [user setObject:imageData forKey:@"picture"];
+    [user saveInBackground];
+    [SVProgressHUD dismissWithSuccess:@"Facebook sign-in successful"];
+    //TODO: REMOVE ME
+}
 
 #pragma mark - UIAlertView Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (currentAPICall == kAPIPostToFeed && !somethingElse) {
+    if (currentAPICall == kAPIPostToFeed) {
         [self.navigationController popViewControllerAnimated:YES];
     }
     else {
         if (buttonIndex == 1) {
-            NSArray *permissions = [[NSArray alloc] initWithObjects:@"offline_access", @"publish_stream", @"publish_stream", nil];
+            currentAPICall = kAPISignIn;
+            [SVProgressHUD showWithStatus:@"Signing in with Facebook"];
+            NSArray *permissions = [[NSArray alloc] initWithObjects:@"user_location", @"publish_stream", @"email", nil];
             [PFFacebookUtils linkUser:user permissions:permissions block:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
                     [fbSwitch setOn:YES animated:YES];
                 }
                 else {
+                    [SVProgressHUD dismiss];
+                    [fbSwitch setOn:NO animated:YES];
                     UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
                                                                         message:@"This facebook account is associated with another user"
                                                                        delegate:self 
@@ -418,7 +461,7 @@
                 }
             }];
         }
-        else if (!somethingElse){
+        else {
             [fbSwitch setOn:NO animated:YES];
         }
     }

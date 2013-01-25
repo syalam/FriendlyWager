@@ -7,7 +7,6 @@
 //
 
 #import "MyActionViewController.h"
-#import "LedgerViewController.h"
 #import "MyActionSummaryViewController.h"
 #import "SVProgressHUD.h"
 
@@ -71,6 +70,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:YES];
+    [SVProgressHUD dismiss];
     [stripes removeFromSuperview];
 }
 
@@ -175,6 +175,7 @@
     [compoundQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (objects.count > 0) {
+                [noOpponentsLabel setText:@""];
                 PFObject *wagerObject;
                 for (int i = 0; i < objects.count; i++) {
                     wagerObject = objects[i];
@@ -208,6 +209,10 @@
 
                 }
                 
+            }
+            else {
+                [noOpponentsLabel setText:@"No opponents to display. Make a wager with someone!"];
+                [SVProgressHUD dismiss];
             }
         }
         else

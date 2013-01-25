@@ -41,8 +41,6 @@
     
     detailWithPersonLabel.text = [NSString stringWithFormat:@"%@ %@ %@", @"Wagers", @"with", [[_opponent objectForKey:@"name"] capitalizedString]];
     indexPathArray = [[NSMutableArray alloc]init];
-    //detailTableContents = [[NSMutableArray alloc]initWithArray:_wagerObjects];
-    NSLog(@"%@", _wagerObjects);
     
     UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
     UIButton *custombackButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -74,6 +72,7 @@
     else {
         [self historyButtonClicked:nil];
     }
+    
 }
 
 - (void)viewDidUnload
@@ -272,10 +271,7 @@
             PFObject *wagerObject = [_wagerObjects objectAtIndex:indexPath.row-1];
             
             
-            NSDate *dateCreated = wagerObject.createdAt;
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"M/d/yy"];
-            NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
+            NSString *dateToDisplay = [wagerObject valueForKey:@"gameDate"];
             
             dateLabel.text = dateToDisplay;
             team1Label.text = [wagerObject objectForKey:@"teamWageredToWin"];
@@ -331,11 +327,7 @@
             
             PFObject *wagerObject = [_wagerObjects objectAtIndex:indexPath.row-1];
             
-            
-            NSDate *dateCreated = wagerObject.createdAt;
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"M/d/yy"];
-            NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
+            NSString *dateToDisplay = [wagerObject valueForKey:@"gameDate"];
             
             dateLabel.text = dateToDisplay;
             team1Label.text = [wagerObject objectForKey:@"teamWageredToWin"];
@@ -409,11 +401,7 @@
             
             PFObject *wagerObject = [_wagerObjects objectAtIndex:indexPath.row-1];
             
-            
-            NSDate *dateCreated = wagerObject.createdAt;
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"M/d/yy"];
-            NSString *dateToDisplay = [dateFormatter stringFromDate:dateCreated];
+            NSString *dateToDisplay = [wagerObject valueForKey:@"gameDate"];
             
             dateLabel.text = dateToDisplay;
             team1Label.text = [wagerObject objectForKey:@"teamWageredToWin"];
@@ -452,18 +440,24 @@
                     if([[wagerObject objectForKey:@"teamWageredToWinScore"]intValue] > [[wagerObject objectForKey:@"teamWageredToLoseScore"]intValue]) {
                         [winLoss setImage:[UIImage imageNamed:@"loss"]];
                     }
-                    else {
+                    else if ([[wagerObject objectForKey:@"teamWageredToWinScore"]intValue] < [[wagerObject objectForKey:@"teamWageredToLoseScore"]intValue]){
                         [winLoss setImage:[UIImage imageNamed:@"win"]];
 
+                    }
+                    else {
+                        [winLoss setImage:[UIImage imageNamed:@"tie"]];
                     }
                 }
                 else {
                     if([[wagerObject objectForKey:@"teamWageredToWinScore"]intValue] > [[wagerObject objectForKey:@"teamWageredToLoseScore"]intValue]) {
                             [winLoss setImage:[UIImage imageNamed:@"win"]];
                     }
-                    else {
+                    else if ([[wagerObject objectForKey:@"teamWageredToWinScore"]intValue] < [[wagerObject objectForKey:@"teamWageredToLoseScore"]intValue]) {
                         [winLoss setImage:[UIImage imageNamed:@"loss"]];
                             
+                    }
+                    else {
+                        [winLoss setImage:[UIImage imageNamed:@"tie"]];
                     }
                 }
                 [cell.contentView addSubview:winLoss];
@@ -504,6 +498,7 @@
                         [_wagerObjects removeObjectAtIndex:tag-1];
                         //[indexPathArray removeObjectAtIndex:tag];
                         [actionHistoryTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                        [actionHistoryTableView reloadData];
                     }
                     int newTokenCount = currentTokenCount - [tokensWagered intValue];
                     [tokenObject setObject:[NSNumber numberWithInt:newTokenCount] forKey:@"tokenCount"];
@@ -534,6 +529,7 @@
             [_wagerObjects removeObjectAtIndex:tag-1];
             //[indexPathArray removeObjectAtIndex:tag];
             [actionHistoryTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [actionHistoryTableView reloadData];
         }
         else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to reject this wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];

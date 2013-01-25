@@ -231,6 +231,7 @@
     [queryForWagee whereKey:@"wager" equalTo:_userToWager];
     [queryForWagee whereKey:@"wagee" equalTo:[PFUser currentUser]];
     PFQuery *allWagers = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:queryForWagered, queryForWagee, nil]];
+    [allWagers orderByDescending:@"createdAt"];
     [allWagers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             NSMutableArray *currentArray = [[NSMutableArray alloc]init];
@@ -280,8 +281,6 @@
             NSArray *historyWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"History", @"type", historyWagerCount, @"wagers", historyArray, @"wagerObjects", nil], nil];
             
             wagersArray = [[NSArray alloc]initWithObjects:currentWagersArray, pendingWagersArray, historyWagersArray, nil];
-            //[wagersTableView reloadData];
-            [_tableView reloadData];
         }
 
     }];
