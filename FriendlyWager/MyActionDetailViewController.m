@@ -84,7 +84,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     [self.navigationController.navigationBar addSubview:stripes];
     
@@ -160,7 +159,7 @@
                 [cell addSubview:teamLabel];
                 [cell addSubview:teamToWinLabel];
             }
-
+            
         }
         
         else if ([_wagerType isEqualToString:@"Pending"]) {
@@ -201,7 +200,7 @@
                 [cell addSubview:teamToWinLabel];
                 [cell addSubview:actionLabel];
             }
-
+            
         }
         
         else {
@@ -295,16 +294,16 @@
             team2Label.backgroundColor = [UIColor clearColor];
             teamToWinLabel.backgroundColor = [UIColor clearColor];
             
-
+            
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-                
+            
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell addSubview:dateLabel];
             [cell addSubview:team1Label];
             [cell addSubview:team2Label];
             [cell addSubview:teamToWinLabel];
             [cell.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]]];
-
+            
         }
         
         else if ([_wagerType isEqualToString:@"Pending"]){
@@ -350,7 +349,7 @@
             team2Label.backgroundColor = [UIColor clearColor];
             teamToWinLabel.backgroundColor = [UIColor clearColor];
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-                
+            
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell addSubview:dateLabel];
             [cell addSubview:team1Label];
@@ -366,7 +365,7 @@
                 acceptWagerButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
                 [acceptWagerButton setTitle:@"✔" forState:UIControlStateNormal];
                 [acceptWagerButton setImage:[UIImage imageNamed:@"accept"] forState:UIControlStateNormal];
-                        
+                
                 UIButton *rejectWagerButton = [UIButton buttonWithType:UIButtonTypeCustom];
                 [rejectWagerButton addTarget:self action:@selector(rejectWagerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
                 rejectWagerButton.tag = indexPath.row;
@@ -374,11 +373,11 @@
                 rejectWagerButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
                 [rejectWagerButton setTitle:@"✘" forState:UIControlStateNormal];
                 [rejectWagerButton setImage:[UIImage imageNamed:@"reject"] forState:UIControlStateNormal];
-                        
+                
                 [cell addSubview:acceptWagerButton];
                 [cell addSubview:rejectWagerButton];
             }
-
+            
         }
         
         else {
@@ -426,14 +425,14 @@
             team2Label.backgroundColor = [UIColor clearColor];
             teamToWinLabel.backgroundColor = [UIColor clearColor];
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-                
+            
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell addSubview:dateLabel];
             [cell addSubview:team1Label];
             [cell addSubview:team2Label];
             [cell addSubview:teamToWinLabel];
             [cell.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]]];
-                
+            
             if ([wagerObject objectForKey:@"teamWageredToWinScore"]) {
                 UIImageView *winLoss = [[UIImageView alloc]initWithFrame:CGRectMake(250, 12, 33, 33)];
                 if ([[[wagerObject objectForKey:@"wagee"]objectId] isEqualToString:[[PFUser currentUser]objectId]]) {
@@ -442,7 +441,7 @@
                     }
                     else if ([[wagerObject objectForKey:@"teamWageredToWinScore"]intValue] < [[wagerObject objectForKey:@"teamWageredToLoseScore"]intValue]){
                         [winLoss setImage:[UIImage imageNamed:@"win"]];
-
+                        
                     }
                     else {
                         [winLoss setImage:[UIImage imageNamed:@"tie"]];
@@ -450,11 +449,11 @@
                 }
                 else {
                     if([[wagerObject objectForKey:@"teamWageredToWinScore"]intValue] > [[wagerObject objectForKey:@"teamWageredToLoseScore"]intValue]) {
-                            [winLoss setImage:[UIImage imageNamed:@"win"]];
+                        [winLoss setImage:[UIImage imageNamed:@"win"]];
                     }
                     else if ([[wagerObject objectForKey:@"teamWageredToWinScore"]intValue] < [[wagerObject objectForKey:@"teamWageredToLoseScore"]intValue]) {
                         [winLoss setImage:[UIImage imageNamed:@"loss"]];
-                            
+                        
                     }
                     else {
                         [winLoss setImage:[UIImage imageNamed:@"tie"]];
@@ -463,7 +462,7 @@
                 [cell.contentView addSubview:winLoss];
             }
         }
-
+        
     }
     
     [indexPathArray addObject:indexPath];
@@ -477,38 +476,60 @@
 
 #pragma mark - Button Clicks
 -(void)backButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)acceptWagerButtonClicked:(id)sender {
     NSUInteger tag = [sender tag];
     NSIndexPath *indexPath = [indexPathArray objectAtIndex:tag];
-    PFQuery *updateTokenCount = [PFQuery queryForUser];
-    [updateTokenCount whereKey:@"objectId" equalTo:[[PFUser currentUser]objectId]];
-    [updateTokenCount getFirstObjectInBackgroundWithBlock:^(PFObject *tokenObject, NSError *error) {
+    PFUser *currentUser = [PFUser currentUser];
+    [currentUser fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         if (!error) {
-            int currentTokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
+            currentTokenCount = [[currentUser valueForKey:@"tokenCount"]intValue];
+            int stakedTokens;
+            if ([currentUser valueForKey:@"stakedTokens"]) {
+                stakedTokens = [[currentUser valueForKey:@"stakedTokens"]intValue];
+            }
+            else {
+                stakedTokens = 0;
+            }
+            
             PFObject *wagerObject = [_wagerObjects objectAtIndex:tag-1];
             NSNumber *tokensWagered = [wagerObject objectForKey:@"tokensWagered"];
-            if (currentTokenCount >= [tokensWagered intValue]) {
+            if ((currentTokenCount-stakedTokens) >= [tokensWagered intValue]) {
+                int badge = 0;
+                if ([[NSUserDefaults standardUserDefaults]integerForKey:@"badge"]) {
+                    badge = [[NSUserDefaults standardUserDefaults]integerForKey:@"badge"];
+                }
+                badge = badge - 1;
+                if (badge < 0) {
+                    badge = 0;
+                }
+                [UIApplication sharedApplication].applicationIconBadgeNumber = badge;
+                [[NSUserDefaults standardUserDefaults]setInteger:badge forKey:@"badge"];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+
                 [wagerObject setObject:[NSNumber numberWithBool:YES] forKey:@"wagerAccepted"];
                 [wagerObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     if (succeeded) {
-                        [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [_opponent objectId]] withMessage:[NSString stringWithFormat:@"%@ accepted your wager for the %@ - %@ game", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]]];
+                        [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [_opponent objectId]] withMessage:[NSString stringWithFormat:@"%@ accepted your wager for the %@ - %@ game. It's on!", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]]];
                         [_wagerObjects removeObjectAtIndex:tag-1];
                         //[indexPathArray removeObjectAtIndex:tag];
                         [actionHistoryTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
                         [actionHistoryTableView reloadData];
+                        int newTokenCount = stakedTokens + [tokensWagered intValue];
+                        [currentUser setObject:[NSNumber numberWithInt:newTokenCount] forKey:@"stakedTokens"];
+                        [currentUser saveInBackground];
+                        [_opponent saveInBackground];
                     }
-                    int newTokenCount = currentTokenCount - [tokensWagered intValue];
-                    [tokenObject setObject:[NSNumber numberWithInt:newTokenCount] forKey:@"tokenCount"];
-                    [tokenObject saveInBackground];
+                    
                 }];
             }
             else {
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Token Count" message:@"You don't have enough tokens to accept this wager" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Too Few Tokens" message:@"You don't have enough tokens to make this wager. Would you like to buy more tokens?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Buy 50 tokens ($0.99)", @"Buy 125 tokens ($1.99)", @"Buy 200 tokens ($2.99)", nil];
                 [alert show];
-
+                
             }
         }
         
@@ -525,6 +546,17 @@
     PFObject *wagerObject = [_wagerObjects objectAtIndex:tag-1];
     [wagerObject deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
+            int badge = 0;
+            if ([[NSUserDefaults standardUserDefaults]integerForKey:@"badge"]) {
+                badge = [[NSUserDefaults standardUserDefaults]integerForKey:@"badge"];
+            }
+            badge = badge - 1;
+            if (badge < 0) {
+                badge = 0;
+            }
+            [UIApplication sharedApplication].applicationIconBadgeNumber = badge;
+            [[NSUserDefaults standardUserDefaults]setInteger:badge forKey:@"badge"];
+            [[NSUserDefaults standardUserDefaults]synchronize];
             [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [_opponent objectId]] withMessage:[NSString stringWithFormat:@"%@ rejected your wager for the %@ - %@ game", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], [wagerObject objectForKey:@"teamWageredToWin"], [wagerObject objectForKey:@"teamWageredToLose"]]];
             [_wagerObjects removeObjectAtIndex:tag-1];
             //[indexPathArray removeObjectAtIndex:tag];
@@ -550,7 +582,7 @@
         _wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
     }
     [actionHistoryTableView reloadData];
-
+    
 }
 - (IBAction)pendingButtonClicked:(id)sender {
     [currentButton setImage:[UIImage imageNamed:@"currentOffBtn"] forState:UIControlStateNormal];
@@ -580,6 +612,47 @@
     [actionHistoryTableView reloadData];
     
 }
+
+#pragma mark - UIAlertView Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+    }
+    else if (buttonIndex == 1) {
+        PFUser *currentUser = [PFUser currentUser];
+        [currentUser fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            if (!error) {
+                currentTokenCount = currentTokenCount + 50;
+                [currentUser setValue:[NSNumber numberWithInt:currentTokenCount] forKey:@"tokenCount"];
+                [currentUser saveInBackground];
+            }
+        }];
+        
+    }
+    else if (buttonIndex == 2) {
+        PFUser *currentUser = [PFUser currentUser];
+        [currentUser fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            if (!error) {
+                currentTokenCount = currentTokenCount + 125;
+                [currentUser setValue:[NSNumber numberWithInt:currentTokenCount] forKey:@"tokenCount"];
+                [currentUser saveInBackground];
+            }
+        }];
+        
+    }
+    else {
+        PFUser *currentUser = [PFUser currentUser];
+        [currentUser fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            if (!error) {
+                currentTokenCount = currentTokenCount + 200;
+                [currentUser setValue:[NSNumber numberWithInt:currentTokenCount] forKey:@"tokenCount"];
+                [currentUser saveInBackground];
+            }
+        }];
+
+        
+    }
+}
+
 
 
 @end

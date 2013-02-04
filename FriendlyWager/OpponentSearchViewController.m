@@ -69,7 +69,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     [self.navigationController.navigationBar addSubview:stripes];
     
@@ -176,6 +175,7 @@
 #pragma mark - UITableview delegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSMutableArray *selectedFriendsArray = [[NSMutableArray alloc]initWithObjects:[contentList objectAtIndex:indexPath.row], nil];
+    [self viewWillDisappear:YES];
     if (_wagerInProgress) {
         _viewController.additionalOpponents = selectedFriendsArray;
         [_viewController updateOpponents];
@@ -191,6 +191,7 @@
 
 #pragma mark - Button Clicks
 -(void)backButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

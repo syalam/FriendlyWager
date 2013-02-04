@@ -12,6 +12,8 @@
 #import "SettingsViewController.h"
 #import "HelpViewController.h"
 #import "SVProgressHUD.h"
+#import "AppDelegate.h"
+
 
 
 #define CELL_CONTENT_WIDTH 320.0f
@@ -79,6 +81,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.lastVC = @"TrashTalkViewController";
     [self getTrashTalk];
     
     
@@ -479,7 +483,6 @@
         [SVProgressHUD showWithStatus:@"Getting trash talk"];
         PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
         [queryForTrashTalk whereKey:@"recipients" containsString:[[PFUser currentUser]objectId]];
-        [queryForTrashTalk whereKey:@"sender" notEqualTo:[PFUser currentUser]];
         PFQuery *queryForSentTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
         [queryForSentTrashTalk whereKey:@"sender" equalTo:[PFUser currentUser]];
         PFQuery *queryForAllTrashTalk = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:queryForTrashTalk, queryForSentTrashTalk, nil]];
@@ -556,6 +559,18 @@
                     chatIndicatorLabel.text = [NSString stringWithFormat:@"%d",newItems];
                     [chatIndicator setHidden:NO];
                     [chatIndicatorLabel setHidden:NO];
+                    int badge = 0;
+                    if ([[NSUserDefaults standardUserDefaults]integerForKey:@"badge"]) {
+                        badge = [[NSUserDefaults standardUserDefaults]integerForKey:@"badge"];
+                    }
+                    badge = badge - newItems;
+                    if (badge < 0) {
+                        badge = 0;
+                    }
+                    [UIApplication sharedApplication].applicationIconBadgeNumber = badge;
+                    [[NSUserDefaults standardUserDefaults]setInteger:badge forKey:@"badge"];
+                    [[NSUserDefaults standardUserDefaults]synchronize];
+
                 }
                 else {
                     [chatIndicatorLabel setHidden:YES];

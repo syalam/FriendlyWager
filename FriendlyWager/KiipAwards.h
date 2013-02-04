@@ -12,6 +12,6 @@
 
 @interface KiipAwards : NSObject
 
-- (void)setAwards;
++ (void)setAwards;
 
 @end

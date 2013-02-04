@@ -30,7 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [trashTalkTextView becomeFirstResponder];
     user = [PFUser currentUser];
     
@@ -182,6 +182,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    if (self.myAction) {
+        appDelegate.lastVC = @"NewTrashTalkViewController1";
+    }
+    else {
+        appDelegate.lastVC = @"NewTrashTalkViewController";
+
+    }
     
 }
 

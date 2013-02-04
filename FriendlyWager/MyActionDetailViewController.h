@@ -20,6 +20,7 @@
     
     NSString *wagerOfType;
     NSMutableArray *indexPathArray;
+    int currentTokenCount;
     
     NSMutableArray *detailTableContents;
     UIImageView *stripes;

@@ -15,6 +15,7 @@
 #import "PreviouslyWageredViewController.h"
 #import "ContactInviteViewController.h"
 #import "ScoresViewController.h"
+#import "SVProgressHUD.h"
 
 @implementation MakeAWagerViewController
 @synthesize wagerInProgress = _wagerInProgress;
@@ -112,10 +113,12 @@
 
 #pragma mark - Button Clicks
 - (void)homeButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)backButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -159,15 +162,16 @@
 #pragma mark - UIAlertView Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
+        [SVProgressHUD showWithStatus:@"Signing in with Facebook"];
         NSArray *permissions = [[NSArray alloc] initWithObjects:@"user_location", @"publish_stream", @"email", nil];
         PFUser *user = [PFUser currentUser];
         //[user linkToFacebook:permissions block:^(BOOL succeeded, NSError *error) {
         [PFFacebookUtils linkUser:user permissions:permissions block:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
-                FacebookFriendsViewController *facebookFriends = [[FacebookFriendsViewController alloc]initWithNibName:@"FacebookFriendsViewController" bundle:nil];
-                [self.navigationController pushViewController:facebookFriends animated:YES];
+                [SVProgressHUD dismiss];
             }
             else {
+                [SVProgressHUD dismiss];
                 UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
                                                                     message:@"This facebook account is associated with another user"
                                                                    delegate:self 
@@ -181,6 +185,7 @@
 
 #pragma mark - Helper Methods
 - (void)selectRandomOpponent {
+    [self viewWillDisappear:YES];
     PFQuery *getOpponents = [PFQuery queryForUser];
     [getOpponents whereKey:@"objectId" notEqualTo:[[PFUser currentUser]objectId]];
     [getOpponents findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -205,6 +210,7 @@
 
 #pragma mark - Button Taps
 - (IBAction)searchBtnTapped:(id)sender {
+    [self viewWillDisappear:YES];
     OpponentSearchViewController *search = [[OpponentSearchViewController alloc]initWithNibName:@"OpponentSearchViewController" bundle:nil];
     if (_wagerInProgress) {
         search.wagerInProgress = YES;
@@ -214,6 +220,7 @@
     [self.navigationController pushViewController:search animated:YES];
 }
 - (IBAction)previousBtnTapped:(id)sender {
+    [self viewWillDisappear:YES];
     PreviouslyWageredViewController *pwvc = [[PreviouslyWageredViewController alloc]initWithNibName:@"PreviouslyWageredViewController" bundle:nil];
     if (_wagerInProgress) {
         pwvc.wagerInProgress = YES;
@@ -232,6 +239,7 @@
             facebookFriends.opponentsToWager = _opponentsToWager;
             facebookFriends.viewController = _viewController;
         }
+        [self viewWillDisappear:YES];
         [self.navigationController pushViewController:facebookFriends animated:YES];
     }
     else {
@@ -241,6 +249,7 @@
 
 }
 - (IBAction)twitterFollowerBtnTapped:(id)sender {
+    [self viewWillDisappear:YES];
     TwitterFollowersViewController *twitterFollowers = [[TwitterFollowersViewController alloc]initWithNibName:@"TwitterFollowersViewController" bundle:nil];
     [self.navigationController pushViewController:twitterFollowers animated:YES];
 }
@@ -249,8 +258,71 @@
     [self selectRandomOpponent];
 }
 - (IBAction)inviteBtnTapped:(id)sender {
+    [self viewWillDisappear:YES];
     ContactInviteViewController *civc = [[ContactInviteViewController alloc]initWithNibName:@"ContactInviteViewController" bundle:nil];
     [self.navigationController pushViewController:civc animated:YES];
+}
+
+- (void)request:(PF_FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
+    NSLog(@"received response");
+}
+
+- (void)request:(PF_FBRequest *)request didLoad:(id)result {
+    //save the users username and email address to parse
+    fbUser = [PFUser currentUser];
+    if ([result objectForKey:@"username"] && !fbUser.username) {
+        fbUser.username = [[result objectForKey:@"username"]lowercaseString];
+    }
+    if ([result objectForKey:@"name"]) {
+        [fbUser setObject:[[result objectForKey:@"name"] lowercaseString] forKey:@"name"];
+    }
+    if ([result objectForKey:@"id"]) {
+        [fbUser setObject:[result objectForKey:@"id"] forKey:@"fbId"];
+    }
+    if ([result objectForKey:@"email"] && !fbUser.email) {
+        fbUser.email = [result objectForKey:@"email"];
+    }
+    if ([result objectForKey:@"user_location"] && ![fbUser valueForKey:@"city"]) {
+        [fbUser setObject:[result objectForKey:@"user_location"] forKey:@"city"];
+    }
+    if (![result objectForKey:@"tokenCount"]) {
+        [fbUser setObject:[NSNumber numberWithInt:50] forKey:@"tokenCount"];
+    }
+    if (![result objectForKey:@"tokensStaked"]) {
+        [fbUser setObject:[NSNumber numberWithInt:0] forKey:@"stakedTokens"];
+    }
+    if ([result objectForKey:@"picture"]) {
+        imageData = [[NSMutableData alloc] init];
+        NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", [result objectForKey:@"id"]]];
+        NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:pictureURL
+                                                                  cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                              timeoutInterval:2.0f];
+        // Run network request asynchronously
+        NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    }
+    
+}
+
+// Called every time a chunk of the data is received
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [imageData appendData:data]; // Build the image
+}
+
+// Called when the entire image is finished downloading
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    // Set the image in the header imageView
+    [self viewWillDisappear:YES];
+    [fbUser setObject:imageData forKey:@"picture"];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"facebookConnect"];
+    [fbUser saveInBackground];
+    [SVProgressHUD dismissWithSuccess:@"Facebook sign-in successful"];
+    FacebookFriendsViewController *facebookFriends = [[FacebookFriendsViewController alloc]initWithNibName:@"FacebookFriendsViewController" bundle:nil];
+    [self.navigationController pushViewController:facebookFriends animated:YES];
+
+}
+- (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
+    NSLog(@"%@", error);
+    [SVProgressHUD dismissWithError:@"Sign-in unsuccessful. Please try again"];
 }
 
 

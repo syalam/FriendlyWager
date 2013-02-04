@@ -339,8 +339,6 @@
 		F7A08FC715100DC200471D3C /* TrashTalkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7A08FC515100DC200471D3C /* TrashTalkViewController.xib */; };
 		F7A08FD11510216600471D3C /* NewTrashTalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A08FCF1510216600471D3C /* NewTrashTalkViewController.m */; };
 		F7A08FD21510216600471D3C /* NewTrashTalkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7A08FD01510216600471D3C /* NewTrashTalkViewController.xib */; };
-		F7A70324152438C7007C7468 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A70322152438C7007C7468 /* ChatViewController.m */; };
-		F7A70325152438C7007C7468 /* ChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7A70323152438C7007C7468 /* ChatViewController.xib */; };
 		F7B971F014E38A0800C683B9 /* FacebookFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B971EE14E38A0800C683B9 /* FacebookFriendsViewController.m */; };
 		F7B971F114E38A0800C683B9 /* FacebookFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B971EF14E38A0800C683B9 /* FacebookFriendsViewController.xib */; };
 		F7B9720314E44B9B00C683B9 /* OpponentSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B9720114E44B9B00C683B9 /* OpponentSearchViewController.m */; };
@@ -781,9 +779,6 @@
 		F7A08FCE1510216600471D3C /* NewTrashTalkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTrashTalkViewController.h; sourceTree = "<group>"; };
 		F7A08FCF1510216600471D3C /* NewTrashTalkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTrashTalkViewController.m; sourceTree = "<group>"; };
 		F7A08FD01510216600471D3C /* NewTrashTalkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewTrashTalkViewController.xib; sourceTree = "<group>"; };
-		F7A70321152438C7007C7468 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
-		F7A70322152438C7007C7468 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
-		F7A70323152438C7007C7468 /* ChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatViewController.xib; sourceTree = "<group>"; };
 		F7B971ED14E38A0800C683B9 /* FacebookFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookFriendsViewController.h; sourceTree = "<group>"; };
 		F7B971EE14E38A0800C683B9 /* FacebookFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookFriendsViewController.m; sourceTree = "<group>"; };
 		F7B971EF14E38A0800C683B9 /* FacebookFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FacebookFriendsViewController.xib; sourceTree = "<group>"; };
@@ -1713,7 +1708,6 @@
 			isa = PBXGroup;
 			children = (
 				F7A08FC8151020BC00471D3C /* New Trash Talk */,
-				F7A70327152438DE007C7468 /* Chat */,
 			);
 			name = "Trash Talk";
 			sourceTree = "<group>";
@@ -1726,16 +1720,6 @@
 				F7A08FD01510216600471D3C /* NewTrashTalkViewController.xib */,
 			);
 			name = "New Trash Talk";
-			sourceTree = "<group>";
-		};
-		F7A70327152438DE007C7468 /* Chat */ = {
-			isa = PBXGroup;
-			children = (
-				F7A70321152438C7007C7468 /* ChatViewController.h */,
-				F7A70322152438C7007C7468 /* ChatViewController.m */,
-				F7A70323152438C7007C7468 /* ChatViewController.xib */,
-			);
-			name = Chat;
 			sourceTree = "<group>";
 		};
 		F7B971EB14E389CF00C683B9 /* Facebook Friends */ = {
@@ -2127,7 +2111,6 @@
 				F7D70C3F14F1EE9A001F8525 /* SVProgressHUD.bundle in Resources */,
 				F7A08FC715100DC200471D3C /* TrashTalkViewController.xib in Resources */,
 				F7A08FD21510216600471D3C /* NewTrashTalkViewController.xib in Resources */,
-				F7A70325152438C7007C7468 /* ChatViewController.xib in Resources */,
 				F7F050C0153604EC0000A95E /* CHANGELOG.md in Resources */,
 				F7F050C1153604EC0000A95E /* Kiip.html in Resources */,
 				F7F050C7153604EC0000A95E /* index.html in Resources */,
@@ -2455,7 +2438,6 @@
 				F7D70C4014F1EE9A001F8525 /* SVProgressHUD.m in Sources */,
 				F7A08FC615100DC200471D3C /* TrashTalkViewController.m in Sources */,
 				F7A08FD11510216600471D3C /* NewTrashTalkViewController.m in Sources */,
-				F7A70324152438C7007C7468 /* ChatViewController.m in Sources */,
 				F74B3123153C9DBA00A66EDB /* PreviouslyWageredViewController.m in Sources */,
 				F7F5F5E11540B3C100D1ED7C /* ContactInviteViewController.m in Sources */,
 				F799D4CB155AE53E00D1157A /* KiipAwards.m in Sources */,
@@ -2541,8 +2523,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "120421F6-2F31-4A7C-BBDD-E9DB20621D08";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "120421F6-2F31-4A7C-BBDD-E9DB20621D08";
+				PROVISIONING_PROFILE = "A81FB983-8FF7-4C6B-9F68-FB0F7C4D24F7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A81FB983-8FF7-4C6B-9F68-FB0F7C4D24F7";
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
@@ -2564,8 +2546,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "120421F6-2F31-4A7C-BBDD-E9DB20621D08";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "120421F6-2F31-4A7C-BBDD-E9DB20621D08";
+				PROVISIONING_PROFILE = "A81FB983-8FF7-4C6B-9F68-FB0F7C4D24F7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A81FB983-8FF7-4C6B-9F68-FB0F7C4D24F7";
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;
@@ -2595,8 +2577,8 @@
 					"-lKiip",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "120421F6-2F31-4A7C-BBDD-E9DB20621D08";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "120421F6-2F31-4A7C-BBDD-E9DB20621D08";
+				PROVISIONING_PROFILE = "A81FB983-8FF7-4C6B-9F68-FB0F7C4D24F7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A81FB983-8FF7-4C6B-9F68-FB0F7C4D24F7";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2625,8 +2607,8 @@
 					"-lKiip",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "120421F6-2F31-4A7C-BBDD-E9DB20621D08";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "120421F6-2F31-4A7C-BBDD-E9DB20621D08";
+				PROVISIONING_PROFILE = "A81FB983-8FF7-4C6B-9F68-FB0F7C4D24F7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A81FB983-8FF7-4C6B-9F68-FB0F7C4D24F7";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};

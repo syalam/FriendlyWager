@@ -75,20 +75,8 @@
     else {
         [chatPushNotificationSwitch setOn:YES];
     }
-    
-    PFQuery *queryForUser = [PFQuery queryForUser];
-    [queryForUser whereKey:@"objectId" equalTo:[[PFUser currentUser]objectId]];
-    [queryForUser getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        if (!error) {
-            currentUser = ((PFUser *)object);
-        }
-        else {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to connect to the server at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-        }
-
-    }];
-
+    currentUser = [PFUser currentUser];
+    [currentUser fetchIfNeeded];
 }
 
 - (void)didReceiveMemoryWarning

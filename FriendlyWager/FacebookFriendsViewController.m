@@ -13,6 +13,7 @@
 #import "MyActionSummaryViewController.h"
 #import "ScoresViewController.h"
 #import "SVProgressHUD.h"
+#import "TCImageView.h"
 
 @implementation FacebookFriendsViewController
 @synthesize contentList;
@@ -131,7 +132,7 @@
 #pragma mark - Facebook Callback Methods
 - (void)sendFacebookRequest {
     //TODO: Add picture and link keys to this dictionary
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"You should download Friendly Wager. It's Awesome!", @"message", nil];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"You should download the Friendly Wager app. It's awesome! Check out www.friendlywager.me.", @"message", nil];
     [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", uid] andParams:params andHttpMethod:@"POST" andDelegate:self];
 }
 
@@ -179,36 +180,13 @@
     }
     else if (currentApiCall == kAPIInviteFriendToFW) {
         NSLog(@"%@", @"Successfully Invited!");
-        
-        PFQuery *awardTokens = [PFQuery queryForUser];
-        [awardTokens whereKey:@"objectId" equalTo:[[PFUser currentUser]objectId]];
-        [awardTokens findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        PFUser *currentUser = [PFUser currentUser];
+        [currentUser fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
             if (!error) {
-                //check if user exists in this table
-                if (objects.count > 0) {
-                    for (PFObject *tokenObject in objects) {
-                        int currentTokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
-                        //add 5 tokens
-                        int updatedTokenCount = currentTokenCount + 5; 
-                        [tokenObject setValue:[NSNumber numberWithInt:updatedTokenCount] forKey:@"tokenCount"];
-                        [tokenObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                            if (!error) {
-                                NSLog(@"%@", @"tokens added");
-                            } 
-                        }];
-                    }
-                }
-                //if the user doesn't exist in the tokens table, add the user along with 5 points to start off with
-                else {
-                    PFObject *tokens = [PFObject objectWithClassName:@"tokens"];
-                    [tokens setValue:[PFUser currentUser] forKey:@"user"];
-                    [tokens setValue:[NSNumber numberWithInt:5] forKey:@"tokenCount"];
-                    [tokens saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        if (!error) {
-                            NSLog(@"%@", @"tokens added");
-                        } 
-                    }];
-                }
+                int currentTokenCount = [[currentUser objectForKey:@"tokenCount"]intValue];
+                int updatedTokenCount = currentTokenCount + 5;
+                [currentUser setObject:[NSNumber numberWithInt:updatedTokenCount] forKey:@"tokenCount"];
+                [currentUser saveInBackground];
             }
         }];
     }
@@ -266,11 +244,17 @@
             }
         }
     }
-    
-    cell.textLabel.text = [[[contentForThisRow valueForKey:@"data"]valueForKey:@"name"] capitalizedString];
-    cell.textLabel.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
-    cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
-    [cell.textLabel setBackgroundColor:[UIColor clearColor]];
+    TCImageView *thumbnailImage = [[TCImageView alloc] initWithFrame:CGRectMake(10, 4, 48, 48)];
+    [cell addSubview:thumbnailImage];
+    NSString *userId = [[contentForThisRow valueForKey:@"data"]valueForKey:@"uid"];
+    NSString *videoThumbUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", userId];
+    [thumbnailImage reloadWithUrl:videoThumbUrl];
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(65, 19, 160, 20)];
+    [cell addSubview:nameLabel];
+    nameLabel.font = [UIFont boldSystemFontOfSize:14];
+    nameLabel.backgroundColor = [UIColor clearColor];
+    nameLabel.text = [[[contentForThisRow valueForKey:@"data"]valueForKey:@"name"] capitalizedString];
+    nameLabel.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
     [cell.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBG1"]]];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
@@ -325,7 +309,7 @@
 
 -(void)selectButtonClicked:(id)sender {
     if (selectedItems.count > 0) {
-        [SVProgressHUD showWithStatus:@"Initiating Wager"];
+        [SVProgressHUD showWithStatus:@"Adding friends to wager"];
         
         //NSString *jsonString = [[selectedItems allValues] JSONString];
         NSMutableArray *selectedItemsArray = [[NSMutableArray alloc]initWithCapacity:1];
@@ -350,6 +334,7 @@
                     }
                     if (_wagerInProgress) {
                         _viewController.additionalOpponents = peopleToWagerArray;
+                        [_viewController updateOpponents];
                         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -3)] animated:YES];
                     }
                     else {

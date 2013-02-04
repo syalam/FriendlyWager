@@ -87,11 +87,13 @@
 
 #pragma mark - Button Clicks
 - (IBAction)resetButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     [PFUser requestPasswordResetForEmailInBackground:emailAddressTextField.text];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)backButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

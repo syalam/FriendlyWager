@@ -98,11 +98,11 @@
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     UIBarButtonItem *inviteBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = inviteBarButton;
-
-
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -141,7 +141,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSArray *sectionContents = [_contentList objectAtIndex:section];
-    return sectionContents.count; 
+    return sectionContents.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -189,43 +189,43 @@
 }
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ }
+ else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+ {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 #pragma mark - Table view delegate
 
@@ -254,7 +254,7 @@
     for (NSUInteger i = 0; i < resultSetArray.count; i++) {
         [namesArray addObject:[NSString stringWithFormat:@"%@ %@", [[resultSetArray objectAtIndex:i]valueForKey:@"firstName"], [[resultSetArray objectAtIndex:i]valueForKey:@"lastName"]]];
     }
-
+    
     for (NSUInteger i = 0; i < indexTitles.count; i++) {
         NSMutableArray *sectionContent = [[NSMutableArray alloc]initWithCapacity:1];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"SELF BEGINSWITH '%@'", [indexTitles objectAtIndex:i]]];
@@ -284,7 +284,7 @@
     NSMutableArray *inviteeArray = [[NSMutableArray alloc]init];
     if (selectedItems.count > 0) {
         NSArray *selectedItemsArray = [selectedItems allValues];
-                
+        
         NSLog(@"%@, %d objects", selectedItemsArray, selectedItemsArray.count);
         
         for (NSUInteger i = 0; i < selectedItemsArray.count; i++) {
@@ -303,7 +303,7 @@
             
             [mailer setSubject:@"Friendly Wager Invitation"];
             [mailer setToRecipients:inviteeArray];
-            [mailer setMessageBody:@"Join Friendly Wager. It's Awesome!" isHTML:NO];
+            [mailer setMessageBody:@"You should download the Friendly Wager app. It's awesome! Check out www.friendlywager.me." isHTML:YES];
             
             [self presentModalViewController:mailer animated:YES];
         }
@@ -316,7 +316,7 @@
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please select the contacts whom you'd like to invite to Friendly Wager" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
-
+    
 }
 
 - (void)backButtonClicked:(id)sender {
@@ -329,38 +329,17 @@
     switch (result)
     {
         case MFMailComposeResultSent: {
-            PFQuery *awardTokens = [PFQuery queryForUser];
-            [awardTokens whereKey:@"objectId" equalTo:[[PFUser currentUser]objectId]];
-            [awardTokens findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            PFUser *currentUser = [PFUser currentUser];
+            [currentUser fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
                 if (!error) {
-                    //check if user exists in this table
-                    if (objects.count > 0) {
-                        for (PFObject *tokenObject in objects) {
-                            int currentTokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
-                            //add 5 tokens
-                            int updatedTokenCount = currentTokenCount + 5; 
-                            [tokenObject setValue:[NSNumber numberWithInt:updatedTokenCount] forKey:@"tokenCount"];
-                            [tokenObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                                if (!error) {
-                                    NSLog(@"%@", @"tokens added");
-                                } 
-                            }];
-                        }
-                    }
-                    //if the user doesn't exist in the tokens table, add the user along with 5 points to start off with
-                    else {
-                        PFObject *tokens = [PFObject objectWithClassName:@"tokens"];
-                        [tokens setValue:[PFUser currentUser] forKey:@"user"];
-                        [tokens setValue:[NSNumber numberWithInt:5] forKey:@"tokenCount"];
-                        [tokens saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                            if (!error) {
-                                NSLog(@"%@", @"tokens added");
-                            } 
-                        }];
-                    }
+                    int currentTokenCount = [[currentUser objectForKey:@"tokenCount"]intValue];
+                    int updatedTokenCount = currentTokenCount + 5;
+                    [currentUser setValue:[NSNumber numberWithInt:updatedTokenCount] forKey:@"tokenCount"];
+                    [currentUser saveInBackground];
+                    
                 }
             }];
-
+            
             break;
         }
             

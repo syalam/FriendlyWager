@@ -21,5 +21,6 @@
 @property (strong, nonatomic) UINavigationController *navigationController;
 @property (strong, nonatomic) TrashTalkViewController *trashTalkViewController;
 @property BOOL lookingForScores;
+@property (nonatomic,retain)NSString *lastVC;
 
 @end

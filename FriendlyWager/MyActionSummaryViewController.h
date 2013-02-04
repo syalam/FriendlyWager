@@ -40,6 +40,7 @@
     
     NSString *currentWagers;
     NSString *opponent;
+    PFUser *currentUser;
     
     NSArray *wagersArray;
     

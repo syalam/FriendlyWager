@@ -176,6 +176,9 @@
                     if (![user objectForKey:@"tokenCount"]) {
                         [user setObject:[NSNumber numberWithInt:50] forKey:@"tokenCount"];
                     }
+                    if (![user objectForKey:@"stakedTokens"]) {
+                        [user setObject:[NSNumber numberWithInt:0] forKey:@"stakedTokesn"];
+                    }
                     [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                         if (!error) {
                             [self.navigationController dismissModalViewControllerAnimated:YES];
@@ -232,6 +235,9 @@
     }
     if (![result objectForKey:@"tokenCount"]) {
         [fbUser setObject:[NSNumber numberWithInt:50] forKey:@"tokenCount"];
+    }
+    if (![result objectForKey:@"tokensStaked"]) {
+        [fbUser setObject:[NSNumber numberWithInt:0] forKey:@"stakedTokens"];
     }
     if ([result objectForKey:@"picture"]) {
         imageData = [[NSMutableData alloc] init];

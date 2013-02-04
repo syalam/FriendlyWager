@@ -77,7 +77,7 @@
     scrollView.contentSize = CGSizeMake(320, 560);
     
     //wagerView.hidden = YES;
-    [self.presentingViewController.navigationController setNavigationBarHidden:YES]; 
+    [self.presentingViewController.navigationController setNavigationBarHidden:YES];
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG5_BG"]]];
     
@@ -158,18 +158,18 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
     self.navigationItem.leftBarButtonItem = backButton;
-
+    
     
     /*UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
-    [button addTarget:self action:@selector(wagerButtonClicked:) forControlEvents:UIControlEventTouchDown];
-    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
-    [button setTitle:@"Wager" forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    UIBarButtonItem *wagerBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
-    self.navigationItem.rightBarButtonItem = wagerBarButton;*/
-
+     [button addTarget:self action:@selector(wagerButtonClicked:) forControlEvents:UIControlEventTouchDown];
+     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
+     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
+     [button setTitle:@"Wager" forState:UIControlStateNormal];
+     button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+     UIBarButtonItem *wagerBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
+     self.navigationItem.rightBarButtonItem = wagerBarButton;*/
+    
     
     currentCountLabel = [[KBLabel alloc]initWithFrame:CGRectMake(42, 267, 42, 30)];
     [currentCountLabel setTextColor:[UIColor colorWithRed:.4196 green:.282 blue:.1216 alpha:1]];
@@ -212,7 +212,7 @@
     
     //Load Top bar data
     [self getPointCount];
-    [self getWinLossCounts];
+    [self rankByWins];
     [self loadTrashTalk];
 }
 
@@ -221,8 +221,8 @@
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     [self.navigationController.navigationBar addSubview:stripes];
     /*if (_tabParentView) {
-        [_tabParentView.navigationController setNavigationBarHidden:NO];
-    }*/
+     [_tabParentView.navigationController setNavigationBarHidden:NO];
+     }*/
     
     PFQuery *queryForWagered = [PFQuery queryWithClassName:@"wagers"];
     [queryForWagered whereKey:@"wager" equalTo:[PFUser currentUser]];
@@ -234,55 +234,29 @@
     [allWagers orderByDescending:@"createdAt"];
     [allWagers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
+            currentUser = [PFUser currentUser];
+            [currentUser fetchIfNeeded];
             NSMutableArray *currentArray = [[NSMutableArray alloc]init];
             NSMutableArray *pendingArray = [[NSMutableArray alloc]init];
             NSMutableArray *historyArray = [[NSMutableArray alloc]init];
             
             for (PFObject *wager in objects) {
-                NSString *gameDate = [wager valueForKey:@"gameDate"];
-                gameDate = [NSString stringWithFormat:@"%@ %@", gameDate, [wager valueForKey:@"gameTime"]];
-                NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-                [dateFormat setDateFormat:@"MMddyyyy HH:mm"];
-                [dateFormat setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"EST"]];
-                NSString *gameDateModified = [gameDate stringByReplacingOccurrencesOfString:@"/" withString:@""];
-                NSDate *date = [dateFormat dateFromString:gameDateModified];
-                NSDate *currentDate = [NSDate date];
-
-                if ([currentDate compare:date] == NSOrderedDescending && [[wager objectForKey:@"wagerAccepted"] isEqual:[NSNumber numberWithBool:YES]] && [wager objectForKey:@"teamWageredToWinScore"]) {
+                
+                if ([wager objectForKey:@"teamWageredToWinScore"]) {
                     [historyArray addObject:wager];
                 }
-                else if ([[wager objectForKey:@"wagerAccepted"] isEqual:[NSNumber numberWithBool:NO]] && [currentDate compare:date] == NSOrderedAscending) {
+                else if ([[wager objectForKey:@"wagerAccepted"] isEqual:[NSNumber numberWithBool:NO]]) {
                     [pendingArray addObject:wager];
                 }
-                else if ([[wager objectForKey:@"wagerAccepted"] isEqual:[NSNumber numberWithBool:YES]] && [currentDate compare:date] == NSOrderedAscending) {
+                else if ([[wager objectForKey:@"wagerAccepted"] isEqual:[NSNumber numberWithBool:YES]] && ![wager objectForKey:@"teamWageredToWinScore"]) {
                     [currentArray addObject:wager];
                 }
                 
             }
-            NSString *currentWagerCount = [NSString stringWithFormat:@"%d", currentArray.count];
-            NSString *pendingWagerCount = [NSString stringWithFormat:@"%d", pendingArray.count];
-            NSString *historyWagerCount = [NSString stringWithFormat:@"%d", historyArray.count];
-            NSLog(@"%@", currentWagerCount);
-            NSLog(@"%@", pendingWagerCount);
-            NSLog(@"%@", historyWagerCount);
-            currentCountLabel.text = currentWagerCount;
+            [self checkPending:pendingArray withCurrent:currentArray andHistory:historyArray];
             
-            pendingCountLabel.text = pendingWagerCount;
-            if (pendingArray.count) {
-                pendingCountLabel.red = .961;
-                pendingCountLabel.green = .7098;
-                pendingCountLabel.blue = .0471;
-            }
-            
-            historyCountLabel.text = historyWagerCount;
-            
-            NSArray *currentWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Current", @"type", currentWagerCount, @"wagers",currentArray, @"wagerObjects", nil], nil];
-            NSArray *pendingWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Pending", @"type", pendingWagerCount, @"wagers", pendingArray, @"wagerObjects", nil] , nil];
-            NSArray *historyWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"History", @"type", historyWagerCount, @"wagers", historyArray, @"wagerObjects", nil], nil];
-            
-            wagersArray = [[NSArray alloc]initWithObjects:currentWagersArray, pendingWagersArray, historyWagersArray, nil];
         }
-
+        
     }];
 }
 
@@ -308,12 +282,14 @@
 
 #pragma mark - Button Clicks
 - (void)backButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     NSArray *viewControllers = [self.navigationController viewControllers];
     [[viewControllers objectAtIndex:0]viewWillAppear:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)wagerButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     NSMutableArray *userToWager = [[NSMutableArray alloc]initWithObjects:_userToWager, nil];
     ScoresViewController *sports = [[ScoresViewController alloc]initWithNibName:@"ScoresViewController" bundle:nil];
     sports.opponentsToWager = userToWager;
@@ -321,6 +297,7 @@
     [self.navigationController pushViewController:sports animated:YES];
 }
 - (IBAction)chatButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     NewTrashTalkViewController *ntvc = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
     ntvc.recipients = [[NSMutableArray alloc]initWithObjects:_userToWager, nil];
     ntvc.myActionScreen = self;
@@ -328,6 +305,7 @@
 }
 
 - (IBAction)currentButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     if ([wagersArray objectAtIndex:0]) {
         NSArray *sectionContents = [wagersArray objectAtIndex:0];
         id contentForThisRow = [sectionContents objectAtIndex:0];
@@ -339,10 +317,11 @@
         actionDetail.wagersArray = [wagersArray mutableCopy];
         actionDetail.title = @"Current";
         [self.navigationController pushViewController:actionDetail animated:YES];
-
+        
     }
 }
 - (IBAction)pendingButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     if ([wagersArray objectAtIndex:1]) {
         NSArray *sectionContents = [wagersArray objectAtIndex:1];
         id contentForThisRow = [sectionContents objectAtIndex:0];
@@ -354,10 +333,11 @@
         actionDetail.wagersArray = [wagersArray mutableCopy];
         actionDetail.title = @"Pending";
         [self.navigationController pushViewController:actionDetail animated:YES];
-
+        
     }
 }
 - (IBAction)historyButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     if ([wagersArray objectAtIndex:2]) {
         NSArray *sectionContents = [wagersArray objectAtIndex:2];
         id contentForThisRow = [sectionContents objectAtIndex:0];
@@ -373,6 +353,7 @@
 }
 
 -(void)replyButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     NSUInteger tag = [sender tag];
     NSLog(@"%d", tag);
     NSString *recipients = [[[[_contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"sender"] objectId];
@@ -401,6 +382,7 @@
     [recipientSearch findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             new.recipients = [objects mutableCopy];
+            new.myAction = YES;
             [self.navigationController pushViewController:new animated:YES];
         }
         
@@ -436,7 +418,7 @@
     else {
         return 58;
     }
-
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -451,7 +433,7 @@
         
         PFObject *objectToDisplay = [[_contentList objectAtIndex:indexPath.row]valueForKey:@"data"];
         NSDate *dateCreated = objectToDisplay.createdAt;
-
+        
         NSCalendar *calendar = [NSCalendar currentCalendar];
         unsigned int unitFlags =  NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayOrdinalCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit;
         NSDateComponents *messageDateComponents = [calendar components:unitFlags fromDate:dateCreated];
@@ -560,7 +542,7 @@
     cell.contentView.backgroundColor = [UIColor clearColor];
     cell.backgroundColor = [UIColor clearColor];
     return cell;
-
+    
 }
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -594,20 +576,20 @@
 }
 
 /*#pragma mark - TableView Delegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
-    id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
-    MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil];
-    actionDetail.wagerType = [contentForThisRow objectForKey:@"type"];
-    actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
-    actionDetail.opponent = _userToWager;
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self.navigationController pushViewController:actionDetail animated:YES];
-}*/
+ - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+ NSArray *sectionContents = [[self contentList] objectAtIndex:indexPath.section];
+ id contentForThisRow = [sectionContents objectAtIndex:indexPath.row];
+ MyActionDetailViewController *actionDetail = [[MyActionDetailViewController alloc]initWithNibName:@"MyActionDetailViewController" bundle:nil];
+ actionDetail.wagerType = [contentForThisRow objectForKey:@"type"];
+ actionDetail.wagerObjects = [contentForThisRow objectForKey:@"wagerObjects"];
+ actionDetail.opponent = _userToWager;
+ [tableView deselectRowAtIndexPath:indexPath animated:YES];
+ [self.navigationController pushViewController:actionDetail animated:YES];
+ }*/
 
 #pragma mark - UIAlertView Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-
+    
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -629,57 +611,35 @@
                 for (PFObject *tokenObject in objects) {
                     int tokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
                     pointCountLabel.text = [NSString stringWithFormat:@"%d", tokenCount];
-                }
-            }
-        }
-    }];
-}
-
-- (void)getWinLossCounts {
-    NSMutableArray *winArray = [[NSMutableArray alloc]init];
-    NSMutableArray *lossArray = [[NSMutableArray alloc]init];
-    PFQuery *queryGameWagered = [PFQuery queryWithClassName:@"wagers"];
-    [queryGameWagered whereKey:@"wager" equalTo:_userToWager];
-    PFQuery *queryWageredMe = [PFQuery queryWithClassName:@"wagers"];
-    [queryWageredMe whereKey:@"wagee" equalTo:_userToWager];
-    PFQuery *allWagers = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:queryGameWagered, queryWageredMe, nil]];
-    [allWagers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            for (NSUInteger i = 0; i < objects.count; i++) {
-                PFObject *wagerObject = [objects objectAtIndex:i];
-                PFUser *personWagered = [wagerObject objectForKey:@"wagee"];
-                if ([wagerObject objectForKey:@"teamWageredToWinScore"] && [wagerObject objectForKey:@"teamWageredToLoseScore"]) {
+                    if ([tokenObject valueForKey:@"winCount"]) {
+                        winLabel.text = [NSString stringWithFormat:@"%@", [tokenObject valueForKey:@"winCount"]];
+                    }
+                    if ([tokenObject valueForKey:@"lossCount"]) {
+                        lossLabel.text = [NSString stringWithFormat:@"%@", [tokenObject valueForKey:@"lossCount"]];
+                    }
                     
-                    int teamWageredToWinScore = [[wagerObject objectForKey:@"teamWageredToWinScore"]intValue];
-                    int teamWageredToLoseScore = [[wagerObject objectForKey:@"teamWageredToLoseScore"]intValue];
-                            
-                            
-                    if (teamWageredToWinScore > teamWageredToLoseScore) {
-                        if (![[personWagered objectId] isEqualToString:[[PFUser currentUser]objectId]]) {
-                            [winArray addObject:@""];
-                        }
-                        else {
-                            [lossArray addObject:@""];
-                        }
-
-                    }
-                    else {
-                        if ([[personWagered objectId] isEqualToString:[[PFUser currentUser]objectId]]) {
-                            [winArray addObject:@""];
-                        }
-                        else {
-                            [lossArray addObject:@""];
-                        }
-
-                    }
                 }
-                        
-                winLabel.text = [NSString stringWithFormat:@"%d", winArray.count];
-                lossLabel.text = [NSString stringWithFormat:@"%d", lossArray.count];
             }
         }
     }];
 }
+- (void)rankByWins {
+    NSMutableArray *objectsToDisplay = [[NSMutableArray alloc]init];
+    PFQuery *getWinCounts = [PFQuery queryForUser];
+    [getWinCounts orderByDescending:@"winCount"];
+    [getWinCounts setLimit:200];
+    [getWinCounts findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (int i = 0; i < objects.count; i++) {
+                if ([[objects[i] valueForKey:@"objectId"]isEqualToString:_userToWager.objectId]) {
+                        rankLabel.text = [NSString stringWithFormat:@"%d",i+1];
+                }
+            }
+            
+        }
+    }];
+}
+
 
 - (void)loadTrashTalk {
     PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
@@ -700,6 +660,97 @@
             [self.tableView reloadData];
         }
     }];
+}
+
+- (void)checkPending:(NSMutableArray *)pendingArray withCurrent:(NSMutableArray *)currentArray andHistory:(NSMutableArray *)historyArray{
+    if (pendingArray.count) {
+        NSMutableArray *pendingQueries = [[NSMutableArray alloc]init];
+        for (int i = 0; i < pendingArray.count; i++) {
+            [pendingQueries addObject:[PFQuery queryWithClassName:@"Games"]];
+            [pendingQueries[i] whereKey:@"gameId" equalTo:[pendingArray[i]valueForKey:@"gameId"]];
+            [pendingQueries[i] whereKey:@"final" equalTo:[NSNumber numberWithBool:YES]];
+        }
+        PFQuery *compoundQuery = [PFQuery orQueryWithSubqueries:pendingQueries];
+        [compoundQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                int stakedTokens = [[currentUser valueForKey:@"stakedTokens"]intValue];
+                for (PFObject *object in objects) {
+                    for (int i = 0; i < pendingArray.count;i++) {
+                        if ([[pendingArray[i] valueForKey:@"gameId"]isEqualToString:[object valueForKey:@"gameId"]]) {
+                            
+                            if ([currentUser.objectId isEqualToString:[[pendingArray[i] valueForKey:@"wager"]objectId]]) {
+                                stakedTokens = stakedTokens - 5;
+                                [pendingArray[i] deleteEventually];
+                            }
+                            [pendingArray removeObjectAtIndex:i];
+                            int badge = 0;
+                            if ([[NSUserDefaults standardUserDefaults]integerForKey:@"badge"]) {
+                                badge = [[NSUserDefaults standardUserDefaults]integerForKey:@"badge"];
+                            }
+                            badge = badge - 1;
+                            if (badge < 0) {
+                                badge = 0;
+                            }
+                            [UIApplication sharedApplication].applicationIconBadgeNumber = badge;
+                            [[NSUserDefaults standardUserDefaults]setInteger:badge forKey:@"badge"];
+                            [[NSUserDefaults standardUserDefaults]synchronize];
+                            
+                        }
+                    }
+                }
+                [currentUser setObject:[NSNumber numberWithInt:stakedTokens] forKey:@"stakedTokens"];
+                [currentUser saveEventually];
+                NSString *currentWagerCount = [NSString stringWithFormat:@"%d", currentArray.count];
+                NSString *pendingWagerCount = [NSString stringWithFormat:@"%d", pendingArray.count];
+                NSString *historyWagerCount = [NSString stringWithFormat:@"%d", historyArray.count];
+                NSLog(@"%@", currentWagerCount);
+                NSLog(@"%@", pendingWagerCount);
+                NSLog(@"%@", historyWagerCount);
+                currentCountLabel.text = currentWagerCount;
+                
+                pendingCountLabel.text = pendingWagerCount;
+                if (pendingArray.count) {
+                    pendingCountLabel.red = .961;
+                    pendingCountLabel.green = .7098;
+                    pendingCountLabel.blue = .0471;
+                }
+                
+                historyCountLabel.text = historyWagerCount;
+                
+                NSArray *currentWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Current", @"type", currentWagerCount, @"wagers",currentArray, @"wagerObjects", nil], nil];
+                NSArray *pendingWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Pending", @"type", pendingWagerCount, @"wagers", pendingArray, @"wagerObjects", nil] , nil];
+                NSArray *historyWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"History", @"type", historyWagerCount, @"wagers", historyArray, @"wagerObjects", nil], nil];
+                
+                wagersArray = [[NSArray alloc]initWithObjects:currentWagersArray, pendingWagersArray, historyWagersArray, nil];
+            }
+        }];
+        
+    }
+    else {
+        NSString *currentWagerCount = [NSString stringWithFormat:@"%d", currentArray.count];
+        NSString *pendingWagerCount = [NSString stringWithFormat:@"%d", pendingArray.count];
+        NSString *historyWagerCount = [NSString stringWithFormat:@"%d", historyArray.count];
+        NSLog(@"%@", currentWagerCount);
+        NSLog(@"%@", pendingWagerCount);
+        NSLog(@"%@", historyWagerCount);
+        currentCountLabel.text = currentWagerCount;
+        
+        pendingCountLabel.text = pendingWagerCount;
+        if (pendingArray.count) {
+            pendingCountLabel.red = .961;
+            pendingCountLabel.green = .7098;
+            pendingCountLabel.blue = .0471;
+        }
+        
+        historyCountLabel.text = historyWagerCount;
+        
+        NSArray *currentWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Current", @"type", currentWagerCount, @"wagers",currentArray, @"wagerObjects", nil], nil];
+        NSArray *pendingWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"Pending", @"type", pendingWagerCount, @"wagers", pendingArray, @"wagerObjects", nil] , nil];
+        NSArray *historyWagersArray = [[NSArray alloc]initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"History", @"type", historyWagerCount, @"wagers", historyArray, @"wagerObjects", nil], nil];
+        
+        wagersArray = [[NSArray alloc]initWithObjects:currentWagersArray, pendingWagersArray, historyWagersArray, nil];
+        
+    }
 }
 
 @end

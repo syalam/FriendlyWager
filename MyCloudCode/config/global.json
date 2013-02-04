@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "FriendlyWager": {
+            "applicationId": "61ZxKrd2KsVmiuxHBMlBi5bKmaySbRMk4dR8xLv2", 
+            "masterKey": "GkgLT5AT8KP35hpFiNIuSJSabg4iPdAlyRWWLESa"
+        }, 
+        "_default": {
+            "link": "FriendlyWager"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.1.16"
+    }
+}

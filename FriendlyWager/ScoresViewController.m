@@ -59,8 +59,6 @@
 {
     [super viewDidLoad];
     stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
-    //[stripes setImage:[UIImage imageNamed:@"stripes"]];
-    //[self.navigationController.navigationBar addSubview:stripes];
     background.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     background.contentMode = UIViewContentModeTop;
     scoresTableView.dataSource = self;
@@ -108,7 +106,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //stripes = [[UIImageView alloc]initWithFrame:CGRectMake(230, 0, 81, 44)];
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     [self.navigationController.navigationBar addSubview:stripes];
 
@@ -172,8 +169,7 @@
 
 #pragma mark - TableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //[self viewWillDisappear:NO];
-    [stripes removeFromSuperview];
+    [self viewWillDisappear:YES];
     NSArray *contentForThisRow = [[self contentList] objectAtIndex:indexPath.row];
 
     
@@ -199,6 +195,7 @@
 
 #pragma mark - Button Clicks
 - (void)backButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     if (_opponentsToWager) {
         [self viewWillDisappear:YES];
         [self.navigationController popViewControllerAnimated:YES];
@@ -208,10 +205,12 @@
     }
 }
 - (void)cancelButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)wagerButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     [self.tabBarController setSelectedIndex:1];
 }
 

@@ -59,25 +59,31 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
     self.navigationItem.leftBarButtonItem = backButton;
-
+    
     UIGestureRecognizer* recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMethod:)];
     [(UITapGestureRecognizer *)recognizer setNumberOfTouchesRequired:1];
     [self.view addGestureRecognizer:recognizer];
     recognizer.delegate = self;
     
     [stakesList setEnabled:NO];
-    PFQuery *tokenCountForUser = [PFQuery queryForUser];
-    [tokenCountForUser whereKey:@"objectId" equalTo:[[PFUser currentUser]objectId]];
-    [tokenCountForUser getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+    currentUser = [PFUser currentUser];
+    [currentUser fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         if (!error) {
-            tokenCount = [[object objectForKey:@"tokenCount"]intValue];
+            tokenCount = [[currentUser objectForKey:@"tokenCount"]intValue];
+            if ([currentUser valueForKey:@"stakedTokens"]) {
+                tokensStaked = [[currentUser valueForKey:@"stakedTokens"]intValue];
+            }
+            else {
+                tokensStaked = 0;
+            }
         }
         else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Unable to connect to Friendly Wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
         }
     }];
-
+    
+    
     
     NSLog(@"%@", _gameDataDictionary);
     
@@ -85,7 +91,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -130,7 +136,7 @@
 {
     [super viewWillDisappear:animated];
     [stripes removeFromSuperview];
-
+    
 }
 
 
@@ -158,7 +164,7 @@
         
         [self setOpponentsToWager:addOpponents];
     }
-
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -179,10 +185,10 @@
         alert = [[UIAlertView alloc]initWithTitle:@"No Team Selected" message:@"Please select the opponents you'd like to wager" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     }
     else if (![selectTeamButton.titleLabel.text isEqualToString:@"Select Team"]) {
-        if (_opponentsToWager.count*5 > tokenCount) {
+        if (_opponentsToWager.count*5 > (tokenCount - tokensStaked)) {
             alert = [[UIAlertView alloc]initWithTitle:@"Too Few Tokens" message:@"You don't have enough tokens to make this wager. Would you like to buy more tokens?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Buy 50 tokens ($0.99)", @"Buy 125 tokens ($1.99)", @"Buy 200 tokens ($2.99)", nil];
             buyTokens = YES;
-
+            
         }
         else {
             NSDate *currentDate = [NSDate date];
@@ -211,7 +217,7 @@
                         NSLog(@"%@", error);
                     }];
                 }
-
+                
             }
             else {
                 alert = [[UIAlertView alloc]initWithTitle:@"Send Wager" message:@"A new wager will be sent to all selected opponents" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
@@ -225,6 +231,7 @@
 }
 
 - (IBAction)addOthersButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     MakeAWagerViewController *mwvc = [[MakeAWagerViewController alloc]initWithNibName:@"MakeAWagerViewController" bundle:nil];
     mwvc.wagerInProgress = YES;
     mwvc.opponentsToWager = _opponentsToWager;
@@ -238,13 +245,13 @@
     UISegmentedControl *closeButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Done"]];
     [closeButton setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [closeButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                        [UIColor whiteColor], UITextAttributeTextColor,
-                                        [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5], UITextAttributeTextShadowColor,
-                                        [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
-                                        [UIFont boldSystemFontOfSize:12], UITextAttributeFont,
-                                        nil] 
-forState:UIControlStateNormal];
-    closeButton.momentary = YES; 
+                                         [UIColor whiteColor], UITextAttributeTextColor,
+                                         [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5], UITextAttributeTextShadowColor,
+                                         [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
+                                         [UIFont boldSystemFontOfSize:12], UITextAttributeFont,
+                                         nil]
+                               forState:UIControlStateNormal];
+    closeButton.momentary = YES;
     closeButton.frame = CGRectMake(260, 7.0f, 50.0f, 28.0f);
     closeButton.segmentedControlStyle = UISegmentedControlStyleBar;
     closeButton.tag = 1;
@@ -253,13 +260,13 @@ forState:UIControlStateNormal];
     
     UISegmentedControl *cancelButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Cancel"]];
     [cancelButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                         [UIColor whiteColor], UITextAttributeTextColor,
-                                         [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5], UITextAttributeTextShadowColor,
-                                         [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
-                                         [UIFont boldSystemFontOfSize:12], UITextAttributeFont,
-                                         nil]
-                               forState:UIControlStateNormal];
-    cancelButton.momentary = YES; 
+                                          [UIColor whiteColor], UITextAttributeTextColor,
+                                          [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5], UITextAttributeTextShadowColor,
+                                          [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
+                                          [UIFont boldSystemFontOfSize:12], UITextAttributeFont,
+                                          nil]
+                                forState:UIControlStateNormal];
+    cancelButton.momentary = YES;
     cancelButton.frame = CGRectMake(10.0f, 7.0f, 50.0f, 30.0f);
     cancelButton.segmentedControlStyle = UISegmentedControlStyleBar;
     cancelButton.tintColor = [UIColor blackColor];
@@ -286,7 +293,7 @@ forState:UIControlStateNormal];
     [stakesList setEnabled:YES];
     [addStakesBg setImage:[UIImage imageNamed:@"addStakesBtn2"]];
     [stakesList becomeFirstResponder];
-
+    
 }
 
 - (void)chooseButtonClicked:(id)sender {
@@ -374,8 +381,26 @@ forState:UIControlStateNormal];
                 
                 teamWageredToLoseId = [_gameDataDictionary objectForKey:@"homeTeamId"];
                 teamWageredToLose = [_gameDataDictionary objectForKey:@"homeTeam"];
+                
             }
             [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"updated"];
+            
+            
+            NSString *urlString = @"https://api.parse.com/1/functions/addGame";
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+            [request setHTTPMethod:@"POST"];
+            [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            [request setValue:@"61ZxKrd2KsVmiuxHBMlBi5bKmaySbRMk4dR8xLv2" forHTTPHeaderField:@"X-Parse-Application-Id"];
+            [request setValue:@"6cLqyVLCieLXgZLeiHowiDcZz5roHXwIv9C7ThBT" forHTTPHeaderField:@"X-Parse-REST-API-Key"];
+            
+            NSData *body = [NSJSONSerialization dataWithJSONObject:@{ @"sport" : [_gameDataDictionary valueForKey:@"league"] , @"gameId" : [_gameDataDictionary valueForKey:@"gameId"] , @"gameDate" : [_gameDataDictionary valueForKey:@"date"], @"gameTime" : [_gameDataDictionary valueForKey:@"gameTime"], @"homeTeam" : [_gameDataDictionary valueForKey:@"homeTeam"], @"awayTeam" : [_gameDataDictionary valueForKey:@"awayTeam"  ] } options:0 error:nil];
+            [request setHTTPBody:body];
+            [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                if (error) {
+                    NSLog(@"%@", error);
+                }
+                NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            }];
             
             [self saveWager];
             
@@ -387,42 +412,21 @@ forState:UIControlStateNormal];
         }
         else if (buttonIndex == 1) {
             buyTokens = NO;
-            PFQuery *updateTokenCount = [PFQuery queryForUser];
-            [updateTokenCount whereKey:@"objectId" equalTo:[[PFUser currentUser]objectId]];
-            [updateTokenCount getFirstObjectInBackgroundWithBlock:^(PFObject *tokenObject, NSError *error) {
-                if (!error) {
-                    tokenCount = tokenCount + 50;
-                    [tokenObject setValue:[NSNumber numberWithInt:tokenCount] forKey:@"tokenCount"];
-                    [tokenObject saveInBackground];
-                }
-            }];
-            
+            tokenCount = tokenCount + 50;
+            [currentUser setObject:[NSNumber numberWithInt:tokenCount] forKey:@"tokenCount"];
+            [currentUser saveInBackground];
         }
         else if (buttonIndex == 2) {
             buyTokens = NO;
-            PFQuery *updateTokenCount = [PFQuery queryForUser];
-            [updateTokenCount whereKey:@"objectId" equalTo:[[PFUser currentUser]objectId]];
-            [updateTokenCount getFirstObjectInBackgroundWithBlock:^(PFObject *tokenObject, NSError *error) {
-                if (!error) {
-                    tokenCount = tokenCount + 125;
-                    [tokenObject setValue:[NSNumber numberWithInt:tokenCount] forKey:@"tokenCount"];
-                    [tokenObject saveInBackground];
-                }
-            }];
-
+            tokenCount = tokenCount + 125;
+            [currentUser setObject:[NSNumber numberWithInt:tokenCount] forKey:@"tokenCount"];
+            [currentUser saveInBackground];
         }
         else {
             buyTokens = NO;
-            PFQuery *updateTokenCount = [PFQuery queryForUser];
-            [updateTokenCount whereKey:@"objectId" equalTo:[[PFUser currentUser]objectId]];
-            [updateTokenCount getFirstObjectInBackgroundWithBlock:^(PFObject *tokenObject, NSError *error) {
-                if (!error) {
-                    tokenCount = tokenCount + 200;
-                    [tokenObject setValue:[NSNumber numberWithInt:tokenCount] forKey:@"tokenCount"];
-                    [tokenObject saveInBackground];
-                }
-            }];
-
+            tokenCount = tokenCount + 200;
+            [currentUser setObject:[NSNumber numberWithInt:tokenCount] forKey:@"tokenCount"];
+            [currentUser saveInBackground];
         }
     }
 }
@@ -435,7 +439,7 @@ forState:UIControlStateNormal];
     [createNewWager setObject:teamWageredToWin forKey:@"teamWageredToWin"];
     [createNewWager setObject:teamWageredToLoseId forKey:@"teamWageredToLoseId"];
     [createNewWager setObject:teamWageredToLose forKey:@"teamWageredToLose"];
-    [createNewWager setObject:[PFUser currentUser] forKey:@"wager"];
+    [createNewWager setObject:currentUser forKey:@"wager"];
     [createNewWager setObject:[_gameDataDictionary valueForKey:@"league"] forKey:@"sport"];
     [createNewWager setObject:[_gameDataDictionary valueForKey:@"date"] forKey:@"gameDate"];
     [createNewWager setObject:[_gameDataDictionary valueForKey:@"estTime"] forKey:@"gameTime"];
@@ -450,49 +454,42 @@ forState:UIControlStateNormal];
     
     [createNewWager saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
-            PFQuery *updateTokenCount = [PFQuery queryForUser];
-            [updateTokenCount whereKey:@"objectId" equalTo:[[PFUser currentUser]objectId]];
-            [updateTokenCount getFirstObjectInBackgroundWithBlock:^(PFObject *tokenObject, NSError *error) {
-                if (!error) {
-                    int currentTokenCount = [[tokenObject objectForKey:@"tokenCount"]intValue];
-                    int updatedTokenCount = currentTokenCount - (5 *_opponentsToWager.count);
-                    [tokenObject setValue:[NSNumber numberWithInt:updatedTokenCount] forKey:@"tokenCount"];
-                    [tokenObject saveInBackground];
-                    if ([stakesList.text isEqualToString:@""]) {
-                        [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[_opponentsToWager objectAtIndex:saveCount] objectId]] withMessage:[NSString stringWithFormat:@"%@ wagered 5 tokens that %@ would beat %@", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], teamWageredToWin, teamWageredToLose]];
-                    }
-                    else {
-                        [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[_opponentsToWager objectAtIndex:saveCount] objectId]] withMessage:[NSString stringWithFormat:@"%@ wagered 5 tokens and %@ that %@ would beat %@", [[[PFUser currentUser] objectForKey:@"name"] capitalizedString], stakesList.text, teamWageredToWin, teamWageredToLose]];
-                    }
-                    
-                    if (saveCount < _opponentsToWager.count-1) {
-                        saveCount++;
-                        [self saveWager];
-                    }
-                    else {
-                        [SVProgressHUD dismiss];
-                        if (_tabParentView) {
-                            [_tabParentView.navigationController dismissViewControllerAnimated:YES completion:NULL];
-                        }
-                        else {
-                            [self.navigationController popToRootViewControllerAnimated:YES];
-                        }
-
-                    }
-
+            tokensStaked = tokensStaked+5;
+            [currentUser setObject:[NSNumber numberWithInt:tokensStaked] forKey:@"stakedTokens"];
+            [currentUser saveInBackground];
+            if ([stakesList.text isEqualToString:@""]) {
+                [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[_opponentsToWager objectAtIndex:saveCount] objectId]] withMessage:[NSString stringWithFormat:@"%@ wagered 5 tokens that %@ would beat %@", [[currentUser objectForKey:@"name"] capitalizedString], teamWageredToWin, teamWageredToLose]];
+            }
+            else {
+                [PFPush sendPushMessageToChannelInBackground:[NSString stringWithFormat:@"%@%@", @"FW", [[_opponentsToWager objectAtIndex:saveCount] objectId]] withMessage:[NSString stringWithFormat:@"%@ wagered 5 tokens and %@ that %@ would beat %@", [[currentUser objectForKey:@"name"] capitalizedString], stakesList.text, teamWageredToWin, teamWageredToLose]];
+            }
+            
+            if (saveCount < _opponentsToWager.count-1) {
+                saveCount++;
+                [self saveWager];
+            }
+            else {
+                [self viewWillDisappear:YES];
+                [SVProgressHUD dismiss];
+                if (_tabParentView) {
+                    [_tabParentView.navigationController dismissViewControllerAnimated:YES completion:NULL];
+                }
+                else {
+                    [self.navigationController popToRootViewControllerAnimated:YES];
                 }
                 
-            }];
-        }
-        else {
-            NSLog(@"%@", error);
-            [SVProgressHUD dismiss];
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"error" message:@"Unable to create this wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-        }
-
-    }];
-
+            }
+        
+    }
+     else {
+         NSLog(@"%@", error);
+         [SVProgressHUD dismiss];
+         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"error" message:@"Unable to create this wager at this time. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+         [alert show];
+     }
+     
+     }];
+    
 }
 
 
@@ -543,7 +540,7 @@ forState:UIControlStateNormal];
     NSLog(@"%d", tag);
     CGPoint bottomOffset;
     bottomOffset = CGPointMake(0, 150);
-
+    
     [scrollView setContentSize:CGSizeMake(320, 520)];
     [scrollView setContentOffset:bottomOffset animated:YES];
 }
@@ -588,7 +585,7 @@ forState:UIControlStateNormal];
         
         UIAlertView *alert;
         if ([[desiredGame[0] valueForKey:@"Status"] isEqualToString:@"Final"]) {
-                alert = [[UIAlertView alloc]initWithTitle:@"Game Over" message:@"The game just ended" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            alert = [[UIAlertView alloc]initWithTitle:@"Game Over" message:@"The game just ended" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         }
         else {
             alert = [[UIAlertView alloc]initWithTitle:@"Send Wager" message:@"A new wager will be sent to all selected opponents" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];

@@ -128,6 +128,7 @@
             [user setObject:favoriteSportTextField.text forKey:@"favorite_sport"];
             [user setObject:favoriteTeamTextField.text forKey:@"favorite_team"];
             [user setObject:[NSNumber numberWithInt:50] forKey:@"tokenCount"];
+            [user setObject:[NSNumber numberWithInt:0] forKey:@"stakedTokens"];
             [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error) {
                     // Hooray! Let them use the app now.
@@ -156,6 +157,7 @@
 }
 
 - (void)backButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -173,6 +175,7 @@
 #pragma mark - UIAlertView Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (success) {
+        [self viewWillDisappear:YES];
         [[KPManager sharedManager] unlockAchievement:@"1"];
         [self.navigationController dismissModalViewControllerAnimated:YES];
 

@@ -13,7 +13,7 @@
 #import <Parse/Parse.h>
 #import "NewWagerViewController.h"
 
-@interface MakeAWagerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ABPeoplePickerNavigationControllerDelegate> {
+@interface MakeAWagerViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ABPeoplePickerNavigationControllerDelegate, PF_FBRequestDelegate, NSURLConnectionDelegate> {
     IBOutlet UIButton *searchBtn;
     IBOutlet UIButton *previousBtn;
     IBOutlet UIButton *fbFriendBtn;
@@ -22,6 +22,8 @@
     IBOutlet UIButton *inviteBtn;
     
     UIImageView *stripes;
+    NSMutableData *imageData;
+    PFUser *fbUser;
     
 }
 

@@ -243,14 +243,14 @@
                 
             }
             else {
-                [cell.oddsLabel setText:@"Spread"];
+                [cell.oddsLabel setText:@"Line"];
                 [cell.team1Odds setText:[fiveDimes valueForKey:@"HomeSpread"]];
                 [cell.team2Odds setText:[fiveDimes valueForKey:@"AwaySpread"]];
             }
 
         }
-        else {
-            [cell.oddsLabel setText:@"Moneyline"];
+        else if (![[bovada valueForKey:@"HomeLine"] isEqualToString:@""]){
+            [cell.oddsLabel setText:@"Line"];
             [cell.team1Odds setText:[bovada valueForKey:@"HomeLine"]];
             [cell.team2Odds setText:[bovada valueForKey:@"AwayLine"]];
         }
@@ -265,8 +265,15 @@
     [cell.team1Label setText:[gameInfo valueForKey:@"HomeTeam"]];
     [cell.team2Label setText:[gameInfo valueForKey:@"AwayTeam"]];
     
-    [cell.gameTime setText:[gameInfo valueForKey:@"GameTime"]];
+    if ([[gameInfo valueForKey:@"Status"] isEqualToString:@""]) {
+        [cell.gameTime setText:[gameInfo valueForKey:@"GameTime"]];
+    }
+    else {
+        [cell.gameTime setText:[gameInfo valueForKey:@"Status"]];
+    }
+    
     [cell.wagersLabel setText:@"Wagers"];
+
     NSNumber *currentWagers = [gameInfo valueForKey:@"currentWagers"];
 
     if ([currentWagers intValue] != -1) {
@@ -289,12 +296,11 @@
     NSMutableDictionary *allInfo = sectionContent[indexPath.row];
     NSMutableDictionary *gameInfo = [allInfo valueForKey:@"game"];
     NSMutableDictionary *fiveDimes = [allInfo valueForKey:@"5dimes"];
+    NSMutableDictionary *bovada = [allInfo valueForKey:@"bovada"];
     NSString *homeTeam = [gameInfo valueForKey:@"HomeTeam"];
     NSString *homeTeamId = [gameInfo valueForKey:@"HomeTeamId"];
     NSString *awayTeam = [gameInfo valueForKey:@"AwayTeam"];
     NSString *awayTeamId = [gameInfo valueForKey:@"AwayTeamId"];
-    NSString *homeOdds = [fiveDimes valueForKey:@"HomeSpread"];
-    NSString *awayOdds = [fiveDimes valueForKey:@"AwaySpread"];
     NSString *gameDate = [gameInfo valueForKey:@"GameDate"];
     NSString *gameTime = [gameInfo valueForKey:@"GameTime"];
     NSString *gameId = [gameInfo valueForKey:@"GameId"];
@@ -304,10 +310,32 @@
     NSString *status = [gameInfo valueForKey:@"Status"];
     NSString *estTime = [gameInfo valueForKey:@"estTime"];
     UIImage *image = [cell.gameImageView image];
+    NSString *homeOdds;
+    NSString *awayOdds;
+    if (![self.sport isEqualToString:@"Soccer"]) {
+        if ([[fiveDimes valueForKey:@"HomeSpread"] isEqualToString:@""]) {
+            if (![[bovada valueForKey:@"HomeSpread"] isEqualToString:@""]) {
+                homeOdds = [bovada valueForKey:@"HomeSpread"];
+                awayOdds = [bovada valueForKey:@"AwaySpread"];
+            }
+        }
+        else {
+            homeOdds = [fiveDimes valueForKey:@"HomeSpread"];
+            awayOdds = [fiveDimes valueForKey:@"AwaySpread"];
+        }
+        
+    }
+    else if (![[bovada valueForKey:@"HomeLine"] isEqualToString:@""]){
+        homeOdds = [bovada valueForKey:@"HomeLine"];
+        awayOdds = [bovada valueForKey:@"AwayLine"];
+        
+    }
+
     if (!homeOdds) {
         homeOdds = @"";
         awayOdds = @"";
     }
+    [self viewWillDisappear:YES];
     NSMutableDictionary *gameDataDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:homeTeam, @"homeTeam", homeTeamId, @"homeTeamId", awayTeam, @"awayTeam", awayTeamId, @"awayTeamId", homeOdds, @"homeOdds",awayOdds, @"awayOdds", gameDate, @"date", gameId, @"gameId", gameTime, @"gameTime", currentWagers, @"currentWagers", image, @"image", self.sport, @"sport", self.league, @"league", homeScore, @"homeScore", awayScore, @"awayScore", status, @"status", estTime, @"estTime", nil];
     
     if (_wager) {
@@ -393,6 +421,7 @@
 }
 
 - (void)leftButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     NSUInteger index = [sender tag];
     NSDictionary *dataDictionary = [leftArray objectAtIndex:index];
     if (!_wager) {
@@ -414,6 +443,7 @@
 }
 
 - (void)rightButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     NSUInteger index = [sender tag];
     NSDictionary *dataDictionary = [rightArray objectAtIndex:index];
     if (!_opponentsToWager) {
@@ -435,6 +465,7 @@
 }
 
 - (void)wagerButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     [self.tabBarController setSelectedIndex:1];
 }
 

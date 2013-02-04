@@ -156,10 +156,12 @@
 
 #pragma mark - Button Clicks
 - (void)backButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     [self.tabBarController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)wagerButtonClicked:(id)sender {
+    [self viewWillDisappear:YES];
     [self.tabBarController setSelectedIndex:1];
 }
 

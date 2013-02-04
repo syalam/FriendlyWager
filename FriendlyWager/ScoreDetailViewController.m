@@ -11,6 +11,7 @@
 #import "ScoreSummaryCell.h"
 #import "FWAPI.h"
 #import "SVProgressHUD.h"
+#import "MyActionSummaryViewController.h"
 
 @implementation ScoreDetailViewController
 
@@ -70,7 +71,13 @@
     [awayTeam setMinimumFontSize:12];
     homeTeam.text = [_gameDataDictionary valueForKey:@"homeTeam"];
     awayTeam.text = [_gameDataDictionary valueForKey:@"awayTeam"];
-    gameTime.text = [_gameDataDictionary valueForKey:@"gameTime"];
+    if ([[_gameDataDictionary valueForKey:@"status"]isEqualToString:@""]) {
+        gameTime.text = [_gameDataDictionary valueForKey:@"gameTime"];
+    }
+    else {
+        gameTime.text = [_gameDataDictionary valueForKey:@"status"];
+    }
+    
     
     NSDate *currentDate = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
@@ -89,11 +96,11 @@
         homeOdds.text = [_gameDataDictionary valueForKey:@"homeOdds"];
         awayOdds.text = [_gameDataDictionary valueForKey:@"awayOdds"];
         if ([[_gameDataDictionary valueForKey:@"sport"]isEqualToString:@"soccer"] && ![homeOdds.text isEqualToString:@""]) {
-            oddsLabel.text = @"Moneyline";
+            oddsLabel.text = @"Line";
         }
         else {
             if (![homeOdds.text isEqualToString:@""]) {
-                oddsLabel.text = @"Spread";
+                oddsLabel.text = @"Line";
             }
         }
     }
@@ -183,7 +190,10 @@
     if (self.contentList.count == 0) {
         return 2;
     }
-    return self.contentList.count;
+    else {
+        return self.contentList.count;
+
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -292,6 +302,32 @@
     return headerView;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSMutableArray *sectionContents = [self.contentList objectAtIndex:indexPath.section];
+    if (sectionContents.count) {
+        NSString *name = [[[sectionContents objectAtIndex:indexPath.row]valueForKey:@"object"] objectForKey:@"name"];
+        PFQuery *query = [PFQuery queryForUser];
+        [query whereKey:@"name" equalTo:name];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                // The find succeeded.
+                NSLog(@"Successfully retrieved %d scores.", objects.count);
+                MyActionSummaryViewController *actionSummary = [[MyActionSummaryViewController alloc]initWithNibName:@"MyActionSummaryViewController" bundle:nil];
+                actionSummary.userToWager = [objects objectAtIndex:0];
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
+                [actionSummary viewWillAppear:NO];
+                [self.navigationController pushViewController:actionSummary animated:YES];
+            } else {
+                // Log details of the failure
+                NSLog(@"Error: %@ %@", error, [error userInfo]);
+            }
+        }];
+
+    }
+    
+}
+
+
 
 #pragma mark - Button Clicks
 - (IBAction)makeAWagerButtonTapped:(id)sender {
@@ -317,8 +353,13 @@
 - (void)getWagers {
     NSMutableArray *currentWagers = [[NSMutableArray alloc]init];
     NSMutableArray *pendingWagers = [[NSMutableArray alloc]init];
-    PFQuery *wagers = [PFQuery queryWithClassName:@"wagers"];
-    [wagers whereKey:@"gameId" equalTo:[_gameDataDictionary valueForKey:@"gameId"]];
+    PFQuery *meWagered = [PFQuery queryWithClassName:@"wagers"];
+    [meWagered whereKey:@"gameId" equalTo:[_gameDataDictionary valueForKey:@"gameId"]];
+    [meWagered whereKey:@"wager" equalTo:[PFUser currentUser]];
+    PFQuery *wageredMe = [PFQuery queryWithClassName:@"wagers"];
+    [wageredMe whereKey:@"gameId" equalTo:[_gameDataDictionary valueForKey:@"gameId"]];
+    [wageredMe whereKey:@"wagee" equalTo:[PFUser currentUser]];
+    PFQuery *wagers = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:meWagered, wageredMe, nil]];
     [wagers orderByDescending:@"dateModified"];
     [wagers setLimit:200];
     [wagers findObjectsInBackgroundWithBlock:^(NSArray *wagers, NSError *error) {
@@ -329,7 +370,6 @@
             if (wagers.count) {
                 [scoreDetailTableView reloadData];
             }
-            
             for(PFObject *wager in wagers)
             {
                 BOOL isPending;
@@ -349,7 +389,14 @@
                 }
                 [isPendingArray addObject:[NSNumber numberWithBool:isPending]];
                 [oddsArray addObject:odds];
-                NSString *userId = [NSString stringWithFormat:@"%@", [[wager objectForKey:@"wager"]objectId]];
+                NSString *userId;
+                if ([[[wager objectForKey:@"wager"]objectId] isEqualToString:[PFUser currentUser].objectId]) {
+                    userId = [[wager objectForKey:@"wagee"]objectId];
+                }
+                else {
+                    userId = [[wager objectForKey:@"wager"]objectId];
+                }
+                
                 [userArray addObject:userId];
             }
             if (wagers.count - isPendingArray.count > 0 && [numberWagers.text isEqualToString:@""]) {
@@ -360,16 +407,8 @@
             [queryForUsers whereKey:@"objectId" containedIn:userArray];
             [queryForUsers findObjectsInBackgroundWithBlock:^(NSArray *users, NSError *error) {
                 if (!error) {
-                    for (int i = 0; i<wagers.count; i++) {
-                        PFUser *user;
-                        NSString *wagerUserId = [NSString stringWithFormat:@"%@", [[[wagers objectAtIndex:i] objectForKey:@"wager"]objectId]];
-                        for (int j = 0; j < users.count; j++) {
-                            NSString *userId = [NSString stringWithFormat:@"%@", [[users objectAtIndex:j] objectId]];
-                            if ([wagerUserId isEqualToString:userId]) {
-                                user = [users objectAtIndex:j];
-                            }
-                            
-                        }
+                    for (int i = 0; i<users.count; i++) {
+                        PFUser *user = users[i];
                         if ([user objectForKey:@"name"]) {
                             NSMutableDictionary *item = [[NSMutableDictionary alloc]initWithObjectsAndKeys:user, @"object", [oddsArray objectAtIndex:i], @"odds", nil];
                             if (![[isPendingArray objectAtIndex:i]boolValue]) {

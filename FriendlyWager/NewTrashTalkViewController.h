@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "MyActionSummaryViewController.h"
 #import "TITokenField.h"
+#import "AppDelegate.h"
 
 typedef enum apiCall {
     kAPIPostToFeed,
@@ -26,6 +27,7 @@ typedef enum apiCall {
     IBOutlet UIScrollView *scrollView;
     int currentAPICall;
     float height1;
+    AppDelegate *appDelegate;
     
     
     NSUserDefaults *fwData;
@@ -45,6 +47,7 @@ typedef enum apiCall {
 @property (nonatomic, retain) NSMutableArray *contentList;
 @property (nonatomic, retain) NSMutableArray *userArray;
 @property (nonatomic, retain) NSMutableArray *recipients;
+@property (nonatomic) BOOL myAction;
 
 
 

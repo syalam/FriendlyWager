@@ -29,6 +29,7 @@
     
     int saveCount;
     int tokenCount;
+    int tokensStaked;
     NSString *teamWageredId;
     NSString *teamWageredToWin;
     NSString *teamWageredToLose;
@@ -36,6 +37,8 @@
     BOOL buyTokens;
     
     NSMutableArray *xmlGameArray;
+    
+    PFUser *currentUser;
     
 
 }
