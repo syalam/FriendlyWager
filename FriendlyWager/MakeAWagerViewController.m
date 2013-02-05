@@ -296,7 +296,7 @@
         NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", [result objectForKey:@"id"]]];
         NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:pictureURL
                                                                   cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                              timeoutInterval:2.0f];
+                                                              timeoutInterval:10.0f];
         // Run network request asynchronously
         NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     }
@@ -315,14 +315,14 @@
     [fbUser setObject:imageData forKey:@"picture"];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"facebookConnect"];
     [fbUser saveInBackground];
-    [SVProgressHUD dismissWithSuccess:@"Facebook sign-in successful"];
+    [SVProgressHUD showSuccessWithStatus:@"Facebook sign-in successful"];
     FacebookFriendsViewController *facebookFriends = [[FacebookFriendsViewController alloc]initWithNibName:@"FacebookFriendsViewController" bundle:nil];
     [self.navigationController pushViewController:facebookFriends animated:YES];
 
 }
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
     NSLog(@"%@", error);
-    [SVProgressHUD dismissWithError:@"Sign-in unsuccessful. Please try again"];
+    [SVProgressHUD showErrorWithStatus:@"Sign-in unsuccessful. Please try again"];
 }
 
 

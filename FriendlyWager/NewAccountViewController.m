@@ -8,7 +8,7 @@
 
 #import "NewAccountViewController.h"
 #import <Parse/Parse.h>
-#import "Kiip.h"
+#import <KiipSDK/KiipSDK.h>
 
 @implementation NewAccountViewController
 
@@ -176,8 +176,10 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (success) {
         [self viewWillDisappear:YES];
-        [[KPManager sharedManager] unlockAchievement:@"1"];
-        [self.navigationController dismissModalViewControllerAnimated:YES];
+        [[Kiip sharedInstance] saveMoment:@"1" withCompletionHandler:^(KPPoptart *poptart, NSError *error) {
+            
+            [poptart show];
+        }];        [self.navigationController dismissModalViewControllerAnimated:YES];
 
     }
     

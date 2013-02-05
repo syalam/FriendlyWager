@@ -423,7 +423,7 @@
 
     }
     else {
-        [SVProgressHUD dismissWithError:@"Unable to sign into Facebook"];
+        [SVProgressHUD showErrorWithStatus:@"Unable to sign into Facebook"];
     }
 }
 
@@ -438,7 +438,7 @@
     
     [user setObject:imageData forKey:@"picture"];
     [user saveInBackground];
-    [SVProgressHUD dismissWithSuccess:@"Facebook sign-in successful"];
+    [SVProgressHUD showSuccessWithStatus:@"Facebook sign-in successful"];
     //TODO: REMOVE ME
 }
 

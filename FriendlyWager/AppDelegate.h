@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import "TrashTalkViewController.h"
+#import <KiipSDK/KiipSDK.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, NSXMLParserDelegate> {
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate, NSXMLParserDelegate, KiipDelegate> {
     NSMutableArray *results;
     NSMutableArray *gameResults;
     int currentIndex;

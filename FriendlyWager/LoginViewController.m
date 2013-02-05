@@ -10,7 +10,7 @@
 #import "NewAccountViewController.h"
 #import <Parse/Parse.h>
 #import "ResetPasswordViewController.h"
-#import "Kiip.h"
+#import <KiipSDK/KiipSDK.h>
 
 @implementation LoginViewController
 
@@ -108,8 +108,10 @@
                                         NSString *errorString = [[error userInfo] objectForKey:@"error"];
                                         if (user) {
                                             //TODO: REMOVE ME
-                                            [[KPManager sharedManager] unlockAchievement:@"1"];
-                                           [self.navigationController dismissModalViewControllerAnimated:YES];
+                                            [[Kiip sharedInstance] saveMoment:@"1" withCompletionHandler:^(KPPoptart *poptart, NSError *error) {
+                                                
+                                                [poptart show];
+                                            }];                                           [self.navigationController dismissModalViewControllerAnimated:YES];
                                         } else {
                                             UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
                                                                                                 message:errorString 

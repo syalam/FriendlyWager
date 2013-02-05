@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
-#import "Kiip.h"
+#import <KiipSDK/KiipSDK.h>
 
 @interface KiipAwards : NSObject
 

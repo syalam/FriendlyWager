@@ -67,9 +67,6 @@ def checkGame(currentIndex,count,parseResult):
 						"X-Parse-REST-API-Key": "6cLqyVLCieLXgZLeiHowiDcZz5roHXwIv9C7ThBT",
 						"Content-Type": "application/json"
 					})
-					currentIndex = currentIndex+1
-					if currentIndex < count:
-						checkGame(currentIndex,count,parseResult)
 				except Exception as e:
 					raise Exception('Connection Error: %s' % e)
 				finally:
@@ -79,6 +76,10 @@ def checkGame(currentIndex,count,parseResult):
 			raise Exception('Connection Error: %s' % e)
 		finally:
 			apiConnection.close()
+			currentIndex = currentIndex+1
+			if currentIndex < count:
+				checkGame(currentIndex,count,parseResult)
+
 
 	else:
 		try:
@@ -120,9 +121,6 @@ def checkGame(currentIndex,count,parseResult):
 						"X-Parse-REST-API-Key": "6cLqyVLCieLXgZLeiHowiDcZz5roHXwIv9C7ThBT",
 						"Content-Type": "application/json"
 					})
-					currentIndex = currentIndex+1
-					if currentIndex < count:
-						checkGame(currentIndex,count,parseResult)
 
 				except Exception as e:
 					raise Exception('Connection Error: %s' % e)
@@ -131,8 +129,12 @@ def checkGame(currentIndex,count,parseResult):
 
 		except Exception as e:
 			raise Exception('Connection Error: %s' % e)
-		finally:
 			apiConnection.close()
+		finally:
+			apiConnection.close();
+			currentIndex = currentIndex+1
+			if currentIndex < count:
+				checkGame(currentIndex,count,parseResult)
 
 try: 
 	parseConnection = httplib.HTTPSConnection('api.parse.com', 443)
@@ -144,12 +146,12 @@ try:
 	})
 	parseResponse = parseConnection.getresponse()
 	parseResult = json.loads(parseResponse.read())
+	parseConnection.close()
 	if 'result' in parseResult:
 		count = len(parseResult['result'])
 		checkGame(0,count,parseResult)
 
 except Exception as e:
 	raise Exception('Connection Error: %s' % e)
-finally:
 	parseConnection.close()
 

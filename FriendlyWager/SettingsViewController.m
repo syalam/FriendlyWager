@@ -275,11 +275,11 @@
     
     [currentUser setObject:imageData forKey:@"picture"];
     [currentUser saveInBackground];
-    [SVProgressHUD dismissWithSuccess:@"Facebook sign-in successful"];
+    [SVProgressHUD showSuccessWithStatus:@"Facebook sign-in successful"];
     //TODO: REMOVE ME
 }
 - (void)request:(PF_FBRequest *)request didFailWithError:(NSError *)error {
-    [SVProgressHUD dismissWithError:@"Unable to sign into Facebook"];
+    [SVProgressHUD showErrorWithStatus:@"Unable to sign into Facebook"];
     NSLog(@"%@", error);
 }
 

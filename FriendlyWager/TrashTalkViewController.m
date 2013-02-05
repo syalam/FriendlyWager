@@ -479,8 +479,8 @@
 - (void)getTrashTalk {
     newItems = 0;
     [self.navigationController.navigationBar addSubview:stripes];
-    if ([PFUser currentUser]) {
-        [SVProgressHUD showWithStatus:@"Getting trash talk"];
+    if ([PFUser currentUser].objectId) {
+        //[SVProgressHUD showWithStatus:@"Getting trash talk"];
         PFQuery *queryForTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
         [queryForTrashTalk whereKey:@"recipients" containsString:[[PFUser currentUser]objectId]];
         PFQuery *queryForSentTrashTalk = [PFQuery queryWithClassName:@"TrashTalkWall"];
@@ -498,27 +498,22 @@
                     [noTrashTalkLabel setText:@""];
                 }
                 for (PFObject *trashTalkItem in objects) {
-                    
                     [trashTalkArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", [NSNumber numberWithBool:NO], @"wasNew", [trashTalkItem objectForKey:@"conversationId"], @"conversationId", nil]];
                     if ([[trashTalkItem objectForKey:@"recipients"]rangeOfString:userId].location != NSNotFound) {
+                        NSLog(@"%@", userId);
                         NSString *isNew = [trashTalkItem objectForKey:@"isNew"];
                         if ([isNew rangeOfString:userId].location != NSNotFound) {
                             newItems = newItems+ 1;
                             [[trashTalkArray objectAtIndex:trashTalkArray.count-1]setObject:[NSNumber numberWithBool:YES] forKey:@"wasNew"];
-                            if ([isNew rangeOfString:[NSString stringWithFormat:@",%@", userId]].location != NSNotFound) {
-                                isNew = [isNew stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@",%@", userId] withString:@""];
-                                
-                            }
-                            else {
-                                isNew = [isNew stringByReplacingOccurrencesOfString:userId withString:@""];
-                            }
+                            isNew = [isNew stringByReplacingOccurrencesOfString:userId withString:@""];
+                            NSLog(@"%@",isNew);
                             if (isNew) {
                                 [trashTalkItem setObject:isNew forKey:@"isNew"];
-                                [trashTalkItem saveInBackground];
+                                [trashTalkItem saveEventually];
                             }
                             else {
                                 [trashTalkItem setObject:@"" forKey:@"isNew"];
-                                [trashTalkItem saveInBackground];
+                                [trashTalkItem saveEventually];
                                 
                             }
                             
@@ -576,12 +571,12 @@
                     [chatIndicatorLabel setHidden:YES];
                     [chatIndicator setHidden:YES];
                 }
-                [SVProgressHUD dismiss];
+                //[SVProgressHUD dismiss];
                 [self setContentList:abreviatedArray];
                 [self.trashTalkTableView reloadData];
             }
             else {
-                [SVProgressHUD dismiss];
+                //[SVProgressHUD dismiss];
             }
 
         }];

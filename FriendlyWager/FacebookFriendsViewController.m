@@ -60,8 +60,43 @@
     NSString *fql = [NSString stringWithFormat:@"%@,%@", getAllFriends, getFWFriends];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:fql, @"q", nil];
-    
-    [[PFFacebookUtils facebook]requestWithGraphPath:@"fql" andParams:params andDelegate:self];
+    PF_FBRequest *request = [PF_FBRequest requestWithGraphPath:@"fql" parameters:params HTTPMethod:@"GET"];
+    [request startWithCompletionHandler:^(PF_FBRequestConnection *connection, id result, NSError *error) {
+        [SVProgressHUD dismiss];
+        if ([result objectForKey:@"data"]) {
+            resultSetArray = [[NSMutableArray alloc]initWithCapacity:1];
+            NSMutableArray *resultSetArray1 = [[NSMutableArray alloc]initWithCapacity:1];
+            NSMutableArray *allFbFriends = [[NSMutableArray alloc]initWithCapacity:1];
+            NSMutableArray *FWFriends = [[NSMutableArray alloc]initWithCapacity:1];
+            NSMutableDictionary *resultSetDictionary = [[NSMutableDictionary alloc]initWithDictionary:result];
+            for (id key in resultSetDictionary) {
+                resultSetArray1 = [resultSetDictionary valueForKey:key];
+                allFbFriends = [[resultSetArray1 objectAtIndex:0]valueForKey:@"fql_result_set"];
+                FWFriends = [[resultSetArray1 objectAtIndex:1]valueForKey:@"fql_result_set"];
+            }
+            
+            
+            NSString *allFbUid;
+            NSString *fwFbUid;
+            for (NSUInteger i = 0; i < allFbFriends.count; i++) {
+                BOOL added = NO;
+                for (NSUInteger c = 0; c < FWFriends.count; c++) {
+                    allFbUid = [NSString stringWithFormat:@"%@",[[allFbFriends objectAtIndex:i]valueForKey:@"uid"]];
+                    fwFbUid = [NSString stringWithFormat:@"%@",[[FWFriends objectAtIndex:c]valueForKey:@"uid"]];
+                    if ([allFbUid isEqualToString:fwFbUid]) {
+                        added = YES;
+                        [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", [[allFbFriends objectAtIndex:i]valueForKey:@"name"], @"name", @"YES", @"isFW", nil]];
+                    }
+                }
+                if (!added) {
+                    [resultSetArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[allFbFriends objectAtIndex:i], @"data", [[allFbFriends objectAtIndex:i]valueForKey:@"name"], @"name", @"NO", @"isFW", nil]];
+                }
+            }
+            [currentButton setEnabled:YES];
+            [inviteButton setEnabled:YES];
+            [self sortSections];
+        }
+    }];
 
 
     UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];

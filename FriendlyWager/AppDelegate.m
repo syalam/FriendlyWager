@@ -11,7 +11,6 @@
 #import "LoginOptionsViewController.h"
 #import "LoadScreenViewController.h"
 #import "TestFlight.h" 
-#import "Kiip.h"
 #import "FWAPI.h"
 #import "KiipAwards.h"
 
@@ -40,13 +39,11 @@
     [PFFacebookUtils initializeWithApplicationId:@"287216318005845"];
     
     [PFTwitterUtils initializeWithConsumerKey:@"PoYvHD6BsQZZci4MciV4Hw" consumerSecret:@"WSMY30fWUKFnPltawHaZzUR7mQlhjwKrVsZW8T8P4"];
+        
     
-    // Start and initialize when application starts
-    KPManager *manager = [[KPManager alloc] initWithKey:@"00c7493ed13c6d7ee3e5127f7cd0385e" secret:@"f70c0fb59c0b5f95db8d135057aff5c2"];
-    
-    // Set the shared instance after initialization
-    // to allow easier access of the object throughout the project.
-    [KPManager setSharedManager:manager];
+    Kiip *kiip = [[Kiip alloc] initWithAppKey:@"00c7493ed13c6d7ee3e5127f7cd0385e" andSecret:@"f70c0fb59c0b5f95db8d135057aff5c2"];
+    kiip.delegate = self;
+    [Kiip setSharedInstance:kiip];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     _trashTalkViewController = [[TrashTalkViewController alloc] initWithNibName:@"TrashTalkViewController" bundle:nil];
@@ -147,9 +144,9 @@
      */
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    return [PFFacebookUtils handleOpenURL:url];
-}
+//- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+//    return [PFFacebookUtils handleOpenURL:url];
+//}
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -174,6 +171,10 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
     UIApplicationState state = [application applicationState];
     if (state == UIApplicationStateBackground) {
         [PFPush handlePush:userInfo];
+    }
+    else {
+        [_trashTalkViewController getTrashTalk];
+        //[PFPush handlePush:userInfo];
     }
     
 }
