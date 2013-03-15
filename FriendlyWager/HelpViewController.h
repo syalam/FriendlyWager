@@ -10,7 +10,7 @@
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 
-@interface HelpViewController : UIViewController <MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate> {
+@interface HelpViewController : UIViewController <MFMailComposeViewControllerDelegate> {
     IBOutlet UIScrollView *scrollView;
     IBOutlet UISwitch *tipSwitch;
     IBOutlet UIButton *emailButton;

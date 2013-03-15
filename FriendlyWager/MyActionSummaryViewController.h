@@ -21,9 +21,7 @@
     IBOutlet UIImageView *profilePic;
     
     
-    IBOutlet UIScrollView *scrollView;
     IBOutlet UILabel *wagersWithLabel;
-    IBOutlet UITableView *wagersTableView;
     IBOutlet UIButton *wagerButton;
     IBOutlet UIButton *chatButton;
     
@@ -35,19 +33,12 @@
     IBOutlet KBLabel *currentCountLabel;
     IBOutlet KBLabel *historyCountLabel;
 
-    
-    IBOutlet UIView *wagerView;
-    
     NSString *currentWagers;
     NSString *opponent;
     PFUser *currentUser;
     
     NSArray *wagersArray;
-    
-    BOOL newWagerBool;
-    
-    NSUserDefaults *fwData;
-    
+            
     UIImageView *stripes;
     
 }
@@ -60,7 +51,6 @@
 - (IBAction)chatButtonClicked:(id)sender;
 
 - (void)getPointCount;
-- (void)getWinLossCounts;
 - (void)loadTrashTalk;
 
 @property (nonatomic, retain) NSMutableArray* contentList;

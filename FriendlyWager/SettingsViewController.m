@@ -258,7 +258,7 @@
                                                                   cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                               timeoutInterval:2.0f];
         // Run network request asynchronously
-        NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+        [NSURLConnection connectionWithRequest:urlRequest delegate:self];
 
     }
 

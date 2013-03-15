@@ -306,7 +306,7 @@
     NSMutableArray *sectionContents = [self.contentList objectAtIndex:indexPath.section];
     if (sectionContents.count) {
         NSString *name = [[[sectionContents objectAtIndex:indexPath.row]valueForKey:@"object"] objectForKey:@"name"];
-        PFQuery *query = [PFQuery queryForUser];
+        PFQuery *query = [PFUser query];
         [query whereKey:@"name" equalTo:name];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
@@ -403,7 +403,7 @@
                 numberWagers.text = [NSString stringWithFormat:@"%d", wagers.count - isPendingArray.count];
 
             }
-            PFQuery *queryForUsers = [PFQuery queryForUser];
+            PFQuery *queryForUsers = [PFUser query];
             [queryForUsers whereKey:@"objectId" containedIn:userArray];
             [queryForUsers findObjectsInBackgroundWithBlock:^(NSArray *users, NSError *error) {
                 if (!error) {

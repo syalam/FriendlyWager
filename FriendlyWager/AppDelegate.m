@@ -93,18 +93,6 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    /*
-     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-     *NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Basketball", @"Sport", @"NBA", @"League", @"01/10/2013", @"StartDate", @"01/10/2013", @"EndDate", nil];
-     [FWAPI getScoresAndOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
-     NSLog(@"%@", XMLParser);
-     
-     XMLParser.delegate = self;
-     [XMLParser parse];
-     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
-     NSLog(@"%@", error);
-     }];
-*/
     if ([PFUser currentUser]) {
         PFQuery *wagersMade = [PFQuery queryWithClassName:@"wagers"];
         [wagersMade whereKey:@"wager" equalTo:[PFUser currentUser]];
@@ -188,7 +176,6 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
         sport = @"Soccer";
         NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:sport, @"Sport", league, @"League", [wagerObject objectForKey:@"gameDate"], @"StartDate", [wagerObject objectForKey:@"gameDate"], @"EndDate", nil];
         [FWAPI getSoccerScoresAndOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
-            NSLog(@"%@", XMLParser);
             
             XMLParser.delegate = self;
             [XMLParser parse];
@@ -218,7 +205,6 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
         }
         NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:sport, @"Sport", league, @"League", [wagerObject objectForKey:@"gameDate"], @"StartDate", [wagerObject objectForKey:@"gameDate"], @"EndDate", nil];
         [FWAPI getScoresAndOdds:params success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
-            NSLog(@"%@", XMLParser);
             
             XMLParser.delegate = self;
             [XMLParser parse];
@@ -556,22 +542,9 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
 #pragma mark - NSXMLParser Delegate Methods
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     
-    NSCharacterSet * set = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789"] invertedSet];
-    NSString *firstLetter = [string substringWithRange:NSMakeRange(0, 1)];
-    
-    if ([firstLetter rangeOfCharacterFromSet:set].location != NSNotFound) {
-        NSLog(@"This string contains illegal characters");
-        NSLog(@"%@", string);
-    }
-    else {
-        NSLog(@"%@", string);
-    }
-        
 }
 
 - (void)parser:(NSXMLParser *)parser foundElementDeclarationWithName:(NSString *)elementName model:(NSString *)model {
-    NSLog(@"%@", elementName);
-    NSLog(@"%@", model);
 }
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict {
@@ -583,7 +556,6 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
             NSDictionary *gameAndPFObject = [[NSDictionary alloc]initWithObjectsAndKeys:results[currentIndex], @"parseObject", attributeDict, @"gameObject", nil];
             [gameResults addObject:gameAndPFObject];
         }
-        NSLog(@"%@", attributeDict);
     }
     
 }
@@ -592,7 +564,6 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
 }
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
-    NSLog(@"%@", gameResults);
     if (currentIndex < results.count-1) {
         currentIndex++;
         [self getResults];

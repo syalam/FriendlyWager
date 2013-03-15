@@ -30,6 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [trashTalkTextView becomeFirstResponder];
     user = [PFUser currentUser];
@@ -38,7 +39,7 @@
 	[self.view addSubview:tokenFieldView];
 	
 	[tokenFieldView.tokenField setDelegate:self];
-	[tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldFrameDidChange:) forControlEvents:TITokenFieldControlEventFrameDidChange];
+	[tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldFrameDidChange:) forControlEvents:(UIControlEvents)TITokenFieldControlEventFrameDidChange];
 	[tokenFieldView.tokenField setTokenizingCharacters:[NSCharacterSet characterSetWithCharactersInString:@",;."]]; // Default is a comma
 	
 	[tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidBegin];
@@ -98,15 +99,15 @@
     [(UITapGestureRecognizer *)recognizer setNumberOfTouchesRequired:1];
     [self.view addGestureRecognizer:recognizer];
     recognizer.delegate = self;
-
-
+    
+    
     
     if ([[NSUserDefaults standardUserDefaults]boolForKey:@"facebookConnect"] &&![[NSUserDefaults standardUserDefaults]boolForKey:@"noSharing"]) {
         [fbSwitch setOn:YES];
     }
     else {
         [fbSwitch setOn:NO];
-
+        
     }
     
     self.title = @"New Trash Talk";
@@ -137,13 +138,13 @@
     UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithCustomView:customSendButton];
     
     self.navigationItem.rightBarButtonItem = submitButton;
-
+    
     if (self.contentList) {
         [self.trashTalkTableView reloadData];
         CGPoint bottomOffset = CGPointMake(0, self.trashTalkTableView.contentSize.height-58);
         [self.trashTalkTableView setContentOffset:bottomOffset animated:NO];
-
-
+        
+        
     }
     
     else {
@@ -155,11 +156,10 @@
         [tokenFieldView.tokenField addToken:tokenToAdd];
     }
     
-    PFQuery *getUsers = [PFQuery queryForUser];
+    PFQuery *getUsers = [PFUser query];
     [getUsers whereKey:@"name" notEqualTo:[user objectForKey:@"name"]];
     [getUsers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
-            NSLog(@"%@", objects);
             self.userArray= [objects mutableCopy];
             if ([self.userArray containsObject:[PFUser currentUser]]) {
                 [self.userArray removeObject:[PFUser currentUser]];
@@ -187,7 +187,7 @@
     }
     else {
         appDelegate.lastVC = @"NewTrashTalkViewController";
-
+        
     }
     
 }
@@ -310,7 +310,7 @@
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"No Recipients" message:@"You didn't specify any valid recipients" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
-                            //[self.navigationController dismissModalViewControllerAnimated:YES];
+    //[self.navigationController dismissModalViewControllerAnimated:YES];
     
 }
 
@@ -319,7 +319,7 @@
         if ([PFFacebookUtils isLinkedWithUser:user]) {
             [fbSwitch setOn:YES];
             [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"noSharing"];
-
+            
         }
         else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Facebook Sign In Required" message:@"You must sign in with a facebook account to use this feature" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign In", nil];
@@ -343,17 +343,80 @@
 #pragma mark - Facebook delegate methods
 
 - (void)sendFacebookRequest {
-    [SVProgressHUD showWithStatus:@"Posting to facebook"];
-    if (currentAPICall == kAPIPostToFeed) {
-        if (requestIdsArray.count) {
-            if (requestIdsArray.count) {
-                countRequests = 1;
-                NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkTextView.text, @"message", nil];
-                [[PFFacebookUtils facebook]requestWithGraphPath:[NSString stringWithFormat:@"%@/feed", [requestIdsArray objectAtIndex:0]] andParams:params andHttpMethod:@"POST" andDelegate:self];
+    PF_FBRequest *checkPermissions = [PF_FBRequest requestForGraphPath:@"me/permissions"];
+    [checkPermissions startWithCompletionHandler:^(PF_FBRequestConnection *connection, id result, NSError *error) {
+        if (!error) {
+            NSArray *num = [[result valueForKey:@"data"]valueForKey:@"publish_stream"];
+            int value = [num[0] intValue];
+            if (value == 1) {
+                if (requestIdsArray.count) {
+                    NSString *userId = requestIdsArray[currentIndex];
+                    PF_FBSession *session = [PFFacebookUtils session];
+                    _facebook = [[PF_Facebook alloc] initWithAppId:session.appID
+                                                                   andDelegate:nil];
+                    
+                    // Store the Facebook session information
+                    _facebook.accessToken = session.accessToken;
+                    _facebook.expirationDate = session.expirationDate;
+                    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Friendly Wager", @"name",
+                                                   @"Challenge others. Cheer for your teams. Win free stuff.", @"caption", userId, @"to",
+                                                   @"http://getsomeaction.friendlywager.me", @"link",
+                                                   @"https://launchrock-assets.s3.amazonaws.com/logo-files/hHwdBtcSPRhwVkj.png", @"picture",
+                                                   nil];
+                    [_facebook dialog:@"feed" andParams:params andDelegate:self];
+                }
+
             }
+        }
+    }];
+    
+    
+    
+}
+
+- (void)sessionStateChanged:(NSNotification*)notification {
+    if (PF_FBSession.activeSession.isOpen) {
+        
+        // Initiate a Facebook instance and properties
+        if (nil == self.facebook) {
+            self.facebook = [[PF_Facebook alloc]
+                             initWithAppId:PF_FBSession.activeSession.appID
+                             andDelegate:nil];
+            
+            // Store the Facebook session information
+            self.facebook.accessToken = PF_FBSession.activeSession.accessToken;
+            self.facebook.expirationDate = PF_FBSession.activeSession.expirationDate;
         }
     }
 }
+
+/**
+ * A function for parsing URL parameters.
+ */
+- (NSDictionary*)parseURLParams:(NSString *)query {
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    for (NSString *pair in pairs) {
+        NSArray *kv = [pair componentsSeparatedByString:@"="];
+        NSString *val =
+        [[kv objectAtIndex:1]
+         stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        [params setObject:val forKey:[kv objectAtIndex:0]];
+    }
+    return params;
+}
+
+// Handle the publish feed call back
+- (void)dialogCompleteWithUrl:(NSURL *)url {
+    currentIndex++;
+    if (currentIndex<requestIdsArray.count) {
+        [self sendFacebookRequest];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 - (void)request:(PF_FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
     NSLog(@"received response");
 }
@@ -375,7 +438,7 @@
             [SVProgressHUD dismiss];
             [self.navigationController popViewControllerAnimated:YES];
         }
-
+        
     }
     else {
         //save the users username and email address to parse
@@ -399,10 +462,10 @@
                                                                       cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                                   timeoutInterval:2.0f];
             // Run network request asynchronously
-            NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+            [NSURLConnection connectionWithRequest:urlRequest delegate:self];
             
         }
-
+        
     }
 }
 
@@ -420,7 +483,7 @@
             [SVProgressHUD dismiss];
             [self.navigationController popViewControllerAnimated:YES];
         }
-
+        
     }
     else {
         [SVProgressHUD showErrorWithStatus:@"Unable to sign into Facebook"];
@@ -459,10 +522,10 @@
                 else {
                     [SVProgressHUD dismiss];
                     [fbSwitch setOn:NO animated:YES];
-                    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
+                    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error"
                                                                         message:@"This facebook account is associated with another user"
-                                                                       delegate:self 
-                                                              cancelButtonTitle:@"OK" 
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"OK"
                                                               otherButtonTitles:nil];
                     [alertView show];
                 }
@@ -512,20 +575,19 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     if (_contentList.count != 0) {
         NSString *senderName = [[[_contentList objectAtIndex:_contentList.count - (indexPath.row+1)]valueForKey:@"data"] objectForKey:@"senderName"];
-
+        
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         PFObject *objectToDisplay = [[_contentList objectAtIndex:_contentList.count - (indexPath.row+1)]valueForKey:@"data"];
         NSDate *dateCreated = objectToDisplay.createdAt;
-
+        
         NSCalendar *calendar = [NSCalendar currentCalendar];
         unsigned int unitFlags =  NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayOrdinalCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit;
         NSDateComponents *messageDateComponents = [calendar components:unitFlags fromDate:dateCreated];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
         [dateFormatter setDateFormat:@"MM/dd/yyyy"];
         NSString *dateCreatedString = [dateFormatter stringFromDate:dateCreated];
-        NSLog(@"%@", dateCreatedString);
         NSDate *today = [NSDate date];
         NSString *todayString = [dateFormatter stringFromDate:today];
         NSDate *yesterday = [today dateByAddingTimeInterval:-(60*60*24)];
@@ -659,7 +721,7 @@
     UIImageView *backgroundImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, cell.frame.size.height - 58, 308, 58)];
     [backgroundImage setImage:[UIImage imageNamed:@"CellBG1"]];
     [cell addSubview:backgroundImage];
-
+    
     
 }
 
@@ -759,5 +821,6 @@
     
     return NO;
 }
+
 
 @end

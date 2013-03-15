@@ -46,7 +46,6 @@
 - (IBAction)selectTeamButtonClicked:(id)sender;
 - (IBAction)sendButtonClicked:(id)sender;
 - (IBAction)addOthersButtonClicked:(id)sender;
-- (IBAction)spreadSliderAction:(id)sender;
 - (IBAction)addStakesButtonClicked:(id)sender;
 
 - (void)updateOpponents;

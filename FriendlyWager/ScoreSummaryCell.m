@@ -38,10 +38,10 @@
         _team1Odds.textAlignment = UITextAlignmentRight;
         _team2Odds = [[UILabel alloc]initWithFrame:CGRectMake(200, 40, 60, 20)];
         _team2Odds.textAlignment = UITextAlignmentRight;
-        _gameTime = [[UILabel alloc]initWithFrame:CGRectMake(70, 50, 70, 30)];
-        _wagersLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 50, 60, 30)];
+        _gameTime = [[UILabel alloc]initWithFrame:CGRectMake(70, 50, 90, 30)];
+        _wagersLabel = [[UILabel alloc]initWithFrame:CGRectMake(170, 50, 60, 30)];
         
-        _wagerCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(190, 40, 37, 50)];
+        _wagerCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(220, 40, 37, 50)];
         [_wagerCountLabel setBackgroundColor:[UIColor clearColor]];
         [_wagerCountLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:19]];
         [_wagerCountLabel setTextColor:[UIColor darkGrayColor]];

@@ -20,8 +20,6 @@
 
 - (NSMutableArray *)castToMutableArray;
 
-- (NSMutableArray *)createList;
-
 @end
 
 @implementation NSArray (Alphabet)
@@ -168,7 +166,7 @@
         BOOL lotsItems = NO;
 		for (int i = 0; i < [telephone count]; i++)
 		{
-			if (tels == @"") 
+			if ([tels isEqualToString: @""])
 			{
 				tels = [telephone objectAtIndex:i];
 			}
@@ -194,7 +192,7 @@
             nameString = [NSString stringWithFormat:@"%@ %@", nameString, lastName];
         }
         
-		if ((tels != @"") || (![[tels lowercaseString] containsString:@"null"]))
+		if (![tels isEqualToString:@""] || (![[tels lowercaseString] containsString:@"null"]))
 		{
 			NSMutableDictionary *info = [NSMutableDictionary new];
 			[info setValue:[NSString stringWithFormat:@"%@", [[nameString stringByReplacingOccurrencesOfString:@" " withString:@""] substringFrom:0 to:1]] forKey:@"letter"];

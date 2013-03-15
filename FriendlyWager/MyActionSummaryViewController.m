@@ -19,7 +19,6 @@
 @implementation MyActionSummaryViewController
 @synthesize contentList = _contentList;
 @synthesize userToWager = _userToWager;
-@synthesize tabParentView = _tabParentView;
 @synthesize tableView = _tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -71,16 +70,10 @@
         [wagerButton setEnabled:NO];
     }
     
-    fwData = [NSUserDefaults alloc];
     
-    //Set Scrollview size
-    scrollView.contentSize = CGSizeMake(320, 560);
     
-    //wagerView.hidden = YES;
     [self.presentingViewController.navigationController setNavigationBarHidden:YES];
-    
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"FW_PG5_BG"]]];
-    
+        
     opponentNameLabel.text = [[_userToWager objectForKey:@"name"] capitalizedString];
     
     //Set labels with name of currently selected opponent
@@ -94,8 +87,6 @@
     [chatButton setTitle:[NSString stringWithFormat:@"%@\n%@", @"Trash Talk", opponent] forState:UIControlStateNormal];
     chatButton.titleLabel.textAlignment = UITextAlignmentCenter;
     chatButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
-    //[wagerView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"gameCellNoArrow"]]];
-    
     UILabel *wagerLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 35, wagerButton.frame.size.width, 20)];
     wagerLabel.text = @"Wager";
     wagerLabel.textAlignment = UITextAlignmentCenter;
@@ -138,9 +129,6 @@
     [chatButton addSubview:trashTalkLabel];
     [chatButton addSubview:trashTalkOpponentLabel];
     
-    //Set datasource and delegate for table view
-    wagersTableView.dataSource = self;
-    wagersTableView.delegate = self;
     
     
     UIImage *backButtonImage = [UIImage imageNamed:@"backBtn"];
@@ -158,17 +146,6 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:custombackButton];
     
     self.navigationItem.leftBarButtonItem = backButton;
-    
-    
-    /*UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 28)];
-     [button addTarget:self action:@selector(wagerButtonClicked:) forControlEvents:UIControlEventTouchDown];
-     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateNormal];
-     [button setBackgroundImage:[UIImage imageNamed:@"NavBtn"] forState:UIControlStateHighlighted];
-     [button setTitle:@"Wager" forState:UIControlStateNormal];
-     button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-     UIBarButtonItem *wagerBarButton = [[UIBarButtonItem alloc]initWithCustomView:button];
-     self.navigationItem.rightBarButtonItem = wagerBarButton;*/
     
     
     currentCountLabel = [[KBLabel alloc]initWithFrame:CGRectMake(42, 267, 42, 30)];
@@ -220,9 +197,6 @@
     [super viewWillAppear:animated];
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     [self.navigationController.navigationBar addSubview:stripes];
-    /*if (_tabParentView) {
-     [_tabParentView.navigationController setNavigationBarHidden:NO];
-     }*/
     
     PFQuery *queryForWagered = [PFQuery queryWithClassName:@"wagers"];
     [queryForWagered whereKey:@"wager" equalTo:[PFUser currentUser]];
@@ -359,14 +333,13 @@
     NSString *recipients = [[[[_contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"sender"] objectId];
     recipients = [NSString stringWithFormat:@"%@,%@",recipients,[[[_contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"recipients"]];
     
-    NSString *currentUser = [[PFUser currentUser] objectId];
-    if ([recipients rangeOfString:currentUser].location != NSNotFound) {
+    if ([recipients rangeOfString:currentUser.objectId].location != NSNotFound) {
         if ([recipients rangeOfString:[NSString stringWithFormat:@",%@", currentUser]].location != NSNotFound) {
             recipients = [recipients stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@",%@", currentUser] withString:@""];
             
         }
         else {
-            recipients = [recipients stringByReplacingOccurrencesOfString:currentUser withString:@""];
+            recipients = [recipients stringByReplacingOccurrencesOfString:currentUser.objectId withString:@""];
         }
     }
     
@@ -377,7 +350,7 @@
     }
     
     NSArray *recipientList = [recipients componentsSeparatedByString:@","];
-    PFQuery *recipientSearch = [PFQuery queryForUser];
+    PFQuery *recipientSearch = [PFUser query];
     [recipientSearch whereKey:@"objectId" containedIn:recipientList];
     [recipientSearch findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
@@ -603,7 +576,7 @@
 
 #pragma mark - Helper methods
 - (void)getPointCount {
-    PFQuery *queryForTokens = [PFQuery queryForUser];
+    PFQuery *queryForTokens = [PFUser query];
     [queryForTokens whereKey:@"objectId" equalTo:[_userToWager objectId]];
     [queryForTokens findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
@@ -624,8 +597,7 @@
     }];
 }
 - (void)rankByWins {
-    NSMutableArray *objectsToDisplay = [[NSMutableArray alloc]init];
-    PFQuery *getWinCounts = [PFQuery queryForUser];
+    PFQuery *getWinCounts = [PFUser query];
     [getWinCounts orderByDescending:@"winCount"];
     [getWinCounts setLimit:200];
     [getWinCounts findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {

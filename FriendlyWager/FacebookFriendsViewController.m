@@ -358,7 +358,7 @@
             [selectedFriendsArray addObject:fbUid];
         }
         
-        PFQuery *query = [PFQuery queryForUser];
+        PFQuery *query = [PFUser query];
         [query whereKey:@"fbId" containedIn:selectedFriendsArray];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {

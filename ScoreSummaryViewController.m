@@ -81,16 +81,13 @@
     NSDate *currentDate = [NSDate date];
     currentDate = [currentDate dateByAddingTimeInterval:(timeDifference-(3*60*60))];
     
-    NSDate *yesterday = [currentDate dateByAddingTimeInterval:-(60*60*24)];
     NSDate *weekFromNow = [currentDate dateByAddingTimeInterval:(60*60*24*6)];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *currentDateComponents = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:currentDate];
     currentDate = [calendar dateFromComponents:currentDateComponents];
     NSLog(@"%d",[currentDateComponents hour]);
-    NSDateComponents *yesterdayComponents = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:yesterday];
     NSDateComponents *weekFromNowComponents = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:weekFromNow];
     NSString *currentDateString = [NSString stringWithFormat:@"%d/%d/%d", [currentDateComponents month], [currentDateComponents day], [currentDateComponents year]];
-    NSString *yesterdayString = [NSString stringWithFormat:@"%d/%d/%d", [yesterdayComponents month], [yesterdayComponents day], [yesterdayComponents year]];
     NSString *weekFromNowString = [NSString stringWithFormat:@"%d/%d/%d", [weekFromNowComponents month], [weekFromNowComponents day], [weekFromNowComponents year]];
     
     if ([self.league isEqualToString:@"NBA"] || [self.league isEqualToString:@"NCAAB"]) {
@@ -622,6 +619,7 @@
             }
             [self.tableView reloadData];
             [SVProgressHUD dismiss];
+            stopQuerying = NO;
             [self getWagers];
             
         }

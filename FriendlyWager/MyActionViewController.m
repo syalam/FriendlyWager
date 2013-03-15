@@ -224,7 +224,7 @@
 }
 
 - (void)getUsers {
-    PFQuery *userQuery = [PFQuery queryForUser];
+    PFQuery *userQuery = [PFUser query];
     [userQuery whereKey:@"objectId" equalTo:idArray[currentIndex]];
     [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         if (!error) {

@@ -40,14 +40,14 @@ Parse.Cloud.define("addGame", function(request, response) {
 });
 
 Parse.Cloud.define("getGames", function(request, response) {
-	var responseArray = new Array();
+	var responseArray = [];
 	var query = new Parse.Query("Games");
 	query.equalTo("final", false);
 	query.find({
 		success: function(results) {
 			if(results.length > 0) {
 				for(var i = 0; i < results.length; i++) {
-					var game = "{'gameId': '" + results[i].get("gameId") + "', 'gameDate': '" + results[i].get("gameDate") + "', 'homeTeam': '" + results[i].get("homeTeam") + "', 'awayTeam': '" + results[i].get("awayTeam") + "', 'sport': '" + results[i].get("sport") + "'}";
+					var game = '{"gameId": "' + results[i].get("gameId") + '", "gameDate": "' + results[i].get("gameDate") + '", "homeTeam": "' + results[i].get("homeTeam") + '", "awayTeam": "' + results[i].get("awayTeam") + '", "sport": "' + results[i].get("sport") + '"}';
 					responseArray[i] = game;
 				}
 				response.success(responseArray);
@@ -97,29 +97,7 @@ Parse.Cloud.define("updateGames", function(request, response) {
 												}
 											}, {
 												success: function() {
-													/*wagers[i].set("wagerUpdated", true);
-                                                    var stakedTokens1 = wager.get("stakedTokens");
-                                                    stakedTokens1 = stakedTokens1 - 5;
-                                                    var tokenCount1 = wager.get("tokenCount");
-                                                    tokenCount1 = tokenCount1 + 5;
-                                                    var winCount = wager.get("winCount");
-                                                    winCount++;
-                                                    wager.set("stakedTokens", stakedTokens1);
-                                                    wager.set("tokenCount", tokenCount1);
-                                                    wager.set("winCount", winCount);
-                                                    wagers[i].set("wageeUpdated", true);
-                                                    var stakedTokens = wagee.get("stakedTokens");
-                                                    stakedTokens = stakedTokens - 5;
-                                                    var tokenCount = wagee.get("tokenCount");
-                                                    tokenCount = tokenCount - 5;
-                                                    var lossCount = wagee.get("lossCount");
-                                                    lossCount++;
-                                                    wagee.set("stakedTokens", stakedTokens);
-                                                    wagee.set("tokenCount", tokenCount);
-                                                    wagee.set("lossCount", lossCount);
-                                                    wagers[i].save();
-                                                    wagee.save();
-                                                    wager.save();*/
+													
 
 													i++;
 													if(i < wagers.length) {
@@ -161,29 +139,7 @@ Parse.Cloud.define("updateGames", function(request, response) {
 												}
 											}, {
 												success: function() {
-													/*wagers[i].set("wagerUpdated", true);
-                                                    var stakedTokens1 = wager.get("stakedTokens");
-                                                    stakedTokens1 = stakedTokens1 - 5;
-                                                    var tokenCount1 = wager.get("tokenCount");
-                                                    tokenCount1 = tokenCount1 - 5;
-                                                    var lossCount = wager.get("lossCount");
-                                                    lossCount ++;
-                                                    wager.set("stakedTokens", stakedTokens1);
-                                                    wager.set("tokenCount", tokenCount1);
-                                                    wager.set("lossCount", lossCount);
-                                                    wagers[i].set("wageeUpdated", true);
-                                                    var stakedTokens = wagee.get("stakedTokens");
-                                                    stakedTokens = stakedTokens - 5;
-                                                    var tokenCount = wagee.get("tokenCount");
-                                                    tokenCount = tokenCount + 5;
-                                                    var winCount = wagee.get("winCount");
-                                                    winCount++;
-                                                    wagee.set("stakedTokens", stakedTokens);
-                                                    wagee.set("tokenCount", tokenCount);
-                                                    wagee.set("winCount", winCount);
-                                                    wagers[i].save();
-                                                    wagee.save();
-                                                    wager.save();*/
+													
 													i++;
 													if(i < wagers.length) {
 														updateWagers(wagers, i, g);
@@ -226,18 +182,7 @@ Parse.Cloud.define("updateGames", function(request, response) {
 												}
 											}, {
 												success: function() {
-													/*wagers[i].set("wagerUpdated", true);
-                                                    var stakedTokens1 = wager.get("stakedTokens");
-                                                    stakedTokens1 = stakedTokens1 - 5;
-                                                    wager.set("stakedTokens", stakedTokens1);
-                                                    wagers[i].save();
-                                                    wager.save();
-                                                    wagers[i].set("wageeUpdated", true);
-                                                    var stakedTokens = wagee.get("stakedTokens");
-                                                    stakedTokens = stakedTokens - 5;
-                                                    wagee.set("stakedTokens", stakedTokens);
-                                                    wagers[i].save();
-                                                    wagee.save();*/
+													
 													i++;
 													if(i < wagers.length) {
 														updateWagers(wagers, i, g);
@@ -294,7 +239,13 @@ Parse.Cloud.define("updateGames", function(request, response) {
 				queryForWagers.find({
 					success: function(results) {
 						if(results.length > 0) {
+							console.log("Made it here too!");
 							updateWagers(results, 0, games[0]);
+						}
+						else {
+							games[0].set("final", true);
+							games[0].save();
+							response.success("Game set to final. There were no accepted wagers to update");
 						}
 					},
 					error: function(error) {

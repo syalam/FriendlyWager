@@ -18,7 +18,7 @@ typedef enum apiCall {
     kAPISignIn,
 }apiCall;
 
-@interface NewTrashTalkViewController : UIViewController <PF_FBRequestDelegate, TITokenFieldDelegate, UIGestureRecognizerDelegate, NSURLConnectionDelegate, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate> {
+@interface NewTrashTalkViewController : UIViewController <PF_FBRequestDelegate, TITokenFieldDelegate, UIGestureRecognizerDelegate, NSURLConnectionDelegate, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, PF_FBDialogDelegate> {
     PFObject *newTrashTalk;
     PFUser *user;
     IBOutlet UITextView *trashTalkTextView;
@@ -37,6 +37,7 @@ typedef enum apiCall {
     
     NSMutableArray *requestIdsArray;
     int countRequests;
+    int currentIndex;
     NSMutableData *imageData;
 
 }
@@ -48,6 +49,7 @@ typedef enum apiCall {
 @property (nonatomic, retain) NSMutableArray *userArray;
 @property (nonatomic, retain) NSMutableArray *recipients;
 @property (nonatomic) BOOL myAction;
+@property (nonatomic, retain) PF_Facebook *facebook;
 
 
 

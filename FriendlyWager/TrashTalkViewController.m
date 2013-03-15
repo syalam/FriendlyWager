@@ -46,7 +46,6 @@
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     [chatIndicator setHidden:YES];
     [chatIndicatorLabel setHidden:YES];
-    NSLog(@"%@", [[NSUserDefaults standardUserDefaults]valueForKey:@"tipsOff"]);
     if (![[NSUserDefaults standardUserDefaults]boolForKey:@"tipsOff"]) {
         [self.navigationController.view addSubview:tipsView];
 
@@ -149,7 +148,6 @@
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
         [dateFormatter setDateFormat:@"MM/dd/yyyy"];
         NSString *dateCreatedString = [dateFormatter stringFromDate:dateCreated];
-        NSLog(@"%@", dateCreatedString);
         NSDate *today = [NSDate date];
         NSString *todayString = [dateFormatter stringFromDate:today];
         NSDate *yesterday = [today dateByAddingTimeInterval:-(60*60*24)];
@@ -345,13 +343,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+
 }
 
 
@@ -360,14 +352,10 @@
 -(IBAction)newTrashTalkButtonClicked:(id)sender {
     NewTrashTalkViewController *new = [[NewTrashTalkViewController alloc]initWithNibName:@"NewTrashTalkViewController" bundle:nil];
     [self.navigationController pushViewController:new animated:YES];
-    //UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:new];
-    //[self.navigationController presentModalViewController:navc animated:YES];
-}
+    }
 
 -(void)backButtonClicked:(id)sender {
-    //[self.navigationController setNavigationBarHidden:NO];
     if (_opponent) {
-        //[self.navigationController dismissModalViewControllerAnimated:YES];
         [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
     }
     else {
@@ -377,7 +365,6 @@
 
 -(void)replyButtonClicked:(id)sender {
     NSUInteger tag = [sender tag];
-    NSLog(@"%d", tag);
     NSString *recipients = [[[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"sender"] objectId];
     recipients = [NSString stringWithFormat:@"%@,%@",recipients,[[[contentList objectAtIndex:tag]valueForKey:@"data"] objectForKey:@"recipients"]];
     
@@ -405,7 +392,7 @@
     thisConversation = [[allItems filteredArrayUsingPredicate:predicate]mutableCopy];
 
     NSArray *recipientList = [recipients componentsSeparatedByString:@","];
-    PFQuery *recipientSearch = [PFQuery queryForUser];
+    PFQuery *recipientSearch = [PFUser query];
     [recipientSearch whereKey:@"objectId" containedIn:recipientList];
     [recipientSearch findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
@@ -456,7 +443,7 @@
 - (IBAction)okButtonClicked:(id)sender{
     [UIView animateWithDuration:0.2
                           delay:0.0
-                        options:UIViewAnimationCurveEaseInOut
+                        options:UIViewAnimationOptionCurveEaseInOut
                      animations:^ {
                          tipsView.alpha = 0;
                      }
@@ -500,13 +487,11 @@
                 for (PFObject *trashTalkItem in objects) {
                     [trashTalkArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:trashTalkItem, @"data", [NSNumber numberWithBool:NO], @"wasNew", [trashTalkItem objectForKey:@"conversationId"], @"conversationId", nil]];
                     if ([[trashTalkItem objectForKey:@"recipients"]rangeOfString:userId].location != NSNotFound) {
-                        NSLog(@"%@", userId);
                         NSString *isNew = [trashTalkItem objectForKey:@"isNew"];
                         if ([isNew rangeOfString:userId].location != NSNotFound) {
                             newItems = newItems+ 1;
                             [[trashTalkArray objectAtIndex:trashTalkArray.count-1]setObject:[NSNumber numberWithBool:YES] forKey:@"wasNew"];
                             isNew = [isNew stringByReplacingOccurrencesOfString:userId withString:@""];
-                            NSLog(@"%@",isNew);
                             if (isNew) {
                                 [trashTalkItem setObject:isNew forKey:@"isNew"];
                                 [trashTalkItem saveEventually];

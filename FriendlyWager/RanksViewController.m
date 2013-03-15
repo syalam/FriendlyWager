@@ -149,7 +149,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    PFQuery *query = [PFQuery queryForUser];
+    PFQuery *query = [PFUser query];
     [query whereKey:@"name" equalTo:[[_contentList objectAtIndex:indexPath.row]objectForKey:@"name"]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
@@ -197,7 +197,7 @@
 - (void)rankByPoints {
     _rankCategory = @"Rankings By Points";
     NSMutableArray *itemsToDisplay = [[NSMutableArray alloc]init];
-    PFQuery *getRanking = [PFQuery queryForUser];
+    PFQuery *getRanking = [PFUser query];
     [getRanking orderByDescending:@"tokenCount"];
     [getRanking setLimit:25];
     [getRanking findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -223,7 +223,7 @@
 - (void)rankByWins {
     _rankCategory = @"Rankings By Wins";
     NSMutableArray *objectsToDisplay = [[NSMutableArray alloc]init];
-    PFQuery *getWinCounts = [PFQuery queryForUser];
+    PFQuery *getWinCounts = [PFUser query];
     [getWinCounts orderByDescending:@"winCount"];
     [getWinCounts setLimit:30];
     [getWinCounts findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {

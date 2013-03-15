@@ -84,11 +84,7 @@
     [super viewWillAppear:YES];
     [stripes setImage:[UIImage imageNamed:@"stripes"]];
     [self.navigationController.navigationBar addSubview:stripes];
-    NSUserDefaults *newWager = [NSUserDefaults alloc];
-    /*if ([newWager objectForKey:@"opponent"]) {
-        TabsViewController *tabsController = [[TabsViewController alloc]initWithNibName:@"TabsViewController" bundle:nil];
-        [self.navigationController pushViewController:tabsController animated:YES];
-    }*/
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -186,7 +182,7 @@
 #pragma mark - Helper Methods
 - (void)selectRandomOpponent {
     [self viewWillDisappear:YES];
-    PFQuery *getOpponents = [PFQuery queryForUser];
+    PFQuery *getOpponents = [PFUser query];
     [getOpponents whereKey:@"objectId" notEqualTo:[[PFUser currentUser]objectId]];
     [getOpponents findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
@@ -298,7 +294,7 @@
                                                                   cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                               timeoutInterval:10.0f];
         // Run network request asynchronously
-        NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+        [NSURLConnection connectionWithRequest:urlRequest delegate:self];
     }
     
 }

@@ -43,4 +43,5 @@
 @property (nonatomic) BOOL wager;
 @property (nonatomic, retain)NSMutableArray *contentList;
 
+
 @end

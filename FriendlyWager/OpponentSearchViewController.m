@@ -92,7 +92,7 @@
 -(void)fetchSearchResults
 {
     NSString *stringToSearch = [searchBar.text lowercaseString];
-    PFQuery *getUsers = [PFQuery queryForUser];
+    PFQuery *getUsers = [PFUser query];
     [getUsers whereKey:@"name" containsString:stringToSearch];
     if (_wagerInProgress) {
         NSMutableArray *objectIds = [[NSMutableArray alloc]init];
